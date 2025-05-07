@@ -18,8 +18,8 @@ jobs:
         
     - run: ./gradlew test
     - run: ./gradlew assembleStandardDebug -PdoNotStrip
-    - run: cd ./app
-    - run: ls
+    - run: cd ./app\nls
+    - run: ls app
     - name: Upload Debug APK to Artifacts
       uses: actions/upload-artifact@v4
       with:
