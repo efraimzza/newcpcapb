@@ -103,7 +103,8 @@ public class Billing {
         if(mPeerSkus.contains(sku))
             return true;
 
-        return !getLicense().isEmpty();
+        //return !getLicense().isEmpty();
+        return true;
     }
 
     public boolean isPlayStore() {
@@ -128,10 +129,13 @@ public class Billing {
                 .putString("license", license)
                 .apply();
 
-        return valid;
+        //return valid;
+        return true;
     }
 
     public boolean isValidLicense(String license) {
+        if(true)
+            return true;
         if(license.isEmpty())
             return false;
 
