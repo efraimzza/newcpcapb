@@ -29,7 +29,14 @@ android {
             dimension "type"
         }
     }
-
+    signingConfigs {
+        debug {
+            storeFile file('debuga.jks')
+            storePassword '13579@#'
+            keyPassword '13579@#'
+            keyAlias 'debuga'
+        }
+    }
     buildTypes {
         release {
             minifyEnabled true
