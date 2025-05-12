@@ -81,15 +81,24 @@ public class Blacklists {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(ctx);
 
         // Domains
-        addList("Maltrail", BlacklistDescriptor.Type.DOMAIN_BLACKLIST,"maltrail-malware-domains.txt",
+        /*addList("Maltrail", BlacklistDescriptor.Type.DOMAIN_BLACKLIST,"maltrail-malware-domains.txt",
                 "https://raw.githubusercontent.com/stamparm/aux/master/maltrail-malware-domains.txt");
+        */
+        addList("domains white", BlacklistDescriptor.Type.DOMAIN_BLACKLIST,"domainswhite.txt",
+                "https://raw.githubusercontent.com/efraimzz/Mywhitelistdomains/refs/heads/main/domainswhite.txt");
+
 
         // IPs
-        addList("Emerging Threats", BlacklistDescriptor.Type.IP_BLACKLIST, "emerging-Block-IPs.txt",
+        /*addList("Emerging Threats", BlacklistDescriptor.Type.IP_BLACKLIST, "emerging-Block-IPs.txt",
                 "https://rules.emergingthreats.net/fwrules/emerging-Block-IPs.txt");
+        */
+        addList("ips white", BlacklistDescriptor.Type.IP_BLACKLIST, "ipswhite.txt",
+                "https://raw.githubusercontent.com/efraimzz/Mywhitelistdomains/refs/heads/main/ipswhite.txt");
+ 
+        /*
         addList("DigitalSide Threat-Intel", BlacklistDescriptor.Type.IP_BLACKLIST,  "digitalsideit_ips.txt",
                 "https://raw.githubusercontent.com/davidonzo/Threat-Intel/master/lists/latestips.txt");
-
+        */
         // To review
         //https://github.com/StevenBlack/hosts
         //https://phishing.army/download/phishing_army_blocklist.txt
