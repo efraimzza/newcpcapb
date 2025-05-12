@@ -454,6 +454,7 @@ pd_conn_t* pd_new_connection(pcapdroid_t *pd, const zdtun_5tuple_t *tuple, int u
     if(pd->malware_detection.bl) {
         if(!data->whitelisted_app) {
             bool blacklisted = blacklist_match_ip(pd->malware_detection.bl, &dst_ip, tuple->ipver);
+            /*old
             if (blacklisted) {
                 char appbuf[64];
                 char buf[256];
@@ -467,7 +468,23 @@ pd_conn_t* pd_new_connection(pcapdroid_t *pd, const zdtun_5tuple_t *tuple, int u
                     data->blacklisted_ip = true;
                     data->to_block = true;
                 }
+            }*/
+            /*new*/
+            if (!blacklisted) {
+                char appbuf[64];
+                char buf[256];
+                get_appname_by_uid(pd, data->uid, appbuf, sizeof(appbuf));
+
+                if(pd->malware_detection.whitelist && blacklist_match_ip(pd->malware_detection.whitelist, &dst_ip, tuple->ipver))
+                    log_d("new Whitelisted dst ip: %s [%s]", zdtun_5tuple2str(tuple, buf, sizeof(buf)),
+                          appbuf);
+                else {
+                    log_w("new Blacklisted dst ip: %s [%s]", zdtun_5tuple2str(tuple, buf, sizeof(buf)), appbuf);
+                    data->blacklisted_ip = true;
+                    data->to_block = true;
+                }
             }
+            /*end new*/
         }
 
         bl_num_checked_connections++;
