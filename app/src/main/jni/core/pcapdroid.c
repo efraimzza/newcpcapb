@@ -292,6 +292,7 @@ static void check_blacklisted_domain(pcapdroid_t *pd, pd_conn_t *data, const zdt
     if(data->info && data->info[0]) {
         if(pd->malware_detection.bl && !data->blacklisted_domain && !data->whitelisted_app) {
             bool blacklisted = blacklist_match_domain(pd->malware_detection.bl, data->info);
+            /*old
             if(blacklisted) {
                 char appbuf[64];
                 char buf[512];
@@ -307,7 +308,25 @@ static void check_blacklisted_domain(pcapdroid_t *pd, pd_conn_t *data, const zdt
                     data->blacklisted_domain = true;
                     data->to_block = true;
                 }
+            }*/
+            /*new*/
+            if(!blacklisted) {
+                char appbuf[64];
+                char buf[512];
+                get_appname_by_uid(pd, data->uid, appbuf, sizeof(appbuf));
+
+                // Check if whitelisted
+                if(pd->malware_detection.whitelist && blacklist_match_domain(pd->malware_detection.whitelist, data->info))
+                    log_d("new Whitelisted domain [%s]: %s [%s]", data->info,
+                          zdtun_5tuple2str(tuple, buf, sizeof(buf)), appbuf);
+                else {
+                    log_w("new Blacklisted domain [%s]: %s [%s]", data->info,
+                          zdtun_5tuple2str(tuple, buf, sizeof(buf)), appbuf);
+                    data->blacklisted_domain = true;
+                    data->to_block = true;
+                }
             }
+            /*new end*/
         }
 
         if(pd->firewall.enabled && pd->firewall.bl && !data->to_block) {
