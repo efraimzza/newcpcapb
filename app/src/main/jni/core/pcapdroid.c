@@ -46,6 +46,7 @@ int fw_num_checked_connections = 0;
 char *pd_appver = (char*) "";
 char *pd_device = (char*) "";
 char *pd_os = (char*) "";
+bool domainopen=false;
 
 static ndpi_protocol_bitmask_struct_t masterProtos;
 static bool masterProtosInit = false;
@@ -310,21 +311,26 @@ static void check_blacklisted_domain(pcapdroid_t *pd, pd_conn_t *data, const zdt
                 }
             }*/
             /*new*/
+            domainopen=false;
             if(!blacklisted) {
                 char appbuf[64];
                 char buf[512];
                 get_appname_by_uid(pd, data->uid, appbuf, sizeof(appbuf));
 
                 // Check if whitelisted
-                if(pd->malware_detection.whitelist && blacklist_match_domain(pd->malware_detection.whitelist, data->info))
+                if(pd->malware_detection.whitelist && blacklist_match_domain(pd->malware_detection.whitelist, data->info)){
                     log_d("new Whitelisted domain [%s]: %s [%s]", data->info,
                           zdtun_5tuple2str(tuple, buf, sizeof(buf)), appbuf);
+                    domainopen=true;
+                }
                 else {
                     log_w("new Blacklisted domain [%s]: %s [%s]", data->info,
                           zdtun_5tuple2str(tuple, buf, sizeof(buf)), appbuf);
                     data->blacklisted_domain = true;
                     data->to_block = true;
                 }
+            }else{
+                 domainopen=true;
             }
             /*new end*/
         }
@@ -470,7 +476,7 @@ pd_conn_t* pd_new_connection(pcapdroid_t *pd, const zdtun_5tuple_t *tuple, int u
                 }
             }*/
             /*new*/
-            if (!blacklisted) {
+            if (!blacklisted&&!domainopen) {
                 char appbuf[64];
                 char buf[256];
                 get_appname_by_uid(pd, data->uid, appbuf, sizeof(appbuf));
