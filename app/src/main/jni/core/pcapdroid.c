@@ -47,6 +47,7 @@ char *pd_appver = (char*) "";
 char *pd_device = (char*) "";
 char *pd_os = (char*) "";
 bool domainopen=false;
+bool thischeck=false;
 
 static ndpi_protocol_bitmask_struct_t masterProtos;
 static bool masterProtosInit = false;
@@ -321,7 +322,8 @@ static void check_blacklisted_domain(pcapdroid_t *pd, pd_conn_t *data, const zdt
                 if(pd->malware_detection.whitelist && blacklist_match_domain(pd->malware_detection.whitelist, data->info)){
                     log_d("new Whitelisted domain [%s]: %s [%s]", data->info,
                           zdtun_5tuple2str(tuple, buf, sizeof(buf)), appbuf);
-                    domainopen=true;
+                          if(thischeck) domainopen=true;
+                          thischeck=false;
                 }
                 else {
                     log_w("new Blacklisted domain [%s]: %s [%s]", data->info,
@@ -330,7 +332,8 @@ static void check_blacklisted_domain(pcapdroid_t *pd, pd_conn_t *data, const zdt
                     data->to_block = true;
                 }
             }else{
-                 domainopen=true;
+                  if(thischeck) domainopen=true;
+                  thischeck=false;
             }
             /*new end*/
         }
@@ -362,6 +365,9 @@ static void check_whitelist_mode_block(pcapdroid_t *pd, const zdtun_5tuple_t *tu
             // always allow DNS traffic from unspecified apps
             (!is_dns || ((data->uid != UID_NETD) && (data->uid != UID_PHONE) && (data->uid != UID_UNKNOWN))))
         data->to_block = !blacklist_match_uid(pd->firewall.wl, data->uid);
+    /*new block unknown (firewall whitelist mode)*/
+    if(data->uid == UID_UNKNOWN) data->to_block = true;//solution1a
+    /*end new*/
 }
 
 /* ******************************************************* */
@@ -453,7 +459,9 @@ pd_conn_t* pd_new_connection(pcapdroid_t *pd, const zdtun_5tuple_t *tuple, int u
                 }
             }
         }
-
+        /*new only true domainopen here. not in all use of domain check*/
+        thischeck = true;
+        /*end new solution1b*/
         check_blacklisted_domain(pd, data, tuple);
     }
 
@@ -490,6 +498,7 @@ pd_conn_t* pd_new_connection(pcapdroid_t *pd, const zdtun_5tuple_t *tuple, int u
                     data->to_block = true;
                 }
             }
+            domainopen=false;//end checking domain must implement very important (solution1b)
             /*end new*/
         }
 
