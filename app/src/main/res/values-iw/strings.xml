@@ -2,9 +2,9 @@
     <string name="pcapdroid_app_name" translatable="false">Pcapdroid</string>
     <string name="default_collector_ip" translatable="false">127.0.0.1</string>
     <string name="default_collector_port" translatable="false">1234</string>
-    <string name="ip_and_port" translatable="false">%1 $ s:%2 $ d</string>
-    <string name="ipv6_and_port" translatable="false">[%1 $ s]:%2 $ d</string>
-    <string name="app_and_proto" translatable="false">%1 $ s (%2 $ s)</string>
+    <string name="ip_and_port" translatable="false">%1$s:%2$d</string>
+    <string name="ipv6_and_port" translatable="false">[%1$s]:%2$d</string>
+    <string name="app_and_proto" translatable="false">%1$s (%2$s)</string>
     <string name="sni" translatable="false">סני</string>
     <string name="url" translatable="false">כתובת אתר</string>
     <string name="whois_lookup" translatable="false">מי</string>
@@ -15,32 +15,32 @@
         כל אחריות; ללא אפילו האחריות המרומזת של סחירות או כושר למטרה מסוימת.
         ראו את <a href = 'https: //www.gnu.org/licenses/gpl-3.0-standalone.html'> רישיון ציבורי כללי GNU או מאוחר יותר </a> עבור
         פרטים נוספים</string>
-    <string name="opensource_licenses" translatable="false"><b> רישיונות קוד פתוח: </b> <br /> \ n \ n
-        -zdtun: <a href = 'https: //github.com/emanuele-f/zdtun/blob/master/copying'> lgpl-3.0 </a> \ n \ n
-        - ndpi: <a href = 'https: //github.com/ntop/ndpi/blob/dev/copying'> lgpl-3.0 </a> \ n \ n
-        - CustomActivityOnCrash: <a href = 'https: //github.com/ereza/customactivityoncrash/blob/master/license'> apache-2.0 </a> \ n \ n
-        - gson: <a href = 'https: //github.com/google/gson/blob/master/license'> apache-2.0 </a> \ n \ n
-        - מפענח Brotli: <a href = 'https: //github.com/google/brotli/blob/master/license'> mit </a> \ n \ n
-        - mitmproxy: <a href = 'https: //github.com/mitmproxy/mitmproxy/blob/main/license'> mit </a> \ n \ n
-        - Chaquopy: <a href = 'https: //github.com/chaquo/chaquopy/blob/master/license.txt'> mit </a> \ n \ n
-        -קורא Maxmind db: <a href = 'https: //github.com/maxmind/maxmind-db-reader-java/blob/main/license'> apache-2.0 </a> \ n \ n
-        - FlagKit: <a href = 'https: //github.com/madebybowtie/flagkit/blob/master/license'> mit </a> \ n \ n
-        -מיקום גיאוגרפי IP על ידי <a href = 'https: //db-ip.com'> db-ip </a> \ n \ n
-        - appintro: <a href = 'https: //github.com/appintro/appintro/blob/main/license'> apache-2.0 </a> \ n \ n
-        - qrgenerator: <a href = 'https: //github.com/androidmads/qrgenerator/blob/master/license.md'> mit </a> \ n \ n
-        -Sparsehash: <a href = 'https: //github.com/sparsehash/sparsehash/blob/master/copying'> bsd-3-clouse </a> \ n \ n
-        - cidrutils: <a href = 'https: //github.com/edazdarevic/cidrutils'> mit </a> \ n \ n
-        - גופן מדהים: <a href = 'https: //fontawome.com/license/free'> רישיונות </a> \ n \ n
-        - אייקון אפליקציה מאת <a href = "https://www.freepik.com" title = "freepik"> freepik </a> מ- <a href = "https://www.flaticon.com/" title = "flaticon"> flaticon </a> \ n \ n
-        -sourcecodepro font: <a href = 'https: //github.com/adobe-fonts/source-code-pro/blob/release/license.md'> ofl-1.1 </a> \ n \ n</string>
-    <string name="wireshark_licenses" translatable="false"><b> פענוח PCAP: </b> <br /> \ n \ n
-        - wireshark: <a href = 'hhttps: //github.com/wireshark/wireshark/blob/master/copying'> gpl-2.0 </a> \ n \ n
-        - ushark: <a href = 'https: //github.com/altafinance/ushark'> gpl-2.0 </a> \ n \ n
-        - libiconv: <a href = 'https: //www.gnu.org/software/libiconv'> lgpl-2.1 </a> \ n \ n
-        -גליב: <a href = 'https: //gitlab.gnome.org/gnome/glib/-/blob/main/copying'> lgpl-2.1 </a> \ n \ n
-        -gpgerror: <a href = 'https: //github.com/gpg/libgpg-error/blob/master/copying'> lgpl-2.1 </a> \ n \ n
-        - gcrypt: <a href = 'https: //gnupg.org/software/libgcrypt/index.html'> lgpl-2.1 </a> \ n \ n
-        - nghttp2: <a href = 'https: //github.com/nghttp2/nghttp2/blob/master/coping'> mit </a> \ n \ n</string>
+    <string name="opensource_licenses" translatable="false"><b> רישיונות קוד פתוח: </b> <br /> \n \n
+        -zdtun: <a href = 'https: //github.com/emanuele-f/zdtun/blob/master/copying'> lgpl-3.0 </a> \n \n
+        - ndpi: <a href = 'https: //github.com/ntop/ndpi/blob/dev/copying'> lgpl-3.0 </a> \n \n
+        - CustomActivityOnCrash: <a href = 'https: //github.com/ereza/customactivityoncrash/blob/master/license'> apache-2.0 </a> \n \n
+        - gson: <a href = 'https: //github.com/google/gson/blob/master/license'> apache-2.0 </a> \n \n
+        - מפענח Brotli: <a href = 'https: //github.com/google/brotli/blob/master/license'> mit </a> \n \n
+        - mitmproxy: <a href = 'https: //github.com/mitmproxy/mitmproxy/blob/main/license'> mit </a> \n \n
+        - Chaquopy: <a href = 'https: //github.com/chaquo/chaquopy/blob/master/license.txt'> mit </a> \n \n
+        -קורא Maxmind db: <a href = 'https: //github.com/maxmind/maxmind-db-reader-java/blob/main/license'> apache-2.0 </a> \n \n
+        - FlagKit: <a href = 'https: //github.com/madebybowtie/flagkit/blob/master/license'> mit </a> \n \n
+        -מיקום גיאוגרפי IP על ידי <a href = 'https: //db-ip.com'> db-ip </a> \n \n
+        - appintro: <a href = 'https: //github.com/appintro/appintro/blob/main/license'> apache-2.0 </a> \n \n
+        - qrgenerator: <a href = 'https: //github.com/androidmads/qrgenerator/blob/master/license.md'> mit </a> \n \n
+        -Sparsehash: <a href = 'https: //github.com/sparsehash/sparsehash/blob/master/copying'> bsd-3-clouse </a> \n \n
+        - cidrutils: <a href = 'https: //github.com/edazdarevic/cidrutils'> mit </a> \n \n
+        - גופן מדהים: <a href = 'https: //fontawome.com/license/free'> רישיונות </a> \n \n
+        - אייקון אפליקציה מאת <a href = "https://www.freepik.com" title = "freepik"> freepik </a> מ- <a href = "https://www.flaticon.com/" title = "flaticon"> flaticon </a> \n \n
+        -sourcecodepro font: <a href = 'https: //github.com/adobe-fonts/source-code-pro/blob/release/license.md'> ofl-1.1 </a> \n \n</string>
+    <string name="wireshark_licenses" translatable="false"><b> פענוח PCAP: </b> <br /> \n \n
+        - wireshark: <a href = 'hhttps: //github.com/wireshark/wireshark/blob/master/copying'> gpl-2.0 </a> \n \n
+        - ushark: <a href = 'https: //github.com/altafinance/ushark'> gpl-2.0 </a> \n \n
+        - libiconv: <a href = 'https: //www.gnu.org/software/libiconv'> lgpl-2.1 </a> \n \n
+        -גליב: <a href = 'https: //gitlab.gnome.org/gnome/glib/-/blob/main/copying'> lgpl-2.1 </a> \n \n
+        -gpgerror: <a href = 'https: //github.com/gpg/libgpg-error/blob/master/copying'> lgpl-2.1 </a> \n \n
+        - gcrypt: <a href = 'https: //gnupg.org/software/libgcrypt/index.html'> lgpl-2.1 </a> \n \n
+        - nghttp2: <a href = 'https: //github.com/nghttp2/nghttp2/blob/master/coping'> mit </a> \n \n</string>
     <string name="connections_csv_fields" translatable="false">Ipproto, srcip, srcport, dstip, dstport, uid, app, packagename, proto, status, info, bytessent, bytesrcvd, pktssent, pktsrcvd, firstseen, lastseen</string>
     <string name="unlock_token" translatable="false">ביטול נעילת אסימון</string>
 
@@ -48,10 +48,10 @@
     <string name="start_button">הַתחָלָה</string>
     <string name="stop_button">לְהַפְסִיק</string>
     <string name="title_activity_settings">הגדרות</string>
-    <string name="collector_info">אספן UDP: %1 $ s: %2 $ d</string>
-    <string name="tcp_collector_info">אספן TCP: %1 $ s: %2 $ d</string>
-    <string name="http_server_status">שרת http: http: //%1 $ s:%2 $ d</string>
-    <string name="rcvd_and_sent">%1 $ s קיבל - %2 $ s נשלח</string>
+    <string name="collector_info">אספן UDP: %1$s: %2$d</string>
+    <string name="tcp_collector_info">אספן TCP: %1$s: %2$d</string>
+    <string name="http_server_status">שרת http: http: //%1$s:%2$d</string>
+    <string name="rcvd_and_sent">%1$s קיבל - %2$s נשלח</string>
     <string name="query">שְׁאֵלָה</string>
     <string name="host">מְאָרֵחַ</string>
     <string name="ready">מוּכָן</string>
@@ -85,7 +85,7 @@
     <string name="yes">כֵּן</string>
     <string name="no">לֹא</string>
     <string name="vpn_setup_failed">לא יכולתי להגדיר את ה- VPN. ודא שתמיד VPN מושבת</string>
-    <string name="app_not_found">לא הצליח למצוא את האפליקציה "%1 $ s"</string>
+    <string name="app_not_found">לא הצליח למצוא את האפליקציה "%1$s"</string>
     <string name="stats">סטטיסטיקה</string>
     <string name="active_connections">חיבורים פעילים</string>
     <string name="dropped_connections">חיבורים הושלכו</string>
@@ -109,11 +109,11 @@
     <string name="share">לַחֲלוֹק</string>
     <string name="delete">לִמְחוֹק</string>
     <string name="ok">בְּסֵדֶר</string>
-    <string name="pcap_file_action">התנועה שנחסכה בקובץ \ "%1 $ s \" (%2 $ S)</string>
+    <string name="pcap_file_action">התנועה שנחסכה בקובץ \"%1$s \" (%2$s)</string>
     <string name="delete_error">לא יכול היה למחוק את הקובץ</string>
     <string name="copy_error">לא יכולתי לכתוב את הקובץ</string>
     <string name="capture_running">לכידת ריצה</string>
-    <string name="notification_msg">%1 $ s נלכד, %2 $ חיבורי S</string>
+    <string name="notification_msg">%1$s נלכד, %2$s חיבורי </string>
     <string name="proto_and_port">%1$s, %2$d</string>
     <string name="conn_status_active">פָּעִיל</string>
     <string name="first_seen">נראה לראשונה</string>
@@ -121,7 +121,7 @@
     <string name="conn_status_closed">סָגוּר</string>
     <string name="copy_to_clipboard">לְהַעְתִיק</string>
     <string name="save_to_file">שמור בקובץ</string>
-    <string name="older_connections_notice">%1 $ D חיבורים מבוגרים יותר לא מוצגים</string>
+    <string name="older_connections_notice">%1$D חיבורים מבוגרים יותר לא מוצגים</string>
     <string name="about_text">PCAPDROID הוא כלי לכידת וניטור של רשת קוד פתוח שעובד ללא הרשאות שורש</string>
     <string name="get_app">קבל את זה:</string>
     <string name="unknown_app">לֹא יְדוּעַ</string>
@@ -133,12 +133,12 @@
     <string name="lang_english">אַנגְלִית</string>
     <string name="system_default">ברירת מחדל של המערכת</string>
     <string name="no_activity_file_selection">לא נמצא כי לא נמצא כי אפליקציה מטפלת בבחירת קבצים</string>
-    <string name="file_saved_with_name">הקובץ נשמר כ- "%1 $ s \"</string>
+    <string name="file_saved_with_name">הקובץ נשמר כ- "%1$s \"</string>
     <string name="socks5_proxy">SOCKS5</string>
     <string name="socks5_redirection">הפניית SOCKS5</string>
     <string name="socks5_summary">קבע את התצורה של הפניה מחדש ל- SOCKS5 Proxy</string>
     <string name="enable_socks5_proxy_summary">להפנות את כל חיבורי ה- TCP ל- SOCKS5 Proxy</string>
-    <string name="socks5_info">פרוקסי SOCKS5: %1 $ S: %2 $ d</string>
+    <string name="socks5_info">פרוקסי SOCKS5: %1$s: %2$d</string>
     <string name="socks5_auth">אימות SOCKS5</string>
     <string name="socks5_auth_summary">לאמת ל- Proxy באמצעות שם משתמש וסיסמא</string>
     <string name="proxy_host">מארח פרוקסי</string>
@@ -149,14 +149,14 @@
     <string name="app_log">עֵץ</string>
     <string name="no_data">אין נתונים</string>
     <string name="search">לְחַפֵּשׂ…</string>
-    <string name="app_val">אפליקציה: %1 $ s</string>
-    <string name="ip_address_val">כתובת IP: %1 $ s</string>
-    <string name="cidr_val">CIDR: %1 $ s</string>
-    <string name="host_val">מארח: %1 $ s</string>
-    <string name="protocol_val">פרוטוקול: %1 $ s</string>
+    <string name="app_val">אפליקציה: %1$s</string>
+    <string name="ip_address_val">כתובת IP: %1$s</string>
+    <string name="cidr_val">CIDR: %1$s</string>
+    <string name="host_val">מארח: %1$s</string>
+    <string name="protocol_val">פרוטוקול: %1$s</string>
     <string name="malware_whitelist_action">רשימת הלבנים (תוכנות זדוניות) ...</string>
     <string name="hide">לְהַסתִיר…</string>
-    <string name="n_selected">%1 $ d נבחר</string>
+    <string name="n_selected">%1$d נבחר</string>
     <string name="select_all">בחר הכל</string>
     <string name="app_details">פרטי אפליקציה</string>
     <string name="package_name">שם החבילה</string>
@@ -171,14 +171,14 @@
     <string name="netd_app_info">דמון המערכת המבצע את רזולוציות ה- DNS</string>
     <string name="android_app_info">מערכת אנדרואיד</string>
     <string name="phone_app_info">שירותי טלפוניה</string>
-    <string name="unknown_app_info">\ "לא ידוע \" מסמן חיבורים שלא ניתן היה לקבוע את האפליקציה שלהם</string>
+    <string name="unknown_app_info">\"לא ידוע \" מסמן חיבורים שלא ניתן היה לקבוע את האפליקציה שלהם</string>
     <string name="packets_dropped">מנות צנחו</string>
     <string name="capture_prefs">לִלְכּוֹד</string>
     <string name="dump_extensions">הרחבות PCAPDROID</string>
     <string name="dump_extensions_summary">הרחב את פורמט המזבלה של המנות עם מטא נתונים נוספים, כמו האפליקציה ששלחה/קיבלה חבילה נתונה</string>
     <string name="dump_extensions_how_to">כיצד להציג את תוספי ה- pcapdroid במזבלה ב- Wireshark</string>
     <string name="pending_transaction">אנא מלא את העסקה שלך כדי לממש תכונה זו</string>
-    <string name="ctrl_consent">אפליקציה רוצה לתפוס את תנועת המכשירים שלך. \ Ndeny אם אינך בטוח</string>
+    <string name="ctrl_consent">אפליקציה רוצה לתפוס את תנועת המכשירים שלך. \ndeny אם אינך בטוח</string>
     <string name="deny">לְהַכּחִישׁ</string>
     <string name="allow">לְהַתִיר</string>
     <string name="ctrl_consent_title">בקשת בקרת PCAPDroid</string>
@@ -187,7 +187,7 @@
     <string name="capture_interface">ממשק לכידת</string>
     <string name="internet">לַאִינטֶרנֶט</string>
     <string name="all_interfaces">כל הממשקים</string>
-    <string name="capturing_from">לכידת מנות מ- \ "%1 $ s \"</string>
+    <string name="capturing_from">לכידת מנות מ- \"%1$s \"</string>
     <string name="edit_filter">ערוך פילטר</string>
     <string name="edit_list">עריכת רשימת</string>
     <string name="hidden_connections_rules">כללי חיבורים נסתרים</string>
@@ -204,20 +204,20 @@
     <string name="malware_whitelist_help">רשימת הלבנים המוגדרת על ידי המשתמש כדי לעכב איתור תוכנות זדוניות. לחיצה ארוכה חיבורים זדוניים ליצירת כללים המבטלים אותם כתוכנה זדונית</string>
     <string name="hidden_connections_help">רשימת הכללים כדי להסתיר ערכי רשימת חיבור כך שתוכל להתמקד ברלוונטיים</string>
     <string name="malicious_connection_filter">זְדוֹנִי</string>
-    <string name="status_filter">סטטוס: %1 $ s</string>
+    <string name="status_filter">סטטוס: %1$s</string>
     <string name="not_hidden_filter">לא מוסתר</string>
     <string name="copy_action">לְהַעְתִיק…</string>
-    <string name="url_val">"כתובת אתר: %1 $ s"</string>
+    <string name="url_val">"כתובת אתר: %1$s"</string>
     <string name="show_me">תראה לי</string>
     <string name="hint">רֶמֶז</string>
     <string name="once">פַּעַם</string>
     <string name="forever">לָנֶצַח</string>
     <string name="control_permissions">הרשאות בקרה</string>
     <string name="control_permissions_summary">בדוק אילו אפליקציות מורשות לשלוט על לכידת PCAPDROID</string>
-    <string name="control_permissions_item">%1 $ s: %2 $ s</string>
+    <string name="control_permissions_item">%1$s: %2$s</string>
     <string name="country">מְדִינָה</string>
     <string name="asn">ASN</string>
-    <string name="country_val">מדינה: %1 $ s</string>
+    <string name="country_val">מדינה: %1$s</string>
     <string name="send_report">שלח דוח</string>
     <string name="start_at_boot">התחל באתחול</string>
     <string name="start_at_boot_summary">סטארטים אוטומטיים לוכדים לאחר האתחול</string>
@@ -228,13 +228,13 @@
     <string name="status_outdated">מְיוּשָׁן</string>
     <string name="status_not_loaded">לא נטען</string>
     <string name="status_uptodate">עדכני</string>
-    <string name="blacklist_type">"סוג: %1 $ s"</string>
+    <string name="blacklist_type">"סוג: %1$s"</string>
     <string name="blacklist_type_ip">IP Blacklist</string>
     <string name="blacklist_type_domain">רשימה שחורה של דומיין</string>
-    <string name="n_rules">%1 $ כללי S.</string>
-    <string name="last_update_val">עדכון אחרון: %1 $ s</string>
+    <string name="n_rules">%1$כללי S.</string>
+    <string name="last_update_val">עדכון אחרון: %1$s</string>
     <string name="malicious_connections">קשרים זדוניים</string>
-    <string name="malicious_connection_description">חיבור מ- App \ "%1 $ s \" הפעיל כלל זיהוי תוכנות זדוניות (%2 $ s)</string>
+    <string name="malicious_connection_description">חיבור מ- App \"%1$s \" הפעיל כלל זיהוי תוכנות זדוניות (%2$s)</string>
     <string name="malicious_connections_notice">רשימות שחורות עשויות להכיל חיוביות כוזבות. הקפד לבדוק שוב את מוניטין כתובת ה- IP/תחום באופן מקוון. אתה יכול לשלול חיוביות כוזבות דרך רשימת ההלבנה של תוכנות זדוניות</string>
     <string name="updated_blacklists">רשימות שחורות מעודכנות</string>
     <string name="connections_checked">חיבורים נבדקו</string>
@@ -253,17 +253,17 @@
     <string name="firewall">חומת אש</string>
     <string name="firewall_rules">כללי חומת אש</string>
     <string name="blocked_pkts">חָסוּם</string>
-    <string name="n_pkts">%1 $ s pkts</string>
+    <string name="n_pkts">%1$s pkts</string>
     <string name="blocked_connection_filter">חָסוּם</string>
     <string name="allowed_connection_filter">מוּתָר</string>
-    <string name="firewall_filter">חומת אש: %1 $ s</string>
+    <string name="firewall_filter">חומת אש: %1$s</string>
     <string name="paid_features">תכונות בתשלום</string>
     <string name="validate">לְאַמֵת</string>
     <string name="valid">תָקֵף</string>
     <string name="invalid">לֹא בְּתוֹקֶף</string>
     <string name="no_intent_handler_found">שום אפליקציה לא נמצאה לבצע פעולה זו</string>
     <string name="network_interface">מִמְשָׁק</string>
-    <string name="interface_filter">ממשק: %1 $ s</string>
+    <string name="interface_filter">ממשק: %1$s</string>
     <string name="loading">טְעִינָה…</string>
     <string name="purchased">נרכש</string>
     <string name="no_items_for_purchase">אין פריטים זמינים לרכישה</string>
@@ -288,15 +288,15 @@
     <string name="install_action">לְהַתְקִין</string>
     <string name="export_action">יְצוּא</string>
     <string name="export_ellipsis">יְצוּא…</string>
-    <string name="install_the_mitm_addon">התקן את ה- pcapdroid <a href = '%1 $ s'> mitm addon </a></string>
-    <string name="export_ca_certificate">ייצא את אישור ה- PCAPDROID CA, ואז פתח את הגדרות Android \"Cenryption &amp; Induptions \" ובחר התקן אותו כתעודת CA \ "</string>
-    <string name="install_ca_certificate">התקן את אישור ה- PCAPDROID CA, בחירת \ "VPN ואפליקציות \". אנדרואיד תבקש את מסך המנעול או הסיסמה שלך</string>
+    <string name="install_the_mitm_addon">התקן את ה- pcapdroid <a href = '%1$s'> mitm addon </a></string>
+    <string name="export_ca_certificate">ייצא את אישור ה- PCAPDROID CA, ואז פתח את הגדרות Android \"Cenryption &amp; Induptions \" ובחר התקן אותו כתעודת CA \"</string>
+    <string name="install_ca_certificate">התקן את אישור ה- PCAPDROID CA, בחירת \"VPN ואפליקציות \". אנדרואיד תבקש את מסך המנעול או הסיסמה שלך</string>
     <string name="checking_the_certificate">בדיקת האישור ...</string>
-    <string name="ca_cert_export_failed">אירעה שגיאה בעת ייצוא תעודת CA \ n \ nif המכשיר שלך מיישם את AutoStart או תוכנה דומה כדי להגביל את ביצוע שירותי הרקע, הקפד <a href = '%1 $ s'> רשימת הלבנות pcapdroid </a></string>
+    <string name="ca_cert_export_failed">אירעה שגיאה בעת ייצוא תעודת CA \n \nif המכשיר שלך מיישם את AutoStart או תוכנה דומה כדי להגביל את ביצוע שירותי הרקע, הקפד <a href = '%1$s'> רשימת הלבנות pcapdroid </a></string>
     <string name="cert_exported_now_installed">אישור מיוצא, התקן אותו כעת מהגדרות אנדרואיד</string>
     <string name="cert_installed_correctly">תעודת CA מותקנת</string>
     <string name="cert_reinstall_required">תעודת CA אינה מותקנת, הפעל את אשף הגדרת MITM</string>
-    <string name="mitm_addon_bad_version">גרסת Addon MITM Bad PCAPDroid. אנא התקן גרסה %1 $ s ונסה מחדש</string>
+    <string name="mitm_addon_bad_version">גרסת Addon MITM Bad PCAPDroid. אנא התקן גרסה %1$s ונסה מחדש</string>
     <string name="update_available">עדכון זמין</string>
     <string name="mitm_addon_update_available">ניתן להשיג עדכון חדש של MITM Addon. עדכן כדי לקבל את תיקוני הבאגים האחרונים</string>
     <string name="mitm_addon_new_version">יש לעדכן את תוסף ה- PCAPDroid MITM</string>
@@ -309,7 +309,7 @@
     <string name="overview">סקירה כללית</string>
     <string name="string_http_request">בקשת HTTP</string>
     <string name="string_http_response">תגובת HTTP</string>
-    <string name="payload_truncated">עומס המשא קטום. כדי להראות את זה במלואו, הפסק את הלכידה ואפשר \ "%1 $ s \" מהגדרות PCAPDROID</string>
+    <string name="payload_truncated">עומס המשא קטום. כדי להראות את זה במלואו, הפסק את הלכידה ואפשר \"%1$s \" מהגדרות PCAPDROID</string>
     <string name="websocket">שקע רשת</string>
     <string name="http">Http</string>
     <string name="payload">מטען</string>
@@ -320,7 +320,7 @@
     <string name="not_decryptable">לא לפענוח</string>
     <string name="decrypted">מפוענח</string>
     <string name="decryption">פענוח</string>
-    <string name="decryption_filter">פענוח: %1 $ s</string>
+    <string name="decryption_filter">פענוח: %1$s</string>
     <string name="connection_start_not_seen">PCAPDROID לא ראה את תחילתו של חיבור זה. מידע מסוים עשוי לחסר</string>
     <string name="network_traffic">תְנוּעָה</string>
     <string name="warn_no_app_data">לא הוחלפו נתוני יישום</string>
@@ -338,16 +338,16 @@
     <string name="geo_db_missing">מסד נתונים של מיקום גיאוגרפי חסר</string>
     <string name="country_rules_warning">כדי להשתמש בכללי חומת אש מבוססי מדינה, הורד את מסד הנתונים של מיקום הגיאוגרפי מההגדרות PCAPDROID, אחרת כללים מבוססי מדינה יהיו לא יעילים</string>
     <string name="database">מסד נתונים</string>
-    <string name="built_on">בנוי על: %1 $ s</string>
+    <string name="built_on">בנוי על: %1$s</string>
     <string name="geo_db_download">הקש כדי להוריד את מסד הנתונים האחרון. בסיסי נתונים חדשים זמינים מדי חודש</string>
-    <string name="size_x">גודל: %1 $ s</string>
+    <string name="size_x">גודל: %1$s</string>
     <string name="geo_db_delete">הקש כדי למחוק את בסיס הנתונים ולחסוך מקום</string>
     <string name="download">הורד</string>
     <string name="connection_blocked">חיבור זה נחסם על ידי pcapdroid</string>
     <string name="import_action">יְבוּא</string>
     <string name="import_failed">היבוא נכשל</string>
     <string name="invalid_backup">פורמט גיבוי לא חוקי</string>
-    <string name="rules_import_success">מיובא %1 $ D כללים</string>
+    <string name="rules_import_success">מיובא %1$D כללים</string>
     <string name="no_rules_to_export">אין כללים לייצוא</string>
     <string name="rules_merge_msg">לשמור על הכללים הקיימים?</string>
     <string name="keep_action">לִשְׁמוֹר</string>
@@ -368,25 +368,25 @@
     <string name="block_quick">בלוק קוויק</string>
     <string name="block_private_dns">חסום DNS פרטי</string>
     <string name="block_private_dns_summary">לזהות ואולי חוסמים DNS פרטי כדי לבדוק את תנועת ה- DNS. השבתת זה יכולה להפריע לניתוח התנועה</string>
-    <string name="mitm_setup_wizard_intro">אשף זה ידריך אתכם בהתקנת רשות ה- PCAPDroid MITM Addon והסמכה, הנדרשים לביצוע פענוח <A href = '%1 $ s'> TLS </a></string>
-    <string name="mitm_setup_wizard_done">PCAPDROID מוכן כעת לפענח את תנועת ה- TLS \ n \ בדוק את מדריך למשתמש <a href = '%1 $ s'></string>
+    <string name="mitm_setup_wizard_intro">אשף זה ידריך אתכם בהתקנת רשות ה- PCAPDroid MITM Addon והסמכה, הנדרשים לביצוע פענוח <a href = '%1$s'> TLS </a></string>
+    <string name="mitm_setup_wizard_done">PCAPDROID מוכן כעת לפענח את תנועת ה- TLS \n \בדוק את מדריך למשתמש <a href = '%1$s'></string>
     <string name="welcome_to_pcapdroid">ברוך הבא ל- pcapdroid</string>
     <string name="app_intro_next_button">הַבָּא</string>
     <string name="app_intro_skip_button">לְדַלֵג</string>
     <string name="app_intro_back_button">בְּחֲזָרָה</string>
     <string name="app_intro_done_button">נַעֲשָׂה</string>
-    <string name="app_intro_welcome_msg">PCAPDroid היא אפליקציה ידידותית לפרטיות המאפשרת לך לעקוב ולנתח את החיבורים שנעשו על ידי האפליקציות במכשיר שלך \ n \ nmoreover, היא מאפשרת לך לייצא מזבלה של PCAP של מטא נתונים של התנועה, לחלץ ועוד ועוד!</string>
+    <string name="app_intro_welcome_msg">PCAPDroid היא אפליקציה ידידותית לפרטיות המאפשרת לך לעקוב ולנתח את החיבורים שנעשו על ידי האפליקציות במכשיר שלך \n \nmoreover, היא מאפשרת לך לייצא מזבלה של PCAP של מטא נתונים של התנועה, לחלץ ועוד ועוד!</string>
     <string name="privacy_first">פרטיות ראשונה</string>
-    <string name="app_intro_privacy_msg">האפליקציה אינה מעסיקה מעקב, אנליטיקס או טלפונים נגד תכונות \ n \ nhow אתה יכול להיות בטוח? עיין ב <a href = '%1 $ s'> מדיניות פרטיות </a> ו <a href = '%2 $ s'> קוד המקור </a></string>
+    <string name="app_intro_privacy_msg">האפליקציה אינה מעסיקה מעקב, אנליטיקס או טלפונים נגד תכונות \n \nhow אתה יכול להיות בטוח? עיין ב <a href = '%1$s'> מדיניות פרטיות </a> ו <a href = '%2$s'> קוד המקור </a></string>
     <string name="country_and_asn">מדינה ו- ASN</string>
-    <string name="app_intro_geolocation_msg">PCAPDROID יכול לשאול מסד נתונים מקומי כדי לקבוע את המדינה של שרת מרוחק \ n \ nyou חייב להוריד תחילה את מסד הנתונים של המיקום Geolocation מהגדרות האפליקציה</string>
-    <string name="vpn_setup_msg">PCapdroid מדמה VPN על מנת לתפוס את תנועת הרשת ללא שורש. \ N \ nto להתחיל את הלכידה, עליך לקבל את בקשת ה- VPN במסך הבא.</string>
-    <string name="app_intro_traffic_inspection">בדיקת בקשות HTTP, תגובות ונתונים גולמיים היא קלה, בזכות המפענחים המובנים \ n \ ngot חיבור מוצפן? אתה יכול לאפשר את הפענוח <A href = '%1 $ s'> TLS </a> כדי לקבל את הנתונים המפענחים</string>
-    <string name="app_intro_firewall_msg">עם <a href = '%1 $ s'> חומת אש </a> אתה יכול בקלות לחסום גישה לאינטרנט לאפליקציות, תחומים ומדינות בודדות \ n \ ncombine זה עם נראות התעבורה המובנית כדי לקבל את הכלי האולטימטיבי כדי להגן על פרטיותך</string>
-    <string name="app_intro_malware_detection">שפר את האבטחה של המכשיר שלך עם <a href = '%1 $ s'> זיהוי תוכנות זדוניות </a> תכונה \ n \ nby באמצעות רשימות שחורות עדכניות, הוא יכול לאתר, לחסום ולהתריע חיבורים זדוניים בזמן אמת</string>
-    <string name="app_intro_traffic_dump">Pcapdroid מספקת <a href = '%1 $ s'> דרכים מרובות </a> כדי לזרוק את התנועה בפורמט PCAP הסטנדרטי לצורך ניתוח נוסף \ n \ nvia <a href = '%2 $ s'> אפשרות הרחבות pcapdroid </a>, אתה יכול להוסיף שמות אפליקציות למנות ולהציג אותן ב- Wresharkark </a></string>
-    <string name="permission_granted">%1 $ S הוענק</string>
-    <string name="permission_grant_fail">לא ניתן היה להעניק אישור של %1 $</string>
+    <string name="app_intro_geolocation_msg">PCAPDROID יכול לשאול מסד נתונים מקומי כדי לקבוע את המדינה של שרת מרוחק \n \nyou חייב להוריד תחילה את מסד הנתונים של המיקום Geolocation מהגדרות האפליקציה</string>
+    <string name="vpn_setup_msg">PCapdroid מדמה VPN על מנת לתפוס את תנועת הרשת ללא שורש. \n \nto להתחיל את הלכידה, עליך לקבל את בקשת ה- VPN במסך הבא.</string>
+    <string name="app_intro_traffic_inspection">בדיקת בקשות HTTP, תגובות ונתונים גולמיים היא קלה, בזכות המפענחים המובנים \n \ngot חיבור מוצפן? אתה יכול לאפשר את הפענוח <a href = '%1$s'> TLS </a> כדי לקבל את הנתונים המפענחים</string>
+    <string name="app_intro_firewall_msg">עם <a href = '%1$s'> חומת אש </a> אתה יכול בקלות לחסום גישה לאינטרנט לאפליקציות, תחומים ומדינות בודדות \n \ncombine זה עם נראות התעבורה המובנית כדי לקבל את הכלי האולטימטיבי כדי להגן על פרטיותך</string>
+    <string name="app_intro_malware_detection">שפר את האבטחה של המכשיר שלך עם <a href = '%1$s'> זיהוי תוכנות זדוניות </a> תכונה \n \nby באמצעות רשימות שחורות עדכניות, הוא יכול לאתר, לחסום ולהתריע חיבורים זדוניים בזמן אמת</string>
+    <string name="app_intro_traffic_dump">Pcapdroid מספקת <a href = '%1$s'> דרכים מרובות </a> כדי לזרוק את התנועה בפורמט PCAP הסטנדרטי לצורך ניתוח נוסף \n \nvia <a href = '%2$s'> אפשרות הרחבות pcapdroid </a>, אתה יכול להוסיף שמות אפליקציות למנות ולהציג אותן ב- Wresharkark </a></string>
+    <string name="permission_granted">%1$s הוענק</string>
+    <string name="permission_grant_fail">לא ניתן היה להעניק אישור של %1$s</string>
     <string name="connection_not_found">לא הצליח למצוא את החיבור הנתון</string>
     <string name="low_memory">זיכרון נמוך</string>
     <string name="low_memory_info">האפליקציה נגמרת הזיכרון, צפו להתרסקות</string>
@@ -394,7 +394,7 @@
     <string name="capture_stopped_low_memory">הלכידה נעצרה</string>
     <string name="heap_usage">שימוש בערימה</string>
     <string name="memory_usage">שימוש בזיכרון</string>
-    <string name="vpn_lockdown_notice">כדי למנוע אפליקציות לגשת לאינטרנט כאשר PCAPDROID לא פועל (למשל לאחר אתחול מחדש) אתה יכול להגדיר PCAPDROID כ- VPN תמיד במצב נעילה. \ N \ ndo אתה רוצה לפתוח את הגדרות ה- VPN עכשיו?</string>
+    <string name="vpn_lockdown_notice">כדי למנוע אפליקציות לגשת לאינטרנט כאשר PCAPDROID לא פועל (למשל לאחר אתחול מחדש) אתה יכול להגדיר PCAPDROID כ- VPN תמיד במצב נעילה. \n \ndo אתה רוצה לפתוח את הגדרות ה- VPN עכשיו?</string>
     <string name="ip_mode">כתובות IP של VPN</string>
     <string name="ipv4_only">IPv4 בלבד</string>
     <string name="ipv6_only">IPv6 בלבד</string>
@@ -405,35 +405,35 @@
     <string name="no_matches_found">אין התאמות</string>
     <string name="cleartext_connection">ClearText</string>
     <string name="unblock_permanently">בטל את החסימה לצמיתות</string>
-    <string name="unblock_for_n_hours">ביטול חסימה עבור %1 $ dh</string>
-    <string name="unblock_for_n_minutes">ביטול חסימה עבור %1 $ dm</string>
+    <string name="unblock_for_n_hours">ביטול חסימה עבור %1$dh</string>
+    <string name="unblock_for_n_minutes">ביטול חסימה עבור %1$dm</string>
     <string name="block_new_apps">חסום אפליקציות שהותקנו לאחרונה</string>
     <string name="app_blocked">אפליקציה חסומה</string>
-    <string name="app_blocked_info">אפליקציית %1 $ S נחסמה על ידי חומת האש</string>
-    <string name="app_unblocked">האפליקציה %1 $ s לא הייתה חסומה</string>
+    <string name="app_blocked_info">אפליקציית %1$s נחסמה על ידי חומת האש</string>
+    <string name="app_unblocked">האפליקציה %1$s לא הייתה חסומה</string>
     <string name="payload_scams_notice">תצוגה זו עשויה להכיל מידע רגיש, כמו הסיסמאות שלך ואסימוני הגישה שלך.</string>
     <string name="cancel_action">לְבַטֵל</string>
     <string name="show_data_action">להציג נתונים</string>
-    <string name="remote_collector_notice">הגדרת תצורה של PCAPDROID לשלוח תנועה לשרת מרוחק. השרת יוכל לגשת למידע הרגיש שלך. \ N \ nif מישהו ביקש ממך לעשות זאת, זה כנראה ניסיון הונאה</string>
-    <string name="remote_server_warning">מסיבות אבטחה, שליחת תנועה לשרת המרוחק \ "%1 $ s \" אסורה "</string>
+    <string name="remote_collector_notice">הגדרת תצורה של PCAPDROID לשלוח תנועה לשרת מרוחק. השרת יוכל לגשת למידע הרגיש שלך. \n \nif מישהו ביקש ממך לעשות זאת, זה כנראה ניסיון הונאה</string>
+    <string name="remote_server_warning">מסיבות אבטחה, שליחת תנועה לשרת המרוחק \"%1$s \" אסורה "</string>
     <string name="warning">אַזהָרָה</string>
     <string name="paid_features_unlocked">תכונות בתשלום לא נעולות. הפעל מחדש את הלכידה אם פועל</string>
     <string name="build_info">לבנות מידע</string>
-    <string name="tls_decryption_with_root_msg">היכולת להפעיל פענוח TLS עם שורש היא תכונה ניסיונית. זוהי רשימה של באגים ידועים: \ n \ n
-- ב- PCAPDroid תראה את התנועה כפי שהיא נוצרה מאפליקציית MITM-ADDON במקום האפליקציה המקורית \ n
-- כאשר מוגדר מסנן אפליקציות, פענוח יתרחש רק עבור אפליקציית היעד, אך PCAPDROID עדיין יציג את תנועת היישומים האחרים \ n
-- אם הלכידה לא מתחילה, וודא שאתה יכול למעשה להריץ את הפקודה iptables כשורש (למשל באמצעות termux) \ n
-- יתכן שזה לא יעבוד על אנדרואיד 12 ואילך \ n
+    <string name="tls_decryption_with_root_msg">היכולת להפעיל פענוח TLS עם שורש היא תכונה ניסיונית. זוהי רשימה של באגים ידועים: \n \n
+- ב- PCAPDroid תראה את התנועה כפי שהיא נוצרה מאפליקציית MITM-ADDON במקום האפליקציה המקורית \n
+- כאשר מוגדר מסנן אפליקציות, פענוח יתרחש רק עבור אפליקציית היעד, אך PCAPDROID עדיין יציג את תנועת היישומים האחרים \n
+- אם הלכידה לא מתחילה, וודא שאתה יכול למעשה להריץ את הפקודה iptables כשורש (למשל באמצעות termux) \n
+- יתכן שזה לא יעבוד על אנדרואיד 12 ואילך \n
 - אם אפליקציית VPN פועלת, עליך למקד לאפליקציה ספציפית לפענוח או להדיר את תוסף ה- PCAPDROID MITM מ- VPN, אחרת התנועה תעבור לולאה</string>
     <string name="unlock_token_summary">אסימון שניתן להשתמש בו כדי לבטל את נעילת התכונות בתשלום במבנים שאינם Google-Play של האפליקציה (למשל F-Droid/Github)</string>
-    <string name="unlock_token_error">לא יכול היה לבקש נעילת אסימון [ %1 $ D]: %2 $ s</string>
-    <string name="access_paid_features_msg">בדוק <a href = '%1 $ s'> מדריך למשתמש </a> כדי ללמוד כיצד לגשת לתכונות בתשלום</string>
+    <string name="unlock_token_error">לא יכול היה לבקש נעילת אסימון [ %1$D]: %2$s</string>
+    <string name="access_paid_features_msg">בדוק <a href = '%1$s'> מדריך למשתמש </a> כדי ללמוד כיצד לגשת לתכונות בתשלום</string>
     <string name="license_service_unavailable">שירות הרישיון PCAPDROID אינו זמין כעת. אנא נסה שוב תוך כמה דקות</string>
     <string name="requesting_unlock_token">מבקש אסימון נעילה, אנא המתן</string>
     <string name="show_action">לְהַצִיג</string>
-    <string name="unlock_token_msg1">זה אסימון הנעילה שלך. שימו לב לזה כיוון שתזדקקו לזה <a href = '%1 $ s'> כדי לייצר את קודי הרישיון שלך </a></string>
+    <string name="unlock_token_msg1">זה אסימון הנעילה שלך. שימו לב לזה כיוון שתזדקקו לזה <a href = '%1$s'> כדי לייצר את קודי הרישיון שלך </a></string>
     <string name="paid_feature">תכונה בתשלום</string>
-    <string name="firewall_purchase_msg">קנה את התכונה <i>%1 $ s </i> כדי להתחיל לחסום חיבורים</string>
+    <string name="firewall_purchase_msg">קנה את התכונה <i>%1$s </i> כדי להתחיל לחסום חיבורים</string>
     <string name="mitm_skip_notice">נראה כי תעודת MITM אינה מותקנת. אם תמשיך, הפענוח עלול להיכשל</string>
     <string name="mitm_wizard_description">קבע את התצורה של המכשיר לפענוח TLS</string>
     <string name="mitmproxy_opts">אפשרויות MITMPROXY נוספות</string>
@@ -474,15 +474,15 @@
     <string name="username">שם משתמש</string>
     <string name="password">סִיסמָה</string>
     <string name="mitm_addon_autostart_workaround">החיבור ל- MITM Addon נכשל. כדרך לעקיפת הבעיה, תוכלו לנסות לפתוח את אפליקציית MITM Addon ואז לחזור ל- PCAPDroid מבלי לסגור אותה. האם אתה רוצה לפתוח אותו עכשיו?</string>
-    <string name="qr_license_confirm">האם ברצונך ליצור רישיון למכשיר \ "%1 $ s \" באמצעות אסימון הנעילה הבא?</string>
+    <string name="qr_license_confirm">האם ברצונך ליצור רישיון למכשיר \"%1$s \" באמצעות אסימון הנעילה הבא?</string>
     <string name="invalid_license">רישיון לא חוקי</string>
-    <string name="connection_error">שגיאת חיבור: %1 $ s</string>
+    <string name="connection_error">שגיאת חיבור: %1$s</string>
     <string name="activate_via_qr_code">הפעל באמצעות קוד QR</string>
     <string name="qr_code_expired">קוד QR פג. צור קוד QR חדש ונסה מחדש</string>
     <string name="qr_info_text">התקן PCAPDROID מ- Google Play וסרוק את קוד ה- QR הזה</string>
     <string name="qr_purchase_required">לרכוש אסימון נעילה כדי להמשיך בהפעלת קוד QR</string>
     <string name="license_limit_reached">הגעת למגבלת הרישיונות לאסימון נעילת זה. קנו אסימון חדש לייצור רישיונות נוספים</string>
-    <string name="license_error">שגיאת ייצור רישיון [ %1 $ d]: %2 $ s</string>
+    <string name="license_error">שגיאת ייצור רישיון [ %1$d]: %2$s</string>
     <string name="requesting_license">בקשת קוד רישיון, אנא המתן</string>
     <string name="license_activation_ok">הפעלת רישיון הושלמה</string>
     <string name="mitm_addon_starting">Mitm Addon מתחיל ...</string>
@@ -506,8 +506,8 @@
     <string name="pcap_read_error">שגיאה בקריאת קובץ הלכידה. בדוק את היומן לקבלת פרטים</string>
     <string name="keylog_read_error">שגיאת קריאה של SSL Keylog</string>
     <string name="pcap_file_load_aborted">לכידת טעינה של קובץ</string>
-    <string name="host_resolution_failed">"לא יכול היה לפתור את המארח %1 $ s</string>
-    <string name="pcapdroid_trailer_notice">כדי להציג את האפליקציות בפועל במקום \ "%1 $ s \", הקפד לאפשר את האפשרות \ "%2 $ s \" לפני שתייצר את המזבלה</string>
+    <string name="host_resolution_failed">"לא יכול היה לפתור את המארח %1$s</string>
+    <string name="pcapdroid_trailer_notice">כדי להציג את האפליקציות בפועל במקום \"%1$s \", הקפד לאפשר את האפשרות \"%2$s \" לפני שתייצר את המזבלה</string>
     <string name="decryption_info_no_rule">כדי לפענח חיבור זה, צור כלל פענוח מהמגירה השמאלית או מהתפריט ההקשרי ברשימת החיבורים</string>
     <string name="tls_decryption_no_rules_notice">פענוח TLS מיושם רק על חיבורים התואמים את הכללים המוגדרים. האם אתה רוצה ליצור כללי פענוח עכשיו?</string>
     <string name="active_vpn_detected">VPN פעיל זוהה</string>
@@ -534,7 +534,7 @@
     <string name="bytes_threshold">סף בתים</string>
     <string name="select_the_pcap_file">בחר בקובץ PCAP/PCAPNG</string>
     <string name="select_the_keylog_file">בחר בקובץ Keylog SSL</string>
-    <string name="error_code_with_text">%1 $ s (שגיאה %2 $ d)</string>
+    <string name="error_code_with_text">%1$s (שגיאה %2$d)</string>
     <string name="errno_epipe">צינור שבור</string>
     <string name="errno_epipe_msg">השרת סגר באופן בלתי צפוי את החיבור במהלך העברת הנתונים</string>
     <string name="errno_enetdown">הרשת למטה</string>
@@ -554,5 +554,5 @@
     <string name="errno_ehostunreach">אין מסלול לארח</string>
     <string name="errno_ehostunreach_msg">המערכת לא יכולה למצוא מסלול למארח היעד</string>
     <string name="dns_conn_info">DNS מתרגם שם דומיין לכתובת IP. בדרך כלל מחליפים את הנתונים בפועל על חיבורי HTTPS/TLS הבאים</string>
-    <string name="tls_conn_info">תנועת TLS/HTTPS מוצפנת. כדי לבדוק את התנועה הזו, אתה צריך לפענח אותה. עיין במדריך למשתמש של PCAPDroid <A HREF = '%1 $ S'> למשתמש </a> לפרטים</string>
+    <string name="tls_conn_info">תנועת TLS/HTTPS מוצפנת. כדי לבדוק את התנועה הזו, אתה צריך לפענח אותה. עיין במדריך למשתמש של PCAPDroid <a HREF = '%1$s'> למשתמש </a> לפרטים</string>
 </resources>
