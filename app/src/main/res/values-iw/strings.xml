@@ -369,7 +369,7 @@
     <string name="block_private_dns">חסום DNS פרטי</string>
     <string name="block_private_dns_summary">לזהות ואולי חוסמים DNS פרטי כדי לבדוק את תנועת ה- DNS. השבתת זה יכולה להפריע לניתוח התנועה</string>
     <string name="mitm_setup_wizard_intro">אשף זה ידריך אתכם בהתקנת רשות ה- PCAPDroid MITM Addon והסמכה, הנדרשים לביצוע פענוח <a href = '%1$s'> TLS </a></string>
-    <string name="mitm_setup_wizard_done">PCAPDROID מוכן כעת לפענח את תנועת ה- TLS \n \בדוק את מדריך למשתמש <a href = '%1$s'></string>
+    <string name="mitm_setup_wizard_done">PCAPDROID מוכן כעת לפענח את תנועת ה- TLS \n \בדוק את מדריך למשתמש <a href='%1$s'>user guide</a> to know more about the security measures which may prevent decryption and how to bypass them</string>
     <string name="welcome_to_pcapdroid">ברוך הבא ל- pcapdroid</string>
     <string name="app_intro_next_button">הַבָּא</string>
     <string name="app_intro_skip_button">לְדַלֵג</string>
@@ -384,7 +384,7 @@
     <string name="app_intro_traffic_inspection">בדיקת בקשות HTTP, תגובות ונתונים גולמיים היא קלה, בזכות המפענחים המובנים \n \ngot חיבור מוצפן? אתה יכול לאפשר את הפענוח <a href = '%1$s'> TLS </a> כדי לקבל את הנתונים המפענחים</string>
     <string name="app_intro_firewall_msg">עם <a href = '%1$s'> חומת אש </a> אתה יכול בקלות לחסום גישה לאינטרנט לאפליקציות, תחומים ומדינות בודדות \n \ncombine זה עם נראות התעבורה המובנית כדי לקבל את הכלי האולטימטיבי כדי להגן על פרטיותך</string>
     <string name="app_intro_malware_detection">שפר את האבטחה של המכשיר שלך עם <a href = '%1$s'> זיהוי תוכנות זדוניות </a> תכונה \n \nby באמצעות רשימות שחורות עדכניות, הוא יכול לאתר, לחסום ולהתריע חיבורים זדוניים בזמן אמת</string>
-    <string name="app_intro_traffic_dump">Pcapdroid מספקת <a href = '%1$s'> דרכים מרובות </a> כדי לזרוק את התנועה בפורמט PCAP הסטנדרטי לצורך ניתוח נוסף \n \nvia <a href = '%2$s'> אפשרות הרחבות pcapdroid </a>, אתה יכול להוסיף שמות אפליקציות למנות ולהציג אותן ב- Wresharkark </a></string>
+    <string name="app_intro_traffic_dump">Pcapdroid מספקת <a href = '%1$s'> דרכים מרובות </a> כדי לזרוק את התנועה בפורמט PCAP הסטנדרטי לצורך ניתוח נוסף \n \nvia <a href = '%2$s'> אפשרות הרחבות pcapdroid </a>, אתה יכול להוסיף שמות אפליקציות למנות ולהציג אותן ב- Wresharkark</string>
     <string name="permission_granted">%1$s הוענק</string>
     <string name="permission_grant_fail">לא ניתן היה להעניק אישור של %1$s</string>
     <string name="connection_not_found">לא הצליח למצוא את החיבור הנתון</string>
