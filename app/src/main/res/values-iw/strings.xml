@@ -231,7 +231,7 @@
     <string name="blacklist_type">"סוג: %1$s"</string>
     <string name="blacklist_type_ip">IP Blacklist</string>
     <string name="blacklist_type_domain">רשימה שחורה של דומיין</string>
-    <string name="n_rules">%1$כללי S.</string>
+    <string name="n_rules">%1$s כללים</string>
     <string name="last_update_val">עדכון אחרון: %1$s</string>
     <string name="malicious_connections">קשרים זדוניים</string>
     <string name="malicious_connection_description">חיבור מ- App \"%1$s \" הפעיל כלל זיהוי תוכנות זדוניות (%2$s)</string>
