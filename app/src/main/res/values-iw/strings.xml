@@ -289,7 +289,7 @@
     <string name="export_action">יְצוּא</string>
     <string name="export_ellipsis">יְצוּא…</string>
     <string name="install_the_mitm_addon">התקן את ה- pcapdroid <a href = '%1 $ s'> mitm addon </a></string>
-    <string name="export_ca_certificate">ייצא את אישור ה- PCAPDROID CA, ואז פתח את הגדרות Android \ "Cenryption & Induptions \" ובחר התקן אותו כתעודת CA \ "</string>
+    <string name="export_ca_certificate">ייצא את אישור ה- PCAPDROID CA, ואז פתח את הגדרות Android \"Cenryption &amp; Induptions \" ובחר התקן אותו כתעודת CA \ "</string>
     <string name="install_ca_certificate">התקן את אישור ה- PCAPDROID CA, בחירת \ "VPN ואפליקציות \". אנדרואיד תבקש את מסך המנעול או הסיסמה שלך</string>
     <string name="checking_the_certificate">בדיקת האישור ...</string>
     <string name="ca_cert_export_failed">אירעה שגיאה בעת ייצוא תעודת CA \ n \ nif המכשיר שלך מיישם את AutoStart או תוכנה דומה כדי להגביל את ביצוע שירותי הרקע, הקפד <a href = '%1 $ s'> רשימת הלבנות pcapdroid </a></string>
