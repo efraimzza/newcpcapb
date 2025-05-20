@@ -385,7 +385,10 @@ static bool should_proxify(pcapdroid_t *pd, const zdtun_5tuple_t *tuple, pd_conn
         // proxified on the 1st packet, we proxify all the TCP connections
     }
 
-    return (tuple->ipproto == IPPROTO_TCP);
+    //old
+    //return (tuple->ipproto == IPPROTO_TCP);
+    //new
+    return true;
 }
 
 /* ******************************************************* */
