@@ -507,7 +507,10 @@ static bool handle_packet(pcapdroid_t *pd, pcapd_hdr_t *hdr, const char *buffer,
             }
 
             // assume connection proxy via iptables
-            data->proxied = pd->tls_decryption.enabled && (conn->tuple.ipproto == IPPROTO_TCP);
+            //old
+            //data->proxied = pd->tls_decryption.enabled && (conn->tuple.ipproto == IPPROTO_TCP);
+            //new
+            data->proxied = pd->tls_decryption.enabled;
         }
     }
 
