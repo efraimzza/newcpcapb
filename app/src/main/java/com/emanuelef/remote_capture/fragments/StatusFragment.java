@@ -330,7 +330,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
                 mStopBtn.setVisible(false);
                 mStartBtn.setEnabled(true);
                 mStartBtn.setVisible(!CaptureService.isAlwaysOnVPN());
-                mMenuSettings.setEnabled(false);//ja disable
+                mMenuSettings.setEnabled(true);//ja disable.. enable now for js
                 mOpenPcap.setEnabled(true);
                 mDecryptPcap.setEnabled(true);
             }
