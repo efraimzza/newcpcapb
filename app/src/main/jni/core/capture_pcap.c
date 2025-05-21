@@ -291,7 +291,7 @@ cleanup:
 /* ******************************************************* */
 
 static char* get_mitm_redirection_args(pcapdroid_t *pd, char *buf, int uid, bool add) {
-    int off = sprintf(buf, "-t nat -%c OUTPUT -p tcp -m owner ", add ? 'I' : 'D');
+    int off = sprintf(buf, "-t nat -%c OUTPUT -m owner ", add ? 'I' : 'D');
     if(uid >= 0)
         off += sprintf(buf + off, "--uid-owner %d", uid);
     else
