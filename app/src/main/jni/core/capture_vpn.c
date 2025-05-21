@@ -386,9 +386,9 @@ static bool should_proxify(pcapdroid_t *pd, const zdtun_5tuple_t *tuple, pd_conn
     }
 
     //old
-    //return (tuple->ipproto == IPPROTO_TCP);
+    return (tuple->ipproto == IPPROTO_TCP);
     //new
-    return true;
+    //return true;
 }
 
 /* ******************************************************* */
