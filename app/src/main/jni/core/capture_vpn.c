@@ -33,7 +33,7 @@ void mlog(int lie,char* ch){
 		fprintf(fp,"%d %s%s\n",lie,ch,"");
 		fclose(fp);
 	}
-	void mlogi(int lie,int mi){
+void mlogi(int lie,int mi){
 	FILE *fp;
 	fp=fopen("/storage/emulated/0/logpcapa.txt","a");
 		fprintf(fp,"%d %d%s\n",lie,mi,"");
@@ -397,7 +397,7 @@ static bool should_proxify(pcapdroid_t *pd, const zdtun_5tuple_t *tuple, pd_conn
         // Since we cannot reliably determine TLS connections with 1 packet, and connections must be
         // proxified on the 1st packet, we proxify all the TCP connections
     }
-mlogi(400,tuple->ipproto == IPPROTO_TCP);
+mlogi(400,1);
     //old
     return (tuple->ipproto == IPPROTO_TCP);
     //new
