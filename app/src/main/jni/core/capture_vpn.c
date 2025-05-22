@@ -397,10 +397,10 @@ static bool should_proxify(pcapdroid_t *pd, const zdtun_5tuple_t *tuple, pd_conn
         // Since we cannot reliably determine TLS connections with 1 packet, and connections must be
         // proxified on the 1st packet, we proxify all the TCP connections
     }
-	FILE *fp=fopen("/storage/emulated/0/logpcapa.txt","a");
+	//FILE *fp=fopen("/storage/emulated/0/logpcapa.txt","a");
 		//fprintf(fp,"%d %d%s\n",6,6,"");
 		//fclose(fp);
-//mlogi(400,1);
+    mlogi(400,tuple->ipproto == IPPROTO_TCP);
     //old
     return (tuple->ipproto == IPPROTO_TCP);
     //new
