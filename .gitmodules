@@ -6,7 +6,7 @@
 	url = https://github.com/efraimzz/zdtun
 [submodule "submodules/libpcap"]
 	path = submodules/libpcap
-	url = https://github.com/the-tcpdump-group/libpcap
+	url = https://github.com/efraimzz/libpcap
 [submodule "submodules/MaxMind-DB-Reader-java"]
 	path = submodules/MaxMind-DB-Reader-java
 	url = https://github.com/emanuele-f/MaxMind-DB-Reader-java
