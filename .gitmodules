@@ -9,7 +9,7 @@
 	url = https://github.com/efraimzz/libpcap
 [submodule "submodules/MaxMind-DB-Reader-java"]
 	path = submodules/MaxMind-DB-Reader-java
-	url = https://github.com/emanuele-f/MaxMind-DB-Reader-java
+	url = https://github.com/efraimzz/MaxMind-DB-Reader-java
 [submodule "submodules/PCAPdroid-ushark-bin"]
 	path = submodules/PCAPdroid-ushark-bin
 	url = https://github.com/efraimzz/PCAPdroid-ushark-bin
