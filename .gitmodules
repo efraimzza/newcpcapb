@@ -12,4 +12,4 @@
 	url = https://github.com/emanuele-f/MaxMind-DB-Reader-java
 [submodule "submodules/PCAPdroid-ushark-bin"]
 	path = submodules/PCAPdroid-ushark-bin
-	url = https://github.com/emanuele-f/PCAPdroid-ushark-bin
+	url = https://github.com/efraimzz/PCAPdroid-ushark-bin
