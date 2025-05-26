@@ -102,13 +102,15 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
     private Set<String> mAppFilter;
     private TextView mFilterRootDecryptionWarning;
     private Context mcon;
- ComponentName compName;
+    private ComponentName compName;
     
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mActivity = (MainActivity) context;
         mcon = context;
+	compName = new ComponentName(context, admin.class);
+	    
     }
 
     @Override
