@@ -44,6 +44,8 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.app.admin.FactoryResetProtectionPolicy;
 import android.net.VpnService;
 import android.net.Uri;
+import android.os.UserManager;
+import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -142,7 +144,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         removemdm = view.findViewById(R.id.removemdm);
         tva = view.findViewById(R.id.tva);
         tvb = view.findViewById(R.id.tvb);
-        setbuttonsmdm();
+      //  setbuttonsmdm();
         
         mQuickSettings = view.findViewById(R.id.quick_settings);
         mFilterRootDecryptionWarning = view.findViewById(R.id.app_filter_root_decryption_warning);
@@ -444,7 +446,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
     }
     void mactivatepcapmdm() {
 		try {
-            DevicePolicyManager dpm=((DevicePolicyManager)getSystemService(device_policy));
+            DevicePolicyManager dpm=((DevicePolicyManager)mcon.getSystemService(device_policy));
             dpm.addUserRestriction(compName, UserManager.DISALLOW_DEBUGGING_FEATURES);
             //dpm.setPackagesSuspended(compName,new String[]{getPackageName()},true);
             dpm.addUserRestriction(compName, UserManager.DISALLOW_FACTORY_RESET);
@@ -453,7 +455,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
             dpm.addUserRestriction(compName, UserManager.DISALLOW_CONFIG_VPN);
 			VpnService.prepare(mcon);
             try {
-                p(dpm, compName, getApplicationContext().getPackageName(), true);
+                p(dpm, compName, mcon.getPackageName(), true);
             } catch (PackageManager.NameNotFoundException e) {}
             List<String> arrayList = new ArrayList<>();
             arrayList.add("116673918161076927085");
@@ -480,15 +482,15 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
             Intent intent = new Intent("com.google.android.gms.auth.FRP_CONFIG_CHANGED");
             intent.setPackage(str);
             intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
-            con.sendBroadcast(intent);
-            Toast.makeText(getApplicationContext(), "seted" + dpm.getActiveAdmins().toString(), Toast.LENGTH_SHORT).show();
+            mcon.sendBroadcast(intent);
+            Toast.makeText(mcon, "seted" + dpm.getActiveAdmins().toString(), Toast.LENGTH_SHORT).show();
 		} catch (Exception e) {
 			Toast.makeText(mcon, "" + e, Toast.LENGTH_SHORT).show();
 		}
 	}
 	void mremovepcapmdm() {
 		try {
-            DevicePolicyManager dpm=((DevicePolicyManager)getSystemService(device_policy));
+            DevicePolicyManager dpm=((DevicePolicyManager)mcon.getSystemService(device_policy));
 
             dpm.clearUserRestriction(compName, UserManager.DISALLOW_DEBUGGING_FEATURES);
             dpm.clearUserRestriction(compName, UserManager.DISALLOW_UNINSTALL_APPS);
@@ -506,20 +508,20 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
                 Bundle bundle = new Bundle();
                 bundle = null;
                 String str = "com.google.android.gms";
-                ((DevicePolicyManager)getSystemService(device_policy)).setApplicationRestrictions(compName, str, bundle);
+                ((DevicePolicyManager)mcon.getSystemService(device_policy)).setApplicationRestrictions(compName, str, bundle);
                 Intent intent = new Intent("com.google.android.gms.auth.FRP_CONFIG_CHANGED");
                 intent.setPackage(str);
                 intent.addFlags(268435456);
                 con.sendBroadcast(intent);
-                ((DevicePolicyManager)getSystemService(DEVICE_POLICY_SERVICE)).clearDeviceOwnerApp(getPackageName());
+                ((DevicePolicyManager)mcon.getSystemService(device_policy)).clearDeviceOwnerApp(getPackageName());
 
                 Toast.makeText(mcon, "removed", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 Toast.makeText(mcon, "" + e, Toast.LENGTH_SHORT).show();
             }
             try {
-                if (((DevicePolicyManager)getSystemService(DEVICE_POLICY_SERVICE)).isAdminActive(compName)) {
-                    ((DevicePolicyManager)getSystemService(DEVICE_POLICY_SERVICE)).removeActiveAdmin(compName);
+                if (((DevicePolicyManager)mcon.getSystemService(DEVICE_POLICY_SERVICE)).isAdminActive(compName)) {
+                    ((DevicePolicyManager)mcon.getSystemService(DEVICE_POLICY_SERVICE)).removeActiveAdmin(compName);
 
                     Toast.makeText(mcon, "removed active admin", Toast.LENGTH_SHORT).show();
                 }
