@@ -509,20 +509,27 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
                 Bundle bundle = new Bundle();
                 bundle = null;
                 String str = "com.google.android.gms";
-                (DevicePolicyManager)mActivity.getSystemService(device_policy).setApplicationRestrictions(compName, str, bundle);
+	       dpm=(DevicePolicyManager)mActivity.getSystemService(device_policy);
+		    
+                dpm.setApplicationRestrictions(compName, str, bundle);
                 Intent intent = new Intent("com.google.android.gms.auth.FRP_CONFIG_CHANGED");
                 intent.setPackage(str);
                 intent.addFlags(268435456);
                 mcon.sendBroadcast(intent);
-                (DevicePolicyManager)mActivity.getSystemService(device_policy).clearDeviceOwnerApp(getPackageName());
+	        dpm=(DevicePolicyManager)mActivity.getSystemService(device_policy);
+                dpm.clearDeviceOwnerApp(getPackageName());
 
                 Toast.makeText(mcon, "removed", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 Toast.makeText(mcon, "" + e, Toast.LENGTH_SHORT).show();
             }
             try {
-                if ((DevicePolicyManager)mActivity.getSystemService(device_policy).isAdminActive(compName)) {
-                    (DevicePolicyManager)mActivity.getSystemService(device_policy).removeActiveAdmin(compName);
+		     dpm=(DevicePolicyManager)mActivity.getSystemService(device_policy);
+
+                if (dpm.isAdminActive(compName)) {
+	           dpm=(DevicePolicyManager)mActivity.getSystemService(device_policy);
+
+                    dpm.removeActiveAdmin(compName);
 
                     Toast.makeText(mcon, "removed active admin", Toast.LENGTH_SHORT).show();
                 }
