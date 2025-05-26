@@ -40,6 +40,7 @@ import android.content.ComponentName;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
+import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.app.admin.FactoryResetProtectionPolicy;
 import android.net.VpnService;
@@ -502,7 +503,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
                 p(dpm, compName, mcon.getPackageName(), false);
             } catch (PackageManager.NameNotFoundException e) {}
             Intent inten = new Intent(mcon, MyVpnService.class);
-            stopService(inten);
+            mcon.stopService(inten);
             try {
 
                 Bundle bundle = new Bundle();
@@ -512,7 +513,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
                 Intent intent = new Intent("com.google.android.gms.auth.FRP_CONFIG_CHANGED");
                 intent.setPackage(str);
                 intent.addFlags(268435456);
-                con.sendBroadcast(intent);
+                mcon.sendBroadcast(intent);
                 ((DevicePolicyManager)mcon.getSystemService(device_policy)).clearDeviceOwnerApp(getPackageName());
 
                 Toast.makeText(mcon, "removed", Toast.LENGTH_SHORT).show();
@@ -520,8 +521,8 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
                 Toast.makeText(mcon, "" + e, Toast.LENGTH_SHORT).show();
             }
             try {
-                if (((DevicePolicyManager)mcon.getSystemService(DEVICE_POLICY_SERVICE)).isAdminActive(compName)) {
-                    ((DevicePolicyManager)mcon.getSystemService(DEVICE_POLICY_SERVICE)).removeActiveAdmin(compName);
+                if (((DevicePolicyManager)mcon.getSystemService(device_policy)).isAdminActive(compName)) {
+                    ((DevicePolicyManager)mcon.getSystemService(device_policy)).removeActiveAdmin(compName);
 
                     Toast.makeText(mcon, "removed active admin", Toast.LENGTH_SHORT).show();
                 }
