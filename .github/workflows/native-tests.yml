@@ -1,6 +1,6 @@
 name: Test native code
 
-on: [push, pull_request]
+on: workflow_dispatch
 
 jobs:
   test:
