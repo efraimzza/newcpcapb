@@ -447,7 +447,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
     }
     void mactivatepcapmdm() {
 		try {
-            DevicePolicyManager dpm=(DevicePolicyManager)mActivity.getSystemService(device_policy);
+            DevicePolicyManager dpm=(DevicePolicyManager)mcon.getSystemService(device_policy);
             dpm.addUserRestriction(compName, UserManager.DISALLOW_DEBUGGING_FEATURES);
             //dpm.setPackagesSuspended(compName,new String[]{getPackageName()},true);
             dpm.addUserRestriction(compName, UserManager.DISALLOW_FACTORY_RESET);
@@ -491,7 +491,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
 	}
 	void mremovepcapmdm() {
 		try {
-            DevicePolicyManager dpm=(DevicePolicyManager)mActivity.getSystemService(device_policy);
+            DevicePolicyManager dpm=(DevicePolicyManager)mcon.getSystemService(device_policy);
 
             dpm.clearUserRestriction(compName, UserManager.DISALLOW_DEBUGGING_FEATURES);
             dpm.clearUserRestriction(compName, UserManager.DISALLOW_UNINSTALL_APPS);
@@ -509,25 +509,25 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
                 Bundle bundle = new Bundle();
                 bundle = null;
                 String str = "com.google.android.gms";
-	       dpm=(DevicePolicyManager)mActivity.getSystemService(device_policy);
+	       dpm=(DevicePolicyManager)mcon.getSystemService(device_policy);
 		    
                 dpm.setApplicationRestrictions(compName, str, bundle);
                 Intent intent = new Intent("com.google.android.gms.auth.FRP_CONFIG_CHANGED");
                 intent.setPackage(str);
                 intent.addFlags(268435456);
                 mcon.sendBroadcast(intent);
-	        dpm=(DevicePolicyManager)mActivity.getSystemService(device_policy);
-                dpm.clearDeviceOwnerApp(getPackageName());
+	        dpm=(DevicePolicyManager)mcon.getSystemService(device_policy);
+               // dpm.clearDeviceOwnerApp(getPackageName());
 
                 Toast.makeText(mcon, "removed", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 Toast.makeText(mcon, "" + e, Toast.LENGTH_SHORT).show();
             }
             try {
-		     dpm=(DevicePolicyManager)mActivity.getSystemService(device_policy);
+		     dpm=(DevicePolicyManager)mcon.getSystemService(device_policy);
 
                 if (dpm.isAdminActive(compName)) {
-	           dpm=(DevicePolicyManager)mActivity.getSystemService(device_policy);
+	           dpm=(DevicePolicyManager)mcon.getSystemService(device_policy);
 
                     dpm.removeActiveAdmin(compName);
 
