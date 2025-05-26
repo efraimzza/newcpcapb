@@ -3,7 +3,7 @@
 	url = https://github.com/efraimzz/nDPI
 [submodule "submodules/zdtun"]
 	path = submodules/zdtun
-	url = https://github.com/efraimzz/zdtun
+	url = https://github.com/efraimzz/zdtunfork
 [submodule "submodules/libpcap"]
 	path = submodules/libpcap
 	url = https://github.com/efraimzz/libpcap
