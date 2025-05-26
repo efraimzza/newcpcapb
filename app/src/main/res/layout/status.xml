@@ -59,8 +59,8 @@
 
         <TextView
             android:id="@+id/status_view"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
             android:layout_marginTop="50dp"
             android:background="@drawable/rounded_bg"
             android:gravity="center"
@@ -73,9 +73,9 @@
             app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:id="@+id/startmdm"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="70dp"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="80dp"
             android:background="@drawable/rounded_bg"
             android:gravity="center"
             android:text="start"
@@ -87,22 +87,8 @@
             app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:id="@+id/removemdm"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="90dp"
-            android:background="@drawable/rounded_bg"
-            android:gravity="center"
-            android:text="remove"
-            android:textSize="30sp"
-            android:focusable="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <TextView
-            android:id="@+id/tva"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
             android:layout_marginTop="110dp"
             android:background="@drawable/rounded_bg"
             android:gravity="center"
@@ -114,10 +100,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
         <TextView
+            android:id="@+id/tva"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="140dp"
+            android:background="@drawable/rounded_bg"
+            android:gravity="center"
+            android:text="remove"
+            android:textSize="30sp"
+            android:focusable="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
             android:id="@+id/tvb"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="130dp"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="170dp"
             android:background="@drawable/rounded_bg"
             android:gravity="center"
             android:text="remove"
