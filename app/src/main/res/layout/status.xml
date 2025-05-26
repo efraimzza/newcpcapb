@@ -25,7 +25,7 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/status_view">
+            app:layout_constraintTop_toBottomOf="@id/tvb">
 
             <TextView
                 android:id="@+id/collector_info_text"
@@ -59,13 +59,13 @@
 
         <TextView
             android:id="@+id/status_view"
-            android:layout_width="50dp"
+            android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_marginTop="50dp"
             android:background="@drawable/rounded_bg"
             android:gravity="center"
             android:text="@string/ready"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:focusable="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -73,13 +73,13 @@
             app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:id="@+id/startmdm"
-            android:layout_width="50dp"
+            android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_marginTop="80dp"
             android:background="@drawable/rounded_bg"
             android:gravity="center"
             android:text="start"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:focusable="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -87,13 +87,13 @@
             app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:id="@+id/removemdm"
-            android:layout_width="50dp"
+            android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_marginTop="110dp"
             android:background="@drawable/rounded_bg"
             android:gravity="center"
             android:text="remove"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:focusable="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -101,13 +101,13 @@
             app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:id="@+id/tva"
-            android:layout_width="50dp"
+            android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_marginTop="140dp"
             android:background="@drawable/rounded_bg"
             android:gravity="center"
             android:text="remove"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:focusable="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -115,13 +115,13 @@
             app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:id="@+id/tvb"
-            android:layout_width="50dp"
+            android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_marginTop="170dp"
             android:background="@drawable/rounded_bg"
             android:gravity="center"
             android:text="remove"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:focusable="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -135,7 +135,7 @@
             android:orientation="vertical"
             android:layout_marginTop="35dp"
             android:padding="10dp"
-            app:layout_constraintTop_toBottomOf="@id/status_view"
+            app:layout_constraintTop_toBottomOf="@id/tvb"
             app:layout_constraintStart_toStartOf="parent">
 
             <androidx.appcompat.widget.AppCompatSpinner
