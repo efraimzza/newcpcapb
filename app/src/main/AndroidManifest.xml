@@ -12,7 +12,17 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE"/>
+   
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MANAGE_DEVICE_ADMINS"/>
+    <uses-permission android:name="android.permission.MANAGE_PROFILE_AND_DEViCE_OWNERS"/>
+    <uses-permission android:name="android.permission.MANAGE_USERS"/>
+    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES"/>
+    <uses-permission android:name="android.permission.DELETE_PACKAGES"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
 
+    
     <!-- Required with root to properly resolve UIDs cross-users/profiles. Granted via root -->
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS" android:protectionLevel="signature"  tools:ignore="ProtectedPermissions" />
 
@@ -147,6 +157,27 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
                 <action android:name="android.intent.action.QUICKBOOT_POWERON"/>
             </intent-filter>
+        </receiver>
+         <receiver
+            android:name="com.emanuelef.remote_capture.activities.admin"
+            android:permission="android.permission.BIND_DEVICE_ADMIN"
+            android:exported="false"
+            android:description="@string/pcapdroid_app_name">
+
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/admin">
+
+            </meta-data>
+
+            <intent-filter>
+
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED">
+
+                </action>
+
+            </intent-filter>
+
         </receiver>
     </application>
 
