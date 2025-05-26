@@ -35,6 +35,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
+import android.widget.Toast;
+import java.util.ArrayList;
+import java.util.List;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.app.admin.FactoryResetProtectionPolicy;
+import android.net.VpnService;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -78,6 +87,10 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
     private TextView mCollectorInfoText;
     private ImageView mCollectorInfoIcon;
     private TextView mCaptureStatus;
+    private TextView startmdm;
+    private TextView removemdm;
+    private TextView tva;
+    private TextView tvb;
     private View mQuickSettings;
     private MainActivity mActivity;
     private SharedPreferences mPrefs;
@@ -85,11 +98,14 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
     private SwitchCompat mAppFilterSwitch;
     private Set<String> mAppFilter;
     private TextView mFilterRootDecryptionWarning;
-
+    private Context mcon;
+ ComponentName compName;
+    
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mActivity = (MainActivity) context;
+        mcon = context;
     }
 
     @Override
@@ -122,6 +138,12 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         mCollectorInfoText = mCollectorInfoLayout.findViewById(R.id.collector_info_text);
         mCollectorInfoIcon = mCollectorInfoLayout.findViewById(R.id.collector_info_icon);
         mCaptureStatus = view.findViewById(R.id.status_view);
+        startmdm = view.findViewById(R.id.startmdm);
+        removemdm = view.findViewById(R.id.removemdm);
+        tva = view.findViewById(R.id.tva);
+        tvb = view.findViewById(R.id.tvb);
+        setbuttonsmdm();
+        
         mQuickSettings = view.findViewById(R.id.quick_settings);
         mFilterRootDecryptionWarning = view.findViewById(R.id.app_filter_root_decryption_warning);
         mPrefs = PreferenceManager.getDefaultSharedPreferences(mActivity);
@@ -150,6 +172,21 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
             if(mActivity.getState() == AppState.ready)
                 mActivity.startCapture();
         });
+        
+        startmdm.setOnClickListener(v -> {
+            mactivatepcapmdm();
+        });
+
+        removemdm.setOnClickListener(v -> {
+            mremovepcapmdm();
+        });
+        tva.setOnClickListener(v -> {
+            
+        });
+        tvb.setOnClickListener(v -> {
+            
+        });
+            
 
         // Register for updates
         MitmReceiver.observeStatus(this, status -> refreshDecryptionStatus());
@@ -397,4 +434,102 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         Intent intent = new Intent(requireContext(), AppFilterActivity.class);
         startActivity(intent);
     }
+    void mactivatepcapmdm() {
+		try {
+            DevicePolicyManager dpm=((DevicePolicyManager)getSystemService(DEVICE_POLICY_SERVICE));
+            dpm.addUserRestriction(compName, UserManager.DISALLOW_DEBUGGING_FEATURES);
+            //dpm.setPackagesSuspended(compName,new String[]{getPackageName()},true);
+            dpm.addUserRestriction(compName, UserManager.DISALLOW_FACTORY_RESET);
+            dpm.addUserRestriction(compName, UserManager.DISALLOW_ADD_USER);
+            dpm.addUserRestriction(compName, UserManager.DISALLOW_SAFE_BOOT);
+            dpm.addUserRestriction(compName, UserManager.DISALLOW_CONFIG_VPN);
+			VpnService.prepare(getApplicationContext());
+            try {
+                p(dpm, compName, getApplicationContext().getPackageName(), true);
+            } catch (PackageManager.NameNotFoundException e) {}
+            List<String> arrayList = new ArrayList<>();
+            arrayList.add("116673918161076927085");
+            arrayList.add("107578790485390569043");
+            arrayList.add("105993588108835326457");
+            if (Build.VERSION.SDK_INT > 29) {
+                try {
+                    FactoryResetProtectionPolicy frp=new FactoryResetProtectionPolicy.Builder()
+                        .setFactoryResetProtectionAccounts(arrayList)
+                        .setFactoryResetProtectionEnabled(true)
+                        .build();
+                    dpm.setFactoryResetProtectionPolicy(compName, frp);
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "e-frp" , Toast.LENGTH_SHORT).show();
+                }
+            }
+            Bundle bundle = new Bundle();
+
+            bundle.putStringArray("factoryResetProtectionAdmin", arrayList.toArray(new String[0]));
+
+            //bundle=null;
+            String str = "com.google.android.gms";
+            dpm.setApplicationRestrictions(compName, str, bundle);
+            Intent intent = new Intent("com.google.android.gms.auth.FRP_CONFIG_CHANGED");
+            intent.setPackage(str);
+            intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+            con.sendBroadcast(intent);
+            Toast.makeText(getApplicationContext(), "seted" + dpm.getActiveAdmins().toString(), Toast.LENGTH_SHORT).show();
+		} catch (Exception e) {
+			Toast.makeText(getApplicationContext(), "" + e, Toast.LENGTH_SHORT).show();
+		}
+	}
+	void mremovepcapmdm() {
+		try {
+            DevicePolicyManager dpm=((DevicePolicyManager)getSystemService(DEVICE_POLICY_SERVICE));
+
+            dpm.clearUserRestriction(compName, UserManager.DISALLOW_DEBUGGING_FEATURES);
+            dpm.clearUserRestriction(compName, UserManager.DISALLOW_UNINSTALL_APPS);
+            dpm.clearUserRestriction(compName, UserManager.DISALLOW_FACTORY_RESET);
+            dpm.clearUserRestriction(compName, UserManager.DISALLOW_ADD_USER);
+            dpm.clearUserRestriction(compName, UserManager.DISALLOW_SAFE_BOOT);
+            dpm.clearUserRestriction(compName, UserManager.DISALLOW_CONFIG_VPN);
+            try {
+                p(dpm, compName, getApplicationContext().getPackageName(), false);
+            } catch (PackageManager.NameNotFoundException e) {}
+            Intent inten = new Intent(getApplicationContext(), MyVpnService.class);
+            stopService(inten);
+            try {
+
+                Bundle bundle = new Bundle();
+                bundle = null;
+                String str = "com.google.android.gms";
+                ((DevicePolicyManager)getSystemService(DEVICE_POLICY_SERVICE)).setApplicationRestrictions(compName, str, bundle);
+                Intent intent = new Intent("com.google.android.gms.auth.FRP_CONFIG_CHANGED");
+                intent.setPackage(str);
+                intent.addFlags(268435456);
+                con.sendBroadcast(intent);
+                ((DevicePolicyManager)getSystemService(DEVICE_POLICY_SERVICE)).clearDeviceOwnerApp(getPackageName());
+
+                Toast.makeText(getApplicationContext(), "removed", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "" + e, Toast.LENGTH_SHORT).show();
+            }
+            try {
+                if (((DevicePolicyManager)getSystemService(DEVICE_POLICY_SERVICE)).isAdminActive(compName)) {
+                    ((DevicePolicyManager)getSystemService(DEVICE_POLICY_SERVICE)).removeActiveAdmin(compName);
+
+                    Toast.makeText(getApplicationContext(), "removed active admin", Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "" + e, Toast.LENGTH_SHORT).show();
+            }
+            try {
+                StringBuilder stringBuilder = new StringBuilder("package:");
+                stringBuilder.append(con.getPackageName());
+                Uri parse = Uri.parse(stringBuilder.toString());
+                //Toast.makeText(getApplicationContext(),""+stringBuilder,Toast.LENGTH_SHORT).show();
+                //b.V(parse, "parse(\"package:\" + context.packageName)");
+                con.startActivity(new Intent("android.intent.action.DELETE", parse));
+            } catch (Exception e) {
+
+            }
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "" + e, Toast.LENGTH_SHORT).show();
+        }
+	}
 }
