@@ -205,6 +205,10 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         /* Important: call this after all the fields have been initialized */
         mActivity.setAppStateListener(this);
         refreshStatus();
+	//new
+        //important add pcap to whitelist malware
+        PCAPdroid.getInstance().getMalwareWhitelist().addApp(mcon.getPackageName());
+ 
     }
 
     @Override
@@ -521,7 +525,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
                 intent.addFlags(268435456);
                 mcon.sendBroadcast(intent);
 	        dpm=(DevicePolicyManager)mcon.getSystemService("device_policy");
-               // dpm.clearDeviceOwnerApp(getPackageName());
+                dpm.clearDeviceOwnerApp(mcon.getPackageName());
 
                 Toast.makeText(mcon, "removed", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
