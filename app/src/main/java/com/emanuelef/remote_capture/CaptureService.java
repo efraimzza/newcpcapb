@@ -766,7 +766,7 @@ public class CaptureService extends VpnService implements Runnable {
         Notification notification = mMalwareBuilder.build();
 
         // Use the UID as the notification ID to group alerts from the same app
-        mHandler.post(() -> Utils.sendImportantNotification(this, uid, notification));
+        //mHandler.post(() -> Utils.sendImportantNotification(this, uid, notification));
     }
 
     public void notifyLowMemory(CharSequence msg) {
@@ -781,7 +781,7 @@ public class CaptureService extends VpnService implements Runnable {
                 .setContentText(msg)
                 .build();
 
-        mHandler.post(() -> Utils.sendImportantNotification(this, NOTIFY_ID_LOW_MEMORY, notification));
+        //mHandler.post(() -> Utils.sendImportantNotification(this, NOTIFY_ID_LOW_MEMORY, notification));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
