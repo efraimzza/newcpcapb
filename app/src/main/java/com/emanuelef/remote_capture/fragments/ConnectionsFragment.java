@@ -770,11 +770,11 @@ if(conn.isBlacklistedIp())
             //blocklist.removeCountry(conn.country);
             //blocklist_changed = true;
         } else if(id == R.id.add_to_fw_whitelist) {
-            fwWhitelist.addApp(conn.uid);
-            firewall_wl_changed = true;
+            //fwWhitelist.addApp(conn.uid);
+            //firewall_wl_changed = true;
         } else if(id == R.id.remove_from_fw_whitelist) {
-            fwWhitelist.removeApp(conn.uid);
-            firewall_wl_changed = true;
+            //fwWhitelist.removeApp(conn.uid);
+            //firewall_wl_changed = true;
         } else if(id == R.id.open_app_details) {
             Intent intent = new Intent(requireContext(), AppDetailsActivity.class);
             intent.putExtra(AppDetailsActivity.APP_UID_EXTRA, conn.uid);
