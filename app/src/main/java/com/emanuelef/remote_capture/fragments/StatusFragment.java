@@ -83,8 +83,8 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
     private Menu mMenu;
     private MenuItem mStartBtn;
     private MenuItem mStopBtn;
-    private MenuItem mOpenPcap;
-    private MenuItem mDecryptPcap;
+    //private MenuItem mOpenPcap;
+    //private MenuItem mDecryptPcap;
     private ImageView mFilterIcon;
     private MenuItem mMenuSettings;
     private TextView mInterfaceInfo;
@@ -96,7 +96,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
     private TextView removemdm;
     private TextView tva;
     private TextView tvb;
-    private View mQuickSettings;
+    //private View mQuickSettings;
     private MainActivity mActivity;
     private SharedPreferences mPrefs;
     private TextView mFilterDescription;
@@ -151,7 +151,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         tvb = view.findViewById(R.id.tvb);
       //  setbuttonsmdm();
         
-        mQuickSettings = view.findViewById(R.id.quick_settings);
+        //mQuickSettings = view.findViewById(R.id.quick_settings);
         mFilterRootDecryptionWarning = view.findViewById(R.id.app_filter_root_decryption_warning);
         mPrefs = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mAppFilter = Prefs.getAppFilter(mPrefs);
@@ -219,9 +219,9 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         mStartBtn = mMenu.findItem(R.id.action_start);
         mStopBtn = mMenu.findItem(R.id.action_stop);
         mMenuSettings = mMenu.findItem(R.id.action_settings);
-        mOpenPcap = mMenu.findItem(R.id.open_pcap);
-        mDecryptPcap = mMenu.findItem(R.id.decrypt_pcap);
-        mDecryptPcap.setVisible(PCAPdroid.getInstance().isUsharkAvailable());
+        //mOpenPcap = mMenu.findItem(R.id.open_pcap);
+        //mDecryptPcap = mMenu.findItem(R.id.decrypt_pcap);
+        //mDecryptPcap.setVisible(PCAPdroid.getInstance().isUsharkAvailable());
         refreshStatus();
     }
 
@@ -372,15 +372,15 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
                 mStopBtn.setEnabled(true);
                 mStopBtn.setVisible(!CaptureService.isAlwaysOnVPN());
                 mMenuSettings.setEnabled(false);
-                mOpenPcap.setEnabled(false);
-                mDecryptPcap.setEnabled(false);
+                //mOpenPcap.setEnabled(false);
+                //mDecryptPcap.setEnabled(false);
             } else { // ready || starting
                 mStopBtn.setVisible(false);
                 mStartBtn.setEnabled(true);
                 mStartBtn.setVisible(!CaptureService.isAlwaysOnVPN());
                 mMenuSettings.setEnabled(true);//ja disable.. enable now for js
-                mOpenPcap.setEnabled(true);
-                mDecryptPcap.setEnabled(true);
+                //mOpenPcap.setEnabled(true);
+                //mDecryptPcap.setEnabled(true);
             }
         }
 
@@ -389,7 +389,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
                 mCaptureStatus.setText(R.string.ready);
                 mCollectorInfoLayout.setVisibility(View.GONE);
                 mInterfaceInfo.setVisibility(View.GONE);
-                mQuickSettings.setVisibility(View.VISIBLE);
+                //mQuickSettings.setVisibility(View.VISIBLE);
                 mAppFilter = Prefs.getAppFilter(mPrefs);
                 refreshFilterInfo();
                 break;
@@ -404,7 +404,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
             case running:
                 mCaptureStatus.setText(Utils.formatBytes(CaptureService.getBytes()));
                 mCollectorInfoLayout.setVisibility(View.VISIBLE);
-                mQuickSettings.setVisibility(View.GONE);
+                //mQuickSettings.setVisibility(View.GONE);
                 CaptureService service = CaptureService.requireInstance();
 
                 if(CaptureService.isDecryptingTLS()) {
