@@ -722,31 +722,31 @@ if(conn.isBlacklistedIp())
             if(firewallPurchased) {
                 //blocklist.addApp(conn.uid);
                 //blocklist_changed = true;
-            } else
+            } else{}
                 //showFirewallPurchaseDialog();
         } else if(id == R.id.block_ip) {
             if(firewallPurchased) {
                 //blocklist.addIp(conn.dst_ip);
                 //blocklist_changed = true;
-            } else
+            } else{}
                 //showFirewallPurchaseDialog();
         } else if(id == R.id.block_host) {
             if(firewallPurchased) {
                 //blocklist.addHost(conn.info);
                 //blocklist_changed = true;
-            } else
+            } else{}
                 //showFirewallPurchaseDialog();
         } else if(id == R.id.block_domain) {
             if(firewallPurchased) {
                 //blocklist.addHost(Utils.getSecondLevelDomain(conn.info));
                 //blocklist_changed = true;
-            } else
+            } else{}
                 //showFirewallPurchaseDialog();
         } else if(id == R.id.block_country) {
             if(firewallPurchased) {
                 //blocklist.addCountry(conn.country);
                 //blocklist_changed = true;
-            } else
+            } else{}
                 //showFirewallPurchaseDialog();
         } else if(id == R.id.unblock_app_permanently) {
             //blocklist.removeApp(conn.uid);
