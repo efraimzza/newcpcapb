@@ -158,15 +158,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         int appver = Prefs.getAppVersion(mPrefs);
         if(appver <= 0) {
+            Prefs.refreshAppVersion(mPrefs);
             // First run, start on-boarding
             // only refresh app version on on-boarding done
-            Intent intent = new Intent(MainActivity.this, OnBoardingActivity.class);
-            startActivity(intent);
-            finish();
-            return;
+            //Intent intent = new Intent(MainActivity.this, OnBoardingActivity.class);
+            //startActivity(intent);
+            //finish();
+            //return;
         } else {
             if (appver < 79)
-                showWhatsNew();
+               // showWhatsNew();
 
             Prefs.refreshAppVersion(mPrefs);
         }
@@ -288,8 +289,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             if(sep != -1)
                 ref = ref.substring(sep + 1);
 
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(GITHUB_PROJECT_URL + "/tree/" + ref));
-            Utils.startActivity(this, browserIntent);
+            //Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(GITHUB_PROJECT_URL + "/tree/" + ref));
+            //Utils.startActivity(this, browserIntent);
+            //can check version update hare
         });
     }
 
@@ -544,7 +546,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else if(id == R.id.firewall) {
             Intent intent = new Intent(MainActivity.this, FirewallActivity.class);
             startActivity(intent);
-        } else if(id == R.id.open_log) {
+        } /*else if(id == R.id.open_log) {
             Intent intent = new Intent(MainActivity.this, LogviewActivity.class);
             startActivity(intent);
         } else if (id == R.id.action_donate) {
@@ -555,13 +557,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else if (id == R.id.action_open_user_guide) {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(DOCS_URL));
             Utils.startActivity(this, browserIntent);
-        } else if (id == R.id.action_stats) {
+        }*/ else if (id == R.id.action_stats) {
             if(mState == AppState.running) {
                 Intent intent = new Intent(MainActivity.this, StatsActivity.class);
                 startActivity(intent);
             } else
                 Utils.showToast(this, R.string.start_capture_first);
-        } else if (id == R.id.action_about) {
+        }/* else if (id == R.id.action_about) {
             Intent intent = new Intent(MainActivity.this, AboutActivity.class);
             startActivity(intent);
         } else if (id == R.id.action_share_app) {
@@ -574,7 +576,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             intent.putExtra(android.content.Intent.EXTRA_TEXT, description + "\n" + getApp + "\n" + url);
 
             Utils.startActivity(this, Intent.createChooser(intent, getResources().getString(R.string.share)));
-        }
+        }*/
 
         return false;
     }
@@ -687,7 +689,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    private void openTelegram() {
+  /*  private void openTelegram() {
         Intent intent;
 
         try {
@@ -701,7 +703,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
 
         Utils.startActivity(this, intent);
-    }
+    }*/
 
     /*private void rateApp() {
         try {
