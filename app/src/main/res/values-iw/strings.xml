@@ -1,5 +1,5 @@
 <resources>
-    <string name="pcapdroid_app_name" translatable="false">Pcapdroid</string>
+    <string name="pcapdroid_app_name" translatable="false">רשימה לבנה</string>
     <string name="default_collector_ip" translatable="false">127.0.0.1</string>
     <string name="default_collector_port" translatable="false">1234</string>
     <string name="ip_and_port" translatable="false">%1$s:%2$d</string>
@@ -224,7 +224,7 @@
     <string name="malware_status_ok">לא התגלתה תנועה זדונית</string>
     <string name="malware_status_detected">קשרים זדוניים זוהו</string>
     <string name="whitelist">רשימת לבנים</string>
-    <string name="blacklists">רשימות שחורות</string>
+    <string name="blacklists">רשימות שחורות(הוחלף בזדוניות)</string>
     <string name="status_outdated">מְיוּשָׁן</string>
     <string name="status_not_loaded">לא נטען</string>
     <string name="status_uptodate">עדכני</string>
