@@ -411,18 +411,22 @@ public class ConnectionsFragment extends Fragment implements ConnectionsListener
             item = menu.findItem(R.id.block_app);
             item.setTitle(label);
             item.setVisible(!appBlocked);
+            item.setVisible(false);
 
             item = menu.findItem(R.id.unblock_app);
             item.setTitle(label);
             item.setVisible(appBlocked);
+            item.setVisible(false);
 
             item = menu.findItem(R.id.dec_add_app);
             item.setTitle(label);
             item.setVisible(!decryptApp);
+            item.setVisible(false);
 
             item = menu.findItem(R.id.dec_rem_app);
             item.setTitle(label);
             item.setVisible(decryptApp);
+            item.setVisible(false);
 
             menu.findItem(R.id.unblock_app_10m).setTitle(getString(R.string.unblock_for_n_minutes, 10));
             menu.findItem(R.id.unblock_app_1h).setTitle(getString(R.string.unblock_for_n_hours, 1));
@@ -432,12 +436,15 @@ public class ConnectionsFragment extends Fragment implements ConnectionsListener
                 item = menu.findItem(R.id.mw_whitelist_app);
                 item.setTitle(label);
                 item.setVisible(true);
+                item.setVisible(false);
             }
 
             if(firewallVisible && whitelistMode) {
                 boolean whitelisted = fwWhitelist.matchesApp(app.getUid());
                 menu.findItem(R.id.add_to_fw_whitelist).setVisible(!whitelisted);
                 menu.findItem(R.id.remove_from_fw_whitelist).setVisible(whitelisted);
+                menu.findItem(R.id.add_to_fw_whitelist).setVisible(false);
+                menu.findItem(R.id.remove_from_fw_whitelist).setVisible(false);
             }
         }
 
@@ -458,10 +465,12 @@ public class ConnectionsFragment extends Fragment implements ConnectionsListener
             item = menu.findItem(R.id.block_host);
             item.setTitle(label);
             item.setVisible(!hostBlocked);
+            item.setVisible(false);
 
             item = menu.findItem(R.id.unblock_host);
             item.setTitle(label);
             item.setVisible(hostBlocked);
+            item.setVisible(false);
 
             item = menu.findItem(R.id.search_host);
             item.setTitle(label);
@@ -474,10 +483,12 @@ public class ConnectionsFragment extends Fragment implements ConnectionsListener
             item = menu.findItem(R.id.dec_add_host);
             item.setTitle(label);
             item.setVisible(!decryptHost);
+            item.setVisible(false);
 
             item = menu.findItem(R.id.dec_rem_host);
             item.setTitle(label);
             item.setVisible(decryptHost);
+            item.setVisible(false);
 
             String dm_clean = Utils.cleanDomain(conn.info);
             String domain = Utils.getSecondLevelDomain(dm_clean);
@@ -495,16 +506,19 @@ public class ConnectionsFragment extends Fragment implements ConnectionsListener
                 item = menu.findItem(R.id.block_domain);
                 item.setTitle(label);
                 item.setVisible(!domainBlocked);
+                item.setVisible(false);
 
                 item = menu.findItem(R.id.unblock_domain);
                 item.setTitle(label);
                 item.setVisible(domainBlocked);
+                item.setVisible(false);
             }
 
             if(conn.isBlacklistedHost()) {
                 item = menu.findItem(R.id.mw_whitelist_host);
                 item.setTitle(label);
                 item.setVisible(true);
+                item.setVisible(false);
             }
         } // conn.info
 
@@ -523,10 +537,12 @@ public class ConnectionsFragment extends Fragment implements ConnectionsListener
             item = menu.findItem(R.id.block_country);
             item.setTitle(label);
             item.setVisible(!countryBlocked);
+            item.setVisible(false);
 
             item = menu.findItem(R.id.unblock_country);
             item.setTitle(label);
             item.setVisible(countryBlocked);
+            item.setVisible(false);
 
             item = menu.findItem(R.id.hide_country);
             item.setTitle(label);
@@ -572,6 +588,13 @@ public class ConnectionsFragment extends Fragment implements ConnectionsListener
         menu.findItem(R.id.unblock_ip)
                 .setTitle(unblockIpLabel)
                 .setVisible(ipBlocked);
+        
+        menu.findItem(R.id.block_ip)
+                .setTitle(label)
+                .setVisible(false);
+        menu.findItem(R.id.unblock_ip)
+                .setTitle(unblockIpLabel)
+                .setVisible(false);
 
         menu.findItem(R.id.dec_add_ip)
                 .setTitle(label)
@@ -579,10 +602,18 @@ public class ConnectionsFragment extends Fragment implements ConnectionsListener
         menu.findItem(R.id.dec_rem_ip)
                 .setTitle(decRemoveIpLabel)
                 .setVisible(decryptIp);
+        menu.findItem(R.id.dec_add_ip)
+                .setTitle(label)
+                .setVisible(false);
+        menu.findItem(R.id.dec_rem_ip)
+                .setTitle(decRemoveIpLabel)
+                .setVisible(false);
 
         if(conn.isBlacklistedIp())
             menu.findItem(R.id.mw_whitelist_ip).setTitle(label).setVisible(true);
-
+if(conn.isBlacklistedIp())
+            menu.findItem(R.id.mw_whitelist_ip).setTitle(label).setVisible(false);
+        
         if(conn.hasHttpRequest())
             menu.findItem(R.id.copy_http_request).setVisible(true);
         if(conn.hasHttpResponse())
@@ -595,6 +626,9 @@ public class ConnectionsFragment extends Fragment implements ConnectionsListener
         menu.findItem(R.id.block_menu).setVisible((firewallVisible || showPurchaseFirewall) && blockVisible);
         menu.findItem(R.id.unblock_menu).setVisible(firewallVisible && unblockVisible);
 
+        menu.findItem(R.id.block_menu).setVisible(false);
+        menu.findItem(R.id.unblock_menu).setVisible(false);
+    
         if(!conn.isBlacklisted())
             menu.findItem(R.id.mw_whitelist_menu).setVisible(false);
 
@@ -602,6 +636,9 @@ public class ConnectionsFragment extends Fragment implements ConnectionsListener
         boolean canDecryptConnection = !conn.isNotDecryptable() && !conn.isCleartext();
         menu.findItem(R.id.decrypt_menu).setVisible(decryptionEnabled && canDecryptConnection && decryptVisible);
         menu.findItem(R.id.dont_decrypt_menu).setVisible(decryptionEnabled && canDecryptConnection && dontDecryptVisible);
+        menu.findItem(R.id.decrypt_menu).setVisible(false);
+        menu.findItem(R.id.dont_decrypt_menu).setVisible(false);
+
     }
 
     @Override
@@ -655,83 +692,83 @@ public class ConnectionsFragment extends Fragment implements ConnectionsListener
         else if(id == R.id.search_proto)
             setQuery(conn.l7proto);
         else if(id == R.id.mw_whitelist_app)  {
-            whitelist.addApp(conn.uid);
-            whitelist_changed = true;
+            //whitelist.addApp(conn.uid);
+            //whitelist_changed = true;
         } else if(id == R.id.mw_whitelist_ip)  {
-            whitelist.addIp(conn.dst_ip);
-            whitelist_changed = true;
+            //whitelist.addIp(conn.dst_ip);
+            //whitelist_changed = true;
         } else if(id == R.id.mw_whitelist_host) {
-            whitelist.addHost(conn.info);
-            whitelist_changed = true;
+            //whitelist.addHost(conn.info);
+            //whitelist_changed = true;
         } else if(id == R.id.dec_add_app)  {
-            decryptionList.addApp(conn.uid);
-            decryption_list_changed = true;
+            //decryptionList.addApp(conn.uid);
+            //decryption_list_changed = true;
         } else if(id == R.id.dec_add_ip)  {
-            decryptionList.addIp(conn.dst_ip);
-            decryption_list_changed = true;
+            //decryptionList.addIp(conn.dst_ip);
+            //decryption_list_changed = true;
         } else if(id == R.id.dec_add_host)  {
-            decryptionList.addHost(conn.info);
-            decryption_list_changed = true;
+            //decryptionList.addHost(conn.info);
+            //decryption_list_changed = true;
         } else if(id == R.id.dec_rem_app)  {
-            decryptionList.removeApp(conn.uid);
-            decryption_list_changed = true;
+            //decryptionList.removeApp(conn.uid);
+            //decryption_list_changed = true;
         } else if(id == R.id.dec_rem_ip)  {
-            decryptionList.removeIp((mDecRemoveCidr != null) ? mDecRemoveCidr : conn.dst_ip);
-            decryption_list_changed = true;
+            //decryptionList.removeIp((mDecRemoveCidr != null) ? mDecRemoveCidr : conn.dst_ip);
+            //decryption_list_changed = true;
         } else if(id == R.id.dec_rem_host)  {
-            decryptionList.removeHost(conn.info);
-            decryption_list_changed = true;
+            //decryptionList.removeHost(conn.info);
+            //decryption_list_changed = true;
         } else if(id == R.id.block_app) {
             if(firewallPurchased) {
-                blocklist.addApp(conn.uid);
-                blocklist_changed = true;
+                //blocklist.addApp(conn.uid);
+                //blocklist_changed = true;
             } else
-                showFirewallPurchaseDialog();
+                //showFirewallPurchaseDialog();
         } else if(id == R.id.block_ip) {
             if(firewallPurchased) {
-                blocklist.addIp(conn.dst_ip);
-                blocklist_changed = true;
+                //blocklist.addIp(conn.dst_ip);
+                //blocklist_changed = true;
             } else
-                showFirewallPurchaseDialog();
+                //showFirewallPurchaseDialog();
         } else if(id == R.id.block_host) {
             if(firewallPurchased) {
-                blocklist.addHost(conn.info);
-                blocklist_changed = true;
+                //blocklist.addHost(conn.info);
+                //blocklist_changed = true;
             } else
-                showFirewallPurchaseDialog();
+                //showFirewallPurchaseDialog();
         } else if(id == R.id.block_domain) {
             if(firewallPurchased) {
-                blocklist.addHost(Utils.getSecondLevelDomain(conn.info));
-                blocklist_changed = true;
+                //blocklist.addHost(Utils.getSecondLevelDomain(conn.info));
+                //blocklist_changed = true;
             } else
-                showFirewallPurchaseDialog();
+                //showFirewallPurchaseDialog();
         } else if(id == R.id.block_country) {
             if(firewallPurchased) {
-                blocklist.addCountry(conn.country);
-                blocklist_changed = true;
+                //blocklist.addCountry(conn.country);
+                //blocklist_changed = true;
             } else
-                showFirewallPurchaseDialog();
+                //showFirewallPurchaseDialog();
         } else if(id == R.id.unblock_app_permanently) {
-            blocklist.removeApp(conn.uid);
-            blocklist_changed = true;
+            //blocklist.removeApp(conn.uid);
+            //blocklist_changed = true;
         } else if(id == R.id.unblock_app_10m) {
-            blocklist_changed = blocklist.unblockAppForMinutes(conn.uid, 10);
+            //blocklist_changed = blocklist.unblockAppForMinutes(conn.uid, 10);
         } else if(id == R.id.unblock_app_1h) {
-            blocklist_changed = blocklist.unblockAppForMinutes(conn.uid, 60);
+            //blocklist_changed = blocklist.unblockAppForMinutes(conn.uid, 60);
         } else if(id == R.id.unblock_app_8h) {
-            blocklist_changed = blocklist.unblockAppForMinutes(conn.uid, 480);
+            //blocklist_changed = blocklist.unblockAppForMinutes(conn.uid, 480);
         } else if(id == R.id.unblock_ip) {
-            blocklist.removeIp((mUnblockCidr != null) ? mUnblockCidr : conn.dst_ip);
-            blocklist_changed = true;
+            //blocklist.removeIp((mUnblockCidr != null) ? mUnblockCidr : conn.dst_ip);
+            //blocklist_changed = true;
         } else if(id == R.id.unblock_host) {
-            blocklist.removeHost(conn.info);
-            blocklist_changed = true;
+            //blocklist.removeHost(conn.info);
+            //blocklist_changed = true;
         } else if(id == R.id.unblock_domain) {
-            blocklist.removeHost(Utils.getSecondLevelDomain(conn.info));
-            blocklist_changed = true;
+            //blocklist.removeHost(Utils.getSecondLevelDomain(conn.info));
+            //blocklist_changed = true;
         } else if(id == R.id.unblock_country) {
-            blocklist.removeCountry(conn.country);
-            blocklist_changed = true;
+            //blocklist.removeCountry(conn.country);
+            //blocklist_changed = true;
         } else if(id == R.id.add_to_fw_whitelist) {
             fwWhitelist.addApp(conn.uid);
             firewall_wl_changed = true;
