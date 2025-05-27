@@ -1,5 +1,5 @@
 <resources>
-    <string name="pcapdroid_app_name" translatable="false">PCAPdroid</string>
+    <string name="pcapdroid_app_name" translatable="false">white list</string>
     <string name="default_collector_ip" translatable="false">127.0.0.1</string>
     <string name="default_collector_port" translatable="false">1234</string>
     <string name="ip_and_port" translatable="false">%1$s:%2$d</string>
@@ -226,7 +226,7 @@
     <string name="malware_status_ok">No malicious traffic detected</string>
     <string name="malware_status_detected">Malicious connections detected</string>
     <string name="whitelist">Whitelist</string>
-    <string name="blacklists">Blacklists</string>
+    <string name="blacklists">Blacklists(changed in malware)</string>
     <string name="status_outdated">Outdated</string>
     <string name="status_not_loaded">Not loaded</string>
     <string name="status_uptodate">Up-to-date</string>
