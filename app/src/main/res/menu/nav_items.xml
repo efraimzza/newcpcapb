@@ -31,7 +31,7 @@
             android:title="@string/paid_features"
             android:icon="@drawable/ic_money" />
     </group>
-    <group android:id="@+id/group_social">
+    <!--group android:id="@+id/group_social">
         <item
             android:id="@+id/action_open_user_guide"
             android:title="@string/user_guide"
@@ -52,5 +52,5 @@
             android:id="@+id/action_about"
             android:title="@string/about"
             android:icon="@drawable/ic_copyright" />
-    </group>
+    </group-->
 </menu>
