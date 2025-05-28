@@ -546,10 +546,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else if(id == R.id.firewall) {
             Intent intent = new Intent(MainActivity.this, FirewallActivity.class);
             startActivity(intent);
-        } /*else if(id == R.id.open_log) {
+        } else if(id == R.id.open_log) {
             Intent intent = new Intent(MainActivity.this, LogviewActivity.class);
             startActivity(intent);
-        } else if (id == R.id.action_donate) {
+        } /*else if (id == R.id.action_donate) {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(DONATE_URL));
             Utils.startActivity(this, browserIntent);
         } else if (id == R.id.action_open_telegram) {
