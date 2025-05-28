@@ -214,11 +214,14 @@ public class AppsFragment extends Fragment implements ConnectionsListener, MenuP
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
         boolean isBlocked = PCAPdroid.getInstance().getBlocklist().matchesApp(stats.getUid());
         menu.findItem(R.id.block_app).setVisible(!isBlocked);
-
+        menu.findItem(R.id.block_app).setVisible(false);
         if(Prefs.isFirewallWhitelistMode(prefs)) {
             boolean isWhitelisted = PCAPdroid.getInstance().getFirewallWhitelist().matchesApp(stats.getUid());
             menu.findItem(R.id.add_to_fw_whitelist).setVisible(!isWhitelisted);
             menu.findItem(R.id.remove_from_fw_whitelist).setVisible(isWhitelisted);
+            menu.findItem(R.id.add_to_fw_whitelist).setVisible(false);
+            menu.findItem(R.id.remove_from_fw_whitelist).setVisible(false);
+        
         }
 
         menu.findItem(R.id.unblock_app_permanently).setVisible(isBlocked);
@@ -228,6 +231,14 @@ public class AppsFragment extends Fragment implements ConnectionsListener, MenuP
                 .setTitle(getString(R.string.unblock_for_n_hours, 1));
         menu.findItem(R.id.unblock_app_8h).setVisible(isBlocked)
                 .setTitle(getString(R.string.unblock_for_n_hours, 8));
+        menu.findItem(R.id.unblock_app_permanently).setVisible(false);
+        menu.findItem(R.id.unblock_app_10m).setVisible(false)
+                .setTitle(getString(R.string.unblock_for_n_minutes, 10));
+        menu.findItem(R.id.unblock_app_1h).setVisible(false)
+                .setTitle(getString(R.string.unblock_for_n_hours, 1));
+        menu.findItem(R.id.unblock_app_8h).setVisible(false)
+                .setTitle(getString(R.string.unblock_for_n_hours, 8));
+ 
     }
 
     @Override
@@ -241,22 +252,22 @@ public class AppsFragment extends Fragment implements ConnectionsListener, MenuP
         if(app == null)
             return super.onContextItemSelected(item);
 
-        if(id == R.id.block_app)
-            blocklist.addApp(app.getUid());
-        else if(id == R.id.unblock_app_permanently)
-            blocklist.removeApp(app.getUid());
-        else if(id == R.id.unblock_app_10m)
-            blocklist.unblockAppForMinutes(app.getUid(), 10);
-        else if(id == R.id.unblock_app_1h)
-            blocklist.unblockAppForMinutes(app.getUid(), 60);
-        else if(id == R.id.unblock_app_8h)
-            blocklist.unblockAppForMinutes(app.getUid(), 480);
+        if(id == R.id.block_app){}
+            //blocklist.addApp(app.getUid());
+        else if(id == R.id.unblock_app_permanently){}
+            //blocklist.removeApp(app.getUid());
+        else if(id == R.id.unblock_app_10m){}
+            //blocklist.unblockAppForMinutes(app.getUid(), 10);
+        else if(id == R.id.unblock_app_1h){}
+            //blocklist.unblockAppForMinutes(app.getUid(), 60);
+        else if(id == R.id.unblock_app_8h){}
+            //blocklist.unblockAppForMinutes(app.getUid(), 480);
         else if(id == R.id.add_to_fw_whitelist) {
-            whitelist.addApp(app.getUid());
-            whitelistChanged = true;
+            //whitelist.addApp(app.getUid());
+            //whitelistChanged = true;
         } else if(id == R.id.remove_from_fw_whitelist) {
-            whitelist.removeApp(app.getUid());
-            whitelistChanged = true;
+            //whitelist.removeApp(app.getUid());
+            //whitelistChanged = true;
         } else
             return super.onContextItemSelected(item);
 
