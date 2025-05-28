@@ -153,7 +153,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main_activity);
-        setTitle("PCAPdroid");
+        setTitle(R.string.pcapdroid_app_name);
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         int appver = Prefs.getAppVersion(mPrefs);
