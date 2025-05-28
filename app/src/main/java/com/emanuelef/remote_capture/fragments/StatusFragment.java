@@ -111,8 +111,8 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
     private TextView mCaptureStatus;
     private TextView startmdm;
     private TextView removemdm;
-    private TextView tva;
-    private TextView tvb;
+    private TextView tvaa;
+    private TextView tvab;
     //private View mQuickSettings;
     private MainActivity mActivity;
     private SharedPreferences mPrefs;
@@ -171,8 +171,8 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         mCaptureStatus = view.findViewById(R.id.status_view);
         startmdm = view.findViewById(R.id.startmdm);
         removemdm = view.findViewById(R.id.removemdm);
-        tva = view.findViewById(R.id.tva);
-        tvb = view.findViewById(R.id.tvb);
+        tvaa = view.findViewById(R.id.tva);
+        tvab = view.findViewById(R.id.tvb);
       //  setbuttonsmdm();
         
         //mQuickSettings = view.findViewById(R.id.quick_settings);
@@ -211,10 +211,10 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         removemdm.setOnClickListener(v -> {
             checkpassword(false);
         });
-        tva.setOnClickListener(v -> {
+        tvaa.setOnClickListener(v -> {
             checkpassword(true);
         });
-        tvb.setOnClickListener(v -> {
+        tvab.setOnClickListener(v -> {
             
         });
             
@@ -584,7 +584,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
 	}
 	void setpassword() {
         try {
-            sp = getApplicationContext().getSharedPreferences(getApplicationContext().getPackageName(), getApplicationContext().MODE_PRIVATE);
+            sp = mcon.getSharedPreferences(mcon.getPackageName(), mcon.MODE_PRIVATE);
             if (sp.getString("pwd", "").equals("")) {
                 spe = sp.edit();
                 spe.putString("pwd", "");
@@ -704,7 +704,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
     }
     void checkpassword(final boolean change) {
         try {
-            sp = getApplicationContext().getSharedPreferences(getApplicationContext().getPackageName(), getApplicationContext().MODE_PRIVATE);
+            sp = mcon.getSharedPreferences(mcon.getPackageName(), mcon.MODE_PRIVATE);
             if (sp.getString("pwd", "").equals("")) {
                 spe = sp.edit();
                 spe.putString("pwd", "");
