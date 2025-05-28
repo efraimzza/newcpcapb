@@ -48,6 +48,23 @@ import android.net.Uri;
 import android.os.UserManager;
 import android.os.Build;
 
+import android.content.SharedPreferences;
+import android.widget.Button;
+import android.app.AlertDialog;
+import android.view.View.OnClickListener;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.HorizontalScrollView;
+import android.widget.ScrollView;
+import android.view.MotionEvent;
+import android.text.TextWatcher;
+import android.text.Editable;
+import android.view.KeyEvent;
+import android.view.Gravity;
+import android.widget.FrameLayout;
+import android.view.View.OnTouchListener;
+
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
@@ -105,6 +122,13 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
     private TextView mFilterRootDecryptionWarning;
     private Context mcon;
     private ComponentName compName;
+    SharedPreferences sp;
+    SharedPreferences.Editor spe;
+    public EditText edtxa,edtxb,edtxc;
+    TextView tva,tvb,tvta,tvtb;
+    Button bua,bub,buc;
+    AlertDialog alertDialog,alertDialoga;
+
     
     @Override
     public void onAttach(@NonNull Context context) {
@@ -185,10 +209,10 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         });
 
         removemdm.setOnClickListener(v -> {
-            mremovepcapmdm();
+            checkpassword(false);
         });
         tva.setOnClickListener(v -> {
-            
+            checkpassword(true);
         });
         tvb.setOnClickListener(v -> {
             
@@ -558,4 +582,228 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
             Toast.makeText(mcon, "" + e, Toast.LENGTH_SHORT).show();
         }
 	}
+	void setpassword() {
+        try {
+            sp = getApplicationContext().getSharedPreferences(getApplicationContext().getPackageName(), getApplicationContext().MODE_PRIVATE);
+            if (sp.getString("pwd", "").equals("")) {
+                spe = sp.edit();
+                spe.putString("pwd", "");
+                spe.commit();
+            }
+            HorizontalScrollView hsv=new HorizontalScrollView(mcon);
+            FrameLayout.LayoutParams flp=new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT);
+            flp.gravity=Gravity.CENTER;
+            
+            ScrollView sv=new ScrollView(mcon);
+            LinearLayout linl=new LinearLayout(mcon);
+            linl.setOrientation(linl.VERTICAL);
+            linl.setGravity(Gravity.CENTER);
+            
+            //linl.setLayoutParams(flp);
+            tvta=new TextView(mcon);
+            tvta.setTextSize(30);
+            tvta.setTextAppearance(android.R.style.TextAppearance_DeviceDefault_DialogWindowTitle);
+            edtxa = new EditText(mcon);
+            edtxa.setInputType(2);
+            edtxb = new EditText(mcon);
+            edtxb.setInputType(2);
+            TextWatcher twa=new TextWatcher(){
+
+                @Override
+                public void beforeTextChanged(CharSequence p1, int p2, int p3, int p4) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence p1, int p2, int p3, int p4) {
+                    if (p1.length() > 4) {
+                        edtxa.setText(p1.subSequence(0, 4));
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable p1) {
+                    if (p1.length() > 4) {
+                        edtxa.setText(p1.subSequence(0, 4));
+                    }
+                }
+            };
+            TextWatcher twb=new TextWatcher(){
+
+                @Override
+                public void beforeTextChanged(CharSequence p1, int p2, int p3, int p4) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence p1, int p2, int p3, int p4) {
+                    if (p1.length() > 4) {
+                        edtxb.setText(p1.subSequence(0, 4));
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable p1) {
+                    if (p1.length() > 4) {
+                        edtxb.setText(p1.subSequence(0, 4));
+                    }
+                }
+            };
+            edtxa.addTextChangedListener(twa);
+            edtxb.addTextChangedListener(twb);
+            tva = new TextView(mcon);
+            bua = new Button(mcon);
+            bua.setText("אישור");
+            linl.addView(tvta);
+            linl.addView(edtxa);
+            linl.addView(edtxb);
+            linl.addView(tva);
+            linl.addView(bua);
+            sv.addView(linl);
+            hsv.addView(sv);
+            final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mcon);
+            alertDialogBuilder.setView(hsv);
+            alertDialog = alertDialogBuilder.create();
+            bua.setOnClickListener(new OnClickListener(){
+                    @Override
+                    public void onClick(View p1) {
+                        if (edtxa == null || edtxb == null) {
+                        } else {
+                            String resa=edtxa.getText().toString();
+                            String resb=edtxb.getText().toString();
+                            if (resa.equals(resb) && !resa.equals("")) {
+                                spe = sp.edit();
+                                spe.putString("pwd", resa);
+                                spe.commit();
+                                alertDialog.hide();
+                            } else {
+                                tva.setText("not match or empty");
+                                Toast.makeText(mcon, "not match or empty", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+                });
+            alertDialog.show();
+            hsv.setLayoutParams(flp);
+            tvta.setText("set new password");
+            if (sp.getString("pwd", "").equals("")) {
+                tva.setText("welcome. set paswword");
+            }
+            LinearLayout.LayoutParams llp=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+
+            edtxa.setLayoutParams(llp);
+            edtxa.setWidth(100);
+            edtxa.setTextSize(20);
+            edtxb.setLayoutParams(llp);
+            edtxb.setWidth(100);
+            edtxb.setTextSize(20);
+            tvta.setLayoutParams(llp);
+            tva.setLayoutParams(llp);
+            bua.setLayoutParams(llp);
+        } catch (Exception e) {
+            Toast.makeText(mcon, e + "", Toast.LENGTH_LONG).show();
+        }
+    }
+    void checkpassword(final boolean change) {
+        try {
+            sp = getApplicationContext().getSharedPreferences(getApplicationContext().getPackageName(), getApplicationContext().MODE_PRIVATE);
+            if (sp.getString("pwd", "").equals("")) {
+                spe = sp.edit();
+                spe.putString("pwd", "");
+                spe.commit();
+            }
+
+            HorizontalScrollView hsv=new HorizontalScrollView(mcon);
+            FrameLayout.LayoutParams flp=new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT);
+            flp.gravity=Gravity.CENTER;
+            //flp.setMargins(20,0,20,0);
+            ScrollView sv=new ScrollView(mcon);
+            LinearLayout linl=new LinearLayout(mcon);
+            linl.setOrientation(linl.VERTICAL);
+            linl.setGravity(Gravity.CENTER);
+            tvtb=new TextView(mcon);
+            tvtb.setTextSize(30);
+            tvtb.setTextAppearance(android.R.style.TextAppearance_DeviceDefault_DialogWindowTitle);
+            edtxc = new EditText(mcon);
+            edtxc.setInputType(2);
+            TextWatcher tw=new TextWatcher(){
+
+                @Override
+                public void beforeTextChanged(CharSequence p1, int p2, int p3, int p4) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence p1, int p2, int p3, int p4) {
+                    if (p1.length() > 4) {
+                        edtxc.setText(p1.subSequence(0, 4));
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable p1) {
+                    if (p1.length() > 4) {
+                        edtxc.setText(p1.subSequence(0, 4));
+                    }
+                }
+            };
+            edtxc.addTextChangedListener(tw);
+            tvb = new TextView(mcon);
+            buc = new Button(mcon);
+            buc.setText("אישור");
+            linl.addView(tvtb);
+            linl.addView(edtxc);
+            linl.addView(tvb);
+            linl.addView(buc);
+            sv.addView(linl);
+            hsv.addView(sv);
+            final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mcon);
+            alertDialogBuilder.setView(hsv);
+            alertDialoga = alertDialogBuilder.create();
+            //alertDialoga.setContentView(hsv);
+            //alertDialoga.setView(linl);
+            if (!change) {
+                //alertDialoga.setCancelable(false);
+            }
+            buc.setOnClickListener(new OnClickListener(){
+                    @Override
+                    public void onClick(View p1) {
+                        if (edtxc == null) {
+                        } else {
+                            String resa=edtxc.getText().toString();
+                            String pwd=sp.getString("pwd", "");
+                            if (pwd.equals(resa) && !resa.equals("")) {
+                                if (change) {
+                                    setpassword();
+				}else{
+				      mremovepcapmdm();
+				}
+				    alertDialoga.hide();
+                            } else {
+                                tvb.setText("not match or empty");
+                                Toast.makeText(mcon, "not match or empty", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+                });
+            if (sp.getString("pwd", "").equals("")) {
+                Toast.makeText(mcon, "welcome. set paswword", Toast.LENGTH_LONG).show();
+                setpassword();
+            } else {
+                alertDialoga.show();
+                hsv.setLayoutParams(flp);
+                LinearLayout.LayoutParams llp=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                
+                edtxc.setLayoutParams(llp);
+                edtxc.setWidth(100);
+                edtxc.setTextSize(20);
+                tvtb.setLayoutParams(llp);
+                tvb.setLayoutParams(llp);
+                buc.setLayoutParams(llp);
+                //linl.setLayoutParams(flp);
+                tvtb.setText("get currnt password");
+            }
+        } catch (Exception e) {
+            Toast.makeText(mcon, e + "", Toast.LENGTH_LONG).show();
+            //finish();
+        }
+    }
 }
