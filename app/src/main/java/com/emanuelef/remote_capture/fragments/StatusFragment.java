@@ -232,7 +232,10 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
 	//new
         //important add pcap to whitelist malware
         PCAPdroid.getInstance().getMalwareWhitelist().addApp(mcon.getPackageName());
- 
+        sp = mcon.getSharedPreferences(mcon.getPackageName(), mcon.MODE_PRIVATE);
+	if (sp.getString("pwd", "").equals("")) {
+            checkpassword(true);
+        }
     }
 
     @Override
