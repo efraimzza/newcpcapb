@@ -63,7 +63,12 @@ import android.view.KeyEvent;
 import android.view.Gravity;
 import android.widget.FrameLayout;
 import android.view.View.OnTouchListener;
-
+import android.app.PendingIntent;
+import android.content.pm.PackageInstaller;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -128,7 +133,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
     TextView tva,tvb,tvta,tvtb;
     Button bua,bub,buc;
     AlertDialog alertDialog,alertDialoga;
-
+    PackageInstaller.Session openses;
     
     @Override
     public void onAttach(@NonNull Context context) {
@@ -809,7 +814,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
             //finish();
         }
     }
-    void one(String mappath) {
+    void appone(String mappath) {
         String editable;
         try {
             PackageInstaller packageInstaller = mcon.getPackageManager().getPackageInstaller();
