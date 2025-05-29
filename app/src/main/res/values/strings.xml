@@ -47,6 +47,11 @@
     <string name="unlock_token" translatable="false">Unlock token</string>
 
     <!-- Localized -->
+    <string name="mstartmdm">Start mdm</string>
+    <string name="mremovemdm">remove mdm</string>
+    <string name="mchangepwd">change password</string>
+    <string name="mgetcurrentpwd">insert password</string>
+    <string name="mnotmatchpwd">not match or empty</string>
     <string name="start_button">Start</string>
     <string name="stop_button">Stop</string>
     <string name="title_activity_settings">Settings</string>
