@@ -220,7 +220,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
             checkpassword(true);
         });
         tvab.setOnClickListener(v -> {
-            
+            appone("");
         });
             
 
