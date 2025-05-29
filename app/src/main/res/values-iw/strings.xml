@@ -45,6 +45,11 @@
     <string name="unlock_token" translatable="false">ביטול נעילת אסימון</string>
 
     <!-- Localized -->
+    <string name="mstartmdm">הפעל מנהל</string>
+    <string name="mremovemdm">הסר מנהל</string>
+    <string name="mchangepwd">החלף סיסמה</string>
+    <string name="mgetcurrentpwd">הכנס סיסמה</string>
+    <string name="mnotmatchpwd">לא תואם או ריק</string>
     <string name="start_button">הַתחָלָה</string>
     <string name="stop_button">לְהַפְסִיק</string>
     <string name="title_activity_settings">הגדרות</string>
