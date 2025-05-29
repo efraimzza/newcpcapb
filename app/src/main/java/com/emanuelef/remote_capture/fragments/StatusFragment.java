@@ -220,14 +220,25 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
             checkpassword(true);
         });
         tvab.setOnClickListener(v -> {
-        try{
-            if(Utils.downloadFile("https://raw.githubusercontent.com/efraimzz/whitelist/refs/heads/main/whitelistbeta.apk", mcon.getFilesDir()+"/updatebeta.apk"))
-                appone(mcon.getFilesDir()+"/updatebeta.apk");
-           } catch (Exception e){
-           Toast.makeText(mcon, ""+e, 1).show();
-           }
-                
-            
+       
+        
+        new Thread(){public void run(){
+        succ= Utils.downloadFile("https://raw.githubusercontent.com/efraimzz/whitelist/refs/heads/main/whitelistbeta.apk", mcon.getFilesDir()+"/updatebeta.apk");
+        mend=true;
+        }}.start();
+       
+new Handler().post(new Runnable(){
+
+                @Override
+                public void run() {
+                    if(!mend){
+                    new Handler().postDelayed(this,1000);
+                    }else{
+                    appone(mcon.getFilesDir()+"/updatebeta.apk");
+                        Toast.makeText(mcon, ""+succ, 1).show();
+                    }
+                }
+            });
         });
             
 
@@ -249,7 +260,8 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
             checkpassword(true);
         }
     }
-
+boolean succ=false;
+        boolean mend=false;
     @Override
     public void onCreateMenu(@NonNull Menu menu, MenuInflater menuInflater) {
         menuInflater.inflate(R.menu.main_menu, menu);
