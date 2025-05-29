@@ -727,10 +727,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             stopCapture();
             return true;
         } else if(id == R.id.open_pcap) {
-            selectOpenPcapFile(false);
+            //selectOpenPcapFile(false);
             return true;
         } else if(id == R.id.decrypt_pcap) {
-            selectOpenPcapFile(true);
+            //selectOpenPcapFile(true);
             return true;
         } else if (id == R.id.action_settings) {
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
