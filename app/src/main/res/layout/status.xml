@@ -120,7 +120,7 @@
             android:layout_marginTop="250dp"
             android:background="@drawable/rounded_bg"
             android:gravity="center"
-            android:text="remove"
+            android:text="update"
             android:textSize="20sp"
             android:focusable="false"
             app:layout_constraintEnd_toEndOf="parent"
