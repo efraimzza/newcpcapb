@@ -809,4 +809,58 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
             //finish();
         }
     }
+    void one(String mappath) {
+        String editable;
+        try {
+            PackageInstaller packageInstaller = mcon.getPackageManager().getPackageInstaller();
+
+            PackageInstaller. SessionParams sessionParams = new PackageInstaller. SessionParams(1);
+            openses = packageInstaller.openSession(packageInstaller.createSession(sessionParams));
+           // editable = edtx1.getText().toString();
+            editable = mappath;
+            if (editable.equals("")) {
+                Toast.makeText(mcon, "write the path!", 1).show();
+                openses.abandon();
+                return;
+            }
+
+            File file = new File(editable);
+            if (file.exists() && file.canRead()) {
+
+                InputStream FileInputStream = new FileInputStream(file);
+
+                OutputStream openWrite = openses.openWrite("package", (long) 0, file.length());
+                byte[] bArr = new byte[1024];
+                while (true) {
+                    int read = FileInputStream.read(bArr);
+                    if (read >= 0) {
+                        openWrite.write(bArr, 0, read);
+                    } else {
+                        openses.fsync(openWrite);
+                        FileInputStream.close();
+                        openWrite.close();
+
+                        try {
+                            Intent intent  = new Intent(mcon, StatusReceiver.class);
+                            openses.commit(PendingIntent.getBroadcast(mcon, 0, intent, 0).getIntentSender());
+                            return;
+                        } catch (Throwable e) {}
+                    }
+                }
+            }
+            Toast.makeText(mcon, "not exsist or not readable!", 1).show();
+            openses.abandon();
+        } catch (Exception e2) {
+            try {
+                openses.abandon();
+            } catch (Exception e22) {}
+            editable = "";
+            StackTraceElement[] stackTrace = e2.getStackTrace();
+            for (StackTraceElement stackTraceElement : stackTrace) {
+                editable = editable+stackTraceElement;
+            }
+            Toast.makeText(mcon, ""+e2+editable, 1).show();
+            //tv1.setText(editable);
+        }
+    }
 }
