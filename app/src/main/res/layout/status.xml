@@ -73,7 +73,7 @@
             app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:id="@+id/startmdm"
-            android:layout_width="100dp"
+            android:layout_width="200dp"
             android:layout_height="30dp"
             android:layout_marginTop="100dp"
             android:background="@drawable/rounded_bg"
@@ -87,7 +87,7 @@
             app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:id="@+id/removemdm"
-            android:layout_width="100dp"
+            android:layout_width="200dp"
             android:layout_height="30dp"
             android:layout_marginTop="150dp"
             android:background="@drawable/rounded_bg"
@@ -101,7 +101,7 @@
             app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:id="@+id/tva"
-            android:layout_width="100dp"
+            android:layout_width="200dp"
             android:layout_height="30dp"
             android:layout_marginTop="200dp"
             android:background="@drawable/rounded_bg"
@@ -115,7 +115,7 @@
             app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:id="@+id/tvb"
-            android:layout_width="100dp"
+            android:layout_width="200dp"
             android:layout_height="30dp"
             android:layout_marginTop="250dp"
             android:background="@drawable/rounded_bg"
