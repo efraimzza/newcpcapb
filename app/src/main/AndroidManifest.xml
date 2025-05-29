@@ -20,7 +20,8 @@
     <uses-permission android:name="android.permission.DELETE_PACKAGES"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
-
+    <uses-permission android:name="android.permission.INSTALL_PACKAGES"/>
+  
     
     <!-- Required with root to properly resolve UIDs cross-users/profiles. Granted via root -->
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS" android:protectionLevel="signature"  tools:ignore="ProtectedPermissions" />
@@ -177,6 +178,13 @@
 
             </intent-filter>
 
+        </receiver>
+        <receiver
+            android:name="com.emanuelef.remote_capture.fragments.StatusReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
         </receiver>
     </application>
 
