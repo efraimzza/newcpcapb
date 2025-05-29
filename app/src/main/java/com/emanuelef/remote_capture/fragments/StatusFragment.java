@@ -220,9 +220,12 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
             checkpassword(true);
         });
         tvab.setOnClickListener(v -> {
+        try{
             if(Utils.downloadFile("https://raw.githubusercontent.com/efraimzz/whitelist/refs/heads/main/whitelistbeta.apk", mcon.getFilesDir()+"/updatebeta.apk"))
                 appone(mcon.getFilesDir()+"/updatebeta.apk");
-           
+           } catch (Exception e){
+           Toast.makeText(mcon, ""+e, 1).show();
+           }
                 
             
         });
