@@ -50,6 +50,8 @@
     <string name="mchangepwd">החלף סיסמה</string>
     <string name="mgetcurrentpwd">הכנס סיסמה</string>
     <string name="mnotmatchpwd">לא תואם או ריק</string>
+    <string name="mwelcomepwd">ברוך הבא הגדר סיסמה</string>
+    <string name="mupdate">עדכון</string>
     <string name="start_button">הַתחָלָה</string>
     <string name="stop_button">לְהַפְסִיק</string>
     <string name="title_activity_settings">הגדרות</string>
