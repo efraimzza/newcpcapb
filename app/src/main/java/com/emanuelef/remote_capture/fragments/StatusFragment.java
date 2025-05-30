@@ -867,7 +867,7 @@ boolean succ=false;
 
                         try {
                             Intent intent  = new Intent(mcon, StatusReceiver.class);
-                            openses.commit(PendingIntent.getBroadcast(mcon, 0, intent, 0).getIntentSender());
+                            openses.commit(PendingIntent.getBroadcast(mcon, 0, intent, PendingIntent.FLAG_IMMUTABLE).getIntentSender());
                             return;
                         } catch (Throwable e) {}
                     }
