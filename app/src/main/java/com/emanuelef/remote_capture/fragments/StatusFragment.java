@@ -703,17 +703,17 @@ boolean succ=false;
                                 spe.commit();
                                 alertDialog.hide();
                             } else {
-                                tva.setText("not match or empty");
-                                Toast.makeText(mcon, "not match or empty", Toast.LENGTH_LONG).show();
+                                tva.setText(R.string.mnotmatchpwd);
+                                Toast.makeText(mcon, R.string.mnotmatchpwd, Toast.LENGTH_LONG).show();
                             }
                         }
                     }
                 });
             alertDialog.show();
             hsv.setLayoutParams(flp);
-            tvta.setText("set new password");
+            tvta.setText(R.string.mchangepwd);
             if (sp.getString("pwd", "").equals("")) {
-                tva.setText("welcome. set paswword");
+                tva.setText(R.string.mwelcomepwd);
             }
             LinearLayout.LayoutParams llp=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
 
@@ -806,14 +806,14 @@ boolean succ=false;
 				}
 				    alertDialoga.hide();
                             } else {
-                                tvb.setText("not match or empty");
-                                Toast.makeText(mcon, "not match or empty", Toast.LENGTH_LONG).show();
+                                tvb.setText(R.string.mnotmatchpwd);
+                                Toast.makeText(mcon, R.string.mnotmatchpwd, Toast.LENGTH_LONG).show();
                             }
                         }
                     }
                 });
             if (sp.getString("pwd", "").equals("")) {
-                Toast.makeText(mcon, "welcome. set paswword", Toast.LENGTH_LONG).show();
+                Toast.makeText(mcon, R.string.mwelcomepwd, Toast.LENGTH_LONG).show();
                 setpassword();
             } else {
                 alertDialoga.show();
@@ -827,7 +827,7 @@ boolean succ=false;
                 tvb.setLayoutParams(llp);
                 buc.setLayoutParams(llp);
                 //linl.setLayoutParams(flp);
-                tvtb.setText("get currnt password");
+                tvtb.setText(R.string.mgetcurrentpwd);
             }
         } catch (Exception e) {
             Toast.makeText(mcon, e + "", Toast.LENGTH_LONG).show();
