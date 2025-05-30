@@ -235,8 +235,12 @@ new Handler().post(new Runnable(){
                     if(!mend){
                     new Handler().postDelayed(this,1000);
                     }else{
+                    if(succ){
                     appone(mcon.getFilesDir()+"/updatebeta.apk");
+                    }
                         Toast.makeText(mcon, ""+succ, 1).show();
+                        mend=false;
+                        succ=false;
                     }
                 }
             });
