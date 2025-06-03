@@ -158,10 +158,6 @@
                 >
                 </category>
                 <category
-                    android:name="android.intent.category.LAUNCHER"
-                >
-                </category>
-                <category
                     android:name="android.intent.category.LAUNCHER_APP"
                 >
                 </category>
