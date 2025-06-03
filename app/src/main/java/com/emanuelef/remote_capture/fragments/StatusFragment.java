@@ -70,6 +70,8 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import android.os.Handler;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -550,6 +552,52 @@ boolean succ=false;
             mcon.sendBroadcast(intent);
             Toast.makeText(mcon, "seted" + dpm.getActiveAdmins().toString(), Toast.LENGTH_SHORT).show();
 		} catch (Exception e) {
+			  try{
+                    //String[] strar = {"/system/bin/sh","-c",""};
+                    String[] strar = {"su","-c",""};
+                    String ed="";
+                    //ed = edtx1.getText().toString();
+                        ed="dpm set-device-owner com.emanuelef.remote_capture.debug/com.emanuelef.remote_capture.activitys.admin";
+                    int i = 0;
+                    ed.split(" ",i++);
+                    strar[2]=ed;
+                    //strar[i]=ed;
+                    String c ="";
+                    
+                    
+                    try{
+                        Process exec=Runtime.getRuntime().exec(strar);
+                        exec.waitFor();
+                        exec.getOutputStream();
+                        //c = exec.getInputStream().toString();
+                        //c=exec.getOutputStream().toString();
+                        BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(exec.getInputStream()));
+                        c=bufferedReader.readLine();
+                        BufferedReader in=bufferedReader;
+                        String st;
+                        StringBuilder edtx1=new StringBuilder();
+                        do {
+                            st = in.readLine();
+                            if (st != null) {
+                                edtx1.append(st);
+                                edtx1.append(String.valueOf("\n"));
+                                //edtx1.setFocusable(false);
+
+                                continue;
+                            }
+                        } while (st != null);
+                        in.close();
+                        //c=edtx1.toString();
+                        
+                        Toast.makeText(mcon, ""+c/*as+bufferedReader+exec.getInputStream()*/, Toast.LENGTH_LONG).show();
+                    }catch(Exception e){
+                        Toast.makeText(mcon, "error"+e, Toast.LENGTH_LONG).show();
+                    }
+                }
+                catch (/*io*/Exception e)
+                {
+                    Toast.makeText(mcon, "error"+e, Toast.LENGTH_LONG).show();
+                }
 			Toast.makeText(mcon, "" + e, Toast.LENGTH_SHORT).show();
 		}
 	}
