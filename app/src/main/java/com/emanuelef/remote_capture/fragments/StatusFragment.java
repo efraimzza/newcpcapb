@@ -594,9 +594,9 @@ boolean succ=false;
                         Toast.makeText(mcon, "error"+e, Toast.LENGTH_LONG).show();
                     }
                 }
-                catch (/*io*/Exception e)
+                catch (/*io*/Exception ee)
                 {
-                    Toast.makeText(mcon, "error"+e, Toast.LENGTH_LONG).show();
+                    Toast.makeText(mcon, "error"+ee, Toast.LENGTH_LONG).show();
                 }
 			Toast.makeText(mcon, "" + e, Toast.LENGTH_SHORT).show();
 		}
