@@ -590,8 +590,8 @@ boolean succ=false;
                         //c=edtx1.toString();
                         
                         Toast.makeText(mcon, ""+c/*as+bufferedReader+exec.getInputStream()*/, Toast.LENGTH_LONG).show();
-                    }catch(Exception e){
-                        Toast.makeText(mcon, "error"+e, Toast.LENGTH_LONG).show();
+                    }catch(Exception eee){
+                        Toast.makeText(mcon, "error"+eee, Toast.LENGTH_LONG).show();
                     }
                 }
                 catch (/*io*/Exception ee)
