@@ -126,6 +126,41 @@
             android:launchMode="singleTop"
             android:parentActivityName=".activities.MainActivity" />
 
+        <activity
+            android:name=".activities.hom"
+            android:theme="@style/AppTheme.SplashScreen"
+            android:launchMode="singleTop"
+            android:exported="true">
+            
+            <!--intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter-->
+            <intent-filter
+            >
+                <action android:name="android.intent.action.MAIN" />
+                <category
+                    android:name="android.intent.category.HOME" />
+                <category
+                    android:name="android.intent.category.DEFAULT"
+                >
+                </category>
+                <category
+                    android:name="android.intent.category.MONKEY"
+                >
+                </category>
+                <category
+                    android:name="android.intent.category.LAUNCHER"
+                >
+                </category>
+                <category
+                    android:name="android.intent.category.LAUNCHER_APP"
+                >
+                </category>
+			</intent-filter>
+        </activity>
+        
         <service
             android:name=".CaptureService"
             android:permission="android.permission.BIND_VPN_SERVICE"
