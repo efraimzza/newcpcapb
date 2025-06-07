@@ -225,17 +225,31 @@ public class EditListFragment extends Fragment implements MatchList.ListChangeLi
         }
 
         Set<RuleType> supportedRules = mListInfo.getSupportedRules();
-        if(supportedRules.contains(RuleType.APP))
+        if(supportedRules.contains(RuleType.APP)){
             menu.findItem(R.id.add_app).setVisible(true);
-        if(supportedRules.contains(RuleType.HOST))
+        }else{
+            menu.findItem(R.id.add_app).setVisible(false);
+        }
+        if(supportedRules.contains(RuleType.HOST)){
             menu.findItem(R.id.add_host).setVisible(true);
-        if(supportedRules.contains(RuleType.IP))
+        }else{
+          menu.findItem(R.id.add_host).setVisible(false);
+        }
+        if(supportedRules.contains(RuleType.IP)){
             menu.findItem(R.id.add_ip).setVisible(true);
-        if(supportedRules.contains(RuleType.PROTOCOL))
+        }else{
+            menu.findItem(R.id.add_ip).setVisible(false);
+        }
+        if(supportedRules.contains(RuleType.PROTOCOL)){
             menu.findItem(R.id.add_proto).setVisible(true);
-        if(supportedRules.contains(RuleType.COUNTRY))
+        }else{
+menu.findItem(R.id.add_proto).setVisible(false);
+        }
+        if(supportedRules.contains(RuleType.COUNTRY)){
             menu.findItem(R.id.add_country).setVisible(true);
-
+        }else{
+menu.findItem(R.id.add_country).setVisible(false);
+        }
         if(mListInfo.getHelpString() <= 0)
             menu.findItem(R.id.show_hint).setVisible(false);
     }
