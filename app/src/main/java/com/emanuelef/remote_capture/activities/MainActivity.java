@@ -550,7 +550,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             Intent intent = new Intent(MainActivity.this, LogviewActivity.class);
             startActivity(intent);
         } else if (id == R.id.action_donate) {
-            DONATE_URL="https://www.matara.pro/nedarimplus/online/?mosad=2813050"
+            DONATE_URL="https://www.matara.pro/nedarimplus/online/?mosad=2813050";
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(DONATE_URL));
             Utils.startActivity(this, browserIntent);
         } else if (id == R.id.action_open_telegram) {
