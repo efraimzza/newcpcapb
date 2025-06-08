@@ -110,7 +110,7 @@ public class ListInfo {
         switch(mType) {
             case VISUALIZATION_MASK:
                 return new ArraySet<>(Arrays.asList(RuleType.APP, RuleType.IP, RuleType.HOST, RuleType.COUNTRY, RuleType.PROTOCOL));
-            
+            case MALWARE_WHITELIST:
             case DECRYPTION_LIST:
             case BLOCKLIST:
                 return new ArraySet<>(Arrays.asList(RuleType.APP, RuleType.IP, RuleType.HOST, RuleType.COUNTRY));
