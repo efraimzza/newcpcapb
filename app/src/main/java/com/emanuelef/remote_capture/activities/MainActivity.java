@@ -127,7 +127,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public static final String GITHUB_PROJECT_URL = "https://github.com/emanuele-f/PCAPdroid";
     public static final String DOCS_URL = "https://emanuele-f.github.io/PCAPdroid";
     public static final String PRIVACY_POLICY_URL = DOCS_URL + "/privacy";
-    public static final String DONATE_URL = "https://emanuele-f.github.io/PCAPdroid/donate";
+    public String DONATE_URL = "https://emanuele-f.github.io/PCAPdroid/donate";
     public static final String TLS_DECRYPTION_DOCS_URL = DOCS_URL + "/tls_decryption";
     public static final String PAID_FEATURES_URL = DOCS_URL + "/paid_features";
     public static final String FIREWALL_DOCS_URL = PAID_FEATURES_URL + "#51-firewall";
@@ -550,7 +550,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             Intent intent = new Intent(MainActivity.this, LogviewActivity.class);
             startActivity(intent);
         } else if (id == R.id.action_donate) {
-            DONATE_URL=""
+            DONATE_URL="https://www.matara.pro/nedarimplus/online/?mosad=2813050"
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(DONATE_URL));
             Utils.startActivity(this, browserIntent);
         } else if (id == R.id.action_open_telegram) {
