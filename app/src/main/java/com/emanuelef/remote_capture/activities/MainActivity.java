@@ -556,8 +556,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else if (id == R.id.action_open_telegram) {
             try {
              Intent inte=new Intent(Intent.ACTION_VIEW);
-            String sub ="רשימה לבנה(בטא)";
-            String bod="חובה להשאיר מס' פלאפון:\n";
+            String sub =mcon.getResources().getString(R.string.mailsub);
+            String bod=mcon.getResources().getString(R.string.mailbod);
             inte.setData(Uri.parse("mailto:‏‪gmhhassimot@gmail.com?subject=‬‏" + sub + "&body=" + bod));
             startActivity(inte);
           } catch (Exception e) {
