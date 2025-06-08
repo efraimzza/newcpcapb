@@ -549,12 +549,21 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else if(id == R.id.open_log) {
             Intent intent = new Intent(MainActivity.this, LogviewActivity.class);
             startActivity(intent);
-        } /*else if (id == R.id.action_donate) {
+        } else if (id == R.id.action_donate) {
+            DONATE_URL=""
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(DONATE_URL));
             Utils.startActivity(this, browserIntent);
         } else if (id == R.id.action_open_telegram) {
-            openTelegram();
-        } else if (id == R.id.action_open_user_guide) {
+            try {
+             Intent inte=new Intent(Intent.ACTION_VIEW);
+            String sub ="רשימה לבנה(בטא)";
+            String bod="חובה להשאיר מס' פלאפון:\n";
+            inte.setData(Uri.parse("mailto:‏‪gmhhassimot@gmail.com?subject=‬‏" + sub + "&body=" + bod));
+            startActivity(inte);
+          } catch (Exception e) {
+             Toast.makeText(mcon, "" + e, 1).show();
+          }
+        }/* else if (id == R.id.action_open_user_guide) {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(DOCS_URL));
             Utils.startActivity(this, browserIntent);
         }*/ else if (id == R.id.action_stats) {
