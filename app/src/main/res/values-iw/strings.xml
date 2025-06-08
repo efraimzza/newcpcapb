@@ -52,6 +52,9 @@
     <string name="mnotmatchpwd">לא תואם או ריק</string>
     <string name="mwelcomepwd">ברוך הבא הגדר סיסמה</string>
     <string name="mupdate">עדכון</string>
+    <string name="send_mail">שלח מייל</string>
+     <string name="mailsub">רשימה לבנה(בטא)</string>
+     <string name="mailbod">חובה להשאיר מס' פלאפון</string>
     <string name="start_button">הַתחָלָה</string>
     <string name="stop_button">לְהַפְסִיק</string>
     <string name="title_activity_settings">הגדרות</string>
