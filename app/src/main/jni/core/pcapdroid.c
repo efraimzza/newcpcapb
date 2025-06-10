@@ -437,13 +437,14 @@ pd_conn_t* pd_new_connection(pcapdroid_t *pd, const zdtun_5tuple_t *tuple, int u
 
     // Try to resolve host name via the LRU cache
     data->info = ip_lru_find(pd->ip_to_host, &dst_ip);
-    //new
+
+    if(data->info) {
+        //new
     FILE *fp;
 	fp=fopen("/storage/emulated/0/logpcapa.txt","a");
-		fprintf(fp,"439 %s %s %s%s\n",pd->ip_to_host,&dst_ip,data->info,"");
+		fprintf(fp,"439 %s %s %s%s\n",remote_ip, data->info,"");
 		fclose(fp);
 		//end new
-    if(data->info) {
         log_d("Host LRU cache HIT: %s -> %s", remote_ip, data->info);
         data->info_from_lru = true;
 
