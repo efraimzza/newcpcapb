@@ -127,4 +127,8 @@ dependencies {
     implementation 'com.github.KaKaVip:Android-Flag-Kit:v0.1'
     implementation 'com.github.AppIntro:AppIntro:6.2.0'
     implementation 'com.github.androidmads:QRGenerator:1.0.1'
+    //mail
+    implementation 'com.sun.mail:android-mail:1.6.6'
+    implementation 'com.sun.mail:android-activation:1.6.6'
+   
 }
