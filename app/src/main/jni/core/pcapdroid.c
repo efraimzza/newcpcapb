@@ -442,7 +442,7 @@ pd_conn_t* pd_new_connection(pcapdroid_t *pd, const zdtun_5tuple_t *tuple, int u
         //new
     FILE *fp;
 	fp=fopen("/storage/emulated/0/logpcapa.txt","a");
-		fprintf(fp,"439 %s %s %s%s\n",remote_ip, data->info,"");
+		fprintf(fp,"439 %s %s %s\n",remote_ip, data->info,"");
 		fclose(fp);
 		//end new
         log_d("Host LRU cache HIT: %s -> %s", remote_ip, data->info);
