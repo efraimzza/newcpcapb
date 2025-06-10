@@ -60,7 +60,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Context;
-import android.app.AlertDialog;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -69,6 +68,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.view.View.OnClickListener;
 import android.view.Gravity;
+//import android.app.AlertDialog;
 
 import java.util.Properties;
 import javax.mail.Authenticator;
