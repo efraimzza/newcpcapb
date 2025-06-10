@@ -66,6 +66,9 @@ android {
     }
 
     packagingOptions {
+        resources {
+            excludes += ['META-INF/NOTICE.md', 'META-INF/LICENSE.md']
+        }
         jniLibs {
             // NOTE: needed to unpack libpcapd.so when installed as app bundle
             useLegacyPackaging = true
