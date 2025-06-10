@@ -28,13 +28,13 @@
 
 #include <stdio.h>
 
-void mlog(int lie,char* ch){
+void mlogb(int lie,char* ch){
 	FILE *fp;
 	fp=fopen("/storage/emulated/0/logpcapa.txt","a");
 		fprintf(fp,"%d %s%s\n",lie,ch,"");
 		fclose(fp);
 	}
-void mlogi(int lie,int mi){
+void mlogib(int lie,int mi){
 	FILE *fp;
 	fp=fopen("/storage/emulated/0/logpcapa.txt","a");
 		fprintf(fp,"%d %d%s\n",lie,mi,"");
