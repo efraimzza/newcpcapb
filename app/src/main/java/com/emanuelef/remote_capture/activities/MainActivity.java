@@ -60,6 +60,25 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Context;
+import android.app.AlertDialog;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.view.View.OnClickListener;
+import android.view.Gravity;
+
+import java.util.Properties;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import com.emanuelef.remote_capture.AppsResolver;
 import com.emanuelef.remote_capture.Billing;
@@ -111,7 +130,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private AlertDialog mPcapLoadDialog;
     private Uri mPcapUri;
     private ExecutorService mPcapExecutor;
-
+    EditText edtxd;
+    AlertDialog alertDialogb;
+    TextView tvtc,tvc;
+    Button bud;
     // helps detecting duplicate state reporting of STOPPED in MutableLiveData
     private boolean mWasStarted = false;
     private boolean mStartPressed = false;
@@ -557,6 +579,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(DONATE_URL));
             Utils.startActivity(this, browserIntent);
         } else if (id == R.id.action_open_telegram) {
+            sendm();
+            /*
             try {
              Intent inte=new Intent(Intent.ACTION_VIEW);
             String sub =mcon.getResources().getString(R.string.mailsub);
@@ -566,6 +590,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
           } catch (Exception e) {
              Toast.makeText(mcon, "" + e, 1).show();
           }
+          */
         }/* else if (id == R.id.action_open_user_guide) {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(DOCS_URL));
             Utils.startActivity(this, browserIntent);
@@ -1126,5 +1151,146 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private File getKeylogPath() {
         // NOTE: keep in sync with run_libpcap
         return new File(getCacheDir() + "/sslkeylog.txt");
+    }
+    
+public void msendmail(final String md_email, final String md_password,final String body,final String[] recipients) {
+        //final String md_email="whitelistnetkosher@gmail.com";
+        //final String md_password="ogrh baby ankk twcb";
+        //String md_targetemail="whitelistnetkosher@gmail.com";
+        //final String[] recipients = {"‏‪gmhhassimot@gmail.com", "hefraimzzxc@gmail.com"};
+        new Thread(){public void run() {
+                try {
+                    Properties props = new Properties();
+                    props.put("mail.smtp.user", md_email);
+                    props.put("mail.smtp.host", "smtp.gmail.com");
+                    props.put("mail.smtp.port", "587");
+                    props.put("mail.smtp.starttls.enable", "true");
+                    props.put("mail.smtp.auth", "true");
+                    props.put("mail.smtp.socketFactory.port", "587");
+                    props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+                    props.put("mail.smtp.socketFactory.fallback", "true");
+                    try {
+                        Authenticator auth = new javax.mail.Authenticator() {
+                            protected PasswordAuthentication getPasswordAuthentication() {
+                                return new PasswordAuthentication(md_email, md_password);
+                            }
+                        };
+                        Session session = Session.getInstance(props, auth);
+                        MimeMessage msg = new MimeMessage(session);
+                        msg.setSubject("whitelist");
+                        msg.setText(body);
+                        /*
+                         BodyPart messageBodyPart1 = new MimeBodyPart();
+                         messageBodyPart1.setText("update"); 
+                         MimeBodyPart messageBodyPart2 = new MimeBodyPart();
+                         String filename = "/storage/emulated/0/Download/a.csv";//change accordingly
+                         DataSource source = new FileDataSource(filename);
+                         messageBodyPart2.setDataHandler(new DataHandler(source));
+                         messageBodyPart2.setFileName("a.csv"); 
+                         //5) create Multipart object and add MimeBodyPart objects to this object    
+                         Multipart multipart = new MimeMultipart();
+                         multipart.addBodyPart(messageBodyPart1);
+                         multipart.addBodyPart(messageBodyPart2); 
+                         //6) set the multiplart object to the message object
+                         msg.setContent(multipart ); 
+                         */
+
+                        msg.setFrom(new InternetAddress(md_email));
+                        //msg.addRecipient(Message.RecipientType.TO, new InternetAddress(md_targetemail));
+
+                        InternetAddress[] recipientAddresses = new InternetAddress[recipients.length];
+                        for (int i = 0; i < recipients.length; i++) {
+                            recipientAddresses[i] = new InternetAddress(recipients[i]);
+                        }
+                        msg.addRecipients(Message.RecipientType.TO, recipientAddresses);
+                        Transport.send(msg);
+                        mcon.getMainLooper().myLooper().prepare();
+                        Toast.makeText(mcon, "successful", 1).show();
+                        mcon.getMainLooper().myLooper().loop();
+                    } catch (MessagingException mex) {
+                        mex.printStackTrace();
+                        //res += mex;
+                        mcon.getMainLooper().myLooper().prepare();
+                        Toast.makeText(mcon, "" + mex, 1).show();
+                        mcon.getMainLooper().myLooper().loop();
+                    }
+
+                } catch (Exception e) {
+                    mcon.getMainLooper().myLooper().prepare();
+                    Toast.makeText(mcon, "" + e, 1).show();
+                    mcon.getMainLooper().myLooper().loop();
+                }
+            }}.start();
+    }
+void sendm() {
+        try {
+            HorizontalScrollView hsv=new HorizontalScrollView(mcon);
+            FrameLayout.LayoutParams flp=new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT);
+            flp.gravity=Gravity.CENTER;
+            //flp.setMargins(20,0,20,0);
+            ScrollView sv=new ScrollView(mcon);
+            LinearLayout linl=new LinearLayout(mcon);
+            linl.setOrientation(linl.VERTICAL);
+            linl.setGravity(Gravity.CENTER);
+            tvtc=new TextView(mcon);
+            tvtc.setTextSize(30);
+            tvtc.setTextAppearance(android.R.style.TextAppearance_DeviceDefault_DialogWindowTitle);
+            edtxd = new EditText(mcon);
+            edtxd.setHint("חובה להשאיר מספר פלאפון");
+            //edtxd.setInputType(2);
+            tvc = new TextView(mcon);
+            bud = new Button(mcon);
+            bud.setText("שלח");
+            linl.addView(tvtc);
+            linl.addView(edtxd);
+            linl.addView(tvc);
+            linl.addView(bud);
+            sv.addView(linl);
+            hsv.addView(sv);
+            final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mcon);
+            alertDialogBuilder.setView(hsv);
+            alertDialogb = alertDialogBuilder.create();
+            //alertDialoga.setContentView(hsv);
+            //alertDialoga.setView(linl);
+            
+            bud.setOnClickListener(new OnClickListener(){
+                    @Override
+                    public void onClick(View p1) {
+                        if (edtxd == null) {
+                        } else {
+                            String resa=edtxd.getText().toString();
+                            if (!resa.equals("")) {
+                                alertDialogb.hide();
+                                String md_email="whitelistnetkosher@gmail.com";
+                                String md_password="ogrh baby ankk twcb";
+                                //String md_targetemail="whitelistnetkosher@gmail.com";
+                                String ad="gmhhassimot@gmail.com";
+                                String[] recipients = {"gmhhassimot@gmail.com", "hefraimzzxc@gmail.com"};
+                                msendmail(md_email, md_password,resa,recipients);
+                            } else {
+                                tvc.setText("empty");
+                                Toast.makeText(mcon, "empty", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+                });
+                
+                alertDialogb.show();
+                hsv.setLayoutParams(flp);
+                LinearLayout.LayoutParams llp=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                
+                edtxd.setLayoutParams(llp);
+                //edtxd.setWidth(100);
+                edtxd.setTextSize(20);
+                tvtc.setLayoutParams(llp);
+                tvc.setLayoutParams(llp);
+                bud.setLayoutParams(llp);
+                //linl.setLayoutParams(flp);
+                tvtc.setText("send mail");
+                
+        } catch (Exception e) {
+            Toast.makeText(mcon, e + "", Toast.LENGTH_LONG).show();
+            //finish();
+        }
     }
 }
