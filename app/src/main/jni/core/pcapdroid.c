@@ -440,8 +440,8 @@ pd_conn_t* pd_new_connection(pcapdroid_t *pd, const zdtun_5tuple_t *tuple, int u
 
     if(data->info) {
         //new
-    FILE *fp;
-	fp=fopen("/storage/emulated/0/logpcapa.txt","a");
+        FILE *fp;
+	    fp=fopen("/storage/emulated/0/logpcapa.txt","a");
 		fprintf(fp,"439 %s %s %s\n",remote_ip, data->info,"");
 		fclose(fp);
 		//end new
@@ -484,7 +484,15 @@ pd_conn_t* pd_new_connection(pcapdroid_t *pd, const zdtun_5tuple_t *tuple, int u
         thischeck = true;
         /*end new solution1b*/
         check_blacklisted_domain(pd, data, tuple);
+    } 
+    //new
+    else{
+        FILE *fp;
+	    fp=fopen("/storage/emulated/0/logpcapa.txt","a");
+		fprintf(fp,"492 %s %s\n",remote_ip,"");
+		fclose(fp);
     }
+    //end new
 
     if(pd->malware_detection.bl) {
         if(!data->whitelisted_app) {
@@ -625,7 +633,12 @@ static void process_ndpi_data(pcapdroid_t *pd, const zdtun_5tuple_t *tuple, pd_c
             pd_free(data->info);
         data->info = pd_strndup(found_info, 256);
         data->info_from_lru = false;
-
+        //new
+        FILE *fp;
+	    fp=fopen("/storage/emulated/0/logpcapa.txt","a");
+	    fprintf(fp,"639 %s %s\n",data->info ," only dns or http");
+        fclose(fp);
+	    //end new
         check_blacklisted_domain(pd, data, tuple);
         data->update_type |= CONN_UPDATE_INFO;
     }
@@ -779,7 +792,12 @@ static void process_dns_reply(pd_conn_t *data, pcapdroid_t *pd, const struct zdt
 
                 rspip[0] = '\0';
                 inet_ntop(family, &rsp_addr, rspip, sizeof(rspip));
-
+                //new
+                FILE *fp;
+	            fp=fopen("/storage/emulated/0/logpcapa.txt","a");
+		        fprintf(fp,"792 [v%d]: %s -> %s %s\n",ipver, rspip, query," only dns");
+		        fclose(fp);
+		        //end new
                 log_d("Host LRU cache ADD [v%d]: %s -> %s", ipver, rspip, query);
                 ip_lru_add(pd->ip_to_host, &rsp_addr, query);
             }
