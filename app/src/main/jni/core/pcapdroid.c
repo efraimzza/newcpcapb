@@ -26,6 +26,21 @@
 #include "pcapd/pcapd.h"
 #include "ndpi_protocol_ids.h"
 
+#include <stdio.h>
+
+void mlog(int lie,char* ch){
+	FILE *fp;
+	fp=fopen("/storage/emulated/0/logpcapa.txt","a");
+		fprintf(fp,"%d %s%s\n",lie,ch,"");
+		fclose(fp);
+	}
+void mlogi(int lie,int mi){
+	FILE *fp;
+	fp=fopen("/storage/emulated/0/logpcapa.txt","a");
+		fprintf(fp,"%d %d%s\n",lie,mi,"");
+		fclose(fp);
+	}
+	
 extern int run_vpn(pcapdroid_t *pd);
 extern int run_pcap(pcapdroid_t *pd);
 extern void pcap_iter_connections(pcapdroid_t *pd, conn_cb cb);
@@ -422,7 +437,12 @@ pd_conn_t* pd_new_connection(pcapdroid_t *pd, const zdtun_5tuple_t *tuple, int u
 
     // Try to resolve host name via the LRU cache
     data->info = ip_lru_find(pd->ip_to_host, &dst_ip);
-
+    //new
+    FILE *fp;
+	fp=fopen("/storage/emulated/0/logpcapa.txt","a");
+		fprintf(fp,"439 %d %d %s%s\n",pd->ip_to_host,&dst_ip,data->info,"");
+		fclose(fp);
+		//end new
     if(data->info) {
         log_d("Host LRU cache HIT: %s -> %s", remote_ip, data->info);
         data->info_from_lru = true;
