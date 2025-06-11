@@ -47,6 +47,8 @@ import android.net.VpnService;
 import android.net.Uri;
 import android.os.UserManager;
 import android.os.Build;
+import android.provider.Settings;
+import android.Manifest;
 
 import android.content.SharedPreferences;
 import android.widget.Button;
@@ -200,6 +202,14 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         mFilterIcon = filterRow.findViewById(R.id.icon);
 
         filterTitle.setText(R.string.target_apps);
+
+        if(!hasManageExternalStoragePermission(mcon)){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                requestManageExternalStoragePermission(mcon);
+            } else if (!hasWriteExternalStoragePermission(mcon)) {
+                requestWriteExternalStoragePermission(mActivity);
+            }
+        }
 
         mAppFilterSwitch.setOnClickListener((buttonView) -> {
             mAppFilterSwitch.setChecked(!mAppFilterSwitch.isChecked());
@@ -940,6 +950,39 @@ boolean succ=false;
             }
             Toast.makeText(mcon, ""+e2+editable, 1).show();
             //tv1.setText(editable);
+        }
+    }
+    
+    // Check if Manage External Storage permission is granted (for Android 11+)
+    public static boolean hasManageExternalStoragePermission(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            return Environment.isExternalStorageManager();
+        } else {
+            // For below Android 11, use normal READ/WRITE permissions
+            int writePermission = context.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, android.os.Process.myPid(), android.os.Process.myUid());
+            return writePermission == PackageManager.PERMISSION_GRANTED;
+        }
+    }
+
+    public static void requestManageExternalStoragePermission(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            try {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                intent.setData(Uri.parse("package:" + context.getPackageName()));
+                context.startActivity(intent);
+            } catch (Exception e) {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                context.startActivity(intent);
+            }
+        }
+    }
+    public static boolean hasWriteExternalStoragePermission(Context context) {
+        int permissionCheck = context.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, android.os.Process.myPid(), android.os.Process.myUid());
+        return permissionCheck == PackageManager.PERMISSION_GRANTED;
+    }
+    public static void requestWriteExternalStoragePermission(Activity activity) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            activity.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 101);
         }
     }
 }
