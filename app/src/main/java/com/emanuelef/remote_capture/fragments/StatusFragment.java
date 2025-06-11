@@ -168,7 +168,8 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         requireActivity().addMenuProvider(this, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
         return inflater.inflate(R.layout.status, container, false);
     }
-
+    
+    @Deprecated
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -230,7 +231,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         mend=true;
         }}.start();
        
-new Handler().post(new Runnable(){
+        new Handler().post(new Runnable(){
 
                 @Override
                 public void run() {
@@ -601,6 +602,7 @@ boolean succ=false;
 			Toast.makeText(mcon, "" + e, Toast.LENGTH_SHORT).show();
 		}
 	}
+	@Deprecated
 	void mremovepcapmdm() {
 		try {
             DevicePolicyManager dpm=(DevicePolicyManager)mcon.getSystemService("device_policy");
