@@ -70,7 +70,7 @@ public class PCAPdroid extends Application {
         super.onCreate();
 
         if(!isUnderTest())
-            Log.init(getCacheDir().getAbsolutePath());
+            Log.init(getFilesDir().getAbsolutePath());
 
         Utils.BuildType buildtp = Utils.getVerifiedBuild(this);
         Log.i(TAG, "Build type: " + buildtp);

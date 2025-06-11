@@ -23,7 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class Log {
-    public static final int LOG_LEVEL_INFO = 4;
+    public static final int LOG_LEVEL_INFO = 0;
     public static final String DEFAULT_LOGGER_PATH = "pcapdroid.log";
     public static final String ROOT_LOGGER_PATH = "pcapd.log";
     public static final String MITM_LOGGER_PATH = "mitmaddon.log";
