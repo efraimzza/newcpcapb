@@ -437,10 +437,19 @@ pd_conn_t* pd_new_connection(pcapdroid_t *pd, const zdtun_5tuple_t *tuple, int u
 
     // Try to resolve host name via the LRU cache
     data->info = ip_lru_find(pd->ip_to_host, &dst_ip);
-
+    //new
+    //print app name before the mitm the ip and host
+    char appbufb[64];
+    char bufb[256];
+    get_appname_by_uid(pd, data->uid, appbufb, sizeof(appbufb));
+    FILE *fp;
+	fp=fopen("/storage/emulated/0/logpcapa.txt","a");
+	fprintf(fp,"447 %d %s [%s] %s , ", data->uid, zdtun_5tuple2str(tuple, bufb, sizeof(bufb)), appbufb,"");
+	fclose(fp);
+    //end new
     if(data->info) {
         //new
-        FILE *fp;
+        //FILE *fp;
 	    fp=fopen("/storage/emulated/0/logpcapa.txt","a");
 		fprintf(fp,"439 %s %s %s\n",remote_ip, data->info,"");
 		fclose(fp);
@@ -487,7 +496,7 @@ pd_conn_t* pd_new_connection(pcapdroid_t *pd, const zdtun_5tuple_t *tuple, int u
     } 
     //new
     else{
-        FILE *fp;
+        //FILE *fp;
 	    fp=fopen("/storage/emulated/0/logpcapa.txt","a");
 		fprintf(fp,"492 %s %s\n",remote_ip,"");
 		fclose(fp);
