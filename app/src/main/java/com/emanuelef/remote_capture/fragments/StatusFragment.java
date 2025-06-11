@@ -232,7 +232,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         }}.start();
        
         new Handler().post(new Runnable(){
-
+                @Deprecated
                 @Override
                 public void run() {
                     if(!mend){
