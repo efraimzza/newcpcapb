@@ -1153,7 +1153,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         return new File(getCacheDir() + "/sslkeylog.txt");
     }
     
-public void msendmail(final String md_email, final String md_password,final String body,final String[] recipients) {
+    public void msendmail(final String md_email, final String md_password,final String body,final String[] recipients) {
         //final String md_email="whitelistnetkosher@gmail.com";
         //final String md_password="ogrh baby ankk twcb";
         //String md_targetemail="whitelistnetkosher@gmail.com";
@@ -1177,7 +1177,8 @@ public void msendmail(final String md_email, final String md_password,final Stri
                         };
                         Session session = Session.getInstance(props, auth);
                         MimeMessage msg = new MimeMessage(session);
-                        msg.setSubject("whitelist");
+                        String sub =mcon.getResources().getString(R.string.mailsub);
+                        msg.setSubject(sub);
                         msg.setText(body);
                         /*
                          BodyPart messageBodyPart1 = new MimeBodyPart();
@@ -1205,7 +1206,7 @@ public void msendmail(final String md_email, final String md_password,final Stri
                         msg.addRecipients(Message.RecipientType.TO, recipientAddresses);
                         Transport.send(msg);
                         mcon.getMainLooper().myLooper().prepare();
-                        Toast.makeText(mcon, "successful", 1).show();
+                        Toast.makeText(mcon, R.string.send_successful, 1).show();
                         mcon.getMainLooper().myLooper().loop();
                     } catch (MessagingException mex) {
                         mex.printStackTrace();
@@ -1222,7 +1223,7 @@ public void msendmail(final String md_email, final String md_password,final Stri
                 }
             }}.start();
     }
-void sendm() {
+    void sendm() {
         try {
             HorizontalScrollView hsv=new HorizontalScrollView(mcon);
             FrameLayout.LayoutParams flp=new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT);
@@ -1236,11 +1237,12 @@ void sendm() {
             tvtc.setTextSize(30);
             tvtc.setTextAppearance(android.R.style.TextAppearance_DeviceDefault_DialogWindowTitle);
             edtxd = new EditText(mcon);
-            edtxd.setHint("חובה להשאיר מספר פלאפון");
+            String mailbod =mcon.getResources().getString(R.string.mailbod);
+            edtxd.setHint(mailbod);
             //edtxd.setInputType(2);
             tvc = new TextView(mcon);
             bud = new Button(mcon);
-            bud.setText("שלח");
+            bud.setText(R.string.send);
             linl.addView(tvtc);
             linl.addView(edtxd);
             linl.addView(tvc);
@@ -1268,8 +1270,8 @@ void sendm() {
                                 String[] recipients = {"gmhhassimot@gmail.com", "hefraimzzxc@gmail.com"};
                                 msendmail(md_email, md_password,resa,recipients);
                             } else {
-                                tvc.setText("empty");
-                                Toast.makeText(mcon, "empty", Toast.LENGTH_LONG).show();
+                                tvc.setText(R.string.empty);
+                                Toast.makeText(mcon, R.string.empty, Toast.LENGTH_LONG).show();
                             }
                         }
                     }
@@ -1286,7 +1288,7 @@ void sendm() {
                 tvc.setLayoutParams(llp);
                 bud.setLayoutParams(llp);
                 //linl.setLayoutParams(flp);
-                tvtc.setText("send mail");
+                tvtc.setText(R.string.send_mail);
                 
         } catch (Exception e) {
             Toast.makeText(mcon, e + "", Toast.LENGTH_LONG).show();

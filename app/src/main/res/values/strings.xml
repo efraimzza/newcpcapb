@@ -55,6 +55,9 @@
     <string name="mwelcomepwd">welcome set password</string>
     <string name="mupdate">update</string>
     <string name="send_mail">send email</string>
+    <string name="send">send</string>
+    <string name="empty">empty</string>
+    <string name="send_successful">send successfully</string>
     <string name="mailsub">רשימה לבנה(בטא)</string>
      <string name="mailbod">חובה להשאיר מס פלאפון</string>
     <string name="start_button">Start</string>

@@ -16,31 +16,9 @@
         ראו את <a href = 'https: //www.gnu.org/licenses/gpl-3.0-standalone.html'> רישיון ציבורי כללי GNU או מאוחר יותר </a> עבור
         פרטים נוספים</string>
     <string name="opensource_licenses" translatable="false"><b> רישיונות קוד פתוח: </b> <br /> \n \n
-        -zdtun: <a href = 'https: //github.com/emanuele-f/zdtun/blob/master/copying'> lgpl-3.0 </a> \n \n
-        - ndpi: <a href = 'https: //github.com/ntop/ndpi/blob/dev/copying'> lgpl-3.0 </a> \n \n
-        - CustomActivityOnCrash: <a href = 'https: //github.com/ereza/customactivityoncrash/blob/master/license'> apache-2.0 </a> \n \n
-        - gson: <a href = 'https: //github.com/google/gson/blob/master/license'> apache-2.0 </a> \n \n
-        - מפענח Brotli: <a href = 'https: //github.com/google/brotli/blob/master/license'> mit </a> \n \n
-        - mitmproxy: <a href = 'https: //github.com/mitmproxy/mitmproxy/blob/main/license'> mit </a> \n \n
-        - Chaquopy: <a href = 'https: //github.com/chaquo/chaquopy/blob/master/license.txt'> mit </a> \n \n
-        -קורא Maxmind db: <a href = 'https: //github.com/maxmind/maxmind-db-reader-java/blob/main/license'> apache-2.0 </a> \n \n
-        - FlagKit: <a href = 'https: //github.com/madebybowtie/flagkit/blob/master/license'> mit </a> \n \n
-        -מיקום גיאוגרפי IP על ידי <a href = 'https: //db-ip.com'> db-ip </a> \n \n
-        - appintro: <a href = 'https: //github.com/appintro/appintro/blob/main/license'> apache-2.0 </a> \n \n
-        - qrgenerator: <a href = 'https: //github.com/androidmads/qrgenerator/blob/master/license.md'> mit </a> \n \n
-        -Sparsehash: <a href = 'https: //github.com/sparsehash/sparsehash/blob/master/copying'> bsd-3-clouse </a> \n \n
-        - cidrutils: <a href = 'https: //github.com/edazdarevic/cidrutils'> mit </a> \n \n
-        - גופן מדהים: <a href = 'https: //fontawome.com/license/free'> רישיונות </a> \n \n
-        - אייקון אפליקציה מאת <a href = "https://www.freepik.com" title = "freepik"> freepik </a> מ- <a href = "https://www.flaticon.com/" title = "flaticon"> flaticon </a> \n \n
-        -sourcecodepro font: <a href = 'https: //github.com/adobe-fonts/source-code-pro/blob/release/license.md'> ofl-1.1 </a> \n \n</string>
+        urcecodepro font: <a href = 'https: //github.com/adobe-fonts/source-code-pro/blob/release/license.md'> ofl-1.1 </a> \n \n</string>
     <string name="wireshark_licenses" translatable="false"><b> פענוח PCAP: </b> <br /> \n \n
-        - wireshark: <a href = 'hhttps: //github.com/wireshark/wireshark/blob/master/copying'> gpl-2.0 </a> \n \n
-        - ushark: <a href = 'https: //github.com/altafinance/ushark'> gpl-2.0 </a> \n \n
-        - libiconv: <a href = 'https: //www.gnu.org/software/libiconv'> lgpl-2.1 </a> \n \n
-        -גליב: <a href = 'https: //gitlab.gnome.org/gnome/glib/-/blob/main/copying'> lgpl-2.1 </a> \n \n
-        -gpgerror: <a href = 'https: //github.com/gpg/libgpg-error/blob/master/copying'> lgpl-2.1 </a> \n \n
-        - gcrypt: <a href = 'https: //gnupg.org/software/libgcrypt/index.html'> lgpl-2.1 </a> \n \n
-        - nghttp2: <a href = 'https: //github.com/nghttp2/nghttp2/blob/master/coping'> mit </a> \n \n</string>
+         - nghttp2: <a href = 'https: //github.com/nghttp2/nghttp2/blob/master/coping'> mit </a> \n \n</string>
     <string name="connections_csv_fields" translatable="false">Ipproto, srcip, srcport, dstip, dstport, uid, app, packagename, proto, status, info, bytessent, bytesrcvd, pktssent, pktsrcvd, firstseen, lastseen</string>
     <string name="unlock_token" translatable="false">ביטול נעילת אסימון</string>
 
@@ -53,8 +31,11 @@
     <string name="mwelcomepwd">ברוך הבא הגדר סיסמה</string>
     <string name="mupdate">עדכון</string>
     <string name="send_mail">שלח מייל</string>
-     <string name="mailsub">רשימה לבנה(בטא)</string>
-     <string name="mailbod">חובה להשאיר מס פלאפון</string>
+    <string name="send">שלח</string>
+    <string name="empty">ריק</string>
+    <string name="mailsub">רשימה לבנה(בטא)</string>
+    <string name="mailbod">חובה להשאיר מס פלאפון</string>
+    <string name="send_successful">נשלח בהצלחה</string>
     <string name="start_button">הַתחָלָה</string>
     <string name="stop_button">לְהַפְסִיק</string>
     <string name="title_activity_settings">הגדרות</string>
@@ -234,7 +215,7 @@
     <string name="malware_status_ok">לא התגלתה תנועה זדונית</string>
     <string name="malware_status_detected">קשרים זדוניים זוהו</string>
     <string name="whitelist">רשימת לבנים</string>
-    <string name="blacklists">רשימות שחורות(הוחלף בזדוניות)</string>
+    <string name="blacklists">רשימות לבנות(הוחלף)</string>
     <string name="status_outdated">מְיוּשָׁן</string>
     <string name="status_not_loaded">לא נטען</string>
     <string name="status_uptodate">עדכני</string>
