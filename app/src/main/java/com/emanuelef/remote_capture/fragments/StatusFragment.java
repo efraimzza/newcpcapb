@@ -50,6 +50,7 @@ import android.os.Build;
 import android.provider.Settings;
 import android.Manifest;
 
+import android.os.Environment;
 import android.content.SharedPreferences;
 import android.widget.Button;
 import android.app.AlertDialog;
@@ -980,7 +981,7 @@ boolean succ=false;
         int permissionCheck = context.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, android.os.Process.myPid(), android.os.Process.myUid());
         return permissionCheck == PackageManager.PERMISSION_GRANTED;
     }
-    public static void requestWriteExternalStoragePermission(Activity activity) {
+    public static void requestWriteExternalStoragePermission(MainActivity activity) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
             activity.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 101);
         }
