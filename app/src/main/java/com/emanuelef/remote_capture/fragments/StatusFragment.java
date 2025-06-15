@@ -126,7 +126,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
     private TextView removemdm;
     private TextView tvaa;
     private TextView tvab;
-    private TextView tvac;
+    TextView tvac;
     //private View mQuickSettings;
     private MainActivity mActivity;
     private SharedPreferences mPrefs;
@@ -1052,7 +1052,7 @@ enum sModetype{
                     public void onCheckedChanged(RadioGroup parent, int p2){
                         try{
                             RadioButton rt=parent.findViewById( parent.getCheckedRadioButtonId());
-                            tvmode.setText(rt.getText());
+                            tvac.setText(rt.getText());
                             String so=rt.getText().toString();
                             smtype=sModetype.valueOf(so);
                             spe.putString(modesp,smtype.name());
