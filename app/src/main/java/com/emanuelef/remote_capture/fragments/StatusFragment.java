@@ -75,6 +75,8 @@ import java.io.OutputStream;
 import android.os.Handler;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -264,7 +266,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
                 }
             });
         });
-	    sp=getSharedPreferences(mcon.getPackageName(),mcon.MODE_PRIVATE);
+	    sp=mcon.getSharedPreferences(mcon.getPackageName(),mcon.MODE_PRIVATE);
         spe=sp.edit();
         
         if(sp.getString(modesp,"").equals("")){
@@ -308,7 +310,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         PCAPdroid.getInstance().getMalwareWhitelist().addApp(mcon.getPackageName());
         sp = mcon.getSharedPreferences(mcon.getPackageName(), mcon.MODE_PRIVATE);
 	if (sp.getString("pwd", "").equals("")) {
-            checkpassword(true);
+            checkpassword(true,"welcome");
         }
     }
 boolean succ=false;
@@ -899,13 +901,13 @@ enum sModetype{
                             String resa=edtxc.getText().toString();
                             String pwd=sp.getString("pwd", "");
                             if (pwd.equals(resa) && !resa.equals("")) {
-                                if(todo.equals("")){
+                                if(mtodo.equals("")){
 				    if (change) {
                                     setpassword();
 				}else{
 				      mremovepcapmdm();
 				}
-				}else if(todo.equals("changemode")){
+				}else if(mtodo.equals("changemode")){
 			             mradiodialog();
 				}
 				    alertDialoga.hide();
