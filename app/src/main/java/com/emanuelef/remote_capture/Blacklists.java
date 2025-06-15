@@ -114,8 +114,6 @@ sp=mContext.getSharedPreferences(mContext.getPackageName(),mContext.MODE_PRIVATE
         //domains
         addList("domains white", BlacklistDescriptor.Type.DOMAIN_BLACKLIST,"domainswhite.txt",
                 "https://raw.githubusercontent.com/efraimzz/Mywhitelistdomains/refs/heads/main/domainswhite.txt");
-
-
         // IPs
         /*addList("Emerging Threats", BlacklistDescriptor.Type.IP_BLACKLIST, "emerging-Block-IPs.txt",
                 "https://rules.emergingthreats.net/fwrules/emerging-Block-IPs.txt");
@@ -129,22 +127,12 @@ sp=mContext.getSharedPreferences(mContext.getPackageName(),mContext.MODE_PRIVATE
         */
                 break;
             case all:
-                  
-        
-        
-        addList("domains white", BlacklistDescriptor.Type.DOMAIN_BLACKLIST,"domainswhiteall.txt",
+        addList("domains white all", BlacklistDescriptor.Type.DOMAIN_BLACKLIST,"domainswhiteall.txt",
                 "https://raw.githubusercontent.com/efraimzz/Mywhitelistdomains/refs/heads/main/domainswhiteall.txt");
-
-
         // IPs
-        
-        addList("ips white", BlacklistDescriptor.Type.IP_BLACKLIST, "ipswhiteall.txt",
+        addList("ips white all", BlacklistDescriptor.Type.IP_BLACKLIST, "ipswhiteall.txt",
                 "https://raw.githubusercontent.com/efraimzz/Mywhitelistdomains/refs/heads/main/ipswhiteall.txt");
- 
-        
         }
-    
-      
         // To review
         //https://github.com/StevenBlack/hosts
         //https://phishing.army/download/phishing_army_blocklist.txt
