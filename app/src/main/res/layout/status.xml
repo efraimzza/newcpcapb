@@ -25,7 +25,7 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvb">
+            app:layout_constraintTop_toBottomOf="@id/tvc">
 
             <TextView
                 android:id="@+id/collector_info_text"
@@ -127,7 +127,20 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-        
+        <TextView
+            android:id="@+id/tvc"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="300dp"
+            android:background="@drawable/rounded_bg"
+            android:gravity="center"
+            android:text="mode"
+            android:textSize="20sp"
+            android:focusable="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
         <LinearLayout
             android:id="@+id/quick_settings"
             android:layout_width="match_parent"
@@ -136,7 +149,7 @@
             android:layout_marginTop="35dp"
             android:padding="10dp"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/tvb"
+            app:layout_constraintTop_toBottomOf="@id/tvc"
             app:layout_constraintStart_toStartOf="parent">
 
             <androidx.appcompat.widget.AppCompatSpinner
