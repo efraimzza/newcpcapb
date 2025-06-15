@@ -1063,6 +1063,13 @@ enum sModetype{
                             smtype=sModetype.valueOf(so);
                             spe.putString(modesp,smtype.name());
                             spe.commit();
+				switch (smtype){
+                case multimedia:
+                    tvac.setText(R.string.mmode_multimedia);
+                    break;
+                case all:
+                    tvac.setText(R.string.mmode_all);
+				}
                             Toast.makeText(mcon,""+rt.getText(),0).show();
                             alertDialogmode.hide();
                         }catch(Exception e){
