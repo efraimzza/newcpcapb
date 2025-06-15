@@ -909,6 +909,12 @@ enum sModetype{
 				}
 				}else if(mtodo.equals("changemode")){
 			             mradiodialog();
+				}else if(mtodo.equals("removemdm")){
+			             mremovepcapmdm();
+				}else if(mtodo.equals("changepwd")){
+			             setpassword();
+				}else if(mtodo.equals("welcome")){
+			             setpassword();
 				}
 				    alertDialoga.hide();
                             } else {
