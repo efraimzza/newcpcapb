@@ -24,6 +24,12 @@ import android.content.SharedPreferences;
 import android.os.SystemClock;
 import android.util.ArrayMap;
 
+import android.content.SharedPreferences;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
+
 import androidx.collection.ArraySet;
 import androidx.preference.PreferenceManager;
 
@@ -70,6 +76,10 @@ public class Blacklists {
     private long mLastUpdateMonotonic;
     private int mNumDomainRules;
     private int mNumIPRules;
+    public static final String modesp="mode";
+    SharedPreferences sp;
+    SharedPreferences.Editor spe;
+    public static sModetype smtype;
 
     public Blacklists(Context ctx) {
         mLastUpdate = 0;
@@ -79,11 +89,29 @@ public class Blacklists {
         mContext = ctx;
         mUpdateInProgress = false;
         mPrefs = PreferenceManager.getDefaultSharedPreferences(ctx);
-
-        // Domains
-        /*addList("Maltrail", BlacklistDescriptor.Type.DOMAIN_BLACKLIST,"maltrail-malware-domains.txt",
+        
+sp=mContext.getSharedPreferences(mContext.getPackageName(),mContext.MODE_PRIVATE);
+        spe=sp.edit();
+        
+        if(sp.getString(modesp,"").equals("")){
+            smtype=sModetype.multimedia;
+            spe.putString(modesp,smtype.name());
+            spe.commit();
+            Toast.makeText(mContext, smtype.name()+" is default",1).show();
+        }else{
+            try{
+                smtype=sModetype.valueOf(sp.getString(modesp,""));
+                Toast.makeText(mContext, smtype.name()+ " is now",1).show();
+            }catch(Exception e){
+                Toast.makeText(mContext, e+"",1).show();
+            }
+        }
+        switch (smtype){
+            case multimedia:
+                  /*addList("Maltrail", BlacklistDescriptor.Type.DOMAIN_BLACKLIST,"maltrail-malware-domains.txt",
                 "https://raw.githubusercontent.com/stamparm/aux/master/maltrail-malware-domains.txt");
         */
+        //domains
         addList("domains white", BlacklistDescriptor.Type.DOMAIN_BLACKLIST,"domainswhite.txt",
                 "https://raw.githubusercontent.com/efraimzz/Mywhitelistdomains/refs/heads/main/domainswhite.txt");
 
@@ -99,6 +127,24 @@ public class Blacklists {
         addList("DigitalSide Threat-Intel", BlacklistDescriptor.Type.IP_BLACKLIST,  "digitalsideit_ips.txt",
                 "https://raw.githubusercontent.com/davidonzo/Threat-Intel/master/lists/latestips.txt");
         */
+                break;
+            case all:
+                  
+        
+        
+        addList("domains white", BlacklistDescriptor.Type.DOMAIN_BLACKLIST,"domainswhiteall.txt",
+                "https://raw.githubusercontent.com/efraimzz/Mywhitelistdomains/refs/heads/main/domainswhiteall.txt");
+
+
+        // IPs
+        
+        addList("ips white", BlacklistDescriptor.Type.IP_BLACKLIST, "ipswhiteall.txt",
+                "https://raw.githubusercontent.com/efraimzz/Mywhitelistdomains/refs/heads/main/ipswhiteall.txt");
+ 
+        
+        }
+    
+      
         // To review
         //https://github.com/StevenBlack/hosts
         //https://phishing.army/download/phishing_army_blocklist.txt
@@ -107,7 +153,10 @@ public class Blacklists {
         deserialize();
         checkFiles();
     }
-
+enum sModetype{
+        multimedia,
+        all;
+}
     private void addList(String label, BlacklistDescriptor.Type tp, String fname, String url) {
         BlacklistDescriptor item = new BlacklistDescriptor(label, tp, fname, url);
         mLists.add(item);
