@@ -124,6 +124,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
     private TextView removemdm;
     private TextView tvaa;
     private TextView tvab;
+    private TextView tvac;
     //private View mQuickSettings;
     private MainActivity mActivity;
     private SharedPreferences mPrefs;
@@ -140,7 +141,10 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
     Button bua,bub,buc;
     AlertDialog alertDialog,alertDialoga;
     PackageInstaller.Session openses;
-    
+    public static final String modesp="mode";
+	public static sModetype smtype;
+	AlertDialog alertDialogmode;
+	
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -185,6 +189,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         removemdm = view.findViewById(R.id.removemdm);
         tvaa = view.findViewById(R.id.tva);
         tvab = view.findViewById(R.id.tvb);
+	    tvac = view.findViewById(R.id.tvc);
       //  setbuttonsmdm();
         
         //mQuickSettings = view.findViewById(R.id.quick_settings);
@@ -229,10 +234,10 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         });
 
         removemdm.setOnClickListener(v -> {
-            checkpassword(false);
+            checkpassword(false,"removemdm");
         });
         tvaa.setOnClickListener(v -> {
-            checkpassword(true);
+            checkpassword(true,"changepwd");
         });
         tvab.setOnClickListener(v -> {
        
@@ -259,7 +264,34 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
                 }
             });
         });
-            
+	    sp=getSharedPreferences(mcon.getPackageName(),mcon.MODE_PRIVATE);
+        spe=sp.edit();
+        
+        if(sp.getString(modesp,"").equals("")){
+            smtype=sModetype.multimedia;
+            spe.putString(modesp,smtype.name());
+            spe.commit();
+            Toast.makeText(mcon, smtype.name()+" is default",1).show();
+        }else{
+            try{
+                smtype=sModetype.valueOf(sp.getString(modesp,""));
+                Toast.makeText(mcon, smtype.name()+ " is now",1).show();
+            }catch(Exception e){
+                Toast.makeText(mcon, e+"",1).show();
+            }
+	}
+	    String curmodestr="";
+        switch (smtype){
+            case multimedia:
+                curmodestr = smtype.name();
+                break;
+            case all:
+                curmodestr = smtype.name();
+	}
+	    tvac.setText(curmodestr);
+            tvac.setOnClickListener(v -> {
+              checkpassword(true,"changemode");
+        });
 
         // Register for updates
         MitmReceiver.observeStatus(this, status -> refreshDecryptionStatus());
@@ -294,7 +326,10 @@ boolean succ=false;
         //mDecryptPcap.setVisible(PCAPdroid.getInstance().isUsharkAvailable());
         refreshStatus();
     }
-
+enum sModetype{
+        multimedia,
+        all;
+}
     @Override
     public boolean onMenuItemSelected(@NonNull MenuItem item) {
         return false;
@@ -795,7 +830,7 @@ boolean succ=false;
             Toast.makeText(mcon, e + "", Toast.LENGTH_LONG).show();
         }
     }
-    void checkpassword(final boolean change) {
+    void checkpassword(final boolean change,String mtodo) {
         try {
             sp = mcon.getSharedPreferences(mcon.getPackageName(), mcon.MODE_PRIVATE);
             if (sp.getString("pwd", "").equals("")) {
@@ -864,10 +899,14 @@ boolean succ=false;
                             String resa=edtxc.getText().toString();
                             String pwd=sp.getString("pwd", "");
                             if (pwd.equals(resa) && !resa.equals("")) {
-                                if (change) {
+                                if(todo.equals("")){
+				    if (change) {
                                     setpassword();
 				}else{
 				      mremovepcapmdm();
+				}
+				}else if(todo.equals("changemode")){
+			             mradiodialog();
 				}
 				    alertDialoga.hide();
                             } else {
@@ -986,4 +1025,77 @@ boolean succ=false;
             activity.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 101);
         }
     }
+	void mradiodialog(){
+        try{
+            RadioGroup r= new RadioGroup(mcon);
+            // r.setLayoutDirection(RadioButton.LAYOUT_DIRECTION_LTR);
+            RadioButton rba=new RadioButton(mcon);
+            rba.setText(sModetype.multimedia.name());
+            //  rba.setLayoutDirection(RadioButton.LAYOUT_DIRECTION_LTR);
+            rba.setLayoutParams(new RadioGroup.LayoutParams(RadioGroup.LayoutParams.MATCH_PARENT,RadioGroup.LayoutParams.MATCH_PARENT));
+            RadioButton rbb=new RadioButton(mcon);
+            rbb.setText(sModetype.all.name());
+            rbb.setLayoutParams(new RadioGroup.LayoutParams(RadioGroup.LayoutParams.MATCH_PARENT,RadioGroup.LayoutParams.MATCH_PARENT));
+            r.addView(rba);
+            r.addView(rbb);
+            switch (smtype){
+                case multimedia:
+                    rba.setChecked(true);
+                    break;
+                case all:
+                    rbb.setChecked(true);
+            }
+            r.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
+                    @Override
+                    public void onCheckedChanged(RadioGroup parent, int p2){
+                        try{
+                            RadioButton rt=parent.findViewById( parent.getCheckedRadioButtonId());
+                            tvmode.setText(rt.getText());
+                            String so=rt.getText().toString();
+                            smtype=sModetype.valueOf(so);
+                            spe.putString(modesp,smtype.name());
+                            spe.commit();
+                            Toast.makeText(mcon,""+rt.getText(),0).show();
+                            alertDialogmode.hide();
+                        }catch(Exception e){
+                            Toast.makeText(mcon,""+e,0).show();
+                        }
+                    }
+                });
+            final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mcon);
+            LinearLayout lip=new LinearLayout(mcon);
+            LinearLayout lipa=new LinearLayout(mcon);
+            LinearLayout lipb=new LinearLayout(mcon);
+            LinearLayout lipc=new LinearLayout(mcon);
+            TextView tvp=new TextView(mcon);
+            tvp.setText("mode");
+            tvp.setTextSize(30);
+            tvp.setTextAppearance(android.R.style.TextAppearance_DeviceDefault_DialogWindowTitle);
+            lip.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+            lip.setOrientation(LinearLayout.VERTICAL);
+            lipa.setOrientation(LinearLayout.VERTICAL);
+            lipb.setOrientation(LinearLayout.VERTICAL);
+            lipc.setOrientation(LinearLayout.VERTICAL);
+            lip.addView(lipa);
+            lip.addView(lipb);
+            lip.addView(lipc);
+            lipa.addView(tvp);
+            lipb.addView(r);
+            Button bu=new Button(mcon);
+            bu.setText("cancel");
+            lipc.addView(bu);
+            alertDialogBuilder.setView(lip);
+            alertDialogmode = alertDialogBuilder.create();
+            bu.setOnClickListener(new OnClickListener(){
+                    @Override
+                    public void onClick(View p1){
+                        alertDialogmode.hide();
+                    }
+                });
+            alertDialogmode.show();
+        }catch(Exception e){
+            Toast.makeText(mcon, "pa!"+e, 0).show();
+
+        }
+	}
 }
