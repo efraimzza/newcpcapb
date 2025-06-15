@@ -1058,7 +1058,7 @@ enum sModetype{
                     public void onCheckedChanged(RadioGroup parent, int p2){
                         try{
                             RadioButton rt=parent.findViewById( parent.getCheckedRadioButtonId());
-                            tvac.setText(rt.getText());
+                            //tvac.setText(rt.getText());
                             String so=rt.getText().toString();
                             smtype=sModetype.valueOf(so);
                             spe.putString(modesp,smtype.name());
