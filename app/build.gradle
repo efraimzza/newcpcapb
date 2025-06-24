@@ -31,10 +31,14 @@ android {
     }
     signingConfigs {
         debug {
-            storeFile file('debuga.jks')
-            storePassword System.getenv("KEYSTORE_PASSWORD")
-            keyPassword System.getenv("KEYSTORE_PASSWORD")
-            keyAlias 'debuga'
+            def keystorePath = System.getenv("KEYSTORE_PATH")
+                if (keystorePath != null) {
+                    storeFile file(keystorePath)
+                    storePassword System.getenv("KEYSTORE_PASSWORD")
+                    keyAlias System.getenv("KEY_ALIAS")
+                    keyPassword System.getenv("KEY_PASSWORD")
+                }
+            
         }
     }
     buildTypes {
