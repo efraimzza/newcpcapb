@@ -14,4 +14,6 @@ jobs:
           #echo "KEY_ALIAS=$(echo -n '${{ secrets.KEY_ALIAS }}')" >> $GITHUB_ENV
           #echo "KEY_PASSWORD=$(echo -n '${{ secrets.KEY_PASSWORD }}')" >> $GITHUB_ENV
           echo ${{secrets.KEYSTORE_PASSWORD}} > aa
-          echo $aa
+          echo $aa > a.txt
+          echo $pwd
+          
