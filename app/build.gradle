@@ -32,8 +32,8 @@ android {
     signingConfigs {
         debug {
             storeFile file('debuga.jks')
-            storePassword '13579@#'
-            keyPassword '13579@#'
+            storePassword System.getenv("KEYSTORE_PASSWORD")
+            keyPassword System.getenv("KEYSTORE_PASSWORD")
             keyAlias 'debuga'
         }
     }
