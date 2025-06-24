@@ -20,4 +20,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: a
-          path: $~
+          path: /home/runner/work/newcpcapb/newcpcapb/a.txt
