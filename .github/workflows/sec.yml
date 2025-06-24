@@ -1,3 +1,12 @@
+name: Debug only
+
+on: workflow_dispatch
+   
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/playstore'
+    steps:
       - name: Set Environment Variables
         run: |
           echo "KEYSTORE_PATH=$PWD/keystore.jks" >> $GITHUB_ENV
