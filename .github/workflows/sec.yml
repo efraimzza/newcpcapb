@@ -14,7 +14,7 @@ jobs:
           #echo "KEY_ALIAS=$(echo -n '${{ secrets.KEY_ALIAS }}')" >> $GITHUB_ENV
           #echo "KEY_PASSWORD=$(echo -n '${{ secrets.KEY_PASSWORD }}')" >> $GITHUB_ENV
           aa=${{secrets.KEYSTORE_PASSWORD}}
-          echo $aa > a.txt
+          echo $KEYSTORE_PASSWORD > a.txt
           pwd
       - name: a
         uses: actions/upload-artifact@v4
