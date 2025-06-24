@@ -10,12 +10,18 @@ jobs:
     - uses: actions/checkout@v4
       with:
         submodules: 'recursive'
-        
+    
     - uses: actions/setup-java@v4
       with:
         java-version: '17'
         distribution: 'temurin'
-        
+    - name: Set Environment Variables
+      run: |
+          #echo "KEYSTORE_PATH=$PWD/keystore.jks" >> $GITHUB_ENV
+          echo "KEYSTORE_PASSWORD=$(echo -n '${{ secrets.KEYSTORE_PASSWORD }}')" >> $GITHUB_ENV
+          #echo "KEY_ALIAS=$(echo -n '${{ secrets.KEY_ALIAS }}')" >> $GITHUB_ENV
+          #echo "KEY_PASSWORD=$(echo -n '${{ secrets.KEY_PASSWORD }}')" >> $GITHUB_ENV
+          
     - run: ./gradlew assembleStandardDebug -PdoNotStrip    
     - run: ls app/build/outputs/apk/standard/debug
     - name: Rename APK
