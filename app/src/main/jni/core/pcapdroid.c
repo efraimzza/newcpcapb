@@ -337,22 +337,40 @@ static void check_blacklisted_domain(pcapdroid_t *pd, pd_conn_t *data, const zdt
                 if(pd->malware_detection.whitelist && blacklist_match_domain(pd->malware_detection.whitelist, data->info)){
                     log_d("new Whitelisted domain [%s]: %s [%s]", data->info,
                           zdtun_5tuple2str(tuple, buf, sizeof(buf)), appbuf);
+                             //new
+        FILE *fp;
+	    fp=fopen("/storage/emulated/0/logpcapa.txt","a");
+	    fprintf(fp,"343 %s %s\n",data->info ," open");
+        fclose(fp);
+	    //end new
                           if(thischeck) domainopen=true;
                           thischeck=false;
                 }
                 else {
                     log_w("new Blacklisted domain [%s]: %s [%s]", data->info,
                           zdtun_5tuple2str(tuple, buf, sizeof(buf)), appbuf);
+                          //new
+        FILE *fp;
+	    fp=fopen("/storage/emulated/0/logpcapa.txt","a");
+	    fprintf(fp,"355 %s %s\n",data->info ," block");
+        fclose(fp);
+	    //end new
                     data->blacklisted_domain = true;
                     data->to_block = true;
                     char bufb[512];
                     FILE *fp;
 	                fp=fopen("/storage/emulated/0/logpcapa.txt","a");
-		            fprintf(fp,"346 m yes [%s]: %s [%s]\n", data->info,
+		            fprintf(fp,"363 m yes [%s]: %s [%s]\n", data->info,
                           zdtun_5tuple2str(tuple, bufb, sizeof(bufb)), appbuf);
 		            fclose(fp);
                 }
             }else{
+               //new
+        FILE *fp;
+	    fp=fopen("/storage/emulated/0/logpcapa.txt","a");
+	    fprintf(fp,"371 %s %s\n",data->info ," open");
+        fclose(fp);
+	    //end new
                   if(thischeck) domainopen=true;
                   thischeck=false;
             }
