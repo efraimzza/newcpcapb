@@ -358,7 +358,7 @@ static void check_blacklisted_domain(pcapdroid_t *pd, pd_conn_t *data, const zdt
                     data->blacklisted_domain = true;
                     data->to_block = true;
                     char bufb[512];
-                    FILE *fp;
+                  //  FILE *fp;
 	                fp=fopen("/storage/emulated/0/logpcapa.txt","a");
 		            fprintf(fp,"363 m yes [%s]: %s [%s]\n", data->info,
                           zdtun_5tuple2str(tuple, bufb, sizeof(bufb)), appbuf);
