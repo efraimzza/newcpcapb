@@ -362,7 +362,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void checkPermissions() {
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+        //if(Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 // Needed to write PCAP files
                 if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -372,8 +372,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         Utils.showToastLong(this, R.string.no_intent_handler_found);
                     }
                 }
+                if (checkSelfPermission("android.permission.WRITE_EXTERNAL_STORAGE") != 0) {
+                   MainActivity.this.requestPermissions(new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"}, 55);
+                }
+                if (checkSelfPermission("android.permission.READ_EXTERNAL_STORAGE") != 0) {
+                   MainActivity.this.requestPermissions(new String[]{"android.permission.READ_EXTERNAL_STORAGE"}, 55);
+                }
             }
-        }
+        //}
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if(checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
