@@ -127,6 +127,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
     private TextView tvaa;
     private TextView tvab;
     TextView tvac;
+    TextView tvad;
     //private View mQuickSettings;
     private MainActivity mActivity;
     private SharedPreferences mPrefs;
@@ -192,6 +193,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         tvaa = view.findViewById(R.id.tva);
         tvab = view.findViewById(R.id.tvb);
 	    tvac = view.findViewById(R.id.tvc);
+	    tvad = view.findViewById(R.id.tvd);
       //  setbuttonsmdm();
         
         //mQuickSettings = view.findViewById(R.id.quick_settings);
@@ -243,6 +245,24 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         });
         tvab.setOnClickListener(v -> {
        
+       try {
+      List<PackageInstaller.SessionInfo> lses= mcon.getPackageManager().getPackageInstaller().getAllSessions();
+      if (lses != null) {
+         for (PackageInstaller.SessionInfo pses:lses) {
+             if (pses != null) {
+                try {
+                    if (pses.getInstallerPackageName().equals(mcon.getPackageName())) {
+                       mcon.getPackageManager().getPackageInstaller().abandonSession(pses.getSessionId());
+                    }
+                } catch (Exception e) {  
+                    Toast.makeText(mcon, "" + e, 0).show();
+                }
+             }
+         }
+      }
+   } catch (Exception e) {
+           Toast.makeText(mcon, "" + e, 0).show();
+   }
         
         new Thread(){public void run(){
         succ= Utils.downloadFile("https://raw.githubusercontent.com/efraimzz/whitelist/refs/heads/main/whitelistbeta.apk", mcon.getFilesDir()+"/updatebeta.apk");
@@ -291,10 +311,16 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
                 curmodestr = smtype.name();
 	}
 	    tvac.setText(curmodestr);
-            tvac.setOnClickListener(v -> {
-              checkpassword(true,"changemode");
+        tvac.setOnClickListener(v -> {
+            checkpassword(true,"changemode");
         });
-
+        tvad.setOnClickListener(v -> {
+         if(CaptureService.isServiceActive()){
+            CaptureService.requestBlacklistsUpdate();
+            Toast.makeText(mcon, smtype.name()+ "updating...",1).show();
+            
+         }
+   });
         // Register for updates
         MitmReceiver.observeStatus(this, status -> refreshDecryptionStatus());
         CaptureService.observeStats(this, this::onStatsUpdate);

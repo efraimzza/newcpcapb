@@ -28,6 +28,14 @@ public class StatusReceiver extends BroadcastReceiver {
                 }
                 return;
             case -1:
+            try {
+      Intent inte= intent.getParcelableExtra("android.intent.extra.INTENT");
+      inte.addFlags(intent.FLAG_ACTIVITY_NEW_TASK);
+      context.startActivity(inte);
+   } catch (Exception e) {
+      Toast.makeText(context, ""+e, 1).show();
+   }
+   
                 Toast.makeText(context2, "מחכה לפעולת משתמש", 1).show();
                 try {
                    // MainActivity.tv1.setText("מחכה לפעולת משתמש");
