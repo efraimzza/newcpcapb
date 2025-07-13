@@ -317,7 +317,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         tvad.setOnClickListener(v -> {
          if(CaptureService.isServiceActive()){
             CaptureService.requestBlacklistsUpdate();
-            Toast.makeText(mcon, smtype.name()+ "updating...",1).show();
+            Toast.makeText(mcon, "updating...",1).show();
             
          }
    });
