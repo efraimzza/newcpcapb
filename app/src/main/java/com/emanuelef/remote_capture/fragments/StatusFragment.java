@@ -595,6 +595,8 @@ enum sModetype{
             dpm.addUserRestriction(compName, UserManager.DISALLOW_ADD_USER);
             dpm.addUserRestriction(compName, UserManager.DISALLOW_SAFE_BOOT);
             dpm.addUserRestriction(compName, UserManager.DISALLOW_CONFIG_VPN);
+            dpm.addUserRestriction(compName, UserManager.DISALLOW_CONFIG_TETHERING);
+            
 			VpnService.prepare(mcon);
             try {
                 p(dpm, compName, mcon.getPackageName(), true);
@@ -687,6 +689,8 @@ enum sModetype{
             dpm.clearUserRestriction(compName, UserManager.DISALLOW_ADD_USER);
             dpm.clearUserRestriction(compName, UserManager.DISALLOW_SAFE_BOOT);
             dpm.clearUserRestriction(compName, UserManager.DISALLOW_CONFIG_VPN);
+            dpm.clearUserRestriction(compName, UserManager.DISALLOW_CONFIG_TETHERING);
+            
             try {
                 p(dpm, compName, mcon.getPackageName(), false);
             } catch (PackageManager.NameNotFoundException e) {}
