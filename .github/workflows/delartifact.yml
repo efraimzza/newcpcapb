@@ -1,12 +1,8 @@
-name: del artifact
-
+name: Delete Old Artifacts
 on: workflow_dispatch
-   
-jobs:
-- name: Delete Old Artifacts
-    uses: actions/github-script@v6
-    id: artifact
-    with:
+ - uses: actions/github-script@v6
+     id: artifact
+     with:
       script: |
         const res = await github.rest.actions.listArtifactsForRepo({
           owner: context.repo.owner,
