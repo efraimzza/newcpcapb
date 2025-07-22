@@ -5,7 +5,9 @@ on:
 jobs:
   delete_artifacts: # הגדרת Job בשם "delete_artifacts"
     runs-on: ubuntu-latest # ה-Job ירוץ על מערכת הפעלה Ubuntu
-
+    permissions:
+      actions: write # הוספה חשובה: נותן הרשאת כתיבה לפעולות (כולל מחיקת artifacts)
+      
     steps:
       - name: List and Delete Artifacts # שם השלב
         uses: actions/github-script@v6 # שימוש בפעולה שמריצה סקריפט JS
