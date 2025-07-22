@@ -1,19 +1,41 @@
 name: Delete Old Artifacts
-on: workflow_dispatch
- - uses: actions/github-script@v6
-     id: artifact
-     with:
-      script: |
-        const res = await github.rest.actions.listArtifactsForRepo({
-          owner: context.repo.owner,
-          repo: context.repo.repo,
-        })
+on:
+  workflow_dispatch # מאפשר להפעיל את ה-workflow ידנית
 
-        res.data.artifacts
-          .forEach(({ id }) => {
-            github.rest.actions.deleteArtifact({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              artifact_id: id,
-            })
-          })
+jobs:
+  delete_artifacts: # הגדרת Job בשם "delete_artifacts"
+    runs-on: ubuntu-latest # ה-Job ירוץ על מערכת הפעלה Ubuntu
+
+    steps:
+      - name: List and Delete Artifacts # שם השלב
+        uses: actions/github-script@v6 # שימוש בפעולה שמריצה סקריפט JS
+        id: delete-artifact-step # ID עבור השלב, אם נרצה להתייחס אליו בהמשך
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const { data: { artifacts } } = await github.rest.actions.listArtifactsForRepo({
+              owner,
+              repo,
+              per_page: 100 // מומלץ להגדיל את כמות ה-artifacts שמחזירים בקריאה אחת
+            });
+
+            if (artifacts.length === 0) {
+              console.log('No artifacts found to delete.');
+              return;
+            }
+
+            console.log(`Found ${artifacts.length} artifacts to delete.`);
+
+            for (const artifact of artifacts) {
+              try {
+                await github.rest.actions.deleteArtifact({
+                  owner,
+                  repo,
+                  artifact_id: artifact.id,
+                });
+                console.log(`Successfully deleted artifact: ${artifact.name} (ID: ${artifact.id})`);
+              } catch (error) {
+                console.error(`Failed to delete artifact: ${artifact.name} (ID: ${artifact.id}) - ${error.message}`);
+              }
+            }
