@@ -64,16 +64,7 @@ public class MDMActivity extends Activity {
         btnRemoveMdm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    try {
-                        mDpm.clearDeviceOwnerApp(getPackageName());
-                    } catch (Exception e) {
-                        Toast.makeText(MDMActivity. this, "" + e, 1).show();
-                    }
-                    try {
-                        mDpm.removeActiveAdmin(mAdminComponentName);
-                    } catch (Exception e) {
-                        Toast.makeText(MDMActivity. this, "" + e, 1).show();
-                    }
+                    
                 }
             });
         // וודא שהאפליקציה היא אדמין
@@ -128,13 +119,13 @@ public class MDMActivity extends Activity {
             btnManageApps.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        requestPasswordAndSave(new Runnable() {
-                                @Override
-                                public void run() {
+                        //requestPasswordAndSave(new Runnable() {
+                         //       @Override
+                        //        public void run() {
                                     Intent intent = new Intent(MDMActivity.this, AppManagementActivity.class);
                                     startActivity(intent);
-                                }
-                            });
+                        //        }
+                         //   });
                     }
                 });
         }
