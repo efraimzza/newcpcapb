@@ -27,7 +27,7 @@
             android:icon="@drawable/ic_text_snippet" />
         <item
             android:id="@+id/manage_mdm"
-            android:title="@string/app_log"
+            android:title="@string/mdm_settings"
             android:icon="@drawable/ic_settings" />
         <item
             android:id="@+id/paid_features"

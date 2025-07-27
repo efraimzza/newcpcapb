@@ -38,7 +38,8 @@
     <string name="send_successful">נשלח בהצלחה</string>
     <string name="mmode_multimedia">מולטימדיה</string>
     <string name="mmode_all">הכל</string>
-    
+    <string name="mdm_settings">הגדרות מנהל מכשיר</string>
+        
     <string name="start_button">הַתחָלָה</string>
     <string name="stop_button">לְהַפְסִיק</string>
     <string name="title_activity_settings">הגדרות</string>

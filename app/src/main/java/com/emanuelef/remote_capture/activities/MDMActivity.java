@@ -53,20 +53,7 @@ public class MDMActivity extends Activity {
         }*/
         mDpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
         mAdminComponentName = new ComponentName(this, admin.class);
-        Button btnStartMdm = (Button) findViewById(R.id.btn_start_mdm);
-        btnStartMdm.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    
-                }
-            });
-        Button btnRemoveMdm = (Button) findViewById(R.id.btn_remove_mdm);
-        btnRemoveMdm.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    
-                }
-            });
+        
         // וודא שהאפליקציה היא אדמין
         //requestDeviceAdmin();
         try {

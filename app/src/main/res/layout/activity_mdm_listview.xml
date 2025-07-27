@@ -40,17 +40,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="שנה סיסמת אבטחה" />
-    <Button
-        android:id="@+id/btn_start_mdm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="הפעלת מנהל עם רוט" />
-    <Button
-        android:id="@+id/btn_remove_mdm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="הסרת מנהל" />
+
 
 </LinearLayout>
