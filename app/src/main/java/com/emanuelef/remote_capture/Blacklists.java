@@ -35,6 +35,9 @@ import androidx.preference.PreferenceManager;
 
 import com.emanuelef.remote_capture.interfaces.BlacklistsStateListener;
 import com.emanuelef.remote_capture.model.BlacklistDescriptor;
+
+import com.emanuelef.remote_capture.fragments.StatusFragment;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -79,7 +82,7 @@ public class Blacklists {
     public static final String modesp="mode";
     SharedPreferences sp;
     SharedPreferences.Editor spe;
-    public static sModetype smtype;
+    public static StatusFragment.sModetype smtype;
 
     public Blacklists(Context ctx) {
         mLastUpdate = 0;
@@ -94,13 +97,13 @@ sp=mContext.getSharedPreferences(mContext.getPackageName(),mContext.MODE_PRIVATE
         spe=sp.edit();
         
         if(sp.getString(modesp,"").equals("")){
-            smtype=sModetype.multimedia;
+            smtype=StatusFragment.sModetype.multimedia;
             spe.putString(modesp,smtype.name());
             spe.commit();
             Toast.makeText(mContext, smtype.name()+" is default",1).show();
         }else{
             try{
-                smtype=sModetype.valueOf(sp.getString(modesp,""));
+                smtype=StatusFragment.sModetype.valueOf(sp.getString(modesp,""));
                 Toast.makeText(mContext, smtype.name()+ " is now",1).show();
             }catch(Exception e){
                 Toast.makeText(mContext, e+"",1).show();
@@ -133,6 +136,26 @@ sp=mContext.getSharedPreferences(mContext.getPackageName(),mContext.MODE_PRIVATE
         addList("ips white all", BlacklistDescriptor.Type.IP_BLACKLIST, "ipswhiteall.txt",
                 "https://raw.githubusercontent.com/efraimzz/Mywhitelistdomains/refs/heads/main/ipswhiteall.txt");
         }
+        break;
+        case accmultimedia:
+                  /*addList("Maltrail", BlacklistDescriptor.Type.DOMAIN_BLACKLIST,"maltrail-malware-domains.txt",
+                "https://raw.githubusercontent.com/stamparm/aux/master/maltrail-malware-domains.txt");
+        */
+        //domains
+        addList("domains white", BlacklistDescriptor.Type.DOMAIN_BLACKLIST,"domainswhite.txt",
+                "https://raw.githubusercontent.com/efraimzz/Mywhitelistdomains/refs/heads/main/domainswhite.txt");
+        // IPs
+        /*addList("Emerging Threats", BlacklistDescriptor.Type.IP_BLACKLIST, "emerging-Block-IPs.txt",
+                "https://rules.emergingthreats.net/fwrules/emerging-Block-IPs.txt");
+        */
+        addList("ips white", BlacklistDescriptor.Type.IP_BLACKLIST, "ipswhite.txt",
+                "https://raw.githubusercontent.com/efraimzz/Mywhitelistdomains/refs/heads/main/ipswhite.txt");
+ 
+        /*
+        addList("DigitalSide Threat-Intel", BlacklistDescriptor.Type.IP_BLACKLIST,  "digitalsideit_ips.txt",
+                "https://raw.githubusercontent.com/davidonzo/Threat-Intel/master/lists/latestips.txt");
+        */
+                break;
         // To review
         //https://github.com/StevenBlack/hosts
         //https://phishing.army/download/phishing_army_blocklist.txt
@@ -141,10 +164,7 @@ sp=mContext.getSharedPreferences(mContext.getPackageName(),mContext.MODE_PRIVATE
         deserialize();
         checkFiles();
     }
-enum sModetype{
-        multimedia,
-        all;
-}
+
     private void addList(String label, BlacklistDescriptor.Type tp, String fname, String url) {
         BlacklistDescriptor item = new BlacklistDescriptor(label, tp, fname, url);
         mLists.add(item);

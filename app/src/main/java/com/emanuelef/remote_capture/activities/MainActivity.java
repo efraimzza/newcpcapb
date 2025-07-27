@@ -580,6 +580,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else if(id == R.id.open_log) {
             Intent intent = new Intent(MainActivity.this, LogviewActivity.class);
             startActivity(intent);
+        } else if(id == R.id.manage_mdm) {
+            Intent intent = new Intent(MainActivity.this, MDMActivity.class);
+            startActivity(intent);
         } else if (id == R.id.action_donate) {
             DONATE_URL="https://www.matara.pro/nedarimplus/online/?mosad=2813050";
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(DONATE_URL));
@@ -591,7 +594,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
              Intent inte=new Intent(Intent.ACTION_VIEW);
             String sub =mcon.getResources().getString(R.string.mailsub);
             String bod=mcon.getResources().getString(R.string.mailbod);
-            inte.setData(Uri.parse("mailto:‏‪gmhhassimot@gmail.com?subject=‬‏" + sub + "&body=" + bod));
+            inte.setData(Uri.parse("mailto:****@gmail.com?subject=u" + sub + "&body=" + bod));
             startActivity(inte);
           } catch (Exception e) {
              Toast.makeText(mcon, "" + e, 1).show();
@@ -1163,7 +1166,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         //final String md_email="whitelistnetkosher@gmail.com";
         //final String md_password="ogrh baby ankk twcb";
         //String md_targetemail="whitelistnetkosher@gmail.com";
-        //final String[] recipients = {"‏‪gmhhassimot@gmail.com", "hefraimzzxc@gmail.com"};
+        //final String[] recipients = {"****@gmail.com", "hefraimzzxc@gmail.com"};
         new Thread(){public void run() {
                 try {
                     Properties props = new Properties();
@@ -1272,8 +1275,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                                 String md_email="whitelistnetkosher@gmail.com";
                                 String md_password="ogrh baby ankk twcb";
                                 //String md_targetemail="whitelistnetkosher@gmail.com";
-                                String ad="gmhhassimot@gmail.com";
-                                String[] recipients = {"gmhhassimot@gmail.com", "hefraimzzxc@gmail.com"};
+                                String ad="****@gmail.com";
+                                String[] recipients = { "hefraimzzxc@gmail.com"};
                                 msendmail(md_email, md_password,resa,recipients);
                             } else {
                                 tvc.setText(R.string.empty);

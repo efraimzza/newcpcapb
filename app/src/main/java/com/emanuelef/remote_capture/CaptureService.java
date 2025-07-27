@@ -202,6 +202,7 @@ public class CaptureService extends VpnService implements Runnable {
         super.attachBaseContext(base.createConfigurationContext(Utils.getLocalizedConfig(base)));
     }
 
+    @Deprecated
     @Override
     public void onCreate() {
         Log.d(CaptureService.TAG, "onCreate");
@@ -213,6 +214,18 @@ public class CaptureService extends VpnService implements Runnable {
 
         INSTANCE = this;
         super.onCreate();
+        new Handler().postDelayed(new Runnable(){
+                @Deprecated
+                @Override
+                public void run() {
+                    new Handler().postDelayed(this,86400000);//24 hours
+                     if(CaptureService.isServiceActive()){
+                        CaptureService.requestBlacklistsUpdate();
+                     }
+                }
+            },86400000);
+        });
+        
     }
 
     private int abortStart() {

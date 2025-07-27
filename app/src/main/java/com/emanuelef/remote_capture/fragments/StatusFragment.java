@@ -309,6 +309,9 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
                 break;
             case all:
                 curmodestr = smtype.name();
+                break;
+            case accmultimedia:
+                curmodestr = smtype.name();
 	}
 	    tvac.setText(curmodestr);
         tvac.setOnClickListener(v -> {
@@ -354,9 +357,11 @@ boolean succ=false;
         //mDecryptPcap.setVisible(PCAPdroid.getInstance().isUsharkAvailable());
         refreshStatus();
     }
-enum sModetype{
+    
+public static enum sModetype{
         multimedia,
-        all;
+        all,
+        accmultimedia;
 }
     @Override
     public boolean onMenuItemSelected(@NonNull MenuItem item) {
@@ -1074,14 +1079,22 @@ enum sModetype{
             RadioButton rbb=new RadioButton(mcon);
             rbb.setText(sModetype.all.name());
             rbb.setLayoutParams(new RadioGroup.LayoutParams(RadioGroup.LayoutParams.MATCH_PARENT,RadioGroup.LayoutParams.MATCH_PARENT));
+           RadioButton rbc=new RadioButton(mcon);
+            rbc.setText(sModetype.accmultimedia.name());
+            rbc.setLayoutParams(new RadioGroup.LayoutParams(RadioGroup.LayoutParams.MATCH_PARENT,RadioGroup.LayoutParams.MATCH_PARENT));
+         
             r.addView(rba);
             r.addView(rbb);
+            r.addView(rbc);
             switch (smtype){
                 case multimedia:
                     rba.setChecked(true);
                     break;
                 case all:
                     rbb.setChecked(true);
+                    break;
+                case accmultimedia:
+                    rbc.setChecked(true);
             }
             r.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
                     @Override
@@ -1098,6 +1111,9 @@ enum sModetype{
                     tvac.setText(R.string.mmode_multimedia);
                     break;
                 case all:
+                    tvac.setText(R.string.mmode_all);
+                     break;
+                case accmultimedia:
                     tvac.setText(R.string.mmode_all);
 				}
                             Toast.makeText(mcon,""+rt.getText(),0).show();
