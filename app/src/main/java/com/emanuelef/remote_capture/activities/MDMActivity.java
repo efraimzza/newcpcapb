@@ -26,7 +26,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.PackageManager; // לצורך הדיאלוג
-
+import com.emanuelef.remote_capture.R;
 
 public class MDMActivity extends Activity {
 

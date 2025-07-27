@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import com.emanuelef.remote_capture.R;
 
 public class AppListAdapter extends ArrayAdapter<AppItem> {
 

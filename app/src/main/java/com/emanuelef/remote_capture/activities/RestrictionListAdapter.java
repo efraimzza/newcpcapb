@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.List;
+import com.emanuelef.remote_capture.R;
 
 public class RestrictionListAdapter extends ArrayAdapter<RestrictionItem> {
 

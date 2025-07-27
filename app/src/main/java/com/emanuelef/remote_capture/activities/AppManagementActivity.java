@@ -39,6 +39,8 @@ import android.app.ProgressDialog; // הוסף את הייבוא הזה (לדי�
 import java.util.zip.ZipInputStream; // וודא שזה מיובא
 import java.util.zip.ZipEntry; // וודא שזה מיובא
 
+import com.emanuelef.remote_capture.R;
+
 public class AppManagementActivity extends Activity {
 
     private DevicePolicyManager mDpm;
@@ -64,7 +66,7 @@ public class AppManagementActivity extends Activity {
         setContentView(R.layout.activity_app_management);
 
         mDpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
-        mAdminComponentName = new ComponentName(this, MyDeviceAdminReceiver.class);
+        mAdminComponentName = new ComponentName(this, admin.class);
 
         lvApps = (ListView) findViewById(R.id.lv_apps);
 

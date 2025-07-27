@@ -22,6 +22,7 @@ import com.emanuelef.remote_capture.model.AppDescriptor;
 import com.emanuelef.remote_capture.model.Prefs;
 
 import java.util.Set;
+import com.emanuelef.remote_capture.R;
 
 public class AppFilterActivity extends BaseActivity implements MenuProvider {
     private static final String TAG = "AppFilterActivity";
