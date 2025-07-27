@@ -32,6 +32,7 @@ public class AppUpdater {
     public static final String EXTRA_INSTALL_STATUS = "installStatus";
 
     // הוספת פרמטר isPasswordAlreadyChecked
+    @Deprecated
     public static void startInstallSession(Context context, File sourceFile, boolean isPasswordAlreadyChecked) {
         if (sourceFile == null || !sourceFile.exists()) {
             Toast.makeText(context, "קובץ התקנה לא נמצא או לא חוקי.", Toast.LENGTH_LONG).show();
@@ -161,6 +162,7 @@ public class AppUpdater {
      * מקבל חתימות מקובץ APK. משתמש ב-GET_SIGNING_CERTIFICATES עבור API 28+
      * וב-GET_SIGNATURES עבור גרסאות ישנות יותר.
      */
+     @Deprecated
     private static Signature[] getApkSignature(Context context, String apkFilePath) {
         try {
             PackageManager pm = context.getPackageManager();
@@ -181,6 +183,7 @@ public class AppUpdater {
      * חולץ חתימות מאובייקט PackageInfo, תוך התחשבות ב-API 28+
      * וב-GET_SIGNING_CERTIFICATES.
      */
+     @Deprecated
     private static Signature[] getSignaturesFromPackageInfo(PackageInfo packageInfo) {
         if (packageInfo == null) {
             return null;

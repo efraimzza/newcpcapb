@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.widget.Toast;
 
 public class StatusReceiver extends BroadcastReceiver {
+    @Deprecated
     @Override
     public void onReceive(Context context, Intent intent) {
         Exception exception;

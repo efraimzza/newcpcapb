@@ -10,6 +10,7 @@ import java.io.File;
 
 public class InstallReceiver extends BroadcastReceiver {
 
+    @Deprecated
     @Override
     public void onReceive(Context context, Intent intent) {
         if (AppUpdater.ACTION_INSTALL_COMPLETE.equals(intent.getAction())) {

@@ -41,6 +41,7 @@ import java.util.zip.ZipEntry; // וודא שזה מיובא
 
 import com.emanuelef.remote_capture.R;
 
+@Deprecated
 public class AppManagementActivity extends Activity {
 
     private DevicePolicyManager mDpm;
@@ -59,7 +60,8 @@ public class AppManagementActivity extends Activity {
     private ProgressDialog progressDialog; // משתנה לדיאלוג התקדמות
     
     private static final int PICK_APK_REQUEST_CODE = 101;
-
+    
+    @Deprecated
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,8 +118,10 @@ public class AppManagementActivity extends Activity {
     }
 
     // הוסף AsyncTask חדש לטעינת אפליקציות
+    @Deprecated
     private class LoadAppsTask extends AsyncTask<Void, Void, List<AppItem>> {
-
+        
+        @Deprecated
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -156,7 +160,8 @@ public class AppManagementActivity extends Activity {
             }
             return appList;
         }
-
+        
+        @Deprecated
         @Override
         protected void onPostExecute(List<AppItem> result) {
             super.onPostExecute(result);
