@@ -135,7 +135,7 @@ sp=mContext.getSharedPreferences(mContext.getPackageName(),mContext.MODE_PRIVATE
         // IPs
         addList("ips white all", BlacklistDescriptor.Type.IP_BLACKLIST, "ipswhiteall.txt",
                 "https://raw.githubusercontent.com/efraimzz/Mywhitelistdomains/refs/heads/main/ipswhiteall.txt");
-        }
+        
         break;
         case accmultimedia:
                   /*addList("Maltrail", BlacklistDescriptor.Type.DOMAIN_BLACKLIST,"maltrail-malware-domains.txt",
@@ -156,6 +156,7 @@ sp=mContext.getSharedPreferences(mContext.getPackageName(),mContext.MODE_PRIVATE
                 "https://raw.githubusercontent.com/davidonzo/Threat-Intel/master/lists/latestips.txt");
         */
                 break;
+        }
         // To review
         //https://github.com/StevenBlack/hosts
         //https://phishing.army/download/phishing_army_blocklist.txt

@@ -223,8 +223,8 @@ public class CaptureService extends VpnService implements Runnable {
                         CaptureService.requestBlacklistsUpdate();
                      }
                 }
-            },86400000);
-        });
+        },86400000);
+        
         
     }
 
