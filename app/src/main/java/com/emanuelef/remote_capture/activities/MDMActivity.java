@@ -52,71 +52,12 @@ public class MDMActivity extends Activity {
             }
         }*/
         mDpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
-        mAdminComponentName = new ComponentName(this, MyDeviceAdminReceiver.class);
+        mAdminComponentName = new ComponentName(this, admin.class);
         Button btnStartMdm = (Button) findViewById(R.id.btn_start_mdm);
         btnStartMdm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getApplicationContext(), "u ", 0).show();
-                    try {
-                        //String[] strar = {"/system/bin/sh","-c",""};
-                        String[] strar = {"su","-c",""};
-                        String ed="";
-                        //ed = edtx1.getText().toString();
-                        ed = "dpm set-device-owner com.emanuelef.remote_capture.activities/.MyDeviceAdminReceiver";
-                        //int i = 0;
-                        //ed.split(" ", i++);
-                        strar[2] = ed;
-                        //strar[i]=ed;
-                        String c ="";
-
-                        try {
-                            Process exec=Runtime.getRuntime().exec(strar);
-                            c += (exec.waitFor() == 0) ?"success:": "fail:";
-                            exec.getOutputStream();
-                            //c = exec.getInputStream().toString();
-                            //c=exec.getOutputStream().toString();
-                            BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(exec.getInputStream()));
-                            BufferedReader in=bufferedReader;
-                            String st;
-                            StringBuilder edtx1=new StringBuilder();
-                            do {
-                                st = in.readLine();
-                                if (st != null) {
-                                    edtx1.append(st);
-                                    edtx1.append(String.valueOf("\n"));
-                                    //edtx1.setFocusable(false);
-
-                                    continue;
-                                }
-                            } while (st != null);
-                            in.close();
-                            c += edtx1.toString();
-                            bufferedReader = new BufferedReader(new InputStreamReader(exec.getErrorStream()));
-                            in = bufferedReader;
-                            st = "";
-                            edtx1 = new StringBuilder();
-                            do {
-                                st = in.readLine();
-                                if (st != null) {
-                                    edtx1.append(st);
-                                    edtx1.append(String.valueOf("\n"));
-                                    //edtx1.setFocusable(false);
-
-                                    continue;
-                                }
-                            } while (st != null);
-                            in.close();
-                            c += edtx1.toString();
-                            Toast.makeText(mcon, "" + c/*as+bufferedReader+exec.getInputStream()*/, Toast.LENGTH_LONG).show();
-                        } catch (Exception e) {
-                            Toast.makeText(mcon, "error" + e, Toast.LENGTH_LONG).show();
-                        }
-                    } catch (/*io*/Exception e) {
-                        Toast.makeText(mcon, "error" + e, Toast.LENGTH_LONG).show();
-                    }
-
-
+                    
                 }
             });
         Button btnRemoveMdm = (Button) findViewById(R.id.btn_remove_mdm);
