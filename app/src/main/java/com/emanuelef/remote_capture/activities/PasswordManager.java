@@ -4,6 +4,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import android.widget.LinearLayout;
+import android.widget.EditText;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.widget.Toast;
 
 public class PasswordManager {
     private static final String PREFS_NAME = "MDMPrefs";

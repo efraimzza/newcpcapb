@@ -100,6 +100,7 @@ import com.emanuelef.remote_capture.CaptureService;
 import com.emanuelef.remote_capture.R;
 import com.emanuelef.remote_capture.Utils;
 import com.emanuelef.remote_capture.activities.MainActivity;
+import com.emanuelef.remote_capture.activities.PasswordManager;
 import com.emanuelef.remote_capture.interfaces.AppStateListener;
 import com.emanuelef.remote_capture.model.Prefs;
 import com.emanuelef.remote_capture.model.CaptureStats;

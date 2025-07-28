@@ -590,7 +590,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }else if(id == R.id.settings_short) {
            try{
             ShortcutManager sm=(ShortcutManager) MainActivity.this.getSystemService(SHORTCUT_SERVICE);
-            Icon ic=new Icon().createWithResource(mcon,R.drawable.ic_settingsshort);
+            Icon ic= Icon.createWithResource(mcon,R.drawable.ic_settingsshort);
             ShortcutInfo si=new ShortcutInfo.Builder(MainActivity.this,"settings")
             .setShortLabel("הגדרות")
             .setIntent(MainActivity.this.getPackageManager().getLaunchIntentForPackage("com.android.settings"))

@@ -94,7 +94,7 @@ public class MDMActivity extends Activity {
                          PasswordManager. requestPasswordAndSave(new Runnable() {
                                 @Override
                                 public void run() {
-                            PasswordManager.showSetPasswordDialog(); // פותח את דיאלוג הגדרת/שינוי הסיסמה
+                            PasswordManager.showSetPasswordDialog(MDMActivity.this); // פותח את דיאלוג הגדרת/שינוי הסיסמה
                           }
                         },MDMActivity.this);
                     }
