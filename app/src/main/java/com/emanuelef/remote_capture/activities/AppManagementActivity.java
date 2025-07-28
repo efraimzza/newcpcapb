@@ -94,7 +94,9 @@ public class AppManagementActivity extends Activity {
                     requestPasswordAndSave(new Runnable() {
                             @Override
                             public void run() {
-                                applyAppVisibilityChanges();
+                                try{
+                                    applyAppVisibilityChanges();
+                                }catch(Exception e){}
                             }
                         });
                 }
@@ -138,8 +140,10 @@ public class AppManagementActivity extends Activity {
             List<AppItem> appList = new ArrayList<AppItem>();
 
             for (ApplicationInfo appInfo : installedApps) {
-                boolean isHiddenByMDM = mDpm.isApplicationHidden(mAdminComponentName, appInfo.packageName);
-
+                boolean isHiddenByMDM =false;
+                try{
+                    isHiddenByMDM = mDpm.isApplicationHidden(mAdminComponentName, appInfo.packageName);
+                }catch(Exception e){}
                 long lastUpdateTime = 0;
                 try {
                     PackageInfo packageInfo = pm.getPackageInfo(appInfo.packageName, 0);
