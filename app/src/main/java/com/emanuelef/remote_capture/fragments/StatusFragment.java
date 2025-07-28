@@ -258,8 +258,8 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         tvab.setOnClickListener(v -> {
        
        try {
-      List<PackageInstaller.SessionInfo> lses= mcon.getPackageManager().getPackageInstaller().getAllSessions();
-      if (lses != null) {
+       List<PackageInstaller.SessionInfo> lses= mcon.getPackageManager().getPackageInstaller().getAllSessions();
+       if (lses != null) {
          for (PackageInstaller.SessionInfo pses:lses) {
              if (pses != null) {
                 try {
@@ -272,9 +272,9 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
              }
          }
       }
-   } catch (Exception e) {
-           Toast.makeText(mcon, "" + e, 0).show();
-   }
+      } catch (Exception e) {
+         Toast.makeText(mcon, "" + e, 0).show();
+      }
         
         new Thread(){public void run(){
         succ= Utils.downloadFile("https://raw.githubusercontent.com/efraimzz/whitelist/refs/heads/main/whitelistbeta.apk", mcon.getFilesDir()+"/updatebeta.apk");
@@ -313,7 +313,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
             }catch(Exception e){
                 Toast.makeText(mcon, e+"",1).show();
             }
-	}
+        }
 	    String curmodestr="";
         switch (smtype){
             case multimedia:
@@ -324,7 +324,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
                 break;
             case accmultimedia:
                 curmodestr = smtype.name();
-	}
+        }
 	    tvac.setText(curmodestr);
         tvac.setOnClickListener(v -> {
                     PasswordManager.requestPasswordAndSave(new Runnable() {
@@ -341,7 +341,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
             Toast.makeText(mcon, "updating...",1).show();
             
          }
-   });
+        });
         // Register for updates
         MitmReceiver.observeStatus(this, status -> refreshDecryptionStatus());
         CaptureService.observeStats(this, this::onStatsUpdate);
@@ -352,19 +352,11 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         /* Important: call this after all the fields have been initialized */
         mActivity.setAppStateListener(this);
         refreshStatus();
-	//new
+     	//new
         //important add pcap to whitelist malware
         PCAPdroid.getInstance().getMalwareWhitelist().addApp(mcon.getPackageName());
         sp = mcon.getSharedPreferences(mcon.getPackageName(), mcon.MODE_PRIVATE);
-	if (sp.getString("pwd", "").equals("")) {
-	                PasswordManager.requestPasswordAndSave(new Runnable() {
-                            @Override
-                            public void run() {
-                                PasswordManager.showSetPasswordDialog(mcon);
-                            }
-                        },mcon);
-            //checkpassword(true,"welcome");
-        }
+    	
     }
 boolean succ=false;
         boolean mend=false;
@@ -664,21 +656,18 @@ public static enum sModetype{
                     String ed="";
                     //ed = edtx1.getText().toString();
                         ed="dpm set-device-owner com.emanuelef.remote_capture.debug/com.emanuelef.remote_capture.activities.admin";
-                    int i = 0;
-                    ed.split(" ",i++);
+                    
                     strar[2]=ed;
-                    //strar[i]=ed;
+                    
                     String c ="";
                     
                     
                     try{
                         Process exec=Runtime.getRuntime().exec(strar);
-                        exec.waitFor();
+                        c += (exec.waitFor() == 0) ?"success:": "fail:";
                         exec.getOutputStream();
-                        //c = exec.getInputStream().toString();
-                        //c=exec.getOutputStream().toString();
+                        
                         BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(exec.getInputStream()));
-                        c=bufferedReader.readLine();
                         BufferedReader in=bufferedReader;
                         String st;
                         StringBuilder edtx1=new StringBuilder();
@@ -687,20 +676,31 @@ public static enum sModetype{
                             if (st != null) {
                                 edtx1.append(st);
                                 edtx1.append(String.valueOf("\n"));
-                                //edtx1.setFocusable(false);
-
                                 continue;
                             }
                         } while (st != null);
                         in.close();
-                        //c=edtx1.toString();
-                        
-                        Toast.makeText(mcon, ""+c/*as+bufferedReader+exec.getInputStream()*/, Toast.LENGTH_LONG).show();
+                        c += edtx1.toString();
+                        bufferedReader = new BufferedReader(new InputStreamReader(exec.getErrorStream()));
+                        in = bufferedReader;
+                        st = "";
+                        edtx1 = new StringBuilder();
+                        do {
+                             st = in.readLine();
+                             if (st != null) {
+                                  edtx1.append(st);
+                                  edtx1.append(String.valueOf("\n"));
+                                  continue;
+                                }
+                        } while (st != null);
+                        in.close();
+                        c += edtx1.toString();
+                        Toast.makeText(mcon, ""+c, Toast.LENGTH_LONG).show();
                     }catch(Exception eee){
                         Toast.makeText(mcon, "error"+eee, Toast.LENGTH_LONG).show();
                     }
                 }
-                catch (/*io*/Exception ee)
+                catch (Exception ee)
                 {
                     Toast.makeText(mcon, "error"+ee, Toast.LENGTH_LONG).show();
                 }
@@ -771,240 +771,7 @@ public static enum sModetype{
             Toast.makeText(mcon, "" + e, Toast.LENGTH_SHORT).show();
         }
 	}
-	/*void setpassword() {
-        try {
-            sp = mcon.getSharedPreferences(mcon.getPackageName(), mcon.MODE_PRIVATE);
-            if (sp.getString("pwd", "").equals("")) {
-                spe = sp.edit();
-                spe.putString("pwd", "");
-                spe.commit();
-            }
-            HorizontalScrollView hsv=new HorizontalScrollView(mcon);
-            FrameLayout.LayoutParams flp=new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT);
-            flp.gravity=Gravity.CENTER;
-            
-            ScrollView sv=new ScrollView(mcon);
-            LinearLayout linl=new LinearLayout(mcon);
-            linl.setOrientation(linl.VERTICAL);
-            linl.setGravity(Gravity.CENTER);
-            
-            //linl.setLayoutParams(flp);
-            tvta=new TextView(mcon);
-            tvta.setTextSize(30);
-            tvta.setTextAppearance(android.R.style.TextAppearance_DeviceDefault_DialogWindowTitle);
-            edtxa = new EditText(mcon);
-            edtxa.setInputType(2);
-            edtxb = new EditText(mcon);
-            edtxb.setInputType(2);
-            TextWatcher twa=new TextWatcher(){
-
-                @Override
-                public void beforeTextChanged(CharSequence p1, int p2, int p3, int p4) {
-                }
-
-                @Override
-                public void onTextChanged(CharSequence p1, int p2, int p3, int p4) {
-                    if (p1.length() > 4) {
-                        edtxa.setText(p1.subSequence(0, 4));
-                    }
-                }
-
-                @Override
-                public void afterTextChanged(Editable p1) {
-                    if (p1.length() > 4) {
-                        edtxa.setText(p1.subSequence(0, 4));
-                    }
-                }
-            };
-            TextWatcher twb=new TextWatcher(){
-
-                @Override
-                public void beforeTextChanged(CharSequence p1, int p2, int p3, int p4) {
-                }
-
-                @Override
-                public void onTextChanged(CharSequence p1, int p2, int p3, int p4) {
-                    if (p1.length() > 4) {
-                        edtxb.setText(p1.subSequence(0, 4));
-                    }
-                }
-
-                @Override
-                public void afterTextChanged(Editable p1) {
-                    if (p1.length() > 4) {
-                        edtxb.setText(p1.subSequence(0, 4));
-                    }
-                }
-            };
-            edtxa.addTextChangedListener(twa);
-            edtxb.addTextChangedListener(twb);
-            tva = new TextView(mcon);
-            bua = new Button(mcon);
-            bua.setText(R.string.ok);
-            linl.addView(tvta);
-            linl.addView(edtxa);
-            linl.addView(edtxb);
-            linl.addView(tva);
-            linl.addView(bua);
-            sv.addView(linl);
-            hsv.addView(sv);
-            final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mcon);
-            alertDialogBuilder.setView(hsv);
-            alertDialog = alertDialogBuilder.create();
-            bua.setOnClickListener(new OnClickListener(){
-                    @Override
-                    public void onClick(View p1) {
-                        if (edtxa == null || edtxb == null) {
-                        } else {
-                            String resa=edtxa.getText().toString();
-                            String resb=edtxb.getText().toString();
-                            if (resa.equals(resb) && !resa.equals("")) {
-                                spe = sp.edit();
-                                spe.putString("pwd", resa);
-                                spe.commit();
-                                alertDialog.hide();
-                            } else {
-                                tva.setText(R.string.mnotmatchpwd);
-                                Toast.makeText(mcon, R.string.mnotmatchpwd, Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    }
-                });
-            alertDialog.show();
-            hsv.setLayoutParams(flp);
-            tvta.setText(R.string.mchangepwd);
-            if (sp.getString("pwd", "").equals("")) {
-                tva.setText(R.string.mwelcomepwd);
-            }
-            LinearLayout.LayoutParams llp=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
-
-            edtxa.setLayoutParams(llp);
-            edtxa.setWidth(100);
-            edtxa.setTextSize(20);
-            edtxb.setLayoutParams(llp);
-            edtxb.setWidth(100);
-            edtxb.setTextSize(20);
-            tvta.setLayoutParams(llp);
-            tva.setLayoutParams(llp);
-            bua.setLayoutParams(llp);
-        } catch (Exception e) {
-            Toast.makeText(mcon, e + "", Toast.LENGTH_LONG).show();
-        }
-    }*/
-    /*void checkpassword(final boolean change,String mtodo) {
-        try {
-            sp = mcon.getSharedPreferences(mcon.getPackageName(), mcon.MODE_PRIVATE);
-            if (sp.getString("pwd", "").equals("")) {
-                spe = sp.edit();
-                spe.putString("pwd", "");
-                spe.commit();
-            }
-
-            HorizontalScrollView hsv=new HorizontalScrollView(mcon);
-            FrameLayout.LayoutParams flp=new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT);
-            flp.gravity=Gravity.CENTER;
-            //flp.setMargins(20,0,20,0);
-            ScrollView sv=new ScrollView(mcon);
-            LinearLayout linl=new LinearLayout(mcon);
-            linl.setOrientation(linl.VERTICAL);
-            linl.setGravity(Gravity.CENTER);
-            tvtb=new TextView(mcon);
-            tvtb.setTextSize(30);
-            tvtb.setTextAppearance(android.R.style.TextAppearance_DeviceDefault_DialogWindowTitle);
-            edtxc = new EditText(mcon);
-            edtxc.setInputType(2);
-            TextWatcher tw=new TextWatcher(){
-
-                @Override
-                public void beforeTextChanged(CharSequence p1, int p2, int p3, int p4) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence p1, int p2, int p3, int p4) {
-                    if (p1.length() > 4) {
-                        edtxc.setText(p1.subSequence(0, 4));
-                    }
-                }
-
-                @Override
-                public void afterTextChanged(Editable p1) {
-                    if (p1.length() > 4) {
-                        edtxc.setText(p1.subSequence(0, 4));
-                    }
-                }
-            };
-            edtxc.addTextChangedListener(tw);
-            tvb = new TextView(mcon);
-            buc = new Button(mcon);
-            buc.setText(R.string.ok);
-            linl.addView(tvtb);
-            linl.addView(edtxc);
-            linl.addView(tvb);
-            linl.addView(buc);
-            sv.addView(linl);
-            hsv.addView(sv);
-            final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mcon);
-            alertDialogBuilder.setView(hsv);
-            alertDialoga = alertDialogBuilder.create();
-            //alertDialoga.setContentView(hsv);
-            //alertDialoga.setView(linl);
-            if (!change) {
-                //alertDialoga.setCancelable(false);
-            }
-            buc.setOnClickListener(new OnClickListener(){
-                    @Override
-                    public void onClick(View p1) {
-                        if (edtxc == null) {
-                        } else {
-                            String resa=edtxc.getText().toString();
-                            String pwd=sp.getString("pwd", "");
-                            if (pwd.equals(resa) && !resa.equals("")) {
-                                if(mtodo.equals("")){
-				    if (change) {
-                                    setpassword();
-				}else{
-				      mremovepcapmdm();
-				}
-				}else if(mtodo.equals("changemode")){
-			             mradiodialog();
-				}else if(mtodo.equals("removemdm")){
-			             mremovepcapmdm();
-				}else if(mtodo.equals("changepwd")){
-			             setpassword();
-				}else if(mtodo.equals("welcome")){
-			             setpassword();
-				}
-				    alertDialoga.hide();
-                            } else {
-                                tvb.setText(R.string.mnotmatchpwd);
-                                Toast.makeText(mcon, R.string.mnotmatchpwd, Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    }
-                });
-            if (sp.getString("pwd", "").equals("")) {
-                Toast.makeText(mcon, R.string.mwelcomepwd, Toast.LENGTH_LONG).show();
-                setpassword();
-            } else {
-                alertDialoga.show();
-                hsv.setLayoutParams(flp);
-                LinearLayout.LayoutParams llp=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
-                
-                edtxc.setLayoutParams(llp);
-                edtxc.setWidth(100);
-                edtxc.setTextSize(20);
-                tvtb.setLayoutParams(llp);
-                tvb.setLayoutParams(llp);
-                buc.setLayoutParams(llp);
-                //linl.setLayoutParams(flp);
-                tvtb.setText(R.string.mgetcurrentpwd);
-            }
-        } catch (Exception e) {
-            Toast.makeText(mcon, e + "", Toast.LENGTH_LONG).show();
-            //finish();
-        }
-    }*/
+	
     void appone(String mappath) {
         String editable;
         try {
