@@ -104,6 +104,7 @@ public class MDMActivity extends Activity {
         Button btnManageApps = (Button) findViewById(R.id.btn_manage_apps); // וודא ש-ID זה קיים ב-XML
         if (btnManageApps != null) {
             btnManageApps.setOnClickListener(new View.OnClickListener() {
+                    @Deprecated
                     @Override
                     public void onClick(View v) {
                         //requestPasswordAndSave(new Runnable() {
@@ -117,7 +118,7 @@ public class MDMActivity extends Activity {
                 });
         }
     }
-
+    @Deprecated
     private void loadRestrictions() {
         mRestrictionList = new ArrayList<RestrictionItem>();
 
