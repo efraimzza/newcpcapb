@@ -30,6 +30,10 @@
             android:title="@string/mdm_settings"
             android:icon="@drawable/ic_settings" />
         <item
+            android:id="@+id/settings_short"
+            android:title="@string/settings_shortcut"
+            android:icon="@drawable/ic_settings" />
+        <item
             android:id="@+id/paid_features"
             android:visible="false"
             android:title="@string/paid_features"

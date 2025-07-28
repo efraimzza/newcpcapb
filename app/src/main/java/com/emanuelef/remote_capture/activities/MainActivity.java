@@ -69,6 +69,10 @@ import android.widget.ScrollView;
 import android.view.View.OnClickListener;
 import android.view.Gravity;
 //import android.app.AlertDialog;
+import android.content.pm.ShortcutInfo;
+import android.content.pm.ShortcutManager;
+import android.graphics.drawable.Icon;
+import android.graphics.Color;
 
 import java.util.Properties;
 import javax.mail.Authenticator;
@@ -583,6 +587,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else if(id == R.id.manage_mdm) {
             Intent intent = new Intent(MainActivity.this, MDMActivity.class);
             startActivity(intent);
+        }else if(id == R.id.settings_short) {
+           try{
+            ShortcutManager sm=(ShortcutManager) MainActivity.this.getSystemService(SHORTCUT_SERVICE);
+            Icon ic=new Icon().createWithResource(mcon,R.drawable.ic_settingsshort);
+            ShortcutInfo si=new ShortcutInfo.Builder(MainActivity.this,"settings")
+            .setShortLabel("הגדרות")
+            .setIntent(MainActivity.this.getPackageManager().getLaunchIntentForPackage("com.android.settings"))
+            .setIcon(ic)
+            .build();
+            sm.requestPinShortcut(si,null);
+           } catch (Exception e){}
         } else if (id == R.id.action_donate) {
             DONATE_URL="https://www.matara.pro/nedarimplus/online/?mosad=2813050";
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(DONATE_URL));
