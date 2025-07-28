@@ -93,4 +93,83 @@ public class PasswordManager {
     public static int getMinPasswordLength() {
         return MIN_PASSWORD_LENGTH;
     }
+    
+    public static void requestPasswordAndSave(final Runnable onPasswordCorrect,final Context mcont) {
+        final String storedPasswordHash = PasswordManager.getStoredPasswordHash(mcont);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(mcont);
+        builder.setTitle("אימות סיסמה");
+
+        final EditText input = new EditText(mcont);
+        input.setHint("הכנס סיסמה");
+        input.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+        builder.setView(input);
+
+        builder.setPositiveButton("אשר", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String enteredPassword = input.getText().toString();
+                    if (PasswordManager.checkPassword(mcont, enteredPassword)) {
+                        onPasswordCorrect.run();
+                    } else {
+                        Toast.makeText(mcont, "סיסמה שגויה!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        builder.setNegativeButton("ביטול", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+        if (storedPasswordHash == null) {
+            builder.setMessage("אין סיסמת אבטחה מוגדרת. האם ברצונך להגדיר אחת כעת?\n" +
+                               "אורך מינימלי: " + PasswordManager.getMinPasswordLength() + " תווים.");
+            builder.setNeutralButton("הגדר סיסמה", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        showSetPasswordDialog(mcont);
+                    }
+                });
+        }
+        builder.show();
+    }
+
+    public static void showSetPasswordDialog(final Context mcont) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mcont);
+        builder.setTitle("הגדר/שנה סיסמה");
+
+        final EditText input = new EditText(mcont);
+        input.setHint("הכנס סיסמה חדשה (מינימום " + PasswordManager.getMinPasswordLength() + " תווים)");
+        input.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+        builder.setView(input);
+
+        builder.setPositiveButton("שמור", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String newPassword = input.getText().toString();
+                    if (PasswordManager.setPassword(mcont, newPassword)) {
+                        Toast.makeText(mcont, "הסיסמה נשמרה בהצלחה!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(mcont, "שגיאה: הסיסמה קצרה מדי! (מינימום " + PasswordManager.getMinPasswordLength() + " תווים)", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        builder.setNegativeButton("ביטול", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+        builder.show();
+    }
 }
