@@ -99,7 +99,7 @@ public class PasswordManager {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(mcont);
         builder.setTitle("אימות סיסמה");
-
+        
         final EditText input = new EditText(mcont);
         input.setHint("הכנס סיסמה");
         input.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
@@ -107,8 +107,9 @@ public class PasswordManager {
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.MATCH_PARENT);
         input.setLayoutParams(lp);
+        if (storedPasswordHash != null) {
         builder.setView(input);
-
+        
         builder.setPositiveButton("אשר", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -120,23 +121,23 @@ public class PasswordManager {
                     }
                 }
             });
-        builder.setNegativeButton("ביטול", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
-
-        if (storedPasswordHash == null) {
+        }else{
             builder.setMessage("אין סיסמת אבטחה מוגדרת. האם ברצונך להגדיר אחת כעת?\n" +
                                "אורך מינימלי: " + PasswordManager.getMinPasswordLength() + " תווים.");
-            builder.setNeutralButton("הגדר סיסמה", new DialogInterface.OnClickListener() {
+            builder.setPositiveButton("הגדר סיסמה", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         showSetPasswordDialog(mcont);
                     }
                 });
         }
+        builder.setNegativeButton("ביטול", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+        
         builder.show();
     }
 
