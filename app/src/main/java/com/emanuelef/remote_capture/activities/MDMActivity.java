@@ -86,20 +86,7 @@ public class MDMActivity extends Activity {
         } catch (Exception e) {
             Toast.makeText(this, "" + e, 1).show();
         }
-        Button btnChangePassword = (Button) findViewById(R.id.btn_change_password); // הוסף כפתור כזה ל-layout
-        if (btnChangePassword != null) {
-            btnChangePassword.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                         PasswordManager. requestPasswordAndSave(new Runnable() {
-                                @Override
-                                public void run() {
-                            PasswordManager.showSetPasswordDialog(MDMActivity.this); // פותח את דיאלוג הגדרת/שינוי הסיסמה
-                          }
-                        },MDMActivity.this);
-                    }
-                });
-        }
+        
         Button btnManageApps = (Button) findViewById(R.id.btn_manage_apps); // וודא ש-ID זה קיים ב-XML
         if (btnManageApps != null) {
             btnManageApps.setOnClickListener(new View.OnClickListener() {
