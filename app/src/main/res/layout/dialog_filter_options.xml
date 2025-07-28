@@ -55,7 +55,7 @@
         <RadioButton android:id="@+id/rb_filter_launcher_dialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="מוצגות בלאנצ'ר"/>
+            android:text="מוצגות במסך הבית"/>
     </RadioGroup>
 
     <TextView
