@@ -38,6 +38,7 @@ import android.os.AsyncTask; // הוסף את הייבוא הזה
 import android.app.ProgressDialog; // הוסף את הייבוא הזה (לדיאלוג טעינה)
 import java.util.zip.ZipInputStream; // וודא שזה מיובא
 import java.util.zip.ZipEntry; // וודא שזה מיובא
+import android.content.pm.PackageInstaller;
 
 import com.emanuelef.remote_capture.R;
 
@@ -107,6 +108,25 @@ public class AppManagementActivity extends Activity {
             btnInstallApk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        try {
+                            List<PackageInstaller.SessionInfo> lses= getPackageManager().getPackageInstaller().getAllSessions();
+                            if (lses != null) {
+                                for (PackageInstaller.SessionInfo pses:lses) {
+                                    if (pses != null) {
+                                        try {
+                                            if (pses.getInstallerPackageName().equals(getPackageName())) {
+                                                getPackageManager().getPackageInstaller().abandonSession(pses.getSessionId());
+                                            }
+                                        } catch (Exception e) {
+                                           
+                                            Toast.makeText(AppManagementActivity.this, "" + e, 0).show();
+                                        }
+                                    }
+                                }
+                            }
+                        } catch (Exception e) {
+                            Toast.makeText(AppManagementActivity.this, "" + e, 0).show();
+                        }
                         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                         intent.setType("*/*");
                         String[] mimetypes = {"application/vnd.android.package-archive", "application/zip", "application/x-zip-compressed", "application/octet-stream"};
