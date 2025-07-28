@@ -192,9 +192,9 @@ static jobject getConnUpdate(pcapdroid_t *pd, const conn_and_tuple_t *conn) {
         (*env)->DeleteLocalRef(env, l7proto);
     }
     if(data->update_type & CONN_UPDATE_PAYLOAD) {
-        (*env)->CallVoidMethod(env, update, mids.connUpdateSetPayload, data->payload_chunks,
+        /*(*env)->CallVoidMethod(env, update, mids.connUpdateSetPayload, data->payload_chunks,
                                data->payload_truncated |
-                               (data->has_decrypted_data << 1));
+                               (data->has_decrypted_data << 1));*/
         (*pd->env)->DeleteLocalRef(pd->env, data->payload_chunks);
         data->payload_chunks = NULL;
     }
@@ -431,7 +431,7 @@ static void notifyBlacklistsLoaded(pcapdroid_t *pd, bl_status_arr_t *status_arr)
 static bool dumpPayloadChunk(struct pcapdroid *pd, const pkt_context_t *pctx, const char *dump_data, int dump_size) {
     JNIEnv *env = pd->env;
     bool rv = false;
-/*
+
     if(pctx->data->payload_chunks == NULL) {
         // Directly allocating an ArrayList<bytes> rather than creating it afterwards saves us from a data copy.
         // However, this creates a local reference, which is retained until sendConnectionsDump is called.
@@ -450,14 +450,13 @@ static bool dumpPayloadChunk(struct pcapdroid *pd, const pkt_context_t *pctx, co
     jobject chunk = (*env)->NewObject(env, cls.payload_chunk, mids.payloadChunkInit, barray, chunk_type, pctx->is_tx, pctx->ms);
     if(chunk && !jniCheckException(env)) {
         (*env)->SetByteArrayRegion(env, barray, 0, dump_size, (jbyte*) dump_data);
-        rv = (*env)->CallBooleanMethod(env, pctx->data->payload_chunks, mids.arraylistAdd, chunk);
+       // rv = (*env)->CallBooleanMethod(env, pctx->data->payload_chunks, mids.arraylistAdd, chunk);
     }
 
     //log_d("Dump chunk [size=%d]: %d", rv, dump_size);
 
     (*env)->DeleteLocalRef(env, barray);
     (*env)->DeleteLocalRef(env, chunk);
-    */
     return rv;
 }
 
