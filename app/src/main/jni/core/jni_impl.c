@@ -431,7 +431,7 @@ static void notifyBlacklistsLoaded(pcapdroid_t *pd, bl_status_arr_t *status_arr)
 static bool dumpPayloadChunk(struct pcapdroid *pd, const pkt_context_t *pctx, const char *dump_data, int dump_size) {
     JNIEnv *env = pd->env;
     bool rv = false;
-
+/*
     if(pctx->data->payload_chunks == NULL) {
         // Directly allocating an ArrayList<bytes> rather than creating it afterwards saves us from a data copy.
         // However, this creates a local reference, which is retained until sendConnectionsDump is called.
@@ -457,6 +457,7 @@ static bool dumpPayloadChunk(struct pcapdroid *pd, const pkt_context_t *pctx, co
 
     (*env)->DeleteLocalRef(env, barray);
     (*env)->DeleteLocalRef(env, chunk);
+    */
     return rv;
 }
 
