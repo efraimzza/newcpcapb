@@ -156,12 +156,12 @@ public class ConnectionDetailsActivity extends BaseActivity implements Connectio
             int conn_id = mConn.incr_id;
 
             switch (pos) {
-                case POS_WEBSOCKET:
-                    return ConnectionPayload.newInstance(PayloadChunk.ChunkType.WEBSOCKET, conn_id);
-                case POS_HTTP:
-                    return ConnectionPayload.newInstance(PayloadChunk.ChunkType.HTTP, conn_id);
-                case POS_RAW_PAYLOAD:
-                    return ConnectionPayload.newInstance(PayloadChunk.ChunkType.RAW, conn_id);
+                //case POS_WEBSOCKET:
+                    //return ConnectionPayload.newInstance(PayloadChunk.ChunkType.WEBSOCKET, conn_id);
+                //case POS_HTTP:
+                    //return ConnectionPayload.newInstance(PayloadChunk.ChunkType.HTTP, conn_id);
+                //case POS_RAW_PAYLOAD:
+                    //return ConnectionPayload.newInstance(PayloadChunk.ChunkType.RAW, conn_id);
                 case POS_OVERVIEW:
                 default:
                     return ConnectionOverview.newInstance(conn_id);
@@ -169,18 +169,18 @@ public class ConnectionDetailsActivity extends BaseActivity implements Connectio
         }
 
         @Override
-        public int getItemCount() {  return 1 + (mHasPayload ? 1 : 0) + (mHasHttpTab ? 1 : 0) + (mHasWsTab ? 1 : 0);  }
+        public int getItemCount() {  return 1 + (mHasPayload ? 0 : 0) + (mHasHttpTab ? 0 : 0) + (mHasWsTab ? 0 : 0);  }
 
         public int getPageTitle(final int position) {
             int pos = getVisibleTabsPositions()[position];
 
             switch (pos) {
-                case POS_WEBSOCKET:
-                    return R.string.websocket;
-                case POS_HTTP:
-                    return R.string.http;
-                case POS_RAW_PAYLOAD:
-                    return R.string.payload;
+                //case POS_WEBSOCKET:
+                //    return R.string.websocket;
+                //case POS_HTTP:
+                //    return R.string.http;
+                //case POS_RAW_PAYLOAD:
+                //    return R.string.payload;
                 case POS_OVERVIEW:
                 default:
                     return R.string.overview;
@@ -193,12 +193,12 @@ public class ConnectionDetailsActivity extends BaseActivity implements Connectio
 
             visible[i++] = POS_OVERVIEW;
 
-            if(mHasWsTab)
-                visible[i++] = POS_WEBSOCKET;
-            if(mHasHttpTab)
-                visible[i++] = POS_HTTP;
-            if(mHasPayload)
-                visible[i] = POS_RAW_PAYLOAD;
+            //if(mHasWsTab)
+            //    visible[i++] = POS_WEBSOCKET;
+            //if(mHasHttpTab)
+            //    visible[i++] = POS_HTTP;
+            //if(mHasPayload)
+            //    visible[i] = POS_RAW_PAYLOAD;
 
             return visible;
         }
