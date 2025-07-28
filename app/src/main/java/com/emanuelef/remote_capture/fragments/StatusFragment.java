@@ -238,10 +238,22 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         });
 
         removemdm.setOnClickListener(v -> {
-            checkpassword(false,"removemdm");
+            PasswordManager.requestPasswordAndSave(new Runnable() {
+                            @Override
+                            public void run() {
+                                mremovepcapmdm();
+                            }
+                        },mcon);
+            //checkpassword(false,"removemdm");
         });
         tvaa.setOnClickListener(v -> {
-            checkpassword(true,"changepwd");
+                    PasswordManager.requestPasswordAndSave(new Runnable() {
+                            @Override
+                            public void run() {
+                                PasswordManager.showSetPasswordDialog(mcon);
+                            }
+                        },mcon);
+            //checkpassword(true,"changepwd");
         });
         tvab.setOnClickListener(v -> {
        
@@ -315,7 +327,13 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
 	}
 	    tvac.setText(curmodestr);
         tvac.setOnClickListener(v -> {
-            checkpassword(true,"changemode");
+                    PasswordManager.requestPasswordAndSave(new Runnable() {
+                            @Override
+                            public void run() {
+                                mradiodialog();
+                            }
+                        },mcon);
+            //checkpassword(true,"changemode");
         });
         tvad.setOnClickListener(v -> {
          if(CaptureService.isServiceActive()){
@@ -339,7 +357,13 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         PCAPdroid.getInstance().getMalwareWhitelist().addApp(mcon.getPackageName());
         sp = mcon.getSharedPreferences(mcon.getPackageName(), mcon.MODE_PRIVATE);
 	if (sp.getString("pwd", "").equals("")) {
-            checkpassword(true,"welcome");
+	                PasswordManager.requestPasswordAndSave(new Runnable() {
+                            @Override
+                            public void run() {
+                                PasswordManager.showSetPasswordDialog(mcon);
+                            }
+                        },mcon);
+            //checkpassword(true,"welcome");
         }
     }
 boolean succ=false;
@@ -747,7 +771,7 @@ public static enum sModetype{
             Toast.makeText(mcon, "" + e, Toast.LENGTH_SHORT).show();
         }
 	}
-	void setpassword() {
+	/*void setpassword() {
         try {
             sp = mcon.getSharedPreferences(mcon.getPackageName(), mcon.MODE_PRIVATE);
             if (sp.getString("pwd", "").equals("")) {
@@ -866,8 +890,8 @@ public static enum sModetype{
         } catch (Exception e) {
             Toast.makeText(mcon, e + "", Toast.LENGTH_LONG).show();
         }
-    }
-    void checkpassword(final boolean change,String mtodo) {
+    }*/
+    /*void checkpassword(final boolean change,String mtodo) {
         try {
             sp = mcon.getSharedPreferences(mcon.getPackageName(), mcon.MODE_PRIVATE);
             if (sp.getString("pwd", "").equals("")) {
@@ -980,7 +1004,7 @@ public static enum sModetype{
             Toast.makeText(mcon, e + "", Toast.LENGTH_LONG).show();
             //finish();
         }
-    }
+    }*/
     void appone(String mappath) {
         String editable;
         try {
