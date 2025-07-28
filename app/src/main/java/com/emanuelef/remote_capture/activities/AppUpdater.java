@@ -136,7 +136,7 @@ public class AppUpdater {
 
             int flags = 0;
             if (Build.VERSION.SDK_INT >= 31) {
-                flags = android.app.PendingIntent.FLAG_IMMUTABLE;
+                flags = android.app.PendingIntent.FLAG_MUTABLE;
             } else {
                 flags = android.app.PendingIntent.FLAG_UPDATE_CURRENT;
             }
