@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
+import android.widget.Switch;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,7 +40,7 @@ public class AppListAdapter extends ArrayAdapter<AppItem> {
             holder.appName = (TextView) convertView.findViewById(R.id.app_name);
             holder.appPackage = (TextView) convertView.findViewById(R.id.app_package);
             holder.appLastUpdated = (TextView) convertView.findViewById(R.id.app_last_updated);
-            holder.hideCheckbox = (CheckBox) convertView.findViewById(R.id.hide_checkbox);
+            holder.hideCheckbox = (Switch) convertView.findViewById(R.id.hide_checkbox);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -94,6 +94,6 @@ public class AppListAdapter extends ArrayAdapter<AppItem> {
         TextView appName;
         TextView appPackage;
         TextView appLastUpdated;
-        CheckBox hideCheckbox;
+        Switch hideCheckbox;
     }
 }

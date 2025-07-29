@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.List;
@@ -30,7 +30,7 @@ public class RestrictionListAdapter extends ArrayAdapter<RestrictionItem> {
             convertView = LayoutInflater.from(context).inflate(R.layout.list_item_restriction, parent, false);
             holder = new ViewHolder();
             holder.restrictionName = (TextView) convertView.findViewById(R.id.tv_restriction_name);
-            holder.restrictionCheckbox = (CheckBox) convertView.findViewById(R.id.cb_restriction);
+            holder.restrictionCheckbox = (Switch) convertView.findViewById(R.id.cb_restriction);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -62,6 +62,6 @@ public class RestrictionListAdapter extends ArrayAdapter<RestrictionItem> {
 
     static class ViewHolder {
         TextView restrictionName;
-        CheckBox restrictionCheckbox;
+        Switch restrictionCheckbox;
     }
 }

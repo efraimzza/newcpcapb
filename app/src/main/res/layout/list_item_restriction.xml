@@ -15,7 +15,7 @@
         android:textStyle="bold"
         android:text="שם הגבלה" />
 
-    <CheckBox
+    <Switch
         android:id="@+id/cb_restriction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
