@@ -5,8 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Switch;
 import android.widget.ImageView;
+import android.widget.Switch; // שינוי מ-CheckBox
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +31,7 @@ public class AppListAdapter extends ArrayAdapter<AppItem> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final ViewHolder holder; // הפוך את holder ל-final
+        final ViewHolder holder;
 
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.app_list_item, parent, false);
@@ -40,7 +40,7 @@ public class AppListAdapter extends ArrayAdapter<AppItem> {
             holder.appName = (TextView) convertView.findViewById(R.id.app_name);
             holder.appPackage = (TextView) convertView.findViewById(R.id.app_package);
             holder.appLastUpdated = (TextView) convertView.findViewById(R.id.app_last_updated);
-            holder.hideCheckbox = (Switch) convertView.findViewById(R.id.hide_checkbox);
+            holder.hideSwitch = (Switch) convertView.findViewById(R.id.hide_checkbox); // שינוי ל-Switch
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -56,31 +56,23 @@ public class AppListAdapter extends ArrayAdapter<AppItem> {
         String lastUpdated = "עדכון אחרון: " + sdf.format(new Date(appItem.getLastUpdateTime()));
         holder.appLastUpdated.setText(lastUpdated);
 
-        // **חשוב**: הגדר את מצב הצ'קבוקס ללא ליסנר כאן
-        // אם הצ'קבוקס כבר מסומן, וזו אפליקציית ה-MDM, ודא שהוא לא מסומן.
+        // הגדר את מצב ה-Switch ללא ליסנר כאן
         if (appItem.getPackageName().equals(mdmPackageName)) {
-            holder.hideCheckbox.setChecked(false); // תמיד לא מסומן עבור ה-MDM app
-            holder.hideCheckbox.setEnabled(false); // בטל את האפשרות ללחוץ עליו ישירות
+            holder.hideSwitch.setChecked(false); // תמיד לא מסומן עבור ה-MDM app
+            holder.hideSwitch.setEnabled(false); // בטל את האפשרות ללחוץ עליו ישירות
         } else {
-            holder.hideCheckbox.setChecked(appItem.isHidden());
-            holder.hideCheckbox.setEnabled(true); // ודא שהוא מופעל אם לא ה-MDM
+            holder.hideSwitch.setChecked(appItem.isHidden());
+            holder.hideSwitch.setEnabled(true); // ודא שהוא מופעל אם לא ה-MDM
         }
 
-        // **הסר את ה-OnClickListener מה-CheckBox עצמו!**
-        // holder.hideCheckbox.setOnClickListener(...) - הסר את הבלוק הזה לחלוטין
-
-        // הגדר OnClickListener עבור כל ה-Item (ה-LinearLayout הראשי)
         convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // אם זו אפליקציית ה-MDM, אל תאפשר להסתיר אותה
                     if (appItem.getPackageName().equals(mdmPackageName)) {
                         Toast.makeText(context, "לא ניתן להסתיר את אפליקציית ה-MDM.", Toast.LENGTH_SHORT).show();
-                        // אין צורך לשנות את מצב ה-checkbox כי הוא תמיד לא מסומן עבור ה-MDM
                     } else {
-                        // שנה את מצב ה-checkbox ועדכן את ה-AppItem
-                        boolean newCheckedState = !holder.hideCheckbox.isChecked();
-                        holder.hideCheckbox.setChecked(newCheckedState);
+                        boolean newCheckedState = !holder.hideSwitch.isChecked();
+                        holder.hideSwitch.setChecked(newCheckedState);
                         appItem.setHidden(newCheckedState);
                     }
                 }
@@ -94,6 +86,6 @@ public class AppListAdapter extends ArrayAdapter<AppItem> {
         TextView appName;
         TextView appPackage;
         TextView appLastUpdated;
-        Switch hideCheckbox;
+        Switch hideSwitch; // שינוי ל-Switch
     }
 }

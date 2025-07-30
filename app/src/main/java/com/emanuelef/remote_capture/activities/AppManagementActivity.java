@@ -87,7 +87,14 @@ public class AppManagementActivity extends Activity {
                     showFilterOptionsDialog();
                 }
             });
-
+        Button btnRefreshApps = findViewById(R.id.btn_refresh_apps);
+        btnRefreshApps.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new LoadAppsTask().execute();
+                    //Toast.makeText(AppManagementActivity.this, "רשימת אפליקציות עודכנה.", Toast.LENGTH_SHORT).show();
+                }
+            });
         Button btnSaveAppChanges = (Button) findViewById(R.id.btn_save_app_changes);
         btnSaveAppChanges.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -148,6 +155,7 @@ public class AppManagementActivity extends Activity {
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog = new ProgressDialog(AppManagementActivity.this);
+            progressDialog.getWindow().setBackgroundDrawableResource(R.drawable.roundbugreen);
             progressDialog.setMessage("טוען רשימת אפליקציות...");
             progressDialog.setCancelable(false);
             progressDialog.show();

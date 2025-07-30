@@ -3,22 +3,48 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="16dp"
-    android:gravity="center_vertical">
-
-    <TextView
-        android:id="@+id/tv_restriction_name"
+    android:padding="12dp"
+    android:gravity="center_vertical"
+    android:background="@drawable/rounded_list_item_background">
+    <ImageView
+        android:id="@+id/restriction_icon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="12dp"
+        android:contentDescription="אייקון הגבלה"
+        android:src="@drawable/ic_default_restriction" /> <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:text="שם הגבלה" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/restriction_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:text="שם הגבלה"/>
+
+        <TextView
+            android:id="@+id/restriction_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="#666666"
+            android:text="תיאור מפורט של ההגבלה הזו."/>
+
+    </LinearLayout>
 
     <Switch
-        android:id="@+id/cb_restriction"
+        android:id="@+id/restriction_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:focusable="false" />
+        android:layout_marginStart="12dp"
+        android:thumb="@drawable/custom_switch_thumb"
+        android:track="@drawable/custom_switch_track"
+        android:focusable="false"
+        android:clickable="false" />
 
 </LinearLayout>

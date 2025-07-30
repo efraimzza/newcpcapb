@@ -81,7 +81,7 @@ public class MDMActivity extends Activity {
                     });
 
             } else {
-                Toast.makeText(this, "is not owner", 1).show();
+                Toast.makeText(this, "לא מנהל מכשיר", 1).show();
             }
         } catch (Exception e) {
             Toast.makeText(this, "" + e, 1).show();
@@ -109,54 +109,58 @@ public class MDMActivity extends Activity {
         mRestrictionList = new ArrayList<RestrictionItem>();
 
         String[][] restr={
-            {"vpn","21","הפעלת vpn",""},
-            {"um","20","השבתת הגדרת נקודה חמה",UserManager.DISALLOW_CONFIG_TETHERING},
-            {"um","20","השבתת הגדרת VPN",UserManager.DISALLOW_CONFIG_VPN},
-            {"um","17","השבתת הגדרת Wi-Fi",UserManager.DISALLOW_CONFIG_WIFI},
-            {"um","17","השבתת התקנת אפליקציות",UserManager.DISALLOW_INSTALL_APPS},
-            {"um","17","השבתת התקנה ממקורות לא ידועים",UserManager.DISALLOW_INSTALL_UNKNOWN_SOURCES},
-            {"um","20","מצב מפתחים",UserManager.DISALLOW_DEBUGGING_FEATURES},
-            {"um","20","איפוס להגדרות יצרן",UserManager.DISALLOW_FACTORY_RESET},
-            {"um","25","הוספת משתמש בבעלות",UserManager.DISALLOW_ADD_MANAGED_PROFILE},
-            {"um","27","החלפת משתמש",UserManager.DISALLOW_USER_SWITCH},
-            {"um","20","הוספת משתמשים",UserManager.DISALLOW_ADD_USER},
-            {"um","25","בלוטות",UserManager.DISALLOW_BLUETOOTH},
-            {"um","17","שינוי בלוטות",UserManager.DISALLOW_CONFIG_BLUETOOTH},
-            {"um","28","dns",UserManager.DISALLOW_CONFIG_PRIVATE_DNS},
-            {"um","17","הסרת התקנה",UserManager.DISALLOW_UNINSTALL_APPS},
-            {"um","20","אס אם אס (sms)",UserManager.DISALLOW_SMS},
-            {"um","25","שיתוף בלוטות",UserManager.DISALLOW_BLUETOOTH_SHARING},
-            {"um","27","זמן",UserManager.DISALLOW_CONFIG_DATE_TIME},
-            {"um","22","מצב בטוח",UserManager.DISALLOW_SAFE_BOOT},
-            {"um","20","שיחות יוצאות",UserManager.DISALLOW_OUTGOING_CALLS},
-            {"um","20","שינוי רשת סלולרית",UserManager.DISALLOW_CONFIG_MOBILE_NETWORKS},
-            {"um","17","הסרת משתמש",UserManager.DISALLOW_REMOVE_USER},
-            {"um","20","שליטה באפליקציות",UserManager.DISALLOW_APPS_CONTROL},
-            {"um","23","נדידת נתונים",UserManager.DISALLOW_DATA_ROAMING},
-            {"um","17","usb",UserManager.DISALLOW_USB_FILE_TRANSFER}
-            
+            {"vpn","21","הפעלת vpn","",""+R.drawable.ic_restriction_vpn},
+            {"um","20","השבתת הגדרת נקודה חמה",UserManager.DISALLOW_CONFIG_TETHERING,""+R.drawable.ic_restriction_tethering},
+            {"um","20","השבתת הגדרת VPN",UserManager.DISALLOW_CONFIG_VPN,""+R.drawable.ic_restriction_vpn},
+            {"um","17","השבתת הגדרת Wi-Fi",UserManager.DISALLOW_CONFIG_WIFI,""+R.drawable.ic_restriction_wifi},
+            {"um","17","השבתת התקנת אפליקציות",UserManager.DISALLOW_INSTALL_APPS,""+R.drawable.ic_restriction_install_apps},
+            {"um","17","השבתת התקנה ממקורות לא ידועים",UserManager.DISALLOW_INSTALL_UNKNOWN_SOURCES,""+R.drawable.ic_restriction_unknown_sources},
+            {"um","20","מצב מפתחים",UserManager.DISALLOW_DEBUGGING_FEATURES,""+R.drawable.ic_restriction_developer_mode},
+            {"um","20","איפוס להגדרות יצרן",UserManager.DISALLOW_FACTORY_RESET,""+R.drawable.ic_restriction_factory_reset},
+            {"um","25","הוספת משתמש בבעלות",UserManager.DISALLOW_ADD_MANAGED_PROFILE,""+R.drawable.ic_restriction_add_user},
+            {"um","27","החלפת משתמש",UserManager.DISALLOW_USER_SWITCH,""+R.drawable.ic_restriction_add_user},
+            {"um","20","הוספת משתמשים",UserManager.DISALLOW_ADD_USER,""+R.drawable.ic_restriction_add_user},
+            {"um","25","בלוטות",UserManager.DISALLOW_BLUETOOTH,""+R.drawable.ic_restriction_bluetooth},
+            {"um","17","שינוי בלוטות",UserManager.DISALLOW_CONFIG_BLUETOOTH,""+R.drawable.ic_restriction_bluetooth},
+            {"um","28","dns",UserManager.DISALLOW_CONFIG_PRIVATE_DNS,""+R.drawable.ic_restriction_dns},
+            {"um","17","הסרת התקנה",UserManager.DISALLOW_UNINSTALL_APPS,""+R.drawable.ic_restriction_uninstall_apps},
+            {"um","20","אס אם אס (sms)",UserManager.DISALLOW_SMS,""+R.drawable.ic_restriction_sms},
+            {"um","25","שיתוף בלוטות",UserManager.DISALLOW_BLUETOOTH_SHARING,""+R.drawable.ic_restriction_bluetooth},
+            {"um","27","זמן",UserManager.DISALLOW_CONFIG_DATE_TIME,""+R.drawable.ic_restriction_date_time},
+            {"um","22","מצב בטוח",UserManager.DISALLOW_SAFE_BOOT,""+R.drawable.ic_restriction_safe_boot},
+            {"um","20","שיחות יוצאות",UserManager.DISALLOW_OUTGOING_CALLS,""+R.drawable.ic_restriction_outgoing_calls},
+            {"um","20","שינוי רשת סלולרית",UserManager.DISALLOW_CONFIG_MOBILE_NETWORKS,""+R.drawable.ic_restriction_mobile_networks},
+            {"um","17","הסרת משתמש",UserManager.DISALLOW_REMOVE_USER,""+R.drawable.ic_restriction_remove_user},
+            {"um","20","שליטה באפליקציות",UserManager.DISALLOW_APPS_CONTROL,""+R.drawable.ic_restriction_apps_control},
+            {"um","23","נדידת נתונים",UserManager.DISALLOW_DATA_ROAMING,""+R.drawable.ic_restriction_data_roaming},
+            {"um","17","usb",UserManager.DISALLOW_USB_FILE_TRANSFER,""+R.drawable.ic_restriction_usb_file_transfer}
+
         };
 
         for (String[] ret:restr) {
-            if (ret[0].equals("um")) {
+            if (ret[0].equals("um")) {  //um - usermanager
                 if (Build.VERSION.SDK_INT > Integer.parseInt(ret[1]))
                     mRestrictionList.add(new RestrictionItem(
                                              ret[0],
                                              ret[2],
+                                             getDescriptionForKey( ret[3]),
                                              ret[3],
-                                             mDpm.getUserRestrictions(mAdminComponentName).getBoolean(ret[3])));
+                                             mDpm.getUserRestrictions(mAdminComponentName).getBoolean(ret[3]),
+                                             Integer.parseInt( ret[4])));
             } else {
                 if (ret[0].equals("list")) {
                     mRestrictionList.add(new RestrictionItem(
                                              ret[0],
                                              ret[2],
+                                             getDescriptionForKey( ret[3]),
                                              ret[3], // מפתח מיוחד עבור פריט זה
                                              false));
-                } else if (ret[0].equals("vpn")) {
+                } else if (ret[0].equals("vpn")) { // vpn key
                     if (Build.VERSION.SDK_INT > Integer.parseInt(ret[1]))
                         mRestrictionList.add(new RestrictionItem(
                                                  ret[0],
                                                  ret[2],
+                                                 getDescriptionForKey( ret[3]),
                                                  ret[3],
                                                  mDpm.isAlwaysOnVpnLockdownEnabled(mAdminComponentName)));
                 }
@@ -175,27 +179,55 @@ public class MDMActivity extends Activity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     RestrictionItem item = mRestrictionList.get(position);
-                    
+
                 }
             });
     }
-
+    private String getDescriptionForKey(String key) {
+        switch (key) {
+            case UserManager.DISALLOW_CONFIG_TETHERING: return "מונע מהמשתמש להפעיל נקודה חמה ניידת.";
+            case UserManager.DISALLOW_CONFIG_VPN: return "מונע מהמשתמש להגדיר חיבורי VPN.";
+            case UserManager.DISALLOW_CONFIG_WIFI: return "מונע מהמשתמש לשנות את הגדרות ה-Wi-Fi.";
+            case UserManager.DISALLOW_INSTALL_APPS: return "מונע התקנת אפליקציות חדשות על המכשיר.";
+            case UserManager.DISALLOW_INSTALL_UNKNOWN_SOURCES: return "מונע התקנת אפליקציות ממקורות שאינם חנות האפליקציות הרשמית.";
+            case UserManager.DISALLOW_DEBUGGING_FEATURES: return "מונע שימוש בתכונות איתור באגים (כמו USB debugging).";
+            case UserManager.DISALLOW_FACTORY_RESET: return "מונע איפוס המכשיר להגדרות היצרן.";
+            case UserManager.DISALLOW_ADD_MANAGED_PROFILE: return "מונע הוספת פרופילים מנוהלים חדשים (לדוגמה, פרופיל עבודה).";
+            case UserManager.DISALLOW_USER_SWITCH: return "מונע החלפה בין משתמשים שונים במכשיר.";
+            case UserManager.DISALLOW_ADD_USER: return "מונע הוספת משתמשים חדשים למכשיר.";
+            case UserManager.DISALLOW_BLUETOOTH: return "משבית את תכונת ה-Bluetooth במכשיר.";
+            case UserManager.DISALLOW_CONFIG_BLUETOOTH: return "מונע מהמשתמש לשנות את הגדרות ה-Bluetooth.";
+            case UserManager.DISALLOW_CONFIG_PRIVATE_DNS: return "מונע שינוי הגדרות DNS פרטי.";
+            case UserManager.DISALLOW_UNINSTALL_APPS: return "מונע הסרת התקנה של אפליקציות.";
+            case UserManager.DISALLOW_SMS: return "מונע שליחה וקבלה של הודעות SMS.";
+            case UserManager.DISALLOW_BLUETOOTH_SHARING: return "מונע שיתוף קבצים באמצעות Bluetooth.";
+            case UserManager.DISALLOW_CONFIG_DATE_TIME: return "מונע שינוי תאריך ושעה במכשיר.";
+            case UserManager.DISALLOW_SAFE_BOOT: return "מונע כניסה למצב בטוח (Safe Mode).";
+            case UserManager.DISALLOW_OUTGOING_CALLS: return "מונע ביצוע שיחות יוצאות.";
+            case UserManager.DISALLOW_CONFIG_MOBILE_NETWORKS: return "מונע שינוי הגדרות רשת סלולרית.";
+            case UserManager.DISALLOW_REMOVE_USER: return "מונע הסרת משתמשים מהמכשיר.";
+            case UserManager.DISALLOW_APPS_CONTROL: return "מונע גישה והתאמה אישית של הגדרות אפליקציות.";
+            case UserManager.DISALLOW_DATA_ROAMING: return "מונע שימוש בנדידת נתונים (roaming).";
+            case UserManager.DISALLOW_USB_FILE_TRANSFER: return "מונע העברת קבצים באמצעות כבל USB.";
+            default: return "תיאור הגבלה לא ידוע.";
+        }
+    }
     private void applyAllRestrictions() {
         for (RestrictionItem item : mRestrictionList) {
             // נתעלם מפריט ניהול האפליקציות כי הוא לא הגבלה ישירה
             //if (!APP_MANAGEMENT_ITEM_KEY.equals(item.getRestrictionKey())) {
             if (item.getType().equals("um")) {
-                if (item.isChecked()) {
-                    mDpm.addUserRestriction(mAdminComponentName, item.getRestrictionKey());
+                if (item.isEnabled()) {
+                    mDpm.addUserRestriction(mAdminComponentName, item.getKey());
                 } else {
-                    mDpm.clearUserRestriction(mAdminComponentName, item.getRestrictionKey());
+                    mDpm.clearUserRestriction(mAdminComponentName, item.getKey());
                 }
             } else if (item.getType().equals("vpn")) {
-                
+
                 try {
-                    mDpm.setAlwaysOnVpnPackage(mAdminComponentName,item.isChecked()? getPackageName():null, true);
+                    mDpm.setAlwaysOnVpnPackage(mAdminComponentName, item.isEnabled() ? getPackageName(): null, true);
                 } catch (PackageManager.NameNotFoundException e) {}
-                
+
             }
         }
         Toast.makeText(this, "ההגבלות נשמרו!", Toast.LENGTH_SHORT).show();

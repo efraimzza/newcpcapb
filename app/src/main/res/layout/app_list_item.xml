@@ -3,15 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="8dp"
+    android:padding="12dp"
     android:gravity="center_vertical"
-    android:background="?android:attr/selectableItemBackground"> <ImageView
+    android:background="@drawable/rounded_list_item_background"> 
+    <ImageView
         android:id="@+id/app_icon"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginEnd="8dp"
-        android:contentDescription="אייקון אפליקציה" />
-
+        android:layout_marginEnd="12dp"
+        android:contentDescription="אייקון אפליקציה"
+        android:src="@drawable/ic_launcher"/> 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -24,23 +25,24 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:text="שם האפליקציה"/>
+            android:textColor="@android:color/black"
+            android:text="שם אפליקציה"/>
 
         <TextView
             android:id="@+id/app_package"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="12sp"
-            android:textColor="#888"
-            android:text="com.example.package.name"/>
+            android:textColor="#666666"
+            android:text="com.example.package"/>
 
         <TextView
             android:id="@+id/app_last_updated"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="10sp"
-            android:textColor="#AAA"
-            android:text="עדכון אחרון: 01/01/2024"/>
+            android:textColor="#999999"
+            android:text="עדכון אחרון: DD/MM/YYYY HH:MM"/>
 
     </LinearLayout>
 
@@ -48,5 +50,10 @@
         android:id="@+id/hide_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:focusable="false" android:clickable="false" /> </LinearLayout>
+        android:layout_marginStart="12dp"
+        android:thumb="@drawable/custom_switch_thumb"
+        android:track="@drawable/custom_switch_track"
+        android:focusable="false"
+        android:clickable="false" />
+
+</LinearLayout>

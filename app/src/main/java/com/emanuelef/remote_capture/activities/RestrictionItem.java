@@ -1,19 +1,30 @@
 package com.emanuelef.remote_capture.activities;
 
+import android.graphics.drawable.Drawable; // הוסף את הייבוא הזה
+import com.emanuelef.remote_capture.R;
+
 public class RestrictionItem {
     private String type;
     private String name;
-    private String restrictionKey; // המפתח של ההגבלה ב-UserManager (לדוגמה: UserManager.DISALLOW_TETHERING)
-    private boolean isChecked; // האם ה-CheckBox מסומן
+    private String description; // חדש
+    private String key;
+    private boolean isEnabled;
+    private int iconResId; // חדש: Resource ID של הדרבאל
 
-    public RestrictionItem(String type,String name, String restrictionKey, boolean isChecked) {
+    // קונסטרקטור חדש
+    public RestrictionItem(String type,String name, String description, String key, boolean isEnabled, int iconResId) {
         this.type = type;
         this.name = name;
-        this.restrictionKey = restrictionKey;
-        this.isChecked = isChecked;
+        this.description = description;
+        this.key = key;
+        this.isEnabled = isEnabled;
+        this.iconResId = iconResId;
     }
 
-    // Getters and Setters
+    // קונסטרקטור קיים (למקרה של תאימות לאחור, אך מומלץ להשתמש בחדש)
+    public RestrictionItem(String type,String name, String description, String key, boolean isEnabled) {
+        this(type,name, description, key, isEnabled, R.drawable.ic_default_restriction); // ברירת מחדל לאייקון
+    }
     public String getType() {
         return type;
     }
@@ -21,15 +32,23 @@ public class RestrictionItem {
         return name;
     }
 
-    public String getRestrictionKey() {
-        return restrictionKey;
+    public String getDescription() {
+        return description;
     }
 
-    public boolean isChecked() {
-        return isChecked;
+    public String getKey() {
+        return key;
     }
 
-    public void setChecked(boolean checked) {
-        isChecked = checked;
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
+    }
+
+    public int getIconResId() {
+        return iconResId;
     }
 }
