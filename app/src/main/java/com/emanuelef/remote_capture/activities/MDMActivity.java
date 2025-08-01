@@ -36,7 +36,7 @@ public class MDMActivity extends Activity {
     private DevicePolicyManager mDpm;
     private ComponentName mAdminComponentName;
 
-    
+    @Deprecated
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,6 +124,7 @@ public class MDMActivity extends Activity {
             .setTitle("הסר ניהול מכשיר")
             .setMessage("האם אתה בטוח שברצונך להסיר את אפליקציית ה-MDM כמנהל המכשיר?")
             .setPositiveButton("כן, הסר", new DialogInterface.OnClickListener() {
+                @Deprecated
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     try{
@@ -204,6 +205,7 @@ public class MDMActivity extends Activity {
     }
     boolean succ=false;
     boolean mend=false;
+    @Deprecated
     private void updateMdm(){
     //first abandon all old sessions
     try {

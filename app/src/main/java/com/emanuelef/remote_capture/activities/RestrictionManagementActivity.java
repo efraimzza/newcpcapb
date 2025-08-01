@@ -54,7 +54,7 @@ public class RestrictionManagementActivity extends Activity {
             });
             }
     }
-
+    @Deprecated
     private void loadRestrictions() {
         mRestrictionList = new ArrayList<>();
 
@@ -207,7 +207,7 @@ public class RestrictionManagementActivity extends Activity {
             mRestrictionList.add(new RestrictionItem("",name, getDescriptionForKey(key), key, isEnabled, iconResId));
         }
     }
-
+    @Deprecated
     private String getDescriptionForKey(String key) {
         // ... (המתודה הקיימת, ללא שינוי)
         switch (key) {
