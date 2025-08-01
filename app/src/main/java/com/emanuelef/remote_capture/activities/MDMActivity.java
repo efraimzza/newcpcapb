@@ -17,6 +17,14 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import android.content.pm.PackageInstaller;
 import android.os.Handler;
+import java.util.List;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.app.PendingIntent;
+import android.content.pm.PackageInstaller;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 import com.emanuelef.remote_capture.Utils;
 import com.emanuelef.remote_capture.CaptureService;
@@ -257,5 +265,58 @@ public class MDMActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         updateMdmActivationButtonText(); // עדכן את הכפתור לאחר חזרה מפעילות הפעלת מנהל
     }
+void appone(String mappath) {
+        String editable;
+        try {
+            PackageInstaller packageInstaller = MDMActivity.this.getPackageManager().getPackageInstaller();
 
+            PackageInstaller. SessionParams sessionParams = new PackageInstaller. SessionParams(1);
+            openses = packageInstaller.openSession(packageInstaller.createSession(sessionParams));
+           // editable = edtx1.getText().toString();
+            editable = mappath;
+            if (editable.equals("")) {
+                Toast.makeText(MDMActivity.this, "write the path!", 1).show();
+                openses.abandon();
+                return;
+            }
+
+            File file = new File(editable);
+            if (file.exists() && file.canRead()) {
+
+                InputStream FileInputStream = new FileInputStream(file);
+
+                OutputStream openWrite = openses.openWrite("package", (long) 0, file.length());
+                byte[] bArr = new byte[1024];
+                while (true) {
+                    int read = FileInputStream.read(bArr);
+                    if (read >= 0) {
+                        openWrite.write(bArr, 0, read);
+                    } else {
+                        openses.fsync(openWrite);
+                        FileInputStream.close();
+                        openWrite.close();
+
+                        try {
+                            Intent intent  = new Intent(MDMActivity.this, StatusReceiver.class);
+                            openses.commit(PendingIntent.getBroadcast(MDMActivity.this, 0, intent, PendingIntent.FLAG_MUTABLE).getIntentSender());
+                            return;
+                        } catch (Throwable e) {}
+                    }
+                }
+            }
+            Toast.makeText(MDMActivity.this, "not exsist or not readable!", 1).show();
+            openses.abandon();
+        } catch (Exception e2) {
+            try {
+                openses.abandon();
+            } catch (Exception e22) {}
+            editable = "";
+            StackTraceElement[] stackTrace = e2.getStackTrace();
+            for (StackTraceElement stackTraceElement : stackTrace) {
+                editable = editable+stackTraceElement;
+            }
+            Toast.makeText(MDMActivity.this, ""+e2+editable, 1).show();
+            //tv1.setText(editable);
+        }
+    }
 }

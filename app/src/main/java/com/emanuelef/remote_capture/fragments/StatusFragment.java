@@ -244,7 +244,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
                             public void run() {
                                 mremovepcapmdm();
                             }
-                        },mcon);
+                        },mActivity);
             //checkpassword(false,"removemdm");
         });
         tvaa.setOnClickListener(v -> {
@@ -253,7 +253,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
                             public void run() {
                                 PasswordManager.showSetPasswordDialog(mcon);
                             }
-                        },mcon);
+                        },mActivity);
             //checkpassword(true,"changepwd");
         });
         /*tvab.setOnClickListener(v -> {
@@ -333,7 +333,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
                             public void run() {
                                 mradiodialog();
                             }
-                        },mcon);
+                        },mActivity);
             //checkpassword(true,"changemode");
         });
         tvad.setOnClickListener(v -> {
