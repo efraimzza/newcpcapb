@@ -154,7 +154,7 @@ public class FirewallStatus extends Fragment implements MenuProvider {
 
         if(id == R.id.user_guide) {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(MainActivity.FIREWALL_DOCS_URL));
-            Utils.startActivity(requireContext(), browserIntent);
+            //Utils.startActivity(requireContext(), browserIntent);
             return true;
         } else if(id == R.id.block_new_apps) {
             boolean checked = !item.isChecked();

@@ -65,7 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="@drawable/green_button_background"
+        android:background="@drawable/roundbugreen"
         android:text="שמור שינויים באפליקציות" />
 
     <Button
@@ -73,7 +73,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:background="@drawable/green_button_background"
+        android:background="@drawable/roundbured"
         android:text="התקן/עדכן אפליקציה מ-APK/APKS" />
 
 </LinearLayout>

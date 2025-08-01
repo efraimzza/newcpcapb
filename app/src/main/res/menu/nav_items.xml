@@ -25,14 +25,7 @@
             android:id="@+id/open_log"
             android:title="@string/app_log"
             android:icon="@drawable/ic_text_snippet" />
-        <item
-            android:id="@+id/manage_mdm"
-            android:title="@string/mdm_settings"
-            android:icon="@drawable/ic_settings" />
-        <item
-            android:id="@+id/settings_short"
-            android:title="@string/settings_shortcut"
-            android:icon="@drawable/ic_settings" />
+        
         <item
             android:id="@+id/paid_features"
             android:visible="false"

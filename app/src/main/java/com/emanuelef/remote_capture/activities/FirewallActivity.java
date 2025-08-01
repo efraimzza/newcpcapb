@@ -58,12 +58,16 @@ public class FirewallActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(R.string.firewall);
-        setContentView(R.layout.tabs_activity);
-
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-        mPager = findViewById(R.id.pager);
-        Utils.fixViewPager2Insets(mPager);
-        setupTabs();
+        PasswordManager.requestPasswordAndSave(new Runnable() {
+            @Override
+            public void run() {  
+                setContentView(R.layout.tabs_activity);
+                mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+                mPager = findViewById(R.id.pager);
+                Utils.fixViewPager2Insets(mPager);
+                setupTabs();
+            }
+        },FirewallActivity.this);
     }
 
     private class StateAdapter extends FragmentStateAdapter {

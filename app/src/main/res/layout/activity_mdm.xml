@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#F5F5F5"> <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ניהול MDM"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"
+        android:paddingBottom="24dp"
+        android:textColor="@android:color/black"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <Button style="@style/MDMActionButton"
+                android:id="@+id/btn_manage_restrictions"
+                android:text="ניהול הגבלות מכשיר"/>
+
+            <Button style="@style/MDMActionButton"
+                android:id="@+id/btn_manage_apps"
+                android:text="ניהול אפליקציות"/>
+                
+            <Button style="@style/MDMActionButton"
+                android:id="@+id/btn_manage_vpn"
+                android:text="ניהול vpn"/>
+
+            <Button style="@style/MDMActionButton"
+                android:id="@+id/btn_change_password"
+                android:text="שנה סיסמה"/>
+
+            <Button style="@style/MDMActionButton"
+                android:id="@+id/btn_activate_mdm"
+                android:text="הפעל ניהול מכשיר"
+                android:background="@drawable/green_button_background" /> <Button style="@style/MDMActionButton"
+                android:id="@+id/btn_remove_mdm"
+                android:text="הסר ניהול מכשיר"
+                android:background="@drawable/red_button_background"/> <Button style="@style/MDMActionButton"
+                android:id="@+id/btn_update_mdm_app"
+                android:text="עדכון אפליקציית MDM"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#DDDDDD"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="24dp"/>
+
+            <Button style="@style/MDMActionButton"
+                android:id="@+id/btn_select_route"
+                android:text="בחירת מסלול"/>
+
+            <Button style="@style/MDMActionButton"
+                android:id="@+id/btn_refresh_website_list"
+                android:text="רענון רשימת אתרים"/>
+
+            <Button style="@style/MDMActionButton"
+                android:id="@+id/btn_update_whitelist"
+                android:text="עדכון לרשימת דומיינים לבנה"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#DDDDDD"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="24dp"/>
+
+            <Button style="@style/MDMActionButton"
+                android:id="@+id/btn_more_features"
+                android:text="פיצ'רים נוספים"/>
+
+            <Button style="@style/MDMActionButton"
+                android:id="@+id/btn_instructions"
+                android:text="הוראות הפעלה"/>
+
+            <Button style="@style/MDMActionButton"
+                android:id="@+id/btn_about"
+                android:text="אודות"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

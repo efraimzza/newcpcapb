@@ -263,10 +263,10 @@ public class CaptureService extends VpnService implements Runnable {
         // NOTE: since Android 12, startForeground cannot be called when the app is in background
         // (unless invoked via an Intent).
         setupNotifications();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
-            startForeground(NOTIFY_ID_VPNSERVICE, getStatusNotification(), ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE);
-        else
-            startForeground(NOTIFY_ID_VPNSERVICE, getStatusNotification());
+        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+        //    startForeground(NOTIFY_ID_VPNSERVICE, getStatusNotification(), ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE);
+        //else
+        //    startForeground(NOTIFY_ID_VPNSERVICE, getStatusNotification());
 
         // NOTE: onStartCommand may be called when the capture is already running, e.g. if the user
         // turns on the always-on VPN while the capture is running in root mode
@@ -623,7 +623,7 @@ public class CaptureService extends VpnService implements Runnable {
                                         .setContentTitle(getString(R.string.app_blocked))
                                         .setContentText(getString(R.string.app_blocked_info, label))
                                         .setAutoCancel(true)
-                                        .addAction(R.drawable.ic_check_solid, getString(R.string.action_unblock), unblockIntent)
+                                        //.addAction(R.drawable.ic_check_solid, getString(R.string.action_unblock), unblockIntent)
                                         .build();
 
                                 man.notify(NOTIFY_ID_APP_BLOCKED, notification);
@@ -739,8 +739,8 @@ public class CaptureService extends VpnService implements Runnable {
         if(mStopping)
             return;
 
-        Notification notification = getStatusNotification();
-        NotificationManagerCompat.from(this).notify(NOTIFY_ID_VPNSERVICE, notification);
+        //Notification notification = getStatusNotification();
+        //NotificationManagerCompat.from(this).notify(NOTIFY_ID_VPNSERVICE, notification);
     }
 
     public void notifyBlacklistedConnection(ConnectionDescriptor conn) {

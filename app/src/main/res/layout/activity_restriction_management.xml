@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#F5F5F5"> <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ניהול הגבלות מכשיר"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"
+        android:paddingBottom="16dp"
+        android:textColor="@android:color/black"/>
+
+    <ListView
+        android:id="@+id/lv_restrictions"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="8dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:clipToPadding="false"/>
+
+    <Button
+        android:id="@+id/btn_save_restrictions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="שמור הגבלות"
+        android:background="@drawable/green_button_background"
+        android:textColor="@android:color/white"
+        android:padding="12dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginTop="16dp"/>
+
+</LinearLayout>

@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.widget.Toast;
+import com.emanuelef.remote_capture.R;
 
 public class PasswordManager {
     private static final String PREFS_NAME = "MDMPrefs";
@@ -98,84 +99,64 @@ public class PasswordManager {
     public static int getMinPasswordLength() {
         return MIN_PASSWORD_LENGTH;
     }
-    
-    public static void requestPasswordAndSave(final Runnable onPasswordCorrect,final Context mcont) {
-        final String storedPasswordHash = PasswordManager.getStoredPasswordHash(mcont);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(mcont);
+    public static void requestPasswordAndSave(final Runnable action,final Activity activity) {
+        final String storedPasswordHash = PasswordManager.getStoredPasswordHash(activity);
+        
+        final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle("אימות סיסמה");
+        final View passwordLayout = activity. getLayoutInflater().inflate(R.drawable.dialog_password_input, null);
+        final android.widget.EditText etPassword = passwordLayout.findViewById(R.id.et_admin_password);
         
-        final EditText input = new EditText(mcont);
-        input.setHint("הכנס סיסמה");
-        input.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.MATCH_PARENT);
-        input.setLayoutParams(lp);
+
         if (storedPasswordHash != null) {
-        builder.setView(input);
-        
-        builder.setPositiveButton("אשר", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    String enteredPassword = input.getText().toString();
-                    if (PasswordManager.checkPassword(mcont, enteredPassword)) {
-                        onPasswordCorrect.run();
-                    } else {
-                        Toast.makeText(mcont, "סיסמה שגויה!", Toast.LENGTH_SHORT).show();
+            builder.setView(passwordLayout);
+
+            builder.setPositiveButton("אשר", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String enteredPassword = etPassword.getText().toString();
+                        if (PasswordManager.checkPassword(activity, enteredPassword)) {
+                            action.run();
+                        } else {
+                            Toast.makeText(activity, "סיסמה שגויה!", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                }
-            });
+                });
         }else{
             builder.setMessage("אין סיסמת אבטחה מוגדרת. האם ברצונך להגדיר אחת כעת?\n" +
                                "אורך מינימלי: " + PasswordManager.getMinPasswordLength() + " תווים.");
             builder.setPositiveButton("הגדר סיסמה", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        showSetPasswordDialog(mcont);
+                        showSetPasswordDialog(activity);
                     }
                 });
         }
-        builder.setNegativeButton("ביטול", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
-        
+        builder.setNegativeButton("ביטול", null);
         builder.show();
     }
 
-    public static void showSetPasswordDialog(final Context mcont) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mcont);
-        builder.setTitle("הגדר/שנה סיסמה");
+    public static void showSetPasswordDialog(final Activity activity) {
+        // ... (הקוד הקיים לשינוי סיסמה, אולי תרצה לשפר אותו עם דיאלוג מותאם אישית)
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle("שינוי סיסמת מנהל");
+        final View passwordLayout = activity. getLayoutInflater().inflate(R.drawable.dialog_password_input, null); // השתמש באותו layout
+        final android.widget.EditText etNewPassword = passwordLayout.findViewById(R.id.et_admin_password);
+        etNewPassword.setHint("הכנס סיסמה חדשה (מינימום " + PasswordManager.getMinPasswordLength() + " תווים)");
+        builder.setView(passwordLayout);
 
-        final EditText input = new EditText(mcont);
-        input.setHint("הכנס סיסמה חדשה (מינימום " + PasswordManager.getMinPasswordLength() + " תווים)");
-        input.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.MATCH_PARENT);
-        input.setLayoutParams(lp);
-        builder.setView(input);
-
-        builder.setPositiveButton("שמור", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("שנה", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    String newPassword = input.getText().toString();
-                    if (PasswordManager.setPassword(mcont, newPassword)) {
-                        Toast.makeText(mcont, "הסיסמה נשמרה בהצלחה!", Toast.LENGTH_SHORT).show();
+                    String newPassword = etNewPassword.getText().toString();
+                    if (PasswordManager.setPassword(activity, newPassword)) {
+                        Toast.makeText(activity, "הסיסמה נשמרה בהצלחה!", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(mcont, "שגיאה: הסיסמה קצרה מדי! (מינימום " + PasswordManager.getMinPasswordLength() + " תווים)", Toast.LENGTH_LONG).show();
+                        Toast.makeText(activity, "שגיאה: הסיסמה קצרה מדי! (מינימום " + PasswordManager.getMinPasswordLength() + " תווים)", Toast.LENGTH_LONG).show();
                     }
                 }
             });
-        builder.setNegativeButton("ביטול", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
+        builder.setNegativeButton("ביטול", null);
         builder.show();
     }
 }

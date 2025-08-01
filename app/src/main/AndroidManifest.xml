@@ -58,13 +58,13 @@
             android:name=".activities.MainActivity"
             android:theme="@style/AppTheme.SplashScreen"
             android:launchMode="singleTop"
-            android:exported="true">
+            >
 
-            <intent-filter>
+            <!--intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
-            </intent-filter>
+            </intent-filter-->
         </activity>
 
         <activity
@@ -231,9 +231,15 @@
            <activity
                 android:name="com.emanuelef.remote_capture.activities.MDMActivity"
                 android:exported="true">
-
+                <intent-filter>
+                    <action android:name="android.intent.action.MAIN" />
+                    <category android:name="android.intent.category.LAUNCHER" />
+                </intent-filter>
             </activity>
-
+             <activity android:name="com.emanuelef.remote_capture.activities.RestrictionManagementActivity" />
+             <activity android:name="com.emanuelef.remote_capture.activities.MoreFeaturesActivity" />
+             <activity android:name="com.emanuelef.remote_capture.activities.InstructionsActivity" />
+             <activity android:name="com.emanuelef.remote_capture.activities.AboutActivitya" />
              <activity android:name="com.emanuelef.remote_capture.activities.AppManagementActivity" />
 
             

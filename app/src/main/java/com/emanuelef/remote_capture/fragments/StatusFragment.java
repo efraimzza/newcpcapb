@@ -126,7 +126,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
     private TextView startmdm;
     private TextView removemdm;
     private TextView tvaa;
-    private TextView tvab;
+    //private TextView tvab;
     TextView tvac;
     TextView tvad;
     //private View mQuickSettings;
@@ -192,7 +192,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         startmdm = view.findViewById(R.id.startmdm);
         removemdm = view.findViewById(R.id.removemdm);
         tvaa = view.findViewById(R.id.tva);
-        tvab = view.findViewById(R.id.tvb);
+        //tvab = view.findViewById(R.id.tvb);
 	    tvac = view.findViewById(R.id.tvc);
 	    tvad = view.findViewById(R.id.tvd);
       //  setbuttonsmdm();
@@ -256,7 +256,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
                         },mcon);
             //checkpassword(true,"changepwd");
         });
-        tvab.setOnClickListener(v -> {
+        /*tvab.setOnClickListener(v -> {
        
        try {
        List<PackageInstaller.SessionInfo> lses= mcon.getPackageManager().getPackageInstaller().getAllSessions();
@@ -298,7 +298,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
                     }
                 }
             });
-        });
+        });*/
 	    sp=mcon.getSharedPreferences(mcon.getPackageName(),mcon.MODE_PRIVATE);
         spe=sp.edit();
         
