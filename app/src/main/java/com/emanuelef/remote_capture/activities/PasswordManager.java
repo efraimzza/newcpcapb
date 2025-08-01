@@ -1,5 +1,7 @@
 package com.emanuelef.remote_capture.activities;
 
+import android.app.Activity;
+import android.view.View;
 import android.content.Context;
 import android.content.SharedPreferences;
 import java.security.MessageDigest;

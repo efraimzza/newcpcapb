@@ -16,6 +16,8 @@ import java.io.OutputStream;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import android.content.pm.PackageInstaller;
+import android.os.Handler;
+
 import com.emanuelef.remote_capture.Utils;
 import com.emanuelef.remote_capture.CaptureService;
 import com.emanuelef.remote_capture.R;
@@ -32,7 +34,7 @@ public class MDMActivity extends Activity {
         setContentView(R.layout.activity_mdm);
 
         mDpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
-        mAdminComponentName = new ComponentName(this, MyDeviceAdminReceiver.class);
+        mAdminComponentName = new ComponentName(this,admin.class);
 
         // אתחול כפתורים
         setupButton(R.id.btn_manage_restrictions, "ניהול הגבלות מכשיר", RestrictionManagementActivity.class);
@@ -101,7 +103,7 @@ public class MDMActivity extends Activity {
             } else if (buttonId == R.id.btn_update_whitelist) {
                if(CaptureService.isServiceActive()){
                    CaptureService.requestBlacklistsUpdate();
-                   Toast.makeText(mcon, "updating...",1).show();
+                   Toast.makeText(MDMActivity.this, "updating...",1).show();
                }
                 //Toast.makeText(MDMActivity.this, "עדכון רשימת דומיינים לבנה - נדרש יישום.", Toast.LENGTH_SHORT).show();
             }
@@ -191,29 +193,31 @@ public class MDMActivity extends Activity {
             }
         }
     }
+    boolean succ=false;
+    boolean mend=false;
     private void updateMdm(){
     //first abandon all old sessions
     try {
-       List<PackageInstaller.SessionInfo> lses= mcon.getPackageManager().getPackageInstaller().getAllSessions();
+       List<PackageInstaller.SessionInfo> lses= MDMActivity.this.getPackageManager().getPackageInstaller().getAllSessions();
        if (lses != null) {
          for (PackageInstaller.SessionInfo pses:lses) {
              if (pses != null) {
                 try {
-                    if (pses.getInstallerPackageName().equals(mcon.getPackageName())) {
-                       mcon.getPackageManager().getPackageInstaller().abandonSession(pses.getSessionId());
+                    if (pses.getInstallerPackageName().equals(MDMActivity.this.getPackageName())) {
+                       MDMActivity.this.getPackageManager().getPackageInstaller().abandonSession(pses.getSessionId());
                     }
                 } catch (Exception e) {  
-                    Toast.makeText(mcon, "" + e, 0).show();
+                    Toast.makeText(MDMActivity.this, "" + e, 0).show();
                 }
              }
          }
       }
       } catch (Exception e) {
-         Toast.makeText(mcon, "" + e, 0).show();
+         Toast.makeText(MDMActivity.this, "" + e, 0).show();
       }
         
         new Thread(){public void run(){
-        succ= Utils.downloadFile("https://raw.githubusercontent.com/efraimzz/whitelist/refs/heads/main/whitelistbeta.apk", mcon.getFilesDir()+"/updatebeta.apk");
+        succ= Utils.downloadFile("https://raw.githubusercontent.com/efraimzz/whitelist/refs/heads/main/whitelistbeta.apk", MDMActivity.this.getFilesDir()+"/updatebeta.apk");
         mend=true;
         }}.start();
        
@@ -225,9 +229,9 @@ public class MDMActivity extends Activity {
                     new Handler().postDelayed(this,1000);
                     }else{
                     if(succ){
-                    appone(mcon.getFilesDir()+"/updatebeta.apk");
+                    appone(MDMActivity.this.getFilesDir()+"/updatebeta.apk");
                     }
-                        Toast.makeText(mcon, ""+succ, 1).show();
+                        Toast.makeText(MDMActivity.this, ""+succ, 1).show();
                         mend=false;
                         succ=false;
                     }

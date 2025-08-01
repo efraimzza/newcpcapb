@@ -80,7 +80,7 @@ public class AppManagementActivity extends Activity {
         mAdapter = new AppListAdapter(this, mFilteredAppList);
         lvApps.setAdapter(mAdapter);
 
-        Button btnShowFilterOptions = (Button) findViewById(R.id.btn_show_filter_options);
+        Button btnShowFilterOptions = (Button) findViewById(R.id.btn_filter_apps);
         btnShowFilterOptions.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

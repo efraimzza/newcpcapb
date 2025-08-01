@@ -33,11 +33,11 @@ public class MoreFeaturesActivity extends Activity {
                             Toast.makeText(MoreFeaturesActivity.this, "לא ניתן לפתוח את הגדרות המולטימדיה.", Toast.LENGTH_SHORT).show();
                         }*/
                         try{
-            ShortcutManager sm=(ShortcutManager) MainActivity.this.getSystemService(SHORTCUT_SERVICE);
-            Icon ic= Icon.createWithResource(mcon,R.drawable.ic_settingsshort);
-            ShortcutInfo si=new ShortcutInfo.Builder(MainActivity.this,"settings")
+            ShortcutManager sm=(ShortcutManager) MoreFeaturesActivity.this.getSystemService(SHORTCUT_SERVICE);
+            Icon ic= Icon.createWithResource(MoreFeaturesActivity.this,R.drawable.ic_settingsshort);
+            ShortcutInfo si=new ShortcutInfo.Builder(MoreFeaturesActivity.this,"settings")
             .setShortLabel("הגדרות")
-            .setIntent(MainActivity.this.getPackageManager().getLaunchIntentForPackage("com.android.settings"))
+            .setIntent(MoreFeaturesActivity.this.getPackageManager().getLaunchIntentForPackage("com.android.settings"))
             .setIcon(ic)
             .build();
             sm.requestPinShortcut(si,null);

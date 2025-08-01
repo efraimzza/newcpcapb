@@ -31,7 +31,7 @@ public class RestrictionManagementActivity extends Activity {
         setContentView(R.layout.activity_restriction_management); // שם קובץ layout חדש
 
         mDpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
-        mAdminComponentName = new ComponentName(this, MyDeviceAdminReceiver.class);
+        mAdminComponentName = new ComponentName(this, admin.class);
         if(mDpm.isDeviceOwnerApp(getPackageName())){
         lvRestrictions = findViewById(R.id.lv_restrictions);
         loadRestrictions();

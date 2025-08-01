@@ -62,7 +62,7 @@ public class FirewallActivity extends BaseActivity {
             @Override
             public void run() {  
                 setContentView(R.layout.tabs_activity);
-                mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+                mPrefs = PreferenceManager.getDefaultSharedPreferences(FirewallActivity.this);
                 mPager = findViewById(R.id.pager);
                 Utils.fixViewPager2Insets(mPager);
                 setupTabs();
