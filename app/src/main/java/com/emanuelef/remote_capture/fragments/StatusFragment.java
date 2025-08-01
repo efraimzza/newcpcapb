@@ -251,7 +251,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
                     PasswordManager.requestPasswordAndSave(new Runnable() {
                             @Override
                             public void run() {
-                                PasswordManager.showSetPasswordDialog(mcon);
+                                PasswordManager.showSetPasswordDialog(mActivity);
                             }
                         },mActivity);
             //checkpassword(true,"changepwd");

@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
+import com.emanuelef.remote_capture.activities.StatusReceiver;
 import com.emanuelef.remote_capture.Utils;
 import com.emanuelef.remote_capture.CaptureService;
 import com.emanuelef.remote_capture.R;
@@ -265,7 +266,8 @@ public class MDMActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         updateMdmActivationButtonText(); // עדכן את הכפתור לאחר חזרה מפעילות הפעלת מנהל
     }
-void appone(String mappath) {
+    PackageInstaller.Session openses;
+    void appone(String mappath) {
         String editable;
         try {
             PackageInstaller packageInstaller = MDMActivity.this.getPackageManager().getPackageInstaller();
