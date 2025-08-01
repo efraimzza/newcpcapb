@@ -233,7 +233,7 @@ public class MDMActivity extends Activity {
                     }
                 }
             });
-        });
+        
     }
     private void updateMdmActivationButtonText() {
         Button btnActivateMDM = findViewById(R.id.btn_activate_mdm);
