@@ -961,6 +961,8 @@ public class CaptureService extends VpnService implements Runnable {
         else
             captureService.stopForeground(true);
         } catch (Exception e){}
+        if(captureService == null)
+            return;
         captureService.stopSelf();
     }
 
