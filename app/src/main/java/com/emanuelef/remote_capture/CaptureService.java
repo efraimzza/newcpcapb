@@ -956,10 +956,10 @@ public class CaptureService extends VpnService implements Runnable {
         captureService.mStopping = true;
         stopPacketLoop();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            captureService.stopForeground(STOP_FOREGROUND_REMOVE);
-        else
-            captureService.stopForeground(true);
+        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            //captureService.stopForeground(STOP_FOREGROUND_REMOVE);
+        //else
+            //captureService.stopForeground(true);
 
         captureService.stopSelf();
     }
