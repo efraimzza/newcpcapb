@@ -26,7 +26,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-import com.emanuelef.remote_capture.activities.StatusReceiver;
+import com.emanuelef.remote_capture.fragments.StatusReceiver;
 import com.emanuelef.remote_capture.Utils;
 import com.emanuelef.remote_capture.CaptureService;
 import com.emanuelef.remote_capture.R;
