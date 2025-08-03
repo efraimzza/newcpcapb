@@ -908,6 +908,7 @@ public class CaptureService extends VpnService implements Runnable {
 
     // NOTE: do not call this on the main thread, otherwise it will be an ANR
     private void stopAndJoinThreads() {
+    try{
         signalServicesTermination();
 
         Log.d(TAG, "Joining threads...");
@@ -941,6 +942,7 @@ public class CaptureService extends VpnService implements Runnable {
             }
             mMitmReceiver = null;
         }
+       } catch (Exception e){}
     }
 
     /* Stops the running Service. The SERVICE_STATUS_STOPPED notification is sent asynchronously
@@ -954,16 +956,18 @@ public class CaptureService extends VpnService implements Runnable {
             return;
 
         captureService.mStopping = true;
+                try{
         stopPacketLoop();
-        try{
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             captureService.stopForeground(STOP_FOREGROUND_REMOVE);
         else
             captureService.stopForeground(true);
-        } catch (Exception e){}
+
         if(captureService == null)
             return;
         captureService.stopSelf();
+                } catch (Exception e){}
     }
 
     /* Check if the VPN service was launched */
