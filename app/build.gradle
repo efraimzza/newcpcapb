@@ -25,9 +25,9 @@ android {
             dimension "type"
         }
 
-        withoutUshark {
-            dimension "type"
-        }
+        //withoutUshark {
+           // dimension "type"
+        //}
     }
     signingConfigs {
         debug {
@@ -97,7 +97,8 @@ android {
         main.java.srcDirs += '../submodules/MaxMind-DB-Reader-java/src/main/java'
 
         // Note: must use "setRoot" to make this a per-flavor setting
-        standard.setRoot('../submodules/PCAPdroid-ushark-bin/release')
+        //trying to force no ushark
+        //standard.setRoot('../submodules/PCAPdroid-ushark-bin/release')
     }
 
     testOptions {

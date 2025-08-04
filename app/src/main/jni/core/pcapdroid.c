@@ -29,16 +29,20 @@
 #include <stdio.h>
 
 void mlogb(int lie,char* ch){
+        if(debug){
 	FILE *fp;
 	fp=fopen("/storage/emulated/0/logpcapa.txt","a");
 		fprintf(fp,"%d %s%s\n",lie,ch,"");
 		fclose(fp);
+		}
 	}
 void mlogib(int lie,int mi){
+        if(debug){
 	FILE *fp;
 	fp=fopen("/storage/emulated/0/logpcapa.txt","a");
 		fprintf(fp,"%d %d%s\n",lie,mi,"");
 		fclose(fp);
+		}
 	}
 	
 extern int run_vpn(pcapdroid_t *pd);
@@ -63,6 +67,7 @@ char *pd_device = (char*) "";
 char *pd_os = (char*) "";
 bool domainopen=false;
 bool thischeck=false;
+bool debug=false;
 
 static ndpi_protocol_bitmask_struct_t masterProtos;
 static bool masterProtosInit = false;
@@ -338,10 +343,12 @@ static void check_blacklisted_domain(pcapdroid_t *pd, pd_conn_t *data, const zdt
                     log_d("new Whitelisted domain [%s]: %s [%s]", data->info,
                           zdtun_5tuple2str(tuple, buf, sizeof(buf)), appbuf);
                              //new
+        if(debug){
         FILE *fp;
 	    fp=fopen("/storage/emulated/0/logpcapa.txt","a");
 	    fprintf(fp,"343 %s %s\n",data->info ," open");
         fclose(fp);
+        }
 	    //end new
                           if(thischeck) domainopen=true;
                           thischeck=false;
@@ -350,26 +357,32 @@ static void check_blacklisted_domain(pcapdroid_t *pd, pd_conn_t *data, const zdt
                     log_w("new Blacklisted domain [%s]: %s [%s]", data->info,
                           zdtun_5tuple2str(tuple, buf, sizeof(buf)), appbuf);
                           //new
+          if(debug){
         FILE *fp;
 	    fp=fopen("/storage/emulated/0/logpcapa.txt","a");
 	    fprintf(fp,"355 %s %s\n",data->info ," block");
         fclose(fp);
+        }
 	    //end new
                     data->blacklisted_domain = true;
                     data->to_block = true;
+                     if(debug){
                     char bufb[512];
                   //  FILE *fp;
 	                fp=fopen("/storage/emulated/0/logpcapa.txt","a");
 		            fprintf(fp,"363 m yes [%s]: %s [%s]\n", data->info,
                           zdtun_5tuple2str(tuple, bufb, sizeof(bufb)), appbuf);
 		            fclose(fp);
+		            }
                 }
             }else{
                //new
+          if(debug){
         FILE *fp;
 	    fp=fopen("/storage/emulated/0/logpcapa.txt","a");
 	    fprintf(fp,"371 %s %s\n",data->info ," open");
         fclose(fp);
+        }
 	    //end new
                   if(thischeck) domainopen=true;
                   thischeck=false;
@@ -463,6 +476,7 @@ pd_conn_t* pd_new_connection(pcapdroid_t *pd, const zdtun_5tuple_t *tuple, int u
     data->info = ip_lru_find(pd->ip_to_host, &dst_ip);
     //new
     //print app name before the mitm the ip and host
+            if(debug){
     char appbufb[64];
     char bufb[256];
     get_appname_by_uid(pd, data->uid, appbufb, sizeof(appbufb));
@@ -470,13 +484,16 @@ pd_conn_t* pd_new_connection(pcapdroid_t *pd, const zdtun_5tuple_t *tuple, int u
 	fp=fopen("/storage/emulated/0/logpcapa.txt","a");
 	fprintf(fp,"447 %d %s [%s] %s , ", data->uid, zdtun_5tuple2str(tuple, bufb, sizeof(bufb)), appbufb,"");
 	fclose(fp);
+	}
     //end new
     if(data->info) {
         //new
+                if(debug){
         //FILE *fp;
 	    fp=fopen("/storage/emulated/0/logpcapa.txt","a");
 		fprintf(fp,"439 %s %s %s\n",remote_ip, data->info,"");
 		fclose(fp);
+		}
 		//end new
         log_d("Host LRU cache HIT: %s -> %s", remote_ip, data->info);
         data->info_from_lru = true;
@@ -520,10 +537,12 @@ pd_conn_t* pd_new_connection(pcapdroid_t *pd, const zdtun_5tuple_t *tuple, int u
     } 
     //new
     else{
+            if(debug){
         //FILE *fp;
 	    fp=fopen("/storage/emulated/0/logpcapa.txt","a");
 		fprintf(fp,"492 %s %s\n",remote_ip,"");
 		fclose(fp);
+		}
     }
     //end new
 
@@ -667,10 +686,12 @@ static void process_ndpi_data(pcapdroid_t *pd, const zdtun_5tuple_t *tuple, pd_c
         data->info = pd_strndup(found_info, 256);
         data->info_from_lru = false;
         //new
+                if(debug){
         FILE *fp;
 	    fp=fopen("/storage/emulated/0/logpcapa.txt","a");
 	    fprintf(fp,"639 %s %s\n",data->info ," only dns or http");
         fclose(fp);
+        }
 	    //end new
         check_blacklisted_domain(pd, data, tuple);
         data->update_type |= CONN_UPDATE_INFO;
@@ -826,10 +847,12 @@ static void process_dns_reply(pd_conn_t *data, pcapdroid_t *pd, const struct zdt
                 rspip[0] = '\0';
                 inet_ntop(family, &rsp_addr, rspip, sizeof(rspip));
                 //new
+                        if(debug){
                 FILE *fp;
 	            fp=fopen("/storage/emulated/0/logpcapa.txt","a");
 		        fprintf(fp,"792 [v%d]: %s -> %s %s\n",ipver, rspip, query," only dns");
 		        fclose(fp);
+		        }
 		        //end new
                 log_d("Host LRU cache ADD [v%d]: %s -> %s", ipver, rspip, query);
                 ip_lru_add(pd->ip_to_host, &rsp_addr, query);

@@ -46,7 +46,7 @@
             android:title="@string/share"
             android:icon="@drawable/ic_share" /-->
         <item
-            android:id="@+id/action_open_telegram"
+            android:id="@+id/action_send_mail"
             android:title="@string/send_mail"
             android:icon="@drawable/ic_share" />
         <!--item

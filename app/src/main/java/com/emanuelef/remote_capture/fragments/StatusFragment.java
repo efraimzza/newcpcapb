@@ -114,8 +114,6 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
     private Menu mMenu;
     private MenuItem mStartBtn;
     private MenuItem mStopBtn;
-    //private MenuItem mOpenPcap;
-    //private MenuItem mDecryptPcap;
     private ImageView mFilterIcon;
     private MenuItem mMenuSettings;
     private TextView mInterfaceInfo;
@@ -125,10 +123,10 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
     private TextView mCaptureStatus;
     private TextView startmdm;
     private TextView removemdm;
-    private TextView tvaa;
+    //private TextView tvaa;
     //private TextView tvab;
     TextView tvac;
-    TextView tvad;
+    //TextView tvad;
     //private View mQuickSettings;
     private MainActivity mActivity;
     private SharedPreferences mPrefs;
@@ -144,7 +142,6 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
     TextView tva,tvb,tvta,tvtb;
     Button bua,bub,buc;
     AlertDialog alertDialog,alertDialoga;
-    PackageInstaller.Session openses;
     public static final String modesp="mode";
 	public static sModetype smtype;
 	AlertDialog alertDialogmode;
@@ -191,10 +188,10 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         mCaptureStatus = view.findViewById(R.id.status_view);
         startmdm = view.findViewById(R.id.startmdm);
         removemdm = view.findViewById(R.id.removemdm);
-        tvaa = view.findViewById(R.id.tva);
+        //tvaa = view.findViewById(R.id.tva);
         //tvab = view.findViewById(R.id.tvb);
 	    tvac = view.findViewById(R.id.tvc);
-	    tvad = view.findViewById(R.id.tvd);
+	    //tvad = view.findViewById(R.id.tvd);
       //  setbuttonsmdm();
         
         //mQuickSettings = view.findViewById(R.id.quick_settings);
@@ -247,7 +244,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
                         },mActivity);
             //checkpassword(false,"removemdm");
         });
-        tvaa.setOnClickListener(v -> {
+        /*tvaa.setOnClickListener(v -> {
                     PasswordManager.requestPasswordAndSave(new Runnable() {
                             @Override
                             public void run() {
@@ -255,7 +252,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
                             }
                         },mActivity);
             //checkpassword(true,"changepwd");
-        });
+        });*/
         /*tvab.setOnClickListener(v -> {
        
        try {
@@ -336,13 +333,13 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
                         },mActivity);
             //checkpassword(true,"changemode");
         });
-        tvad.setOnClickListener(v -> {
+        /*tvad.setOnClickListener(v -> {
          if(CaptureService.isServiceActive()){
             CaptureService.requestBlacklistsUpdate();
             Toast.makeText(mcon, "updating...",1).show();
             
          }
-        });
+        });*/
         // Register for updates
         MitmReceiver.observeStatus(this, status -> refreshDecryptionStatus());
         CaptureService.observeStats(this, this::onStatsUpdate);
@@ -359,8 +356,8 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         sp = mcon.getSharedPreferences(mcon.getPackageName(), mcon.MODE_PRIVATE);
     	
     }
-boolean succ=false;
-        boolean mend=false;
+    boolean succ=false;
+    boolean mend=false;
     @Override
     public void onCreateMenu(@NonNull Menu menu, MenuInflater menuInflater) {
         menuInflater.inflate(R.menu.main_menu, menu);
@@ -369,17 +366,14 @@ boolean succ=false;
         mStartBtn = mMenu.findItem(R.id.action_start);
         mStopBtn = mMenu.findItem(R.id.action_stop);
         mMenuSettings = mMenu.findItem(R.id.action_settings);
-        //mOpenPcap = mMenu.findItem(R.id.open_pcap);
-        //mDecryptPcap = mMenu.findItem(R.id.decrypt_pcap);
-        //mDecryptPcap.setVisible(PCAPdroid.getInstance().isUsharkAvailable());
         refreshStatus();
     }
     
-public static enum sModetype{
+    public static enum sModetype{
         multimedia,
         all,
         accmultimedia;
-}
+    }
     @Override
     public boolean onMenuItemSelected(@NonNull MenuItem item) {
         return false;
@@ -527,15 +521,11 @@ public static enum sModetype{
                 mStopBtn.setEnabled(true);
                 mStopBtn.setVisible(!CaptureService.isAlwaysOnVPN());
                 mMenuSettings.setEnabled(false);
-                //mOpenPcap.setEnabled(false);
-                //mDecryptPcap.setEnabled(false);
             } else { // ready || starting
                 mStopBtn.setVisible(false);
                 mStartBtn.setEnabled(true);
                 mStartBtn.setVisible(!CaptureService.isAlwaysOnVPN());
                 mMenuSettings.setEnabled(true);//ja disable.. enable now for js
-                //mOpenPcap.setEnabled(true);
-                //mDecryptPcap.setEnabled(true);
             }
         }
 
@@ -772,8 +762,8 @@ public static enum sModetype{
             Toast.makeText(mcon, "" + e, Toast.LENGTH_SHORT).show();
         }
 	}
-	
-    void appone(String mappath) {
+	//PackageInstaller.Session openses;
+    /*void appone(String mappath) {
         String editable;
         try {
             PackageInstaller packageInstaller = mcon.getPackageManager().getPackageInstaller();
@@ -826,7 +816,7 @@ public static enum sModetype{
             Toast.makeText(mcon, ""+e2+editable, 1).show();
             //tv1.setText(editable);
         }
-    }
+    }*/
     
     // Check if Manage External Storage permission is granted (for Android 11+)
     public static boolean hasManageExternalStoragePermission(Context context) {

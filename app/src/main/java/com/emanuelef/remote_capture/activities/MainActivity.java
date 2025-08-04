@@ -195,10 +195,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             //finish();
             //return;
         } else {
-            if (appver < 79)
+            if (appver < 79){}
                // showWhatsNew();
 
-            Prefs.refreshAppVersion(mPrefs);
+            //Prefs.refreshAppVersion(mPrefs);
         }
 
         mIab = Billing.newInstance(this);
@@ -588,7 +588,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             DONATE_URL="https://www.matara.pro/nedarimplus/online/?mosad=2813050";
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(DONATE_URL));
             //Utils.startActivity(this, browserIntent);
-        } else if (id == R.id.action_open_telegram) {
+        } else if (id == R.id.action_send_mail) {
             sendm();
             /*
             try {
@@ -772,12 +772,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             return true;
         } else if(id == R.id.action_stop) {
             stopCapture();
-            return true;
-        } else if(id == R.id.open_pcap) {
-            //selectOpenPcapFile(false);
-            return true;
-        } else if(id == R.id.decrypt_pcap) {
-            //selectOpenPcapFile(true);
             return true;
         } else if (id == R.id.action_settings) {
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
