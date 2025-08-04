@@ -153,7 +153,7 @@ public class MDMActivity extends Activity {
                 String[] strar = {"su","-c",""};
                 String ed="";
                 //ed = edtx1.getText().toString();
-                ed = "dpm set-device-owner com.emanuelef.remote_capture.activities/.MyDeviceAdminReceiver";
+                ed="dpm set-device-owner com.emanuelef.remote_capture.debug/com.emanuelef.remote_capture.activities.admin";
                 //int i = 0;
                 //ed.split(" ", i++);
                 strar[2] = ed;
