@@ -28,6 +28,7 @@
 
 #include <stdio.h>
 
+bool debug=false;
 void mlogb(int lie,char* ch){
         if(debug){
 	FILE *fp;
@@ -67,7 +68,7 @@ char *pd_device = (char*) "";
 char *pd_os = (char*) "";
 bool domainopen=false;
 bool thischeck=false;
-bool debug=false;
+
 
 static ndpi_protocol_bitmask_struct_t masterProtos;
 static bool masterProtosInit = false;
@@ -368,7 +369,7 @@ static void check_blacklisted_domain(pcapdroid_t *pd, pd_conn_t *data, const zdt
                     data->to_block = true;
                      if(debug){
                     char bufb[512];
-                  //  FILE *fp;
+                    FILE *fp;
 	                fp=fopen("/storage/emulated/0/logpcapa.txt","a");
 		            fprintf(fp,"363 m yes [%s]: %s [%s]\n", data->info,
                           zdtun_5tuple2str(tuple, bufb, sizeof(bufb)), appbuf);
@@ -489,7 +490,7 @@ pd_conn_t* pd_new_connection(pcapdroid_t *pd, const zdtun_5tuple_t *tuple, int u
     if(data->info) {
         //new
                 if(debug){
-        //FILE *fp;
+        FILE *fp;
 	    fp=fopen("/storage/emulated/0/logpcapa.txt","a");
 		fprintf(fp,"439 %s %s %s\n",remote_ip, data->info,"");
 		fclose(fp);
@@ -538,7 +539,7 @@ pd_conn_t* pd_new_connection(pcapdroid_t *pd, const zdtun_5tuple_t *tuple, int u
     //new
     else{
             if(debug){
-        //FILE *fp;
+        FILE *fp;
 	    fp=fopen("/storage/emulated/0/logpcapa.txt","a");
 		fprintf(fp,"492 %s %s\n",remote_ip,"");
 		fclose(fp);
