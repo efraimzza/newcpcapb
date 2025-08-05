@@ -144,17 +144,25 @@ public class PasswordManager {
         builder.setTitle("שינוי סיסמת מנהל");
         final View passwordLayout = activity. getLayoutInflater().inflate(R.drawable.dialog_password_input, null); // השתמש באותו layout
         final android.widget.EditText etNewPassword = passwordLayout.findViewById(R.id.et_admin_password);
+        final android.widget.EditText etNewPasswordb = passwordLayout.findViewById(R.id.et_admin_passwordb);
+        etNewPasswordb.setVisibility(View.VISIBLE);
         etNewPassword.setHint("הכנס סיסמה חדשה (מינימום " + PasswordManager.getMinPasswordLength() + " תווים)");
+        etNewPasswordb.setHint("הכנס שוב את הסיסמה לאימות");
         builder.setView(passwordLayout);
 
         builder.setPositiveButton("שנה", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     String newPassword = etNewPassword.getText().toString();
-                    if (PasswordManager.setPassword(activity, newPassword)) {
-                        Toast.makeText(activity, "הסיסמה נשמרה בהצלחה!", Toast.LENGTH_SHORT).show();
+                    String newPasswordb = etNewPasswordb.getText().toString();
+                    if (newPassword.equals(newPasswordb)) {
+                        if (PasswordManager.setPassword(activity, newPassword)) {
+                            Toast.makeText(activity, "הסיסמה נשמרה בהצלחה!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(activity, "שגיאה: הסיסמה קצרה מדי! (מינימום " + PasswordManager.getMinPasswordLength() + " תווים)", Toast.LENGTH_LONG).show();
+                        }
                     } else {
-                        Toast.makeText(activity, "שגיאה: הסיסמה קצרה מדי! (מינימום " + PasswordManager.getMinPasswordLength() + " תווים)", Toast.LENGTH_LONG).show();
+                        Toast.makeText(activity, "שגיאה: הסיסמאות אינם תואמות", Toast.LENGTH_LONG).show();
                     }
                 }
             });
