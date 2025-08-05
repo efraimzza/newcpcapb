@@ -121,8 +121,8 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
     private TextView mCollectorInfoText;
     private ImageView mCollectorInfoIcon;
     private TextView mCaptureStatus;
-    private TextView startmdm;
-    private TextView removemdm;
+    private TextView startmdmvpn;
+    private TextView removemdmvpn;
     //private TextView tvaa;
     //private TextView tvab;
     TextView tvac;
@@ -186,8 +186,8 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         mCollectorInfoText = mCollectorInfoLayout.findViewById(R.id.collector_info_text);
         mCollectorInfoIcon = mCollectorInfoLayout.findViewById(R.id.collector_info_icon);
         mCaptureStatus = view.findViewById(R.id.status_view);
-        startmdm = view.findViewById(R.id.startmdm);
-        removemdm = view.findViewById(R.id.removemdm);
+        startmdmvpn = view.findViewById(R.id.startmdm);
+        removemdmvpn = view.findViewById(R.id.removemdm);
         //tvaa = view.findViewById(R.id.tva);
         //tvab = view.findViewById(R.id.tvb);
 	    tvac = view.findViewById(R.id.tvc);
@@ -231,20 +231,22 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
                 mActivity.startCapture();
         });
         
-        startmdm.setOnClickListener(v -> {
+        startmdmvpn.setOnClickListener(v -> {
             //mactivatepcapmdm();
             VpnService.prepare(mcon);
             try {
+                DevicePolicyManager dpm=(DevicePolicyManager)mcon.getSystemService("device_policy");
                 p(dpm, compName, mcon.getPackageName(), true);
             } catch (PackageManager.NameNotFoundException e) {}
         });
 
-        removemdm.setOnClickListener(v -> {
+        removemdmvpn.setOnClickListener(v -> {
             PasswordManager.requestPasswordAndSave(new Runnable() {
                             @Override
                             public void run() {
                                 //mremovepcapmdm();
                                       try {
+                                         DevicePolicyManager dpm=(DevicePolicyManager)mcon.getSystemService("device_policy");
                                          p(dpm, compName, null, false);
                                       } catch (PackageManager.NameNotFoundException e) {}
                             }

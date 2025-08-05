@@ -181,9 +181,9 @@ public class MDMActivity extends Activity {
                         .setFactoryResetProtectionAccounts(arrayList)
                         .setFactoryResetProtectionEnabled(true)
                         .build();
-                    dpm.setFactoryResetProtectionPolicy(compName, frp);
+                    mDpm.setFactoryResetProtectionPolicy(mAdminComponentName, frp);
                 } catch (Exception e) {
-                    Toast.makeText(mcon, "e-frp"+e , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MDMActivity.this, "e-frp"+e , Toast.LENGTH_SHORT).show();
                 }
             }
             Bundle bundle = new Bundle();
@@ -192,14 +192,14 @@ public class MDMActivity extends Activity {
 
             //bundle=null;
             String str = "com.google.android.gms";
-            dpm.setApplicationRestrictions(compName, str, bundle);
+            mDpm.setApplicationRestrictions(mAdminComponentName, str, bundle);
             Intent intent = new Intent("com.google.android.gms.auth.FRP_CONFIG_CHANGED");
             intent.setPackage(str);
             intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
-            mcon.sendBroadcast(intent);
-            Toast.makeText(mcon, "frp.." + dpm.getActiveAdmins().toString(), Toast.LENGTH_SHORT).show();
+            MDMActivity.this.sendBroadcast(intent);
+            Toast.makeText(MDMActivity.this, "frp.." + mDpm.getActiveAdmins().toString(), Toast.LENGTH_SHORT).show();
 		} catch (Exception e) {
-		    Toast.makeText(mcon, "e-frp2"+e , Toast.LENGTH_SHORT).show();
+		    Toast.makeText(MDMActivity.this, "e-frp2"+e , Toast.LENGTH_SHORT).show();
 		}
     }
     private void setupabodeb(){
