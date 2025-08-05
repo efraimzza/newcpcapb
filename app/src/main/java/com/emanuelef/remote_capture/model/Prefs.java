@@ -110,6 +110,8 @@ public class Prefs {
     public static final String PREF_PCAPNG_ENABLED = "pcapng_format";
     public static final String PREF_RESTART_ON_DISCONNECT = "restart_on_disconnect";
     public static final String PREF_IGNORED_MITM_VERSION = "ignored_mitm_version";
+    public static final String PREF_DEBUG = "debug";
+        
 
     public enum DumpMode {
         NONE,
@@ -191,6 +193,11 @@ public class Prefs {
         p.edit().putBoolean(PREF_PORT_MAPPING_ENABLED, enabled).apply();
     }
 
+    public static void setdebugp(SharedPreferences p, boolean enabled) {
+        p.edit().putBoolean(PREF_DEBUG, enabled).apply();
+    }
+    
+
     /* Prefs with defaults */
     public static String getCollectorIp(SharedPreferences p) { return(p.getString(PREF_COLLECTOR_IP_KEY, "127.0.0.1")); }
     public static int getCollectorPort(SharedPreferences p)  { return(Integer.parseInt(p.getString(PREF_COLLECTOR_PORT_KEY, "1234"))); }
@@ -238,6 +245,7 @@ public class Prefs {
     public static String getDnsServerV4(SharedPreferences p)    { return(p.getString(PREF_DNS_SERVER_V4, "1.1.1.1")); }
     public static String getDnsServerV6(SharedPreferences p)    { return(p.getString(PREF_DNS_SERVER_V6, "2606:4700:4700::1111")); }
     public static boolean isIgnoredMitmVersion(SharedPreferences p, String v) { return p.getString(PREF_IGNORED_MITM_VERSION, "").equals(v); }
+    public static boolean isdebug(SharedPreferences p)     { return(p.getBoolean(PREF_DEBUG, false)); }
 
     // Gets a StringSet from the prefs
     // The preference should either be a StringSet or a String

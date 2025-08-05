@@ -232,14 +232,21 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         });
         
         startmdm.setOnClickListener(v -> {
-            mactivatepcapmdm();
+            //mactivatepcapmdm();
+            VpnService.prepare(mcon);
+            try {
+                p(dpm, compName, mcon.getPackageName(), true);
+            } catch (PackageManager.NameNotFoundException e) {}
         });
 
         removemdm.setOnClickListener(v -> {
             PasswordManager.requestPasswordAndSave(new Runnable() {
                             @Override
                             public void run() {
-                                mremovepcapmdm();
+                                //mremovepcapmdm();
+                                      try {
+                                         p(dpm, compName, null, false);
+                                      } catch (PackageManager.NameNotFoundException e) {}
                             }
                         },mActivity);
             //checkpassword(false,"removemdm");
@@ -598,7 +605,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         //   Toast.makeText(getApplicationContext(),""+e,Toast.LENGTH_SHORT).show();
         // }
     }
-    void mactivatepcapmdm() {
+/*    void mactivatepcapmdm() {
 		try {
             DevicePolicyManager dpm=(DevicePolicyManager)mcon.getSystemService("device_policy");
             dpm.addUserRestriction(compName, UserManager.DISALLOW_DEBUGGING_FEATURES);
@@ -712,7 +719,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
             dpm.clearUserRestriction(compName, UserManager.DISALLOW_CONFIG_TETHERING);
             
             try {
-                p(dpm, compName, mcon.getPackageName(), false);
+                p(dpm, compName, null, false);
             } catch (PackageManager.NameNotFoundException e) {}
             //Intent inten = new Intent(mcon, MyVpnService.class);
             //mcon.stopService(inten);
@@ -761,7 +768,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         } catch (Exception e) {
             Toast.makeText(mcon, "" + e, Toast.LENGTH_SHORT).show();
         }
-	}
+	}*/
 	//PackageInstaller.Session openses;
     /*void appone(String mappath) {
         String editable;

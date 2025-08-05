@@ -23,8 +23,8 @@
     <string name="unlock_token" translatable="false">ביטול נעילת אסימון</string>
 
     <!-- Localized -->
-    <string name="mstartmdm">הפעל מנהל</string>
-    <string name="mremovemdm">הסר מנהל</string>
+    <string name="mstartmdm">הפעל vpn מ mdm</string>
+    <string name="mremovemdm">הסר vpn מ mdm</string>
     <string name="mchangepwd">החלף סיסמה</string>
     <string name="mgetcurrentpwd">הכנס סיסמה</string>
     <string name="mnotmatchpwd">לא תואם או ריק</string>
@@ -50,7 +50,7 @@
     <string name="rcvd_and_sent">%1$s קיבל - %2$s נשלח</string>
     <string name="query">שאלה</string>
     <string name="host">מארח</string>
-    <string name="ready">מוכן</string>
+    <string name="ready">הפעל vpn ללא mdm</string>
     <string name="about">אודות</string>
     <string name="status">סטטוס</string>
     <string name="connections_view">חיבורים</string>

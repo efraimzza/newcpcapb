@@ -47,8 +47,8 @@
     <string name="unlock_token" translatable="false">Unlock token</string>
 
     <!-- Localized -->
-    <string name="mstartmdm">Start mdm</string>
-    <string name="mremovemdm">remove mdm</string>
+    <string name="mstartmdm">Start vpn from mdm</string>
+    <string name="mremovemdm">remove vpn from mdm</string>
     <string name="mchangepwd">change password</string>
     <string name="mgetcurrentpwd">insert password</string>
     <string name="mnotmatchpwd">not match or empty</string>
@@ -74,7 +74,7 @@
     <string name="rcvd_and_sent">%1$s received — %2$s sent</string>
     <string name="query">Query</string>
     <string name="host">Host</string>
-    <string name="ready">Ready</string>
+    <string name="ready">start vpn without mdm</string>
     <string name="about">About</string>
     <string name="status">Status</string>
     <string name="connections_view">Connections</string>

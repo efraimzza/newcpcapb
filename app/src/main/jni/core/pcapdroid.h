@@ -389,6 +389,7 @@ extern jni_enum_t enums;
 
 /* ******************************************************* */
 
+extern bool debug;
 extern bool running;
 extern uint32_t new_dns_server;
 extern bool block_private_dns;

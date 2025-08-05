@@ -1393,4 +1393,9 @@ Java_com_emanuelef_remote_1capture_CaptureService_extractKeylogFromPcapng(JNIEnv
     return rv;
 }
 
+JNIEXPORT void JNICALL
+Java_com_emanuelef_remote_1capture_CaptureService_setdebug(JNIEnv *env, jclass clazz, jboolean enabled) {
+        debug = enabled;
+}
+
 #endif // ANDROID

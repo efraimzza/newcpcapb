@@ -41,6 +41,7 @@ public class CaptureSettings implements Serializable {
     public int max_pkts_per_flow = 0;
     public int max_dump_size = 0;
     public String mitmproxy_opts;
+    public boolean debug;
 
     public CaptureSettings(Context ctx, SharedPreferences prefs) {
         dump_mode = Prefs.getDumpMode(prefs);
@@ -63,6 +64,7 @@ public class CaptureSettings implements Serializable {
         auto_block_private_dns = Prefs.isPrivateDnsBlockingEnabled(prefs);
         mitmproxy_opts = Prefs.getMitmproxyOpts(prefs);
         pcapng_format = Prefs.isPcapngEnabled(ctx, prefs);
+        debug = Prefs.isdebug(prefs);
     }
 
     public CaptureSettings(Context ctx, Intent intent) {
@@ -92,6 +94,7 @@ public class CaptureSettings implements Serializable {
         auto_block_private_dns = getBool(intent, Prefs.PREF_AUTO_BLOCK_PRIVATE_DNS, true);
         mitmproxy_opts = getString(intent, Prefs.PREF_MITMPROXY_OPTS, "");
         pcapng_format = getBool(intent, Prefs.PREF_PCAPNG_ENABLED, false) && Billing.newInstance(ctx).isPurchased(Billing.PCAPNG_SKU);
+        debug = getBool(intent, Prefs.PREF_DEBUG, false);
     }
 
     private static String getString(Intent intent, String key, String def_value) {

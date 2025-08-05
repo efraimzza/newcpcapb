@@ -28,7 +28,6 @@
 
 #include <stdio.h>
 
-bool debug=false;
 void mlogb(int lie,char* ch){
         if(debug){
 	FILE *fp;
@@ -54,6 +53,7 @@ extern void vpn_process_ndpi(pcapdroid_t *pd, const zdtun_5tuple_t *tuple, pd_co
 /* ******************************************************* */
 
 bool running = false;
+bool debug = false;
 uint32_t new_dns_server = 0;
 bool block_private_dns = false;
 bool has_seen_dump_extensions = false;

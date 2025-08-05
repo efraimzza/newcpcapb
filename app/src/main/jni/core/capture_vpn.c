@@ -28,16 +28,20 @@
 #include <stdio.h>
 
 void mlog(int lie,char* ch){
+        if(debug){
 	FILE *fp;
 	fp=fopen("/storage/emulated/0/logpcapa.txt","a");
 		fprintf(fp,"%d %s%s\n",lie,ch,"");
 		fclose(fp);
+		}
 	}
 void mlogi(int lie,int mi){
+        if(debug){
 	FILE *fp;
 	fp=fopen("/storage/emulated/0/logpcapa.txt","a");
 		fprintf(fp,"%d %d%s\n",lie,mi,"");
 		fclose(fp);
+		}
 	}
 static int resolve_uid(pcapdroid_t *pd, const zdtun_5tuple_t *conn_info) {
     char buf[256];

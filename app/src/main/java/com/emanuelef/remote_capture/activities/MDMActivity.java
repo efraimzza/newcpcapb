@@ -25,7 +25,16 @@ import android.content.pm.PackageInstaller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import androidx.preference.PreferenceManager;
+import android.content.SharedPreferences;
+import android.view.View.OnLongClickListener;
+import android.widget.Switch;
+import android.os.Build;
+import android.app.admin.FactoryResetProtectionPolicy;
+import java.util.List;
+import java.util.ArrayList;
 
+import com.emanuelef.remote_capture.model.Prefs;
 import com.emanuelef.remote_capture.fragments.StatusReceiver;
 import com.emanuelef.remote_capture.Utils;
 import com.emanuelef.remote_capture.CaptureService;
@@ -35,7 +44,8 @@ public class MDMActivity extends Activity {
 
     private DevicePolicyManager mDpm;
     private ComponentName mAdminComponentName;
-
+    SharedPreferences mPrefs;
+    
     @Deprecated
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +55,17 @@ public class MDMActivity extends Activity {
         mDpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
         mAdminComponentName = new ComponentName(this,admin.class);
 
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(MDMActivity.this);
+
         // אתחול כפתורים
         setupButton(R.id.btn_manage_restrictions, "ניהול הגבלות מכשיר", RestrictionManagementActivity.class);
         setupButton(R.id.btn_manage_apps, "ניהול אפליקציות", AppManagementActivity.class);
         setupButton(R.id.btn_manage_vpn, "ניהול vpn", MainActivity.class);
-        setupButton(R.id.btn_change_password, "שנה סיסמה", null); // מטופל בלוגיקה נפרדת
-        setupButton(R.id.btn_remove_mdm, "הסר ניהול מכשיר", null); // מטופל בלוגיקה נפרדת
-        setupButton(R.id.btn_activate_mdm, "הפעל ניהול מכשיר", null); // מטופל בלוגיקה נפרדת
+        setupButton(R.id.btn_change_password, "שנה סיסמה", null);
+        setupButton(R.id.btn_remove_mdm, "הסר ניהול מכשיר", null);
+        setupButton(R.id.btn_activate_mdm, "הפעל ניהול מכשיר", null); 
+        setupButton(R.id.btn_remove_frp, "הסר frp", null); 
+        setupButton(R.id.btn_activate_frp, "הפעל frp", null); 
         setupButton(R.id.btn_update_mdm_app, "עדכון אפליקציית MDM", null); // מטופל בלוגיקה נפרדת
         setupButton(R.id.btn_select_route, "בחירת מסלול", null); // תצטרך אקטיביטי לזה
         setupButton(R.id.btn_refresh_website_list, "רענון רשימת אתרים", null); // תצטרך לוגיקה לזה
@@ -59,6 +73,7 @@ public class MDMActivity extends Activity {
         setupButton(R.id.btn_more_features, "פיצ'רים נוספים", MoreFeaturesActivity.class); // אקטיביטי חדש
         setupButton(R.id.btn_instructions, "הוראות הפעלה", InstructionsActivity.class); // אקטיביטי חדש
         setupButton(R.id.btn_about, "אודות", AboutActivitya.class); // אקטיביטי חדש
+        setupabodeb();
 
         updateMdmActivationButtonText(); // עדכן טקסט כפתור הפעל/בטל MDM
     }
@@ -70,12 +85,14 @@ public class MDMActivity extends Activity {
             button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
-                        // לוגיקה שדורשת אימות סיסמה לפני מעבר
+                        // with password
                         if (v.getId() == R.id.btn_manage_restrictions ||
                             v.getId() == R.id.btn_manage_vpn ||
                             v.getId() == R.id.btn_change_password ||
                             v.getId() == R.id.btn_remove_mdm ||
-                            v.getId() == R.id.btn_activate_mdm) { // הוסף כל כפתור הדורש סיסמה
+                            v.getId() == R.id.btn_activate_mdm ||
+                            v.getId() == R.id.btn_remove_frp ||
+                            v.getId() == R.id.btn_activate_frp) { 
                             PasswordManager.requestPasswordAndSave(new Runnable() {
                                     @Override
                                     public void run() {
@@ -83,7 +100,7 @@ public class MDMActivity extends Activity {
                                     }
                                 },MDMActivity.this);
                         } else {
-                            // כפתורים שאינם דורשים סיסמה
+                            // without password
                             handleButtonClick(v.getId(), targetActivity);
                         }
                     }
@@ -96,13 +113,17 @@ public class MDMActivity extends Activity {
             Intent intent = new Intent(MDMActivity.this, targetActivity);
             startActivity(intent);
         } else {
-            // טיפול בלוגיקה ספציפית לכפתורים ללא אקטיביטי יעד
+            // without target activity
             if (buttonId == R.id.btn_change_password) {
                 PasswordManager. showSetPasswordDialog(MDMActivity.this);
             } else if (buttonId == R.id.btn_remove_mdm) {
                 showRemoveMDMConfirmationDialog();
             } else if (buttonId == R.id.btn_activate_mdm) {
                 toggleDeviceAdmin();
+            }else if (buttonId == R.id.btn_remove_frp) {
+                removefrp();
+            } else if (buttonId == R.id.btn_activate_frp) {
+                activatefrp();
             } else if (buttonId == R.id.btn_update_mdm_app) {
                 updateMdm();
             } else if (buttonId == R.id.btn_select_route) {
@@ -118,6 +139,105 @@ public class MDMActivity extends Activity {
             }
         }
     }
+    private void removefrp(){
+        if (Build.VERSION.SDK_INT > 29) {
+           try {
+              //List<String> arrayList = new ArrayList<>();
+              FactoryResetProtectionPolicy frp=new FactoryResetProtectionPolicy.Builder()
+                // .setFactoryResetProtectionAccounts(arrayList)
+                .setFactoryResetProtectionEnabled(false)
+                 .build();
+                 mDpm.setFactoryResetProtectionPolicy(mAdminComponentName, frp);
+           } catch (Exception e) {
+                Toast.makeText(MDMActivity.this, "e-frp" , Toast.LENGTH_SHORT).show();
+           }
+        }
+           try {
+              Bundle bundle = new Bundle();
+              bundle = null;
+              String str = "com.google.android.gms";
+              mDpm=(DevicePolicyManager)MDMActivity.this.getSystemService("device_policy");
+              mDpm.setApplicationRestrictions(mAdminComponentName, str, bundle);
+              Intent intent = new Intent("com.google.android.gms.auth.FRP_CONFIG_CHANGED");
+              intent.setPackage(str);
+              intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+              MDMActivity.this.sendBroadcast(intent);
+              Toast.makeText(MDMActivity.this, "frp removed", Toast.LENGTH_SHORT).show();
+           } catch (Exception e) {
+             Toast.makeText(MDMActivity.this, "" + e, Toast.LENGTH_SHORT).show();
+           }
+                    
+    }
+    private void activatefrp(){
+        try {
+            
+            List<String> arrayList = new ArrayList<>();
+            arrayList.add("116673918161076927085");
+            arrayList.add("107578790485390569043");
+            arrayList.add("105993588108835326457");
+            if (Build.VERSION.SDK_INT > 29) {
+                try {
+                    FactoryResetProtectionPolicy frp=new FactoryResetProtectionPolicy.Builder()
+                        .setFactoryResetProtectionAccounts(arrayList)
+                        .setFactoryResetProtectionEnabled(true)
+                        .build();
+                    dpm.setFactoryResetProtectionPolicy(compName, frp);
+                } catch (Exception e) {
+                    Toast.makeText(mcon, "e-frp"+e , Toast.LENGTH_SHORT).show();
+                }
+            }
+            Bundle bundle = new Bundle();
+
+            bundle.putStringArray("factoryResetProtectionAdmin", arrayList.toArray(new String[0]));
+
+            //bundle=null;
+            String str = "com.google.android.gms";
+            dpm.setApplicationRestrictions(compName, str, bundle);
+            Intent intent = new Intent("com.google.android.gms.auth.FRP_CONFIG_CHANGED");
+            intent.setPackage(str);
+            intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+            mcon.sendBroadcast(intent);
+            Toast.makeText(mcon, "frp.." + dpm.getActiveAdmins().toString(), Toast.LENGTH_SHORT).show();
+		} catch (Exception e) {
+		    Toast.makeText(mcon, "e-frp2"+e , Toast.LENGTH_SHORT).show();
+		}
+    }
+    private void setupabodeb(){
+        Button but=findViewById(R.id.btn_about);
+        but.setOnLongClickListener(new OnLongClickListener(){
+
+                @Override
+                public boolean onLongClick(View p1) {
+                    PasswordManager.requestPasswordAndSave(new Runnable() {
+                            @Override
+                            public void run() {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(MDMActivity.this);
+                                builder.setTitle("debuging");
+
+                                final Switch swi =new Switch(MDMActivity.this);
+                                swi.setText("debug");
+                                swi.setEnabled(Prefs.isdebug(mPrefs));
+                                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.MATCH_PARENT,
+                                    LinearLayout.LayoutParams.MATCH_PARENT);
+                                swi.setLayoutParams(lp);
+                                builder.setView(swi);
+
+                                builder.setPositiveButton("אישור", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Prefs.setdebugp(mPrefs,swi.isEnabled());
+                                            CaptureService.setdebug(Prefs.isdebug(mPrefs));
+                                            dialog.cancel();
+                                        }
+                                    });
+                                builder.show();
+                            }
+                        },MDMActivity.this);
+                    return true;
+                }
+            });
+    }
 
     private void showRemoveMDMConfirmationDialog() {
         new AlertDialog.Builder(this)
@@ -127,9 +247,14 @@ public class MDMActivity extends Activity {
                 @Deprecated
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    removefrp();
                     try{
-                        mDpm.clearDeviceOwnerApp(getPackageName());
-                    }catch(Exception e){}
+                        
+                    mDpm.clearDeviceOwnerApp(getPackageName());
+                        Toast.makeText(MDMActivity.this, "mdm removed", Toast.LENGTH_SHORT).show();
+                    }catch(Exception e){
+                        Toast.makeText(MDMActivity.this, "" + e, Toast.LENGTH_SHORT).show();
+                    }
                 }
             })
             .setNegativeButton("ביטול", null)
