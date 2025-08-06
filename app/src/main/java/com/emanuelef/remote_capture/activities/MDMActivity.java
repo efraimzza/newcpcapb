@@ -421,7 +421,11 @@ public class MDMActivity extends Activity {
       } catch (Exception e) {
          Toast.makeText(MDMActivity.this, "" + e, 0).show();
       }
-      startDownload();
+      try{
+         startDownload();
+      } catch (Exception e) {
+         Toast.makeText(MDMActivity.this, "" + e, 0).show();
+      }
         /*
         new Thread(){public void run(){
         succ= Utils.downloadFile("https://raw.githubusercontent.com/efraimzz/whitelist/refs/heads/main/whitelistbeta.apk", MDMActivity.this.getFilesDir()+"/updatebeta.apk");
