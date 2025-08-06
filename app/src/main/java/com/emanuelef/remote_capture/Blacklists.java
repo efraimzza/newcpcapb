@@ -36,8 +36,8 @@ import androidx.preference.PreferenceManager;
 import com.emanuelef.remote_capture.interfaces.BlacklistsStateListener;
 import com.emanuelef.remote_capture.model.BlacklistDescriptor;
 
-import com.emanuelef.remote_capture.fragments.StatusFragment;
-
+//import com.emanuelef.remote_capture.fragments.StatusFragment;
+import com.emanuelef.remote_capture.activities.AppState;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -82,7 +82,7 @@ public class Blacklists {
     public static final String modesp="mode";
     SharedPreferences sp;
     SharedPreferences.Editor spe;
-    public static StatusFragment.sModetype smtype;
+//    public static StatusFragment.sModetype smtype;
 
     public Blacklists(Context ctx) {
         mLastUpdate = 0;
@@ -93,7 +93,7 @@ public class Blacklists {
         mUpdateInProgress = false;
         mPrefs = PreferenceManager.getDefaultSharedPreferences(ctx);
         
-sp=mContext.getSharedPreferences(mContext.getPackageName(),mContext.MODE_PRIVATE);
+        /*sp=mContext.getSharedPreferences(mContext.getPackageName(),mContext.MODE_PRIVATE);
         spe=sp.edit();
         
         if(sp.getString(modesp,"").equals("")){
@@ -108,9 +108,9 @@ sp=mContext.getSharedPreferences(mContext.getPackageName(),mContext.MODE_PRIVATE
             }catch(Exception e){
                 Toast.makeText(mContext, e+"",1).show();
             }
-        }
-        switch (smtype){
-            case multimedia:
+        }*/
+        switch (AppState.getInstance().getCurrentPath()){
+            case MULTIMEDIA:
                   /*addList("Maltrail", BlacklistDescriptor.Type.DOMAIN_BLACKLIST,"maltrail-malware-domains.txt",
                 "https://raw.githubusercontent.com/stamparm/aux/master/maltrail-malware-domains.txt");
         */
@@ -129,7 +129,7 @@ sp=mContext.getSharedPreferences(mContext.getPackageName(),mContext.MODE_PRIVATE
                 "https://raw.githubusercontent.com/davidonzo/Threat-Intel/master/lists/latestips.txt");
         */
                 break;
-            case all:
+            case EVERYTHING:
         addList("domains white all", BlacklistDescriptor.Type.DOMAIN_BLACKLIST,"domainswhiteall.txt",
                 "https://raw.githubusercontent.com/efraimzz/Mywhitelistdomains/refs/heads/main/domainswhiteall.txt");
         // IPs
@@ -137,7 +137,7 @@ sp=mContext.getSharedPreferences(mContext.getPackageName(),mContext.MODE_PRIVATE
                 "https://raw.githubusercontent.com/efraimzz/Mywhitelistdomains/refs/heads/main/ipswhiteall.txt");
         
         break;
-        case accmultimedia:
+        case MULTIMEDIA_ACCESSIBILITY:
                   /*addList("Maltrail", BlacklistDescriptor.Type.DOMAIN_BLACKLIST,"maltrail-malware-domains.txt",
                 "https://raw.githubusercontent.com/stamparm/aux/master/maltrail-malware-domains.txt");
         */

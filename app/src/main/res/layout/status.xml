@@ -25,7 +25,7 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvc">
+            app:layout_constraintTop_toBottomOf="@id/mremovemdm">
 
             <TextView
                 android:id="@+id/collector_info_text"
@@ -127,7 +127,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" /-->
-        <TextView
+        <!--TextView
             android:id="@+id/tvc"
             android:layout_width="200dp"
             android:layout_height="30dp"
@@ -140,7 +140,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" /-->
         <!--TextView
             android:id="@+id/tvd"
             android:layout_width="200dp"
@@ -163,7 +163,7 @@
             android:layout_marginTop="35dp"
             android:padding="10dp"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/tvc"
+            app:layout_constraintTop_toBottomOf="@id/mremovemdm"
             app:layout_constraintStart_toStartOf="parent">
 
             <androidx.appcompat.widget.AppCompatSpinner

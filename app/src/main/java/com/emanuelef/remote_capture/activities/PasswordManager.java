@@ -108,7 +108,25 @@ public class PasswordManager {
         builder.setTitle("אימות סיסמה");
         final View passwordLayout = activity. getLayoutInflater().inflate(R.drawable.dialog_password_input, null);
         final android.widget.EditText etPassword = passwordLayout.findViewById(R.id.et_admin_password);
+        final android.widget.ImageView showHidePassword = passwordLayout.findViewById(R.id.show_hide_password);
         
+        showHidePassword.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // // נבדוק את הסוג הנוכחי של הקלט
+                    if (etPassword.getTransformationMethod() instanceof PasswordTransformationMethod) {
+                        // // אם זה סיסמה (מוסתר), נשנה אותו לטקסט רגיל (גלוי)
+                        etPassword.setTransformationMethod(null);
+                        showHidePassword.setImageResource(R.drawable.ic_visibility_off); // // תמונה של עין סגורה
+                    } else {
+                        // // אם זה טקסט רגיל (גלוי), נשנה אותו לסיסמה (מוסתר)
+                        etPassword.setTransformationMethod(new PasswordTransformationMethod());
+                        showHidePassword.setImageResource(R.drawable.ic_visibility); // // תמונה של עין פתוחה
+                    }
+                    // // חשוב להזיז את הסמן לסוף הטקסט כדי למנוע קפיצה של הסמן
+                    etPassword.setSelection(etPassword.getText().length());
+                }
+            });
 
         if (storedPasswordHash != null) {
             builder.setView(passwordLayout);
@@ -145,7 +163,44 @@ public class PasswordManager {
         final View passwordLayout = activity. getLayoutInflater().inflate(R.drawable.dialog_password_input, null); // השתמש באותו layout
         final android.widget.EditText etNewPassword = passwordLayout.findViewById(R.id.et_admin_password);
         final android.widget.EditText etNewPasswordb = passwordLayout.findViewById(R.id.et_admin_passwordb);
-        etNewPasswordb.setVisibility(View.VISIBLE);
+        final android.widget.ImageView showHidePassword = passwordLayout.findViewById(R.id.show_hide_password);
+        final android.widget.ImageView showHidePasswordb = passwordLayout.findViewById(R.id.show_hide_passwordb);
+        showHidePassword.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // // נבדוק את הסוג הנוכחי של הקלט
+                    if (etNewPassword.getTransformationMethod() instanceof PasswordTransformationMethod) {
+                        // // אם זה סיסמה (מוסתר), נשנה אותו לטקסט רגיל (גלוי)
+                        etNewPassword.setTransformationMethod(null);
+                        showHidePassword.setImageResource(R.drawable.ic_visibility_off); // // תמונה של עין סגורה
+                    } else {
+                        // // אם זה טקסט רגיל (גלוי), נשנה אותו לסיסמה (מוסתר)
+                        etNewPassword.setTransformationMethod(new PasswordTransformationMethod());
+                        showHidePassword.setImageResource(R.drawable.ic_visibility); // // תמונה של עין פתוחה
+                    }
+                    // // חשוב להזיז את הסמן לסוף הטקסט כדי למנוע קפיצה של הסמן
+                    etNewPassword.setSelection(etNewPassword.getText().length());
+                }
+            });
+        showHidePasswordb.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // // נבדוק את הסוג הנוכחי של הקלט
+                    if (etNewPasswordb.getTransformationMethod() instanceof PasswordTransformationMethod) {
+                        // // אם זה סיסמה (מוסתר), נשנה אותו לטקסט רגיל (גלוי)
+                        etNewPasswordb.setTransformationMethod(null);
+                        showHidePasswordb.setImageResource(R.drawable.ic_visibility_off); // // תמונה של עין סגורה
+                    } else {
+                        // // אם זה טקסט רגיל (גלוי), נשנה אותו לסיסמה (מוסתר)
+                        etNewPasswordb.setTransformationMethod(new PasswordTransformationMethod());
+                        showHidePasswordb.setImageResource(R.drawable.ic_visibility); // // תמונה של עין פתוחה
+                    }
+                    // // חשוב להזיז את הסמן לסוף הטקסט כדי למנוע קפיצה של הסמן
+                    etNewPasswordb.setSelection(etNewPasswordb.getText().length());
+                }
+            });
+        LinearLayout linlnewb=passwordLayout.findViewById(R.id.linlnewb);
+        linlnewb.setVisibility(View.VISIBLE);
         etNewPassword.setHint("הכנס סיסמה חדשה (מינימום " + PasswordManager.getMinPasswordLength() + " תווים)");
         etNewPasswordb.setHint("הכנס שוב את הסיסמה לאימות");
         builder.setView(passwordLayout);

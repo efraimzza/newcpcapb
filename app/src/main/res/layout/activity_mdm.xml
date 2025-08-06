@@ -70,7 +70,16 @@
                 android:background="#DDDDDD"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="24dp"/>
-
+            <TextView
+                android:id="@+id/tv_cur_route"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="המסלול הפעיל - "
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:gravity="center_horizontal"
+                android:paddingBottom="24dp"
+                android:textColor="@android:color/black"/>
             <Button style="@style/MDMActionButton"
                 android:id="@+id/btn_select_route"
                 android:text="בחירת מסלול"/>

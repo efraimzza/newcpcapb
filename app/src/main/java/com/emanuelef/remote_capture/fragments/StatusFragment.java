@@ -143,7 +143,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
     Button bua,bub,buc;
     AlertDialog alertDialog,alertDialoga;
     public static final String modesp="mode";
-	public static sModetype smtype;
+	//public static sModetype smtype;
 	AlertDialog alertDialogmode;
 	
     @Override
@@ -190,7 +190,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         removemdmvpn = view.findViewById(R.id.removemdm);
         //tvaa = view.findViewById(R.id.tva);
         //tvab = view.findViewById(R.id.tvb);
-	    tvac = view.findViewById(R.id.tvc);
+	    //tvac = view.findViewById(R.id.tvc);
 	    //tvad = view.findViewById(R.id.tvd);
       //  setbuttonsmdm();
         
@@ -306,7 +306,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
                 }
             });
         });*/
-	    sp=mcon.getSharedPreferences(mcon.getPackageName(),mcon.MODE_PRIVATE);
+	    /*sp=mcon.getSharedPreferences(mcon.getPackageName(),mcon.MODE_PRIVATE);
         spe=sp.edit();
         
         if(sp.getString(modesp,"").equals("")){
@@ -342,7 +342,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
                             }
                         },mActivity);
             //checkpassword(true,"changemode");
-        });
+        });*/
         /*tvad.setOnClickListener(v -> {
          if(CaptureService.isServiceActive()){
             CaptureService.requestBlacklistsUpdate();
@@ -379,11 +379,11 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         refreshStatus();
     }
     
-    public static enum sModetype{
+    /*public static enum sModetype{
         multimedia,
         all,
         accmultimedia;
-    }
+    }*/
     @Override
     public boolean onMenuItemSelected(@NonNull MenuItem item) {
         return false;
@@ -860,6 +860,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
             activity.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 101);
         }
     }
+    /*
 	void mradiodialog(){
         try{
             RadioGroup r= new RadioGroup(mcon);
@@ -950,5 +951,5 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
             Toast.makeText(mcon, "pa!"+e, 0).show();
 
         }
-	}
+	}*/
 }

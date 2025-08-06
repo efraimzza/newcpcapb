@@ -33,6 +33,7 @@ import android.os.Build;
 import android.app.admin.FactoryResetProtectionPolicy;
 import java.util.List;
 import java.util.ArrayList;
+import android.text.method.PasswordTransformationMethod;
 
 import com.emanuelef.remote_capture.model.Prefs;
 import com.emanuelef.remote_capture.fragments.StatusReceiver;
@@ -45,6 +46,9 @@ public class MDMActivity extends Activity {
     private DevicePolicyManager mDpm;
     private ComponentName mAdminComponentName;
     SharedPreferences mPrefs;
+    SharedPreferences sp;
+    SharedPreferences.Editor spe;
+    public static final String modesp="mode";
     
     @Deprecated
     @Override
@@ -56,7 +60,29 @@ public class MDMActivity extends Activity {
         mAdminComponentName = new ComponentName(this,admin.class);
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(MDMActivity.this);
+        
+        sp=this.getSharedPreferences(this.getPackageName(),this.MODE_PRIVATE);
+        spe=sp.edit();
 
+        if(sp.getString(modesp,"").equals("")){
+            AppState.getInstance().setCurrentPath(PathType.MULTIMEDIA);
+            spe.putString(modesp,AppState.getInstance().getCurrentPath().name());
+            spe.commit();
+            Toast.makeText(this,AppState.getInstance().getCurrentPath().name()+" is default",1).show();
+        }else{
+            try{
+                AppState.getInstance().setCurrentPath(PathType.valueOf(sp.getString(modesp,"")));
+                Toast.makeText(this, AppState.getInstance().getCurrentPath().name()+ " is now",1).show();
+            }catch(Exception e){
+                Toast.makeText(this, e+"",1).show();
+            }
+        }
+        
+        AppState.getInstance().setCurrentPath(AppState.getInstance().getCurrentPath());
+        
+        TextView tvcurroute=findViewById(R.id.tv_cur_route);
+        tvcurroute.setText("המסלול הפעיל - "+AppState.getInstance().getCurrentPath().getDescription());
+        
         // אתחול כפתורים
         setupButton(R.id.btn_manage_restrictions, "ניהול הגבלות מכשיר", RestrictionManagementActivity.class);
         setupButton(R.id.btn_manage_apps, "ניהול אפליקציות", AppManagementActivity.class);
@@ -92,7 +118,8 @@ public class MDMActivity extends Activity {
                             v.getId() == R.id.btn_remove_mdm ||
                             v.getId() == R.id.btn_activate_mdm ||
                             v.getId() == R.id.btn_remove_frp ||
-                            v.getId() == R.id.btn_activate_frp) { 
+                            v.getId() == R.id.btn_activate_frp ||
+                            v.getId() ==  R.id.btn_select_route) { 
                             PasswordManager.requestPasswordAndSave(new Runnable() {
                                     @Override
                                     public void run() {
@@ -127,7 +154,29 @@ public class MDMActivity extends Activity {
             } else if (buttonId == R.id.btn_update_mdm_app) {
                 updateMdm();
             } else if (buttonId == R.id.btn_select_route) {
-                //Toast.makeText(MDMActivity.this, "בחירת מסלול - נדרש יישום.", Toast.LENGTH_SHORT).show();
+                final PathType[] paths = PathType.values();
+                String[] pathNames = new String[paths.length];
+
+                for (int i = 0; i < paths.length; i++) {
+                    pathNames[i] = paths[i].getDescription();
+                }
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("בחר מסלול");
+                builder.setItems(pathNames, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            PathType selectedPath = paths[which];
+                            AppState.getInstance().setCurrentPath(selectedPath);
+                            spe.putString(modesp,AppState.getInstance().getCurrentPath().name());
+                            spe.commit();
+                            TextView tvcurroute=findViewById(R.id.tv_cur_route);
+                            tvcurroute.setText("המסלול הפעיל - "+AppState.getInstance().getCurrentPath().getDescription());
+                            
+                            Toast.makeText(MDMActivity.this, "המסלול שנבחר: " + selectedPath.getDescription(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                builder.create().show();  
             } else if (buttonId == R.id.btn_refresh_website_list) {
                 //Toast.makeText(MDMActivity.this, "רענון רשימת אתרים - נדרש יישום.", Toast.LENGTH_SHORT).show();
             } else if (buttonId == R.id.btn_update_whitelist) {
@@ -135,16 +184,15 @@ public class MDMActivity extends Activity {
                    CaptureService.requestBlacklistsUpdate();
                    Toast.makeText(MDMActivity.this, "updating...",1).show();
                }
-                //Toast.makeText(MDMActivity.this, "עדכון רשימת דומיינים לבנה - נדרש יישום.", Toast.LENGTH_SHORT).show();
             }
         }
     }
     private void removefrp(){
         if (Build.VERSION.SDK_INT > 29) {
            try {
-              //List<String> arrayList = new ArrayList<>();
+              List<String> arrayList = new ArrayList<>();
               FactoryResetProtectionPolicy frp=new FactoryResetProtectionPolicy.Builder()
-                // .setFactoryResetProtectionAccounts(arrayList)
+                .setFactoryResetProtectionAccounts(arrayList)
                 .setFactoryResetProtectionEnabled(false)
                  .build();
                  mDpm.setFactoryResetProtectionPolicy(mAdminComponentName, frp);
@@ -197,7 +245,7 @@ public class MDMActivity extends Activity {
             intent.setPackage(str);
             intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
             MDMActivity.this.sendBroadcast(intent);
-            Toast.makeText(MDMActivity.this, "frp.." + mDpm.getActiveAdmins().toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(MDMActivity.this, "frp..", Toast.LENGTH_SHORT).show();
 		} catch (Exception e) {
 		    Toast.makeText(MDMActivity.this, "e-frp2"+e , Toast.LENGTH_SHORT).show();
 		}
@@ -216,7 +264,7 @@ public class MDMActivity extends Activity {
 
                                 final Switch swi =new Switch(MDMActivity.this);
                                 swi.setText("debug");
-                                swi.setEnabled(Prefs.isdebug(mPrefs));
+                                swi.setChecked(Prefs.isdebug(mPrefs));
                                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                                     LinearLayout.LayoutParams.MATCH_PARENT,
                                     LinearLayout.LayoutParams.MATCH_PARENT);
@@ -226,7 +274,7 @@ public class MDMActivity extends Activity {
                                 builder.setPositiveButton("אישור", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            Prefs.setdebugp(mPrefs,swi.isEnabled());
+                                            Prefs.setdebugp(mPrefs,swi.isChecked());
                                             CaptureService.setdebug(Prefs.isdebug(mPrefs));
                                             dialog.cancel();
                                         }
