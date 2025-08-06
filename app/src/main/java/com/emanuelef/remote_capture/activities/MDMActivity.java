@@ -535,8 +535,8 @@ public class MDMActivity extends Activity {
         // אפשר הורדה דרך רשת סלולרית ו-Wi-Fi
         request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI);
 
-        // הגדר את נתיב היעד. זה יהיה בספריית ההורדות הציבורית.
-        File destinationFile = new File(getFilesDir()+"/updatebeta.apk");
+        new File(getExternalFilesDir("")+"/updatebeta.apk").delete();
+        File destinationFile = new File(getExternalFilesDir("")+"/updatebeta.apk");
         request.setDestinationUri(Uri.fromFile(destinationFile));
         // הפוך את ההורדה לגלוי ביישום ההורדות ובשורת ההתראות
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
@@ -654,7 +654,7 @@ public class MDMActivity extends Activity {
                             Toast.makeText(context, "הורדה הושלמה בהצלחה!", Toast.LENGTH_LONG).show();
                             // התקן את הקובץ שהורד
                             //installApk(localUriString);
-                            appone(MDMActivity.this.getFilesDir()+"/updatebeta.apk");
+                            appone(MDMActivity.this.getExternalFilesDir("")+"/updatebeta.apk");
                         } else if (status == DownloadManager.STATUS_FAILED) {
                             Toast.makeText(context, "הורדה נכשלה: " + reason, Toast.LENGTH_LONG).show();
                         }
