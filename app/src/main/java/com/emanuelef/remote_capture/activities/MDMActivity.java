@@ -545,9 +545,9 @@ public class MDMActivity extends Activity {
 
         showProgressDialog();
     }
-
+    @Deprecated
     private void showProgressDialog() {
-        progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog = new ProgressDialog(MDMActivity.this);
         progressDialog.setTitle("הורדת קובץ");
         progressDialog.setMessage("מתחיל הורדה...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
@@ -565,13 +565,14 @@ public class MDMActivity extends Activity {
                     handler.removeCallbacks(updateProgressRunnable);
                     // סגור את הדיאלוג
                     dialog.dismiss();
-                    Toast.makeText(MainActivity.this, "ההורדה בוטלה.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MDMActivity.this, "ההורדה בוטלה.", Toast.LENGTH_SHORT).show();
                 }
             });
 
         progressDialog.show();
 
         updateProgressRunnable = new Runnable() {
+            @Deprecated
             @Override
             public void run() {
                 // אם ההורדה כבר בוטלה על ידי המשתמש, אין צורך להמשיך לעדכן
@@ -612,7 +613,7 @@ public class MDMActivity extends Activity {
                     progressDialog.dismiss();
                     // אם לא בוטל על ידי המשתמש, ייתכן שהייתה בעיה אחרת
                     if (!isDownloadCanceled) {
-                        Toast.makeText(MainActivity.this, "הורדה בוטלה או לא נמצאה.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MDMActivity.this, "הורדה בוטלה או לא נמצאה.", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
