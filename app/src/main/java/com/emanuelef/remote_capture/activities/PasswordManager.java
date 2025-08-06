@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.widget.Toast;
+import android.text.method.PasswordTransformationMethod;
+
 import com.emanuelef.remote_capture.R;
 
 public class PasswordManager {

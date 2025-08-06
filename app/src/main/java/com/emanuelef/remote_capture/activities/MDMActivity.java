@@ -34,6 +34,7 @@ import android.app.admin.FactoryResetProtectionPolicy;
 import java.util.List;
 import java.util.ArrayList;
 import android.text.method.PasswordTransformationMethod;
+import android.widget.TextView;
 
 import com.emanuelef.remote_capture.model.Prefs;
 import com.emanuelef.remote_capture.fragments.StatusReceiver;
