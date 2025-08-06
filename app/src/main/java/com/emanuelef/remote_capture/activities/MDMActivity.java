@@ -35,6 +35,15 @@ import java.util.List;
 import java.util.ArrayList;
 import android.text.method.PasswordTransformationMethod;
 import android.widget.TextView;
+import android.app.DownloadManager;
+import android.net.Uri;
+import java.io.File;
+import android.os.Environment;
+import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
+import android.database.Cursor;
+import android.os.Looper;
 
 import com.emanuelef.remote_capture.model.Prefs;
 import com.emanuelef.remote_capture.fragments.StatusReceiver;
@@ -50,12 +59,23 @@ public class MDMActivity extends Activity {
     SharedPreferences sp;
     SharedPreferences.Editor spe;
     public static final String modesp="mode";
+    private DownloadManager downloadManager;
+    private long downloadId;
+    private ProgressDialog progressDialog;
+    private Handler handler;
+    private Runnable updateProgressRunnable;
+    private boolean isDownloadCanceled = false;
     
     @Deprecated
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mdm);
+        
+        downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+        handler = new Handler(Looper.getMainLooper());
+        IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
+        registerReceiver(onDownloadComplete, filter);
 
         mDpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
         mAdminComponentName = new ComponentName(this,admin.class);
@@ -154,6 +174,7 @@ public class MDMActivity extends Activity {
                 activatefrp();
             } else if (buttonId == R.id.btn_update_mdm_app) {
                 updateMdm();
+                //startDownload();
             } else if (buttonId == R.id.btn_select_route) {
                 final PathType[] paths = PathType.values();
                 String[] pathNames = new String[paths.length];
@@ -400,7 +421,8 @@ public class MDMActivity extends Activity {
       } catch (Exception e) {
          Toast.makeText(MDMActivity.this, "" + e, 0).show();
       }
-        
+      startDownload();
+        /*
         new Thread(){public void run(){
         succ= Utils.downloadFile("https://raw.githubusercontent.com/efraimzz/whitelist/refs/heads/main/whitelistbeta.apk", MDMActivity.this.getFilesDir()+"/updatebeta.apk");
         mend=true;
@@ -421,7 +443,7 @@ public class MDMActivity extends Activity {
                         succ=false;
                     }
                 }
-            });
+            });*/
         
     }
     private void updateMdmActivationButtonText() {
@@ -495,6 +517,189 @@ public class MDMActivity extends Activity {
             }
             Toast.makeText(MDMActivity.this, ""+e2+editable, 1).show();
             //tv1.setText(editable);
+        }
+    }
+    private void startDownload() {
+        
+        Uri uri = Uri.parse("https://raw.githubusercontent.com/efraimzz/whitelist/refs/heads/main/whitelistbeta.apk");
+        DownloadManager.Request request = new DownloadManager.Request(uri);
+
+        // הגדר כותרת ותיאור עבור ההתראה
+        request.setTitle("הורדת קובץ");
+        request.setDescription("מוריד עדכון");
+
+        // אפשר הורדה דרך רשת סלולרית ו-Wi-Fi
+        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI);
+
+        // הגדר את נתיב היעד. זה יהיה בספריית ההורדות הציבורית.
+        File destinationFile = new File(getFilesDir()+"/updatebeta.apk");
+        request.setDestinationUri(Uri.fromFile(destinationFile));
+        // הפוך את ההורדה לגלוי ביישום ההורדות ובשורת ההתראות
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+
+        // אפס את דגל הביטול לפני התחלת הורדה חדשה
+        isDownloadCanceled = false;
+
+        // הכנס את ההורדה לתור וקבל את מזהה ההורדה
+        downloadId = downloadManager.enqueue(request);
+
+        showProgressDialog();
+    }
+
+    private void showProgressDialog() {
+        progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog.setTitle("הורדת קובץ");
+        progressDialog.setMessage("מתחיל הורדה...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setCancelable(false); // המשתמש אינו יכול לבטל אותו (דרך כפתור החזרה)
+
+        // הוספת כפתור שלילי (ביטול) לדיאלוג
+        progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "ביטול", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // סמן שההורדה בוטלה על ידי המשתמש
+                    isDownloadCanceled = true;
+                    // ביטול ההורדה באמצעות DownloadManager
+                    downloadManager.remove(downloadId);
+                    // עצור את עדכון ההתקדמות
+                    handler.removeCallbacks(updateProgressRunnable);
+                    // סגור את הדיאלוג
+                    dialog.dismiss();
+                    Toast.makeText(MainActivity.this, "ההורדה בוטלה.", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        progressDialog.show();
+
+        updateProgressRunnable = new Runnable() {
+            @Override
+            public void run() {
+                // אם ההורדה כבר בוטלה על ידי המשתמש, אין צורך להמשיך לעדכן
+                if (isDownloadCanceled) {
+                    handler.removeCallbacks(this);
+                    return;
+                }
+
+                DownloadManager.Query query = new DownloadManager.Query();
+                query.setFilterById(downloadId);
+                Cursor cursor = downloadManager.query(query);
+                if (cursor != null && cursor.moveToFirst()) {
+                    int statusColumnIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS);
+                    int bytesDownloadedColumnIndex = cursor.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR);
+                    int totalBytesColumnIndex = cursor.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES);
+
+                    int status = cursor.getInt(statusColumnIndex);
+                    long bytesDownloaded = cursor.getLong(bytesDownloadedColumnIndex);
+                    long totalBytes = cursor.getLong(totalBytesColumnIndex);
+
+                    if (totalBytes > 0) {
+                        int progress = (int) ((bytesDownloaded * 100) / totalBytes);
+                        progressDialog.setProgress(progress);
+                        progressDialog.setMessage("הורדה: " + progress + "%");
+                    }
+
+                    // אם ההורדה הושלמה בהצלחה או נכשלה, הפסק לעדכן
+                    if (status == DownloadManager.STATUS_SUCCESSFUL || status == DownloadManager.STATUS_FAILED) {
+                        handler.removeCallbacks(this); // הפסק לעדכן התקדמות
+                        progressDialog.dismiss();
+                    } else {
+                        handler.postDelayed(this, 1000); // עדכן כל שנייה
+                    }
+                    cursor.close();
+                } else {
+                    // טפל במקרה שבו הסמן הוא null או ריק (ההורדה אולי הוסרה או בוטלה)
+                    handler.removeCallbacks(this);
+                    progressDialog.dismiss();
+                    // אם לא בוטל על ידי המשתמש, ייתכן שהייתה בעיה אחרת
+                    if (!isDownloadCanceled) {
+                        Toast.makeText(MainActivity.this, "הורדה בוטלה או לא נמצאה.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        };
+        handler.post(updateProgressRunnable); // התחל את עדכון ההתקדמות
+    }
+
+    private BroadcastReceiver onDownloadComplete = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+            // ודא שהאירוע מתייחס להורדה הנוכחית ושהיא לא בוטלה על ידי המשתמש
+            if (downloadId == id && !isDownloadCanceled) {
+                // בטל את דיאלוג ההתקדמות אם הוא עדיין מוצג
+                if (progressDialog != null && progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                    handler.removeCallbacks(updateProgressRunnable);
+                }
+
+                DownloadManager.Query query = new DownloadManager.Query();
+                query.setFilterById(id);
+                Cursor cursor = downloadManager.query(query);
+                if (cursor != null) {
+                    if (cursor.moveToFirst()) {
+                        int statusColumnIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS);
+                        int localUriColumnIndex = cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI);
+                        int reasonColumnIndex = cursor.getColumnIndex(DownloadManager.COLUMN_REASON);
+
+                        int status = cursor.getInt(statusColumnIndex);
+                        String localUriString = cursor.getString(localUriColumnIndex);
+                        int reason = cursor.getInt(reasonColumnIndex);
+
+                        if (status == DownloadManager.STATUS_SUCCESSFUL) {
+                            Toast.makeText(context, "הורדה הושלמה בהצלחה!", Toast.LENGTH_LONG).show();
+                            // התקן את הקובץ שהורד
+                            //installApk(localUriString);
+                            appone(MDMActivity.this.getFilesDir()+"/updatebeta.apk");
+                        } else if (status == DownloadManager.STATUS_FAILED) {
+                            Toast.makeText(context, "הורדה נכשלה: " + reason, Toast.LENGTH_LONG).show();
+                        }
+   
+                    }
+                    cursor.close();
+                }
+            }
+        }
+    };
+
+    private void installApk(String fileUriString) {
+        if (fileUriString == null) {
+            Toast.makeText(this, "קובץ לא נמצא להתקנה.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+        Uri apkUri = Uri.parse(fileUriString);
+        if (apkUri.getScheme().equals("file")) {
+            // נתיב זה מיועד לגרסאות אנדרואיד ישנות יותר (לפני API 24)
+            File apkFile = new File(apkUri.getPath());
+            apkUri = Uri.fromFile(apkFile); // עדיין מביא ל-URI של file://
+        }
+
+        Intent installIntent = new Intent(Intent.ACTION_VIEW);
+        installIntent.setDataAndType(apkUri, "application/vnd.android.package-archive");
+        installIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // נדרש להפעלת פעילות מחוץ להקשר האפליקציה הנוכחי
+        // עבור API 24+, תצטרך גם FLAG_GRANT_READ_URI_PERMISSION אם משתמשים ב-FileProvider
+        // installIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        try {
+            startActivity(installIntent);
+        } catch (Exception e) {
+            Toast.makeText(this, "לא ניתן להתקין קובץ: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // בטל רישום של ה-BroadcastReceiver כדי למנוע דליפות זיכרון
+        unregisterReceiver(onDownloadComplete);
+        // עצור עדכוני התקדמות ממתינים
+        if (handler != null && updateProgressRunnable != null) {
+            handler.removeCallbacks(updateProgressRunnable);
+        }
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
         }
     }
 }
