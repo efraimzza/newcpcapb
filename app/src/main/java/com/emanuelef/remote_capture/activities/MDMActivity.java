@@ -51,6 +51,7 @@ import com.emanuelef.remote_capture.Utils;
 import com.emanuelef.remote_capture.CaptureService;
 import com.emanuelef.remote_capture.R;
 
+@Deprecated
 public class MDMActivity extends Activity {
 
     private DevicePolicyManager mDpm;
