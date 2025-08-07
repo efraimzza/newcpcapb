@@ -77,6 +77,8 @@ public class MDMActivity extends Activity {
         IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
         registerReceiver(monDownloadComplete, filter);
         }  catch(Exception e){
+            MDMActivity.this.requestPermissions(new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"}, 55);
+            LogUtil.logToFile(""+e);
             Toast.makeText(this, e+"",1).show();
         }
         mDpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
