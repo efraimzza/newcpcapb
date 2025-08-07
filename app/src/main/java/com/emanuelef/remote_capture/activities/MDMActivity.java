@@ -75,7 +75,7 @@ public class MDMActivity extends Activity {
         downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
         handler = new Handler(Looper.getMainLooper());
         IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
-        registerReceiver(onDownloadComplete, filter);
+        registerReceiver(monDownloadComplete, filter);
         }  catch(Exception e){
             Toast.makeText(this, e+"",1).show();
         }
@@ -627,7 +627,8 @@ public class MDMActivity extends Activity {
         handler.post(updateProgressRunnable); // התחל את עדכון ההתקדמות
     }
 
-    private BroadcastReceiver onDownloadComplete = new BroadcastReceiver() {
+    public BroadcastReceiver monDownloadComplete = new BroadcastReceiver() {
+        @Deprecated
         @Override
         public void onReceive(Context context, Intent intent) {
         try{
@@ -704,7 +705,7 @@ public class MDMActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         // בטל רישום של ה-BroadcastReceiver כדי למנוע דליפות זיכרון
-        unregisterReceiver(onDownloadComplete);
+        unregisterReceiver(monDownloadComplete);
         // עצור עדכוני התקדמות ממתינים
         if (handler != null && updateProgressRunnable != null) {
             handler.removeCallbacks(updateProgressRunnable);
