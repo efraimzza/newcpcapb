@@ -71,12 +71,14 @@ public class MDMActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mdm);
-        
+        try{
         downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
         handler = new Handler(Looper.getMainLooper());
         IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
         registerReceiver(onDownloadComplete, filter);
-
+        }  catch(Exception e){
+            Toast.makeText(this, e+"",1).show();
+        }
         mDpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
         mAdminComponentName = new ComponentName(this,admin.class);
 
