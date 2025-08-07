@@ -76,7 +76,11 @@ public class MDMActivity extends Activity {
         downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
         handler = new Handler(Looper.getMainLooper());
         IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
-        registerReceiver(monDownloadComplete, filter);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(onDownloadComplete, filter, Context.RECEIVER_NOT_EXPORTED);
+        } else {
+            registerReceiver(onDownloadComplete, filter);
+        }
         }  catch(Exception e){
             MDMActivity.this.requestPermissions(new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"}, 55);
             LogUtil.logToFile(""+e);
