@@ -630,6 +630,7 @@ public class MDMActivity extends Activity {
     private BroadcastReceiver onDownloadComplete = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+        try{
             long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
             // ודא שהאירוע מתייחס להורדה הנוכחית ושהיא לא בוטלה על ידי המשתמש
             if (downloadId == id && !isDownloadCanceled) {
@@ -665,6 +666,9 @@ public class MDMActivity extends Activity {
                     cursor.close();
                 }
             }
+        }  catch(Exception e){
+            Toast.makeText(context, e+"",1).show();
+        }
         }
     };
 
