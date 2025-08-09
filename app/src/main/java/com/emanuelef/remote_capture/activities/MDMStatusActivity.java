@@ -69,7 +69,7 @@ public class MDMStatusActivity extends Activity {
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
+        getMenuInflater().inflate(R.menu.main_menu_status, menu);
         return true;
     }
 

@@ -265,7 +265,7 @@ public class MDMSettingsActivity extends Activity {
 		}
     }
     private void setupabodeb(){
-        Button but=findViewById(R.id.btn_about);
+        Button but=findViewById(R.id.btn_more_features);
         but.setOnLongClickListener(new OnLongClickListener(){
 
                 @Override
