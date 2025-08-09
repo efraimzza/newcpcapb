@@ -183,12 +183,17 @@ public class RestrictionManagementActivity extends Activity {
         );
 
         // טיפול ספציפי ב-VPN - השתמש במתודה המתאימה
+        boolean vpnenabled=false;
+        String strpkgvpn= mDpm.getAlwaysOnVpnPackage(mAdminComponentName);
+        if(strpkgvpn!=null){
+            vpnenabled=strpkgvpn.equals(getPackageName());
+        }
         if (Build.VERSION.SDK_INT >= 24) {
             mRestrictionList.add(new RestrictionItem("",
                                      "הפעלת VPN תמידי",
                                      "מונע עקיפת VPN על ידי חסימת כל תעבורת הרשת מחוץ ל-VPN.",
                                      "DISALLOW_ALWAYS_ON_VPN", // זה לא UserManager restriction key, תצטרך לטפל בזה באופן נפרד ב-applyRestrictions
-                                     mDpm.isAlwaysOnVpnLockdownEnabled(mAdminComponentName),
+                                     vpnenabled,
                                      R.drawable.ic_restriction_vpn
                                  ));
         } else if (Build.VERSION.SDK_INT >= 21) {
