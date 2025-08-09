@@ -54,8 +54,8 @@ import com.emanuelef.remote_capture.R;
 @Deprecated
 public class MDMSettingsActivity extends Activity {
 
-    private DevicePolicyManager mDpm;
-    private ComponentName mAdminComponentName;
+    public static DevicePolicyManager mDpm;
+    public static ComponentName mAdminComponentName;
     SharedPreferences mPrefs;
     SharedPreferences sp;
     SharedPreferences.Editor spe;
@@ -201,7 +201,7 @@ public class MDMSettingsActivity extends Activity {
             }
         }
     }
-    private void removefrp(){
+    private void removefrp(final Activity activity){
         if (Build.VERSION.SDK_INT > 29) {
            try {
               List<String> arrayList = new ArrayList<>();
@@ -211,22 +211,22 @@ public class MDMSettingsActivity extends Activity {
                  .build();
                  mDpm.setFactoryResetProtectionPolicy(mAdminComponentName, frp);
            } catch (Exception e) {
-                Toast.makeText(MDMSettingsActivity.this, "e-frp" , Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "e-frp" , Toast.LENGTH_SHORT).show();
            }
         }
            try {
               Bundle bundle = new Bundle();
               bundle = null;
               String str = "com.google.android.gms";
-              mDpm=(DevicePolicyManager)MDMSettingsActivity.this.getSystemService("device_policy");
+              mDpm=(DevicePolicyManager)activity.getSystemService("device_policy");
               mDpm.setApplicationRestrictions(mAdminComponentName, str, bundle);
               Intent intent = new Intent("com.google.android.gms.auth.FRP_CONFIG_CHANGED");
               intent.setPackage(str);
               intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
-              MDMSettingsActivity.this.sendBroadcast(intent);
-              Toast.makeText(MDMSettingsActivity.this, "frp removed", Toast.LENGTH_SHORT).show();
+              activity.sendBroadcast(intent);
+              Toast.makeText(activity, "frp removed", Toast.LENGTH_SHORT).show();
            } catch (Exception e) {
-             Toast.makeText(MDMSettingsActivity.this, "" + e, Toast.LENGTH_SHORT).show();
+             Toast.makeText(activity, "" + e, Toast.LENGTH_SHORT).show();
            }
                     
     }
@@ -301,21 +301,22 @@ public class MDMSettingsActivity extends Activity {
             });
     }
 
-    private void showRemoveMDMConfirmationDialog() {
-        new AlertDialog.Builder(this)
+    public static void showRemoveMDMConfirmationDialog(final Activity activity) {
+        new AlertDialog.Builder(activity)
             .setTitle("הסר ניהול מכשיר")
             .setMessage("האם אתה בטוח שברצונך להסיר את אפליקציית ה-MDM כמנהל המכשיר?")
             .setPositiveButton("כן, הסר", new DialogInterface.OnClickListener() {
                 @Deprecated
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    removefrp();
+                    mDpm = (DevicePolicyManager) activity.getSystemService(Context.DEVICE_POLICY_SERVICE);
+                    mAdminComponentName = new ComponentName(activity, MyDeviceAdminReceiver.class);
+                    removefrp(activity);
                     try{
-                        
-                    mDpm.clearDeviceOwnerApp(getPackageName());
-                        Toast.makeText(MDMSettingsActivity.this, "mdm removed", Toast.LENGTH_SHORT).show();
+                        mDpm.clearDeviceOwnerApp(activity.getPackageName());
+                        Toast.makeText(activity, "mdm removed", Toast.LENGTH_SHORT).show();
                     }catch(Exception e){
-                        Toast.makeText(MDMSettingsActivity.this, "" + e, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity, "" + e, Toast.LENGTH_SHORT).show();
                     }
                 }
             })
