@@ -71,7 +71,7 @@ public class MDMSettingsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mdm);
+        setContentView(R.layout.activity_mdm_settings);
         try{
         downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
         handler = new Handler(Looper.getMainLooper());
@@ -94,22 +94,7 @@ public class MDMSettingsActivity extends Activity {
         sp=this.getSharedPreferences(this.getPackageName(),this.MODE_PRIVATE);
         spe=sp.edit();
 
-        if(sp.getString(modesp,"").equals("")){
-            AppState.getInstance().setCurrentPath(PathType.MULTIMEDIA);
-            spe.putString(modesp,AppState.getInstance().getCurrentPath().name());
-            spe.commit();
-            Toast.makeText(this,AppState.getInstance().getCurrentPath().name()+" is default",1).show();
-        }else{
-            try{
-                AppState.getInstance().setCurrentPath(PathType.valueOf(sp.getString(modesp,"")));
-                Toast.makeText(this, AppState.getInstance().getCurrentPath().name()+ " is now",1).show();
-            }catch(Exception e){
-                Toast.makeText(this, e+"",1).show();
-            }
-        }
-        
-        AppState.getInstance().setCurrentPath(AppState.getInstance().getCurrentPath());
-        
+
         TextView tvcurroute=findViewById(R.id.tv_cur_route);
         tvcurroute.setText("המסלול הפעיל - "+AppState.getInstance().getCurrentPath().getDescription());
         
@@ -127,8 +112,6 @@ public class MDMSettingsActivity extends Activity {
         setupButton(R.id.btn_refresh_website_list, "רענון רשימת אתרים", null); // תצטרך לוגיקה לזה
         setupButton(R.id.btn_update_whitelist, "עדכון לרשימת דומיינים לבנה", null); // תצטרך לוגיקה לזה
         setupButton(R.id.btn_more_features, "פיצ'רים נוספים", MoreFeaturesActivity.class); // אקטיביטי חדש
-        setupButton(R.id.btn_instructions, "הוראות הפעלה", InstructionsActivity.class); // אקטיביטי חדש
-        setupButton(R.id.btn_about, "אודות", AboutActivitya.class); // אקטיביטי חדש
         setupabodeb();
 
         updateMdmActivationButtonText(); // עדכן טקסט כפתור הפעל/בטל MDM

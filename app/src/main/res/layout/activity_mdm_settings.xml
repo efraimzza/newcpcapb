@@ -103,13 +103,6 @@
                 android:id="@+id/btn_more_features"
                 android:text="פיצ'רים נוספים"/>
 
-            <Button style="@style/MDMActionButton"
-                android:id="@+id/btn_instructions"
-                android:text="הוראות הפעלה"/>
-
-            <Button style="@style/MDMActionButton"
-                android:id="@+id/btn_about"
-                android:text="אודות"/>
 
         </LinearLayout>
     </ScrollView>
