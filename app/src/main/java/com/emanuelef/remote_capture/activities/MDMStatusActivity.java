@@ -20,7 +20,7 @@ public class MDMStatusActivity extends Activity {
     SharedPreferences sp;
     SharedPreferences.Editor spe;
     public static final String modesp="mode";
-    TextView tvstate,tvroute;
+    TextView tvstate,tvroute,tvdescription;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +44,7 @@ public class MDMStatusActivity extends Activity {
         }
         tvstate=findViewById(R.id.act_stat_tvstate);
         tvroute=findViewById(R.id.act_stat_tvroute);
-        
-        TextView tvdescription=findViewById(R.id.act_stat_tvdescription);
+        tvdescription=findViewById(R.id.act_stat_tvdescription);
         
         refresh();
         
@@ -53,13 +52,18 @@ public class MDMStatusActivity extends Activity {
     private void refresh(){
         boolean mdmstate=mDpm.isDeviceOwnerApp(getPackageName());
         tvstate.setText("מצב mdm - "+(mdmstate?"פעיל":"כבוי"));
-        tvroute.setText("המסלול הפעיל - "+AppState.getInstance().getCurrentPath().getDescription());
-        boolean vpnenabled=false;
-        String strpkgvpn= mDpm.getAlwaysOnVpnPackage(mAdminComponentName);
-        if(strpkgvpn!=null){
-            vpnenabled=strpkgvpn.equals(getPackageName());
+        if(mdmstate){
+            tvroute.setText("המסלול הפעיל - "+AppState.getInstance().getCurrentPath().getDescription());
+            boolean vpnenabled=false;
+            String strpkgvpn= mDpm.getAlwaysOnVpnPackage(mAdminComponentName);
+            if(strpkgvpn!=null){
+                vpnenabled=strpkgvpn.equals(getPackageName());
+            }
+            tvdescription.setText("מצב vpn - "+(vpnenabled?"פעיל":"כבוי"));
+        } else {
+            tvroute.setVisibility(View.GONE);
+            tvdescription.setVisibility(View.GONE);
         }
-        
     }
 
     @Override
