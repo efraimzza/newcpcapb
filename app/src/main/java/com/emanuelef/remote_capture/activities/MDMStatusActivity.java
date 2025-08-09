@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.app.admin.DevicePolicyManager;
 import android.content.Context;
 import android.content.ComponentName;
+import com.emanuelef.remote_capture.R;
 
 public class MDMStatusActivity extends Activity {
     
