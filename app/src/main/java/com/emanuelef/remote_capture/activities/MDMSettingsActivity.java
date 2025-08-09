@@ -157,7 +157,7 @@ public class MDMSettingsActivity extends Activity {
             if (buttonId == R.id.btn_change_password) {
                 PasswordManager. showSetPasswordDialog(MDMSettingsActivity.this);
             } else if (buttonId == R.id.btn_remove_mdm) {
-                showRemoveMDMConfirmationDialog();
+                showRemoveMDMConfirmationDialog(MDMSettingsActivity.this);
             } else if (buttonId == R.id.btn_activate_mdm) {
                 toggleDeviceAdmin();
             }else if (buttonId == R.id.btn_remove_frp) {
@@ -327,7 +327,7 @@ public class MDMSettingsActivity extends Activity {
     private void toggleDeviceAdmin() {
         if (mDpm.isDeviceOwnerApp(getPackageName())) {
             // אם פעיל, ננסה לבטל את ההרשאה
-            showRemoveMDMConfirmationDialog(); // נשתמש באותו דיאלוג אישור להסרה
+            showRemoveMDMConfirmationDialog(MDMSettingsActivity.this); // נשתמש באותו דיאלוג אישור להסרה
         } else {
             // אם לא פעיל, נבקש להפעיל
             /*
