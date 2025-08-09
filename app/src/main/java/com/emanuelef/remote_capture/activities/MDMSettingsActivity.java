@@ -52,7 +52,7 @@ import com.emanuelef.remote_capture.CaptureService;
 import com.emanuelef.remote_capture.R;
 
 @Deprecated
-public class MDMActivity extends Activity {
+public class MDMSettingsActivity extends Activity {
 
     private DevicePolicyManager mDpm;
     private ComponentName mAdminComponentName;
@@ -82,14 +82,14 @@ public class MDMActivity extends Activity {
             registerReceiver(monDownloadComplete, filter);
         }
         }  catch(Exception e){
-            MDMActivity.this.requestPermissions(new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"}, 55);
+            MDMSettingsActivity.this.requestPermissions(new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"}, 55);
             LogUtil.logToFile(""+e);
             Toast.makeText(this, e+"",1).show();
         }
         mDpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
         mAdminComponentName = new ComponentName(this,admin.class);
 
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(MDMActivity.this);
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(MDMSettingsActivity.this);
         
         sp=this.getSharedPreferences(this.getPackageName(),this.MODE_PRIVATE);
         spe=sp.edit();
@@ -155,7 +155,7 @@ public class MDMActivity extends Activity {
                                     public void run() {
                                         handleButtonClick(v.getId(), targetActivity);
                                     }
-                                },MDMActivity.this);
+                                },MDMSettingsActivity.this);
                         } else {
                             // without password
                             handleButtonClick(v.getId(), targetActivity);
@@ -167,12 +167,12 @@ public class MDMActivity extends Activity {
 
     private void handleButtonClick(int buttonId, Class<?> targetActivity) {
         if (targetActivity != null) {
-            Intent intent = new Intent(MDMActivity.this, targetActivity);
+            Intent intent = new Intent(MDMSettingsActivity.this, targetActivity);
             startActivity(intent);
         } else {
             // without target activity
             if (buttonId == R.id.btn_change_password) {
-                PasswordManager. showSetPasswordDialog(MDMActivity.this);
+                PasswordManager. showSetPasswordDialog(MDMSettingsActivity.this);
             } else if (buttonId == R.id.btn_remove_mdm) {
                 showRemoveMDMConfirmationDialog();
             } else if (buttonId == R.id.btn_activate_mdm) {
@@ -204,16 +204,16 @@ public class MDMActivity extends Activity {
                             TextView tvcurroute=findViewById(R.id.tv_cur_route);
                             tvcurroute.setText("המסלול הפעיל - "+AppState.getInstance().getCurrentPath().getDescription());
                             
-                            Toast.makeText(MDMActivity.this, "המסלול שנבחר: " + selectedPath.getDescription(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MDMSettingsActivity.this, "המסלול שנבחר: " + selectedPath.getDescription(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 builder.create().show();  
             } else if (buttonId == R.id.btn_refresh_website_list) {
-                //Toast.makeText(MDMActivity.this, "רענון רשימת אתרים - נדרש יישום.", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MDMSettingsActivity.this, "רענון רשימת אתרים - נדרש יישום.", Toast.LENGTH_SHORT).show();
             } else if (buttonId == R.id.btn_update_whitelist) {
                if(CaptureService.isServiceActive()){
                    CaptureService.requestBlacklistsUpdate();
-                   Toast.makeText(MDMActivity.this, "updating...",1).show();
+                   Toast.makeText(MDMSettingsActivity.this, "updating...",1).show();
                }
             }
         }
@@ -228,22 +228,22 @@ public class MDMActivity extends Activity {
                  .build();
                  mDpm.setFactoryResetProtectionPolicy(mAdminComponentName, frp);
            } catch (Exception e) {
-                Toast.makeText(MDMActivity.this, "e-frp" , Toast.LENGTH_SHORT).show();
+                Toast.makeText(MDMSettingsActivity.this, "e-frp" , Toast.LENGTH_SHORT).show();
            }
         }
            try {
               Bundle bundle = new Bundle();
               bundle = null;
               String str = "com.google.android.gms";
-              mDpm=(DevicePolicyManager)MDMActivity.this.getSystemService("device_policy");
+              mDpm=(DevicePolicyManager)MDMSettingsActivity.this.getSystemService("device_policy");
               mDpm.setApplicationRestrictions(mAdminComponentName, str, bundle);
               Intent intent = new Intent("com.google.android.gms.auth.FRP_CONFIG_CHANGED");
               intent.setPackage(str);
               intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
-              MDMActivity.this.sendBroadcast(intent);
-              Toast.makeText(MDMActivity.this, "frp removed", Toast.LENGTH_SHORT).show();
+              MDMSettingsActivity.this.sendBroadcast(intent);
+              Toast.makeText(MDMSettingsActivity.this, "frp removed", Toast.LENGTH_SHORT).show();
            } catch (Exception e) {
-             Toast.makeText(MDMActivity.this, "" + e, Toast.LENGTH_SHORT).show();
+             Toast.makeText(MDMSettingsActivity.this, "" + e, Toast.LENGTH_SHORT).show();
            }
                     
     }
@@ -262,7 +262,7 @@ public class MDMActivity extends Activity {
                         .build();
                     mDpm.setFactoryResetProtectionPolicy(mAdminComponentName, frp);
                 } catch (Exception e) {
-                    Toast.makeText(MDMActivity.this, "e-frp"+e , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MDMSettingsActivity.this, "e-frp"+e , Toast.LENGTH_SHORT).show();
                 }
             }
             Bundle bundle = new Bundle();
@@ -275,10 +275,10 @@ public class MDMActivity extends Activity {
             Intent intent = new Intent("com.google.android.gms.auth.FRP_CONFIG_CHANGED");
             intent.setPackage(str);
             intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
-            MDMActivity.this.sendBroadcast(intent);
-            Toast.makeText(MDMActivity.this, "frp..", Toast.LENGTH_SHORT).show();
+            MDMSettingsActivity.this.sendBroadcast(intent);
+            Toast.makeText(MDMSettingsActivity.this, "frp..", Toast.LENGTH_SHORT).show();
 		} catch (Exception e) {
-		    Toast.makeText(MDMActivity.this, "e-frp2"+e , Toast.LENGTH_SHORT).show();
+		    Toast.makeText(MDMSettingsActivity.this, "e-frp2"+e , Toast.LENGTH_SHORT).show();
 		}
     }
     private void setupabodeb(){
@@ -290,10 +290,10 @@ public class MDMActivity extends Activity {
                     PasswordManager.requestPasswordAndSave(new Runnable() {
                             @Override
                             public void run() {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(MDMActivity.this);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(MDMSettingsActivity.this);
                                 builder.setTitle("debuging");
 
-                                final Switch swi =new Switch(MDMActivity.this);
+                                final Switch swi =new Switch(MDMSettingsActivity.this);
                                 swi.setText("debug");
                                 swi.setChecked(Prefs.isdebug(mPrefs));
                                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
@@ -312,7 +312,7 @@ public class MDMActivity extends Activity {
                                     });
                                 builder.show();
                             }
-                        },MDMActivity.this);
+                        },MDMSettingsActivity.this);
                     return true;
                 }
             });
@@ -330,9 +330,9 @@ public class MDMActivity extends Activity {
                     try{
                         
                     mDpm.clearDeviceOwnerApp(getPackageName());
-                        Toast.makeText(MDMActivity.this, "mdm removed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MDMSettingsActivity.this, "mdm removed", Toast.LENGTH_SHORT).show();
                     }catch(Exception e){
-                        Toast.makeText(MDMActivity.this, "" + e, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MDMSettingsActivity.this, "" + e, Toast.LENGTH_SHORT).show();
                     }
                 }
             })
@@ -413,31 +413,31 @@ public class MDMActivity extends Activity {
     private void updateMdm(){
     //first abandon all old sessions
     try {
-       List<PackageInstaller.SessionInfo> lses= MDMActivity.this.getPackageManager().getPackageInstaller().getAllSessions();
+       List<PackageInstaller.SessionInfo> lses= MDMSettingsActivity.this.getPackageManager().getPackageInstaller().getAllSessions();
        if (lses != null) {
          for (PackageInstaller.SessionInfo pses:lses) {
              if (pses != null) {
                 try {
-                    if (pses.getInstallerPackageName().equals(MDMActivity.this.getPackageName())) {
-                       MDMActivity.this.getPackageManager().getPackageInstaller().abandonSession(pses.getSessionId());
+                    if (pses.getInstallerPackageName().equals(MDMSettingsActivity.this.getPackageName())) {
+                       MDMSettingsActivity.this.getPackageManager().getPackageInstaller().abandonSession(pses.getSessionId());
                     }
                 } catch (Exception e) {  
-                    Toast.makeText(MDMActivity.this, "" + e, 0).show();
+                    Toast.makeText(MDMSettingsActivity.this, "" + e, 0).show();
                 }
              }
          }
       }
       } catch (Exception e) {
-         Toast.makeText(MDMActivity.this, "" + e, 0).show();
+         Toast.makeText(MDMSettingsActivity.this, "" + e, 0).show();
       }
       try{
          startDownload();
       } catch (Exception e) {
-         Toast.makeText(MDMActivity.this, "" + e, 0).show();
+         Toast.makeText(MDMSettingsActivity.this, "" + e, 0).show();
       }
         /*
         new Thread(){public void run(){
-        succ= Utils.downloadFile("https://raw.githubusercontent.com/efraimzz/whitelist/refs/heads/main/whitelistbeta.apk", MDMActivity.this.getFilesDir()+"/updatebeta.apk");
+        succ= Utils.downloadFile("https://raw.githubusercontent.com/efraimzz/whitelist/refs/heads/main/whitelistbeta.apk", MDMSettingsActivity.this.getFilesDir()+"/updatebeta.apk");
         mend=true;
         }}.start();
        
@@ -449,9 +449,9 @@ public class MDMActivity extends Activity {
                     new Handler().postDelayed(this,1000);
                     }else{
                     if(succ){
-                    appone(MDMActivity.this.getFilesDir()+"/updatebeta.apk");
+                    appone(MDMSettingsActivity.this.getFilesDir()+"/updatebeta.apk");
                     }
-                        Toast.makeText(MDMActivity.this, ""+succ, 1).show();
+                        Toast.makeText(MDMSettingsActivity.this, ""+succ, 1).show();
                         mend=false;
                         succ=false;
                     }
@@ -481,14 +481,14 @@ public class MDMActivity extends Activity {
     void appone(String mappath) {
         String editable;
         try {
-            PackageInstaller packageInstaller = MDMActivity.this.getPackageManager().getPackageInstaller();
+            PackageInstaller packageInstaller = MDMSettingsActivity.this.getPackageManager().getPackageInstaller();
 
             PackageInstaller. SessionParams sessionParams = new PackageInstaller. SessionParams(1);
             openses = packageInstaller.openSession(packageInstaller.createSession(sessionParams));
            // editable = edtx1.getText().toString();
             editable = mappath;
             if (editable.equals("")) {
-                Toast.makeText(MDMActivity.this, "write the path!", 1).show();
+                Toast.makeText(MDMSettingsActivity.this, "write the path!", 1).show();
                 openses.abandon();
                 return;
             }
@@ -510,14 +510,14 @@ public class MDMActivity extends Activity {
                         openWrite.close();
 
                         try {
-                            Intent intent  = new Intent(MDMActivity.this, StatusReceiver.class);
-                            openses.commit(PendingIntent.getBroadcast(MDMActivity.this, 0, intent, PendingIntent.FLAG_MUTABLE).getIntentSender());
+                            Intent intent  = new Intent(MDMSettingsActivity.this, StatusReceiver.class);
+                            openses.commit(PendingIntent.getBroadcast(MDMSettingsActivity.this, 0, intent, PendingIntent.FLAG_MUTABLE).getIntentSender());
                             return;
                         } catch (Throwable e) {}
                     }
                 }
             }
-            Toast.makeText(MDMActivity.this, "not exsist or not readable!", 1).show();
+            Toast.makeText(MDMSettingsActivity.this, "not exsist or not readable!", 1).show();
             openses.abandon();
         } catch (Exception e2) {
             try {
@@ -528,7 +528,7 @@ public class MDMActivity extends Activity {
             for (StackTraceElement stackTraceElement : stackTrace) {
                 editable = editable+stackTraceElement;
             }
-            Toast.makeText(MDMActivity.this, ""+e2+editable, 1).show();
+            Toast.makeText(MDMSettingsActivity.this, ""+e2+editable, 1).show();
             //tv1.setText(editable);
         }
     }
@@ -560,7 +560,7 @@ public class MDMActivity extends Activity {
     }
     @Deprecated
     private void showProgressDialog() {
-        progressDialog = new ProgressDialog(MDMActivity.this);
+        progressDialog = new ProgressDialog(MDMSettingsActivity.this);
         progressDialog.setTitle("הורדת קובץ");
         progressDialog.setMessage("מתחיל הורדה...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
@@ -578,7 +578,7 @@ public class MDMActivity extends Activity {
                     handler.removeCallbacks(updateProgressRunnable);
                     // סגור את הדיאלוג
                     dialog.dismiss();
-                    Toast.makeText(MDMActivity.this, "ההורדה בוטלה.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MDMSettingsActivity.this, "ההורדה בוטלה.", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -626,7 +626,7 @@ public class MDMActivity extends Activity {
                     progressDialog.dismiss();
                     // אם לא בוטל על ידי המשתמש, ייתכן שהייתה בעיה אחרת
                     if (!isDownloadCanceled) {
-                        Toast.makeText(MDMActivity.this, "הורדה בוטלה או לא נמצאה.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MDMSettingsActivity.this, "הורדה בוטלה או לא נמצאה.", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -665,7 +665,7 @@ public class MDMActivity extends Activity {
                             Toast.makeText(context, "הורדה הושלמה בהצלחה!", Toast.LENGTH_LONG).show();
                             // התקן את הקובץ שהורד
                             //installApk(localUriString);
-                            appone(MDMActivity.this.getExternalFilesDir("")+"/updatebeta.apk");
+                            appone(MDMSettingsActivity.this.getExternalFilesDir("")+"/updatebeta.apk");
                         } else if (status == DownloadManager.STATUS_FAILED) {
                             Toast.makeText(context, "הורדה נכשלה: " + reason, Toast.LENGTH_LONG).show();
                         }
