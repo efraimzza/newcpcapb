@@ -43,16 +43,6 @@
                 android:text="שנה סיסמה"/>
 
             <Button style="@style/MDMActionButton"
-                android:id="@+id/btn_activate_mdm"
-                android:text="הפעל ניהול מכשיר"
-                android:background="@drawable/green_button_background" /> 
-                
-            <Button style="@style/MDMActionButton"
-                android:id="@+id/btn_remove_mdm"
-                android:text="הסר ניהול מכשיר"
-                android:background="@drawable/red_button_background"/> 
-                
-            <Button style="@style/MDMActionButton"
                 android:id="@+id/btn_activate_frp"
                 android:text="הפעל frp" /> 
                 

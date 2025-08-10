@@ -103,8 +103,6 @@ public class MDMSettingsActivity extends Activity {
         setupButton(R.id.btn_manage_apps, "ניהול אפליקציות", AppManagementActivity.class);
         setupButton(R.id.btn_manage_vpn, "ניהול vpn", MainActivity.class);
         setupButton(R.id.btn_change_password, "שנה סיסמה", null);
-        setupButton(R.id.btn_remove_mdm, "הסר ניהול מכשיר", null);
-        setupButton(R.id.btn_activate_mdm, "הפעל ניהול מכשיר", null); 
         setupButton(R.id.btn_remove_frp, "הסר frp", null); 
         setupButton(R.id.btn_activate_frp, "הפעל frp", null); 
         setupButton(R.id.btn_update_mdm_app, "עדכון אפליקציית MDM", null); // מטופל בלוגיקה נפרדת
@@ -114,8 +112,7 @@ public class MDMSettingsActivity extends Activity {
         setupButton(R.id.btn_more_features, "פיצ'רים נוספים", MoreFeaturesActivity.class); // אקטיביטי חדש
         setupabodeb();
 
-        updateMdmActivationButtonText(); // עדכן טקסט כפתור הפעל/בטל MDM
-    }
+        }
 
     private void setupButton(int buttonId, String text, final Class<?> targetActivity) {
         Button button = findViewById(buttonId);
@@ -128,8 +125,6 @@ public class MDMSettingsActivity extends Activity {
                         if (v.getId() == R.id.btn_manage_restrictions ||
                             v.getId() == R.id.btn_manage_vpn ||
                             v.getId() == R.id.btn_change_password ||
-                            v.getId() == R.id.btn_remove_mdm ||
-                            v.getId() == R.id.btn_activate_mdm ||
                             v.getId() == R.id.btn_remove_frp ||
                             v.getId() == R.id.btn_activate_frp ||
                             v.getId() ==  R.id.btn_select_route) { 
@@ -156,10 +151,6 @@ public class MDMSettingsActivity extends Activity {
             // without target activity
             if (buttonId == R.id.btn_change_password) {
                 PasswordManager. showSetPasswordDialog(MDMSettingsActivity.this);
-            } else if (buttonId == R.id.btn_remove_mdm) {
-                showRemoveMDMConfirmationDialog(MDMSettingsActivity.this);
-            } else if (buttonId == R.id.btn_activate_mdm) {
-                toggleDeviceAdmin();
             }else if (buttonId == R.id.btn_remove_frp) {
                 removefrp(MDMSettingsActivity.this);
             } else if (buttonId == R.id.btn_activate_frp) {
@@ -301,96 +292,6 @@ public class MDMSettingsActivity extends Activity {
             });
     }
 
-    public static void showRemoveMDMConfirmationDialog(final Activity activity) {
-        new AlertDialog.Builder(activity)
-            .setTitle("הסר ניהול מכשיר")
-            .setMessage("האם אתה בטוח שברצונך להסיר את אפליקציית ה-MDM כמנהל המכשיר?")
-            .setPositiveButton("כן, הסר", new DialogInterface.OnClickListener() {
-                @Deprecated
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    mDpm = (DevicePolicyManager) activity.getSystemService(Context.DEVICE_POLICY_SERVICE);
-                    mAdminComponentName = new ComponentName(activity, admin.class);
-                    removefrp(activity);
-                    try{
-                        mDpm.clearDeviceOwnerApp(activity.getPackageName());
-                        Toast.makeText(activity, "mdm removed", Toast.LENGTH_SHORT).show();
-                    }catch(Exception e){
-                        Toast.makeText(activity, "" + e, Toast.LENGTH_SHORT).show();
-                    }
-                }
-            })
-            .setNegativeButton("ביטול", null)
-            .show();
-    }
-
-    private void toggleDeviceAdmin() {
-        if (mDpm.isDeviceOwnerApp(getPackageName())) {
-            // אם פעיל, ננסה לבטל את ההרשאה
-            showRemoveMDMConfirmationDialog(MDMSettingsActivity.this); // נשתמש באותו דיאלוג אישור להסרה
-        } else {
-            // אם לא פעיל, נבקש להפעיל
-            /*
-            Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
-            intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, mAdminComponentName);
-            intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "יישום זה דורש הרשאת מנהל מכשיר כדי ליישם מדיניות אבטחה.");
-            startActivityForResult(intent, 0);
-            */
-            try {
-                //String[] strar = {"/system/bin/sh","-c",""};
-                String[] strar = {"su","-c",""};
-                String ed="";
-                //ed = edtx1.getText().toString();
-                ed="dpm set-device-owner com.emanuelef.remote_capture.debug/com.emanuelef.remote_capture.activities.admin";
-                //int i = 0;
-                //ed.split(" ", i++);
-                strar[2] = ed;
-                //strar[i]=ed;
-                String c ="";
-
-                try {
-                    Process exec=Runtime.getRuntime().exec(strar);
-                    c += (exec.waitFor() == 0) ?"success:": "fail:";
-                    exec.getOutputStream();
-                    //c = exec.getInputStream().toString();
-                    //c=exec.getOutputStream().toString();
-                    BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(exec.getInputStream()));
-                    BufferedReader in=bufferedReader;
-                    String st;
-                    StringBuilder edtx1=new StringBuilder();
-                    do {
-                        st = in.readLine();
-                        if (st != null) {
-                            edtx1.append(st);
-                            edtx1.append(String.valueOf("\n"));
-                            continue;
-                        }
-                    } while (st != null);
-                    in.close();
-                    c += edtx1.toString();
-                    bufferedReader = new BufferedReader(new InputStreamReader(exec.getErrorStream()));
-                    in = bufferedReader;
-                    st = "";
-                    edtx1 = new StringBuilder();
-                    do {
-                        st = in.readLine();
-                        if (st != null) {
-                            edtx1.append(st);
-                            edtx1.append(String.valueOf("\n"));
-                            continue;
-                        }
-                    } while (st != null);
-                    in.close();
-                    c += edtx1.toString();
-                    Toast.makeText(this, "" + c, Toast.LENGTH_LONG).show();
-                } catch (Exception e) {
-                    Toast.makeText(this, "error" + e, Toast.LENGTH_LONG).show();
-                }
-            } catch (Exception e) {
-                Toast.makeText(this, "error" + e, Toast.LENGTH_LONG).show();
-            }
-        }
-    }
     boolean succ=false;
     boolean mend=false;
     @Deprecated
@@ -443,23 +344,11 @@ public class MDMSettingsActivity extends Activity {
             });*/
         
     }
-    private void updateMdmActivationButtonText() {
-        Button btnActivateMDM = findViewById(R.id.btn_activate_mdm);
-        if (btnActivateMDM != null) {
-            if (mDpm.isDeviceOwnerApp(getPackageName())) {
-                btnActivateMDM.setText("בטל ניהול מכשיר");
-                btnActivateMDM.setBackgroundResource(R.drawable.red_button_background); // כפתור אדום לביטול
-            } else {
-                btnActivateMDM.setText("הפעל ניהול מכשיר");
-                btnActivateMDM.setBackgroundResource(R.drawable.green_button_background); // כפתור ירוק להפעלה
-            }
-        }
-    }
+    
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        updateMdmActivationButtonText(); // עדכן את הכפתור לאחר חזרה מפעילות הפעלת מנהל
     }
     PackageInstaller.Session openses;
     void appone(String mappath) {
