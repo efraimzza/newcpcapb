@@ -26,6 +26,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import android.widget.LinearLayout;
+import android.content.ClipboardManager;
+import android.content.DialogInterface;
+import android.app.AlertDialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import com.emanuelef.remote_capture.R;
 
 public class MDMStatusActivity extends Activity {
@@ -226,7 +231,7 @@ public class MDMStatusActivity extends Activity {
                 public void onClick(DialogInterface dialog, int which) {
                     mDpm = (DevicePolicyManager) activity.getSystemService(Context.DEVICE_POLICY_SERVICE);
                     mAdminComponentName = new ComponentName(activity, admin.class);
-                    removefrp(activity);
+                    MDMSettingsActivity.removefrp(activity);
                     try{
                         mDpm.clearDeviceOwnerApp(activity.getPackageName());
                         Toast.makeText(activity, "mdm removed", Toast.LENGTH_SHORT).show();
