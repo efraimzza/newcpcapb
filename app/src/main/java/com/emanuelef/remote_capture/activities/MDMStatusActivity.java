@@ -28,6 +28,7 @@ public class MDMStatusActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mdm_status);
         mDpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
+        mAdminComponentName = new ComponentName(this,admin.class);
         sp=this.getSharedPreferences(this.getPackageName(),this.MODE_PRIVATE);
         spe=sp.edit();
         if(sp.getString(modesp,"").equals("")){
