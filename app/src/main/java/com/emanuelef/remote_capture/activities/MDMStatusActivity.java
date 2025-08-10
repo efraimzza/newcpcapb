@@ -78,7 +78,8 @@ public class MDMStatusActivity extends Activity {
         getMenuInflater().inflate(R.menu.main_menu_status, menu);
         return true;
     }
-
+    
+    @Deprecated
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         super.onOptionsItemSelected(item);
@@ -98,6 +99,7 @@ public class MDMStatusActivity extends Activity {
                 return true;
             case R.id.men_ite_remove:
                 PasswordManager.requestPasswordAndSave(new Runnable() {
+                        @Deprecated
                         @Override
                         public void run() {
                             MDMSettingsActivity.showRemoveMDMConfirmationDialog(MDMStatusActivity.this);

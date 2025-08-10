@@ -161,7 +161,7 @@ public class MDMSettingsActivity extends Activity {
             } else if (buttonId == R.id.btn_activate_mdm) {
                 toggleDeviceAdmin();
             }else if (buttonId == R.id.btn_remove_frp) {
-                removefrp();
+                removefrp(MDMSettingsActivity.this);
             } else if (buttonId == R.id.btn_activate_frp) {
                 activatefrp();
             } else if (buttonId == R.id.btn_update_mdm_app) {
@@ -201,7 +201,7 @@ public class MDMSettingsActivity extends Activity {
             }
         }
     }
-    private void removefrp(final Activity activity){
+    public static void removefrp(final Activity activity){
         if (Build.VERSION.SDK_INT > 29) {
            try {
               List<String> arrayList = new ArrayList<>();
@@ -310,7 +310,7 @@ public class MDMSettingsActivity extends Activity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     mDpm = (DevicePolicyManager) activity.getSystemService(Context.DEVICE_POLICY_SERVICE);
-                    mAdminComponentName = new ComponentName(activity, MyDeviceAdminReceiver.class);
+                    mAdminComponentName = new ComponentName(activity, admin.class);
                     removefrp(activity);
                     try{
                         mDpm.clearDeviceOwnerApp(activity.getPackageName());
