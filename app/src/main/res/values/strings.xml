@@ -64,7 +64,9 @@
     <string name="mmode_all">all</string>
     <string name="mdm_settings">mdm settings</string>
     <string name="settings_shortcut">settings shortcut multimedia</string>
-        
+    <string name="tvremove_root">If your device is rooted, remove the root after activation to avoid bypasses!</string>
+    <string name="bucpcmd">To activate with ADB click here to copy the command!</string>
+    
     <string name="start_button">Start</string>
     <string name="stop_button">Stop</string>
     <string name="title_activity_settings">Settings</string>

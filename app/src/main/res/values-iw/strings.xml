@@ -40,7 +40,9 @@
     <string name="mmode_all">הכל</string>
     <string name="mdm_settings">הגדרות מנהל מכשיר</string>
     <string name="settings_shortcut">קיצור להגדרות למולטימדיה</string>
-        
+    <string name="tvremove_root">אם המכשיר שלך מושרש, הסר את השורש אחרי ההפעלה כדי למנוע מעקפים!</string>
+    <string name="bucpcmd">להפעלה עם ADB לחץ כאן כדי להעתיק את הפקודה!</string>
+    
     <string name="start_button">התחלה</string>
     <string name="stop_button">להפסיק</string>
     <string name="title_activity_settings">הגדרות</string>
