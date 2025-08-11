@@ -2,7 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    
     <item
         android:id="@+id/men_ite_sett"
         android:title="הגדרות"
@@ -15,7 +14,7 @@
     <item
         android:id="@+id/men_ite_about"
         android:title="אודות"
-         />
+    />
     <item
         android:id="@+id/men_ite_remove"
         android:title="הסרה"
