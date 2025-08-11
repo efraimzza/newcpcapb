@@ -232,13 +232,17 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
         });
         
         startmdmvpn.setOnClickListener(v -> {
-            //mactivatepcapmdm();
-            
-            try {
-                VpnService.prepare(mcon);
-                DevicePolicyManager dpm=(DevicePolicyManager)mcon.getSystemService("device_policy");
-                p(dpm, compName, mcon.getPackageName(), true);
-            } catch (Exception e) {}
+        PasswordManager.requestPasswordAndSave(new Runnable() {
+                  @Override
+                  public void run() {
+                    //mactivatepcapmdm();
+                      try {
+                           VpnService.prepare(mcon);
+                           DevicePolicyManager dpm=(DevicePolicyManager)mcon.getSystemService("device_policy");
+                           p(dpm, compName, mcon.getPackageName(), true);
+                      } catch (Exception e) {}
+                  }
+              },mActivity);
         });
 
         removemdmvpn.setOnClickListener(v -> {

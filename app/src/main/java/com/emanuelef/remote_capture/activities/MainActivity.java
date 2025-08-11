@@ -774,8 +774,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             stopCapture();
             return true;
         } else if (id == R.id.action_settings) {
-            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-            startActivity(intent);
+            PasswordManager.requestPasswordAndSave(new Runnable() {
+                        @Deprecated
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                            startActivity(intent);
+                        }
+                    },MainActivity.this);
             return true;
         }
 

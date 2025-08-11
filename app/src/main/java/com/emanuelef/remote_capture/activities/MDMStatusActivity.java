@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,9 +32,11 @@ import android.content.DialogInterface;
 import android.app.AlertDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
+import androidx.core.view.MenuProvider;
 import com.emanuelef.remote_capture.R;
 
-public class MDMStatusActivity extends Activity {
+public class MDMStatusActivity extends BaseActivity implements MenuProvider {
     
     public static DevicePolicyManager mDpm;
     public static ComponentName mAdminComponentName;
@@ -249,12 +252,19 @@ public class MDMStatusActivity extends Activity {
         refresh();
     }
     
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu_status, menu);
         return true;
+    }*/
+    @Override
+    public void onCreateMenu(@NonNull Menu menu, MenuInflater menuInflater) {
+        menuInflater.inflate(R.menu.main_menu_status, menu);
     }
-    
+    @Override
+    public boolean onMenuItemSelected(@NonNull MenuItem item) {
+        return false;
+    }
     @Deprecated
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
