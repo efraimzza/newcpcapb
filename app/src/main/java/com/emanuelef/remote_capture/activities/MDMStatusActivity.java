@@ -32,6 +32,7 @@ import android.content.DialogInterface;
 import android.app.AlertDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import androidx.annotation.NonNull;
 
 import androidx.core.view.MenuProvider;
 import com.emanuelef.remote_capture.R;
