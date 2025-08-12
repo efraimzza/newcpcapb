@@ -54,6 +54,10 @@
                 android:id="@+id/btn_update_mdm_app"
                 android:text="עדכון אפליקציית MDM"/>
 
+            <Button style="@style/MDMActionButton"
+                android:id="@+id/btn_lock_mdm"
+                android:text="נעילת הגדרות והסרה"/>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -75,8 +79,8 @@
                 android:text="בחירת מסלול"/>
 
             <Button style="@style/MDMActionButton"
-                android:id="@+id/btn_refresh_website_list"
-                android:text="רענון רשימת אתרים"/>
+                android:id="@+id/btn_def_rest_multi"
+                android:text="השבתות מומלצות למולטימדיה"/>
 
             <Button style="@style/MDMActionButton"
                 android:id="@+id/btn_update_whitelist"

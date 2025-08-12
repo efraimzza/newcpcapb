@@ -16,6 +16,7 @@ import android.text.method.PasswordTransformationMethod;
 import com.emanuelef.remote_capture.R;
 
 public class PasswordManager {
+    public static final String locksp="lock";
     private static final String PREFS_NAME = "MDMPrefs";
     private static final String KEY_PASSWORD_HASH = "admin_password_hash";
     private static final int MIN_PASSWORD_LENGTH = 4; // אורך סיסמה מינימלי
@@ -138,7 +139,11 @@ public class PasswordManager {
                     public void onClick(DialogInterface dialog, int which) {
                         String enteredPassword = etPassword.getText().toString();
                         if (PasswordManager.checkPassword(activity, enteredPassword)) {
+                        SharedPreferences sp=activity.getSharedPreferences(activity.getPackageName(),activity.MODE_PRIVATE);
+                        
+                            if(!sp.getBoolean(locksp,false)){
                             action.run();
+                            }
                         } else {
                             Toast.makeText(activity, "סיסמה שגויה!", Toast.LENGTH_SHORT).show();
                         }

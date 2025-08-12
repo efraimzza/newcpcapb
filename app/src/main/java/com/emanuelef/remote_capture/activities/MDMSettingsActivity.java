@@ -60,6 +60,7 @@ public class MDMSettingsActivity extends Activity {
     SharedPreferences sp;
     SharedPreferences.Editor spe;
     public static final String modesp="mode";
+    public static final String locksp="lock";
     private DownloadManager downloadManager;
     private long downloadId;
     private ProgressDialog progressDialog;
@@ -105,9 +106,10 @@ public class MDMSettingsActivity extends Activity {
         setupButton(R.id.btn_change_password, "שנה סיסמה", null);
         setupButton(R.id.btn_remove_frp, "הסר frp", null); 
         setupButton(R.id.btn_activate_frp, "הפעל frp", null); 
-        setupButton(R.id.btn_update_mdm_app, "עדכון אפליקציית MDM", null); // מטופל בלוגיקה נפרדת
+        setupButton(R.id.btn_update_mdm_app, "עדכון אפליקציית MDM", null);
+        setupButton(R.id.btn_lock_mdm, "נעילת הגדרות והסרה", null);
         setupButton(R.id.btn_select_route, "בחירת מסלול", null); // תצטרך אקטיביטי לזה
-        setupButton(R.id.btn_refresh_website_list, "רענון רשימת אתרים", null); // תצטרך לוגיקה לזה
+        setupButton(R.id.btn_def_rest_multi, "השבתות מומלצות למולטימדיה", null); // תצטרך לוגיקה לזה
         setupButton(R.id.btn_update_whitelist, "עדכון לרשימת דומיינים לבנה", null); // תצטרך לוגיקה לזה
         setupButton(R.id.btn_more_features, "פיצ'רים נוספים", MoreFeaturesActivity.class); // אקטיביטי חדש
         setupabodeb();
@@ -123,11 +125,12 @@ public class MDMSettingsActivity extends Activity {
                     public void onClick(final View v) {
                         // with password
                         if (v.getId() == R.id.btn_manage_restrictions ||
-                            v.getId() == R.id.btn_manage_vpn ||
                             v.getId() == R.id.btn_change_password ||
                             v.getId() == R.id.btn_remove_frp ||
                             v.getId() == R.id.btn_activate_frp ||
-                            v.getId() ==  R.id.btn_select_route) { 
+                            v.getId() == R.id.btn_lock_mdm ||
+                            v.getId() ==  R.id.btn_select_route ||
+                            v.getId() == R.id.btn_def_rest_multi) { 
                             PasswordManager.requestPasswordAndSave(new Runnable() {
                                     @Override
                                     public void run() {
@@ -158,6 +161,9 @@ public class MDMSettingsActivity extends Activity {
             } else if (buttonId == R.id.btn_update_mdm_app) {
                 updateMdm();
                 //startDownload();
+            } else if (buttonId == R.id.btn_lock_mdm) {
+                spe.putBoolean(locksp,"true");
+                spe.commit();
             } else if (buttonId == R.id.btn_select_route) {
                 final PathType[] paths = PathType.values();
                 String[] pathNames = new String[paths.length];
@@ -182,8 +188,33 @@ public class MDMSettingsActivity extends Activity {
                         }
                     });
                 builder.create().show();  
-            } else if (buttonId == R.id.btn_refresh_website_list) {
-                //Toast.makeText(MDMSettingsActivity.this, "רענון רשימת אתרים - נדרש יישום.", Toast.LENGTH_SHORT).show();
+            } else if (buttonId == R.id.btn_def_rest_multi) {
+                boolean mdmstate=mDpm.isDeviceOwnerApp(MDMSettingsActivity.this.getPackageName());
+                if(mdmstate){
+                try{
+                mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_CONFIG_TETHERING);
+                mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_INSTALL_UNKNOWN_SOURCES);
+                mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_DEBUGGING_FEATURES);
+                mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_FACTORY_RESET);
+                mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_ADD_MANAGED_PROFILE);
+                mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_USER_SWITCH);
+                mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_ADD_USER);
+                mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_UNINSTALL_APPS);
+                mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_REMOVE_USER);
+                mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_APPS_CONTROL);
+                
+                mDpm.setApplicationHidden(mAdminComponentName, "com.dofun.carsetting", true);//carsettings
+                mDpm.setApplicationHidden(mAdminComponentName, "com.android.vending", true);//Google play
+                mDpm.setApplicationHidden(mAdminComponentName, "com.android.vending", true);//
+                
+                Toast.makeText(MDMSettingsActivity.this, "הופעלו השבתות מומלצות למולטימדיה!", Toast.LENGTH_SHORT).show();
+                } catch (Exception e){
+                    Toast.makeText(MDMSettingsActivity.this, ""+e, Toast.LENGTH_SHORT).show();
+                }
+                    
+                }else{
+                    Toast.makeText(MDMSettingsActivity.this, "אין עדיין הרשאות ניהול מכשיר", Toast.LENGTH_SHORT).show();
+                }
             } else if (buttonId == R.id.btn_update_whitelist) {
                if(CaptureService.isServiceActive()){
                    CaptureService.requestBlacklistsUpdate();

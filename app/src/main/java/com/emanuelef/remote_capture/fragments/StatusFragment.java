@@ -240,6 +240,7 @@ public class StatusFragment extends Fragment implements AppStateListener, MenuPr
                            VpnService.prepare(mcon);
                            DevicePolicyManager dpm=(DevicePolicyManager)mcon.getSystemService("device_policy");
                            p(dpm, compName, mcon.getPackageName(), true);
+                           //refreshStatus();//enable after end checking
                       } catch (Exception e) {}
                   }
               },mActivity);

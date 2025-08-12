@@ -33,6 +33,12 @@ import android.app.AlertDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import androidx.annotation.NonNull;
+import android.content.pm.PackageManager;
+import android.os.UserManager;
+import android.os.Build;
+import android.Manifest;
+import android.os.Environment;
+import android.net.Uri;
 
 import androidx.core.view.MenuProvider;
 import com.emanuelef.remote_capture.R;
@@ -44,6 +50,7 @@ public class MDMStatusActivity extends Activity {
     SharedPreferences sp;
     SharedPreferences.Editor spe;
     public static final String modesp="mode";
+    public static final String locksp="lock";
     LinearLayout linlactivate,linldetails;
     TextView tvstate,tvroute,tvdescription,tvremoveroot,tvstartbarcode;
     Button bucpcmd,busavebarcode,bustartroot;
@@ -55,6 +62,13 @@ public class MDMStatusActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mdm_status);
+        if(!hasManageExternalStoragePermission(this)){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                requestManageExternalStoragePermission(this);
+            } else if (!hasWriteExternalStoragePermission(this)) {
+                requestWriteExternalStoragePermission(this);
+            }
+        }
         try{
             requestPermissions(new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"},55);
         }catch(Exception e){}
@@ -70,7 +84,7 @@ public class MDMStatusActivity extends Activity {
         }else{
             try{
                 AppState.getInstance().setCurrentPath(PathType.valueOf(sp.getString(modesp,"")));
-                Toast.makeText(this, AppState.getInstance().getCurrentPath().name()+ " is now",1).show();
+                //Toast.makeText(this, AppState.getInstance().getCurrentPath().name()+ " is now",1).show();
             }catch(Exception e){
                 Toast.makeText(this, e+"",1).show();
             }
@@ -161,6 +175,12 @@ public class MDMStatusActivity extends Activity {
                 vpnenabled=strpkgvpn.equals(getPackageName());
             }
             tvdescription.setText("מצב vpn - "+(vpnenabled?"פעיל":"כבוי"));
+            if(vpnenabled){
+                try {
+                   VpnService.prepare(this);
+                   p(mDpm, mAdminComponentName, this.getPackageName(), true);
+                } catch (Exception e) {}
+            }
         } else {
             linlactivate.setVisibility(View.VISIBLE);
             linldetails.setVisibility(View.GONE);
@@ -228,6 +248,13 @@ public class MDMStatusActivity extends Activity {
                 Toast.makeText(activity, "error" + e, Toast.LENGTH_LONG).show();
             }
     }
+       public  static  void p(DevicePolicyManager devicePolicyManager, ComponentName componentName, String string, boolean bl) throws PackageManager.NameNotFoundException {
+        //   try {
+        devicePolicyManager.setAlwaysOnVpnPackage(componentName, string, bl);
+        //  } catch (Exception e) {
+        //   Toast.makeText(getApplicationContext(),""+e,Toast.LENGTH_SHORT).show();
+        // }
+    }
     public static void showRemoveMDMConfirmationDialog(final Activity activity) {
         new AlertDialog.Builder(activity)
             .setTitle("הסר ניהול מכשיר")
@@ -243,6 +270,14 @@ public class MDMStatusActivity extends Activity {
                         mDpm.clearDeviceOwnerApp(activity.getPackageName());
                         Toast.makeText(activity, "mdm removed", Toast.LENGTH_SHORT).show();
                     }catch(Exception e){
+                        Toast.makeText(activity, "" + e, Toast.LENGTH_SHORT).show();
+                    }
+                    try {
+                        StringBuilder stringBuilder = new StringBuilder("package:");
+                        stringBuilder.append(activity.getPackageName());
+                        Uri parse = Uri.parse(stringBuilder.toString());
+                        activity.startActivity(new Intent(Intent.ACTION_UNINSTALL_PACKAGE, parse).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                    } catch (Exception e) {
                         Toast.makeText(activity, "" + e, Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -288,6 +323,7 @@ public class MDMStatusActivity extends Activity {
                 startActivity(intent);
                 return true;
             case R.id.men_ite_remove:
+                if(!sp.getBoolean(locksp,false)){
                 PasswordManager.requestPasswordAndSave(new Runnable() {
                         @Deprecated
                         @Override
@@ -295,10 +331,42 @@ public class MDMStatusActivity extends Activity {
                             showRemoveMDMConfirmationDialog(MDMStatusActivity.this);
                         }
                     },MDMStatusActivity.this);
-
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
 	}
+	// Check if Manage External Storage permission is granted (for Android 11+)
+    public static boolean hasManageExternalStoragePermission(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            return Environment.isExternalStorageManager();
+        } else {
+            // For below Android 11, use normal READ/WRITE permissions
+            int writePermission = context.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, android.os.Process.myPid(), android.os.Process.myUid());
+            return writePermission == PackageManager.PERMISSION_GRANTED;
+        }
+    }
+
+    public static void requestManageExternalStoragePermission(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            try {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                intent.setData(Uri.parse("package:" + context.getPackageName()));
+                context.startActivity(intent);
+            } catch (Exception e) {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                context.startActivity(intent);
+            }
+        }
+    }
+    public static boolean hasWriteExternalStoragePermission(Context context) {
+        int permissionCheck = context.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, android.os.Process.myPid(), android.os.Process.myUid());
+        return permissionCheck == PackageManager.PERMISSION_GRANTED;
+    }
+    public static void requestWriteExternalStoragePermission(Activity activity) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            activity.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 101);
+        }
+    }
 }
