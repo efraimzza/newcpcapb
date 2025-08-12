@@ -93,6 +93,8 @@ public class MDMStatusActivity extends Activity {
                 public void onClick(View p1) {
                     ClipboardManager clbo= (ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
                     clbo.setText("dpm set-device-owner com.emanuelef.remote_capture.debug/com.emanuelef.remote_capture.activities.admin");
+                    Toast.makeText(MDMStatusActivity.this, "הועתק ללוח!",1).show();
+                    
                 }
             });
         try {
@@ -124,6 +126,7 @@ public class MDMStatusActivity extends Activity {
                     while ((read = is.read(buf))>0) {
                         fos.write(buf,0,read);
                     }
+                    Toast.makeText(MDMStatusActivity.this, "נשמר באיחסון פנימי!",1).show();
                     }catch(Exception e){
                         
                     }finally{
