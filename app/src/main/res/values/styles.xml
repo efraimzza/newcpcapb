@@ -34,7 +34,10 @@
 
     <!-- White app theme. See values-night-v8 for the dark customizations -->
     <style name="AppTheme" parent="Base.AppTheme"/>
-
+    <style name="AppThemeReg" parent="Base.AppTheme">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">false</item>
+    </style>
     <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

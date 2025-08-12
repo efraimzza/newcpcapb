@@ -231,6 +231,7 @@
         </receiver>
            <activity
                 android:name="com.emanuelef.remote_capture.activities.MDMStatusActivity"
+                android:theme="@style/AppThemeReg"
                 android:exported="true">
                 <intent-filter>
                     <action android:name="android.intent.action.MAIN" />

@@ -37,7 +37,7 @@ import androidx.annotation.NonNull;
 import androidx.core.view.MenuProvider;
 import com.emanuelef.remote_capture.R;
 
-public class MDMStatusActivity extends BaseActivity implements MenuProvider {
+public class MDMStatusActivity extends Activity {
     
     public static DevicePolicyManager mDpm;
     public static ComponentName mAdminComponentName;
@@ -253,19 +253,19 @@ public class MDMStatusActivity extends BaseActivity implements MenuProvider {
         refresh();
     }
     
-    /*@Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu_status, menu);
         return true;
-    }*/
-    @Override
+    }
+    /*@Override
     public void onCreateMenu(@NonNull Menu menu, MenuInflater menuInflater) {
         menuInflater.inflate(R.menu.main_menu_status, menu);
     }
     @Override
     public boolean onMenuItemSelected(@NonNull MenuItem item) {
         return false;
-    }
+    }*/
     @Deprecated
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
