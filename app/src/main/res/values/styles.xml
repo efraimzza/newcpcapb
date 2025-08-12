@@ -34,10 +34,12 @@
 
     <!-- White app theme. See values-night-v8 for the dark customizations -->
     <style name="AppTheme" parent="Base.AppTheme"/>
-    <style name="AppThemeReg" parent="Base.AppTheme">
-        <item name="windowActionBar">true</item>
-        <item name="windowNoTitle">false</item>
-    </style>
+    <style name="AppThemeReg" parent="@android:style/Theme.Material.Light.DarkActionBar">
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:navigationBarColor">?android:colorPrimary</item>
+	</style>
     <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
