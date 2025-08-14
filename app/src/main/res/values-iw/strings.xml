@@ -42,6 +42,7 @@
     <string name="settings_shortcut">קיצור להגדרות למולטימדיה</string>
     <string name="tvremove_root">אם המכשיר שלך מושרש, הסר את השורש אחרי ההפעלה כדי למנוע מעקפים!</string>
     <string name="bucpcmd">להפעלה עם ADB לחץ כאן כדי להעתיק את הפקודה!</string>
+    <string name="buadbwifi">adb pair עם ויפי!</string>
     
     <string name="start_button">התחלה</string>
     <string name="stop_button">להפסיק</string>

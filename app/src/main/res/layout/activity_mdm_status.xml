@@ -53,6 +53,12 @@
                     style="@style/MDMActionButton"
                     android:background="@drawable/green_button_background"
                     android:text="@string/bucpcmd"/>
+                <Button
+                    android:id="@+id/act_stat_buadbwifi"
+                    android:layout_width="wrap_content"
+                    style="@style/MDMActionButton"
+                    android:background="@drawable/green_button_background"
+                    android:text="@string/buadbwifi"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"

@@ -53,7 +53,7 @@ public class MDMStatusActivity extends Activity {
     public static final String locksp="lock";
     LinearLayout linlactivate,linldetails;
     TextView tvstate,tvroute,tvdescription,tvremoveroot,tvstartbarcode;
-    Button bucpcmd,busavebarcode,bustartroot;
+    Button bucpcmd,busavebarcode,bustartroot,buadbwifi;
     ImageView ivbarcode;
     Bitmap bmp;
     InputStream is;
@@ -93,6 +93,7 @@ public class MDMStatusActivity extends Activity {
         linlactivate=findViewById(R.id.act_stat_linlactivate);
         linldetails=findViewById(R.id.act_stat_linldetails);
         bucpcmd=findViewById(R.id.act_stat_bucpcmd);
+        buadbwifi=findViewById(R.id.act_stat_buadbwifi);
         tvstartbarcode=findViewById(R.id.act_stat_tvstartbarcode);
         ivbarcode=findViewById(R.id.act_stat_ivbarcode);
         busavebarcode=findViewById(R.id.act_stat_busavebarcode);
@@ -109,6 +110,14 @@ public class MDMStatusActivity extends Activity {
                     clbo.setText("dpm set-device-owner com.emanuelef.remote_capture.debug/com.emanuelef.remote_capture.activities.admin");
                     Toast.makeText(MDMStatusActivity.this, "הועתק ללוח!",1).show();
                     
+                }
+            });
+        buadbwifi.setOnClickListener(new OnClickListener(){
+
+                @Override
+                public void onClick(View p1) {
+                    Intent intent = new Intent(MDMStatusActivity.this, activityadbpair.class);
+                    startActivity(intent);
                 }
             });
         try {

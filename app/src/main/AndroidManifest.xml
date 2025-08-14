@@ -4,6 +4,7 @@
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission-sdk-23 android:name="android.permission.QUERY_ALL_PACKAGES" /> <!-- https://developer.android.com/preview/privacy/package-visibility -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -244,7 +245,7 @@
              <activity android:name="com.emanuelef.remote_capture.activities.InstructionsActivity" />
              <activity android:name="com.emanuelef.remote_capture.activities.AboutActivitya" />
              <activity android:name="com.emanuelef.remote_capture.activities.AppManagementActivity" />
-
+             <activity android:name="com.emanuelef.remote_capture.activities.activityadbpair" />
             
              <receiver
                  android:name="com.emanuelef.remote_capture.activities.InstallReceiver"

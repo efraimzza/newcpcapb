@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+    <ScrollView
+        android:id="@+id/outputScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+    <EditText
+        android:id="@+id/edtxip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="הכנס ip"
+        android:inputType="textMultiLine"
+        android:lines="1"
+        android:gravity="top"
+        android:scrollbars="vertical" />
+    <EditText
+        android:id="@+id/edtxport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="הכנס פורט"
+        android:inputType="textMultiLine"
+        android:lines="1"
+        android:gravity="top"
+        android:scrollbars="vertical" />
+    <EditText
+        android:id="@+id/edtxpwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="הכנס קוד התאמה"
+        android:inputType="textMultiLine"
+        android:lines="1"
+        android:gravity="top"
+        android:scrollbars="vertical" />
+    <EditText
+        android:id="@+id/commandEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="הכנס פקודה כאן"
+        android:inputType="textMultiLine"
+        android:lines="2"
+        android:gravity="top"
+        android:scrollbars="vertical" />
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        
+        <Button
+            android:id="@+id/bupair"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="חיבור+קוד"
+            android:layout_marginTop="8dp" />
+        <Button
+            android:id="@+id/bucon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="חיבור"
+            android:layout_marginTop="8dp" />
+        <Button
+            android:id="@+id/bukill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ניתוק"
+            android:layout_marginTop="8dp" />
+        <Button
+            android:id="@+id/bushell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="פקודה"
+            android:layout_marginTop="8dp" />
+    </LinearLayout>
+    </HorizontalScrollView>
+    
+    <ScrollView
+        android:id="@+id/outputScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:id="@+id/outputTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:text="פלט הפקודה יופיע כאן...\n" />
+
+    </ScrollView>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
