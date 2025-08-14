@@ -68,6 +68,8 @@ import java.security.MessageDigest;
 import android.util.Base64;
 import java.nio.charset.Charset;
 import android.content.pm.PackageManager;
+import com.emanuelef.remote_capture.R;
+
 public class qrmdm extends Activity {
     ServerSocket ss;
     Socket soc;
