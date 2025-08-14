@@ -109,7 +109,7 @@ public class actqrmdm extends Activity {
         Point poi=new Point();
         ((WindowManager) getApplicationContext().getSystemService(WINDOW_SERVICE)).getDefaultDisplay().getRealMetrics(dm);
         ((WindowManager) getApplicationContext().getSystemService(WINDOW_SERVICE)).getDefaultDisplay().getSize(poi);
-        getActionBar().hide();
+        //getActionBar().hide();//is hiding anyway... and because this creashing
         mdeviwidth = dm.widthPixels;
         mdeviheigth = poi.y;
         
