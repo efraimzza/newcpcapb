@@ -246,6 +246,7 @@
              <activity android:name="com.emanuelef.remote_capture.activities.AboutActivitya" />
              <activity android:name="com.emanuelef.remote_capture.activities.AppManagementActivity" />
              <activity android:name="com.emanuelef.remote_capture.activities.activityadbpair" />
+             <activity android:name="com.emanuelef.remote_capture.activities.qrmdm" />
             
              <receiver
                  android:name="com.emanuelef.remote_capture.activities.InstallReceiver"

@@ -53,7 +53,7 @@ public class MDMStatusActivity extends Activity {
     public static final String locksp="lock";
     LinearLayout linlactivate,linldetails;
     TextView tvstate,tvroute,tvdescription,tvremoveroot,tvstartbarcode;
-    Button bucpcmd,busavebarcode,bustartroot,buadbwifi;
+    Button bucpcmd,busavebarcode,bustartroot,buadbwifi,buqrmdm;
     ImageView ivbarcode;
     Bitmap bmp;
     InputStream is;
@@ -94,6 +94,7 @@ public class MDMStatusActivity extends Activity {
         linldetails=findViewById(R.id.act_stat_linldetails);
         bucpcmd=findViewById(R.id.act_stat_bucpcmd);
         buadbwifi=findViewById(R.id.act_stat_buadbwifi);
+        buqrmdm=findViewById(R.id.act_stat_buqrmdm);
         tvstartbarcode=findViewById(R.id.act_stat_tvstartbarcode);
         ivbarcode=findViewById(R.id.act_stat_ivbarcode);
         busavebarcode=findViewById(R.id.act_stat_busavebarcode);
@@ -117,6 +118,14 @@ public class MDMStatusActivity extends Activity {
                 @Override
                 public void onClick(View p1) {
                     Intent intent = new Intent(MDMStatusActivity.this, activityadbpair.class);
+                    startActivity(intent);
+                }
+            });
+        buqrmdm.setOnClickListener(new OnClickListener(){
+
+                @Override
+                public void onClick(View p1) {
+                    Intent intent = new Intent(MDMStatusActivity.this, qrmdm.class);
                     startActivity(intent);
                 }
             });

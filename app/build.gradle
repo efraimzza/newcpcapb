@@ -138,5 +138,6 @@ dependencies {
     //mail
     implementation 'com.sun.mail:android-mail:1.6.6'
     implementation 'com.sun.mail:android-activation:1.6.6'
-   
+    //custom
+    implementation fileTree(dir: "libs", include: ["*.jar"])
 }

@@ -59,6 +59,12 @@
                     style="@style/MDMActionButton"
                     android:background="@drawable/green_button_background"
                     android:text="@string/buadbwifi"/>
+                <Button
+                    android:id="@+id/act_stat_buqrmdm"
+                    android:layout_width="wrap_content"
+                    style="@style/MDMActionButton"
+                    android:background="@drawable/green_button_background"
+                    android:text="@string/buqrmdm"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
