@@ -1,6 +1,6 @@
 package server.mdm;
 
-import android.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -92,7 +92,8 @@ public class qrmdm extends Activity {
     HorizontalScrollView hscl;
     ScrollView scl;
     String patmdm="/storage/emulated/0/mdm.apk";
-
+    
+    @Deprecated
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -174,6 +175,7 @@ public class qrmdm extends Activity {
         }
     }
     String statelinl="home";
+    @Deprecated
     @Override
     public void onBackPressed() {
         if (!statelinl.equals("home")) {
@@ -186,7 +188,7 @@ public class qrmdm extends Activity {
             super.onBackPressed();
         }
     }
-
+    @Deprecated
     private void mai() {
         
         lima.removeAllViews();
@@ -240,7 +242,7 @@ public class qrmdm extends Activity {
     }
     String actualConnectedToNetwork = null;
     Bitmap bitm;
-    
+    @Deprecated
     private String getDeviceIpAddressc() {
         actualConnectedToNetwork = null;
         ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -372,7 +374,7 @@ public class qrmdm extends Activity {
         }
         return actualConnectedToNetwork;
     }
-    
+    @Deprecated
     private String getWifiIp() {
         final WifiManager mWifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         if (mWifiManager != null && mWifiManager.isWifiEnabled()) {
@@ -685,11 +687,12 @@ public class qrmdm extends Activity {
 
         return lit;
     }
+    @Deprecated
     public GradientDrawable grd(View mview) {
         
         final GradientDrawable gdMenuBody = new GradientDrawable();
         mview.setOnTouchListener(new OnTouchListener(){
-
+                @Deprecated
                 @Override
                 public boolean onTouch(final View p1, MotionEvent p2) {
                     gdMenuBody.setColor(Color.parseColor("#ff77ff92"));
@@ -748,6 +751,7 @@ public class qrmdm extends Activity {
         
         return gdMenuBody;
     }
+    @Deprecated
     private String mdmchecksum(String pat){
         String res="";
         try{

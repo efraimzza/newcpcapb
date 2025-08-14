@@ -37,8 +37,10 @@ import android.content.pm.PackageManager;
 import android.os.UserManager;
 import android.os.Build;
 import android.Manifest;
+import android.provider.Settings;
 import android.os.Environment;
 import android.net.Uri;
+import android.net.VpnService;
 
 import androidx.core.view.MenuProvider;
 import com.emanuelef.remote_capture.R;

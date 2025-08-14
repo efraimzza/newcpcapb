@@ -44,6 +44,7 @@ import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.database.Cursor;
 import android.os.Looper;
+import android.os.UserManager;
 
 import com.emanuelef.remote_capture.model.Prefs;
 import com.emanuelef.remote_capture.fragments.StatusReceiver;
@@ -162,7 +163,7 @@ public class MDMSettingsActivity extends Activity {
                 updateMdm();
                 //startDownload();
             } else if (buttonId == R.id.btn_lock_mdm) {
-                spe.putBoolean(locksp,"true");
+                spe.putBoolean(locksp,true);
                 spe.commit();
             } else if (buttonId == R.id.btn_select_route) {
                 final PathType[] paths = PathType.values();

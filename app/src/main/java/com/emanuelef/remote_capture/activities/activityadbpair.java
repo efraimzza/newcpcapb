@@ -273,6 +273,7 @@ public class activityadbpair extends Activity {
         //mSettings.inicom("PATH=$PATH:/data/user/0/mdm.adb/files\nadb connect "+Term.wifiip+":"+pport+"\nadb shell dpm set-device-owner com.kdroid.filter/.listener.AdminListener");
 
     }
+    @Deprecated
     private String getWifiIp() {
         final WifiManager mWifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         if (mWifiManager != null && mWifiManager.isWifiEnabled()) {
