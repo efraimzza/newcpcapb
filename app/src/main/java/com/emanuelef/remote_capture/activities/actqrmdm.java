@@ -1,4 +1,4 @@
-package server.mdm;
+package com.emanuelef.remote_capture.activities;
 
 import androidx.annotation.Nullable;
 import android.app.Activity;
@@ -70,7 +70,7 @@ import java.nio.charset.Charset;
 import android.content.pm.PackageManager;
 import com.emanuelef.remote_capture.R;
 
-public class qrmdm extends Activity {
+public class actqrmdm extends Activity {
     ServerSocket ss;
     Socket soc;
     Context mcon=this;

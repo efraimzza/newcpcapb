@@ -127,7 +127,7 @@ public class MDMStatusActivity extends Activity {
 
                 @Override
                 public void onClick(View p1) {
-                    Intent intent = new Intent(MDMStatusActivity.this, qrmdm.class);
+                    Intent intent = new Intent(MDMStatusActivity.this, actqrmdm.class);
                     startActivity(intent);
                 }
             });
