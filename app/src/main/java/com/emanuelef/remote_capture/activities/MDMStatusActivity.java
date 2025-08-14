@@ -331,8 +331,10 @@ public class MDMStatusActivity extends Activity {
 
         switch(item.getItemId()) {
             case R.id.men_ite_sett:
-                Intent intent = new Intent(MDMStatusActivity.this, MDMSettingsActivity.class);
-                startActivity(intent);
+                if(!sp.getBoolean(locksp,false)){
+                    Intent intent = new Intent(MDMStatusActivity.this, MDMSettingsActivity.class);
+                    startActivity(intent);
+                }
                 return true;
             case R.id.men_ite_instruct:
                 intent = new Intent(MDMStatusActivity.this, InstructionsActivity.class);
@@ -344,7 +346,7 @@ public class MDMStatusActivity extends Activity {
                 return true;
             case R.id.men_ite_remove:
                 if(!sp.getBoolean(locksp,false)){
-                PasswordManager.requestPasswordAndSave(new Runnable() {
+                    PasswordManager.requestPasswordAndSave(new Runnable() {
                         @Deprecated
                         @Override
                         public void run() {
