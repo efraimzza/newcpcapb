@@ -106,7 +106,7 @@ public class MDMStatusActivity extends Activity {
         tvdescription=findViewById(R.id.act_stat_tvdescription);
         
         bucpcmd.setOnClickListener(new OnClickListener(){
-
+                @Deprecated
                 @Override
                 public void onClick(View p1) {
                     ClipboardManager clbo= (ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
@@ -328,11 +328,11 @@ public class MDMStatusActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         super.onOptionsItemSelected(item);
-
+        Intent intent;
         switch(item.getItemId()) {
             case R.id.men_ite_sett:
                 if(!sp.getBoolean(locksp,false)){
-                    Intent intent = new Intent(MDMStatusActivity.this, MDMSettingsActivity.class);
+                    intent = new Intent(MDMStatusActivity.this, MDMSettingsActivity.class);
                     startActivity(intent);
                 }
                 return true;

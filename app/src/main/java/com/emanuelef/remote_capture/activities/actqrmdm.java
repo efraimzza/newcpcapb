@@ -717,6 +717,7 @@ public class actqrmdm extends Activity {
         
         return gdMenuBody;
     }
+    @Deprecated
     LinearLayout lisq() {
         LinearLayout lil=new LinearLayout(mcon);
         lil.setOrientation(lil.VERTICAL);
