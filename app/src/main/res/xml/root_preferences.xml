@@ -96,12 +96,12 @@
             app:defaultValue="never"
             app:useSimpleSummaryProvider="true" />
 
-        <SwitchPreference
+        <!--SwitchPreference
             app:key="full_payload"
             app:title="@string/full_payload"
             app:iconSpaceReserved="false"
             app:summary="@string/full_payload_summary"
-            app:defaultValue="false" />
+            app:defaultValue="false" /-->
 
         <Preference
             android:key="socks5_settings"
@@ -112,12 +112,12 @@
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/capture_prefs" app:iconSpaceReserved="false" >
-        <SwitchPreference
+        <!--SwitchPreference
             app:key="root_capture"
             app:title="@string/root_capture"
             app:iconSpaceReserved="false"
             app:summary="@string/root_capture_summary"
-            app:defaultValue="false" />
+            app:defaultValue="false" /-->
 
         <DropDownPreference
             app:key="capture_interface"

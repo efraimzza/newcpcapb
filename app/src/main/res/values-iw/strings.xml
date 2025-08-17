@@ -1,26 +1,11 @@
 <resources>
     <string name="pcapdroid_app_name" translatable="false">חסימת mdm</string>
-    <string name="default_collector_ip" translatable="false">127.0.0.1</string>
-    <string name="default_collector_port" translatable="false">1234</string>
-    <string name="ip_and_port" translatable="false">%1$s:%2$d</string>
-    <string name="ipv6_and_port" translatable="false">[%1$s]:%2$d</string>
-    <string name="app_and_proto" translatable="false">%1$s (%2$s)</string>
-    <string name="sni" translatable="false">סני</string>
     <string name="url" translatable="false">כתובת אתר</string>
     <string name="whois_lookup" translatable="false">מי</string>
     <string name="installation_id" translatable="false">מזהה התקנה</string>
     <string name="license_code" translatable="false">קוד רישיון</string>
     <string name="root" translatable="false">שורש</string>
-    <string name="app_license" translatable="false">Pcapdroid מופץ בתקווה שזה יהיה שימושי, אך ללא
-        כל אחריות; ללא אפילו האחריות המרומזת של סחירות או כושר למטרה מסוימת.
-        ראו את <a href = 'https: //www.gnu.org/licenses/gpl-3.0-standalone.html'> רישיון ציבורי כללי GNU או מאוחר יותר </a> עבור
-        פרטים נוספים</string>
-    <string name="opensource_licenses" translatable="false"><b> רישיונות קוד פתוח: </b> <br /> \n \n
-        urcecodepro font: <a href = 'https: //github.com/adobe-fonts/source-code-pro/blob/release/license.md'> ofl-1.1 </a> \n \n</string>
-    <string name="wireshark_licenses" translatable="false"><b> פענוח PCAP: </b> <br /> \n \n
-         - nghttp2: <a href = 'https: //github.com/nghttp2/nghttp2/blob/master/coping'> mit </a> \n \n</string>
     <string name="connections_csv_fields" translatable="false">Ipproto, srcip, srcport, dstip, dstport, uid, app, packagename, proto, status, info, bytessent, bytesrcvd, pktssent, pktsrcvd, firstseen, lastseen</string>
-    <string name="unlock_token" translatable="false">ביטול נעילת אסימון</string>
 
     <!-- Localized -->
     <string name="mstartmdm">הפעל vpn מ mdm</string>
@@ -42,7 +27,7 @@
     <string name="settings_shortcut">קיצור להגדרות למולטימדיה</string>
     <string name="tvremove_root">אם המכשיר שלך מושרש, הסר את השורש אחרי ההפעלה כדי למנוע מעקפים!</string>
     <string name="bucpcmd">להפעלה עם ADB לחץ כאן כדי להעתיק את הפקודה!</string>
-    <string name="buadbwifi">adb pair עם ויפי!</string>
+    <string name="buadbwifi">adb pair/connect עם ויפי!</string>
     <string name="buqrmdm">ברקוד qr ממכשיר למכשיר!</string>
     
     <string name="start_button">התחלה</string>

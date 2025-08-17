@@ -62,24 +62,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="חיבור+קוד"
+            style="@style/MDMActionButton"
+            android:background="@drawable/green_button_background"
             android:layout_marginTop="8dp" />
         <Button
             android:id="@+id/bucon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="חיבור"
+            style="@style/MDMActionButton"
+            android:background="@drawable/green_button_background"
             android:layout_marginTop="8dp" />
         <Button
             android:id="@+id/bukill"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ניתוק"
+            style="@style/MDMActionButton"
+            android:background="@drawable/green_button_background"
             android:layout_marginTop="8dp" />
         <Button
             android:id="@+id/bushell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="פקודה"
+            style="@style/MDMActionButton"
+            android:background="@drawable/green_button_background"
             android:layout_marginTop="8dp" />
     </LinearLayout>
     </HorizontalScrollView>

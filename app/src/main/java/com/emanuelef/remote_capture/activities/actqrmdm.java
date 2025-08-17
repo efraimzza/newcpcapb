@@ -97,6 +97,7 @@ public class actqrmdm extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        patmdm=getApplicationContext().getApplicationInfo().sourceDir;
         permi();
         try {
             if (!new File("/storage/emulated/0/").listFiles()[0].canWrite()) {
@@ -271,7 +272,7 @@ public class actqrmdm extends Activity {
         }
 
         if (TextUtils.isEmpty(actualConnectedToNetwork)||!new File(patmdm).canRead()) {
-           actualConnectedToNetwork = "פתח נקודה חמה או חבר לאותו ויפי ושים קובץ mdm.apk בזיכרון פנימי";
+           actualConnectedToNetwork = "פתח נקודה חמה או חבר לאותו ויפי";
             resul = actualConnectedToNetwork;
             tv.setText(resul);
             mavailable = false;
@@ -471,9 +472,10 @@ public class actqrmdm extends Activity {
                 resul += "\ntype - " + getMimeType(fileRequested, mcon);
                 
                 FileInputStream i= new FileInputStream(new File(patmdm));
-                byte[] fileData=new byte[i.available()];
-                i.read(fileData);
-                int fileLength = fileData.length;
+                //byte[] fileData=new byte[i.available()];
+                //i.read(fileData);
+                int fileLength = (int) new File(patmdm).length();
+                //int fileLength = fileData.length;
                 out.println("HTTP/1.1 200 OK");
                 out.println("Server: Java HTTP Server from SSaurel : 1.0");
                 out.println("Date: " + new Date());
@@ -483,7 +485,19 @@ public class actqrmdm extends Activity {
                 out.println(); // blank line between headers and content, very important !
                 out.flush();  // flush character output stream buffer
 
-				os.write(fileData, 0, fileLength);
+				//os.write(fileData, 0, fileLength);
+			    int var3;
+                
+                byte[] var5 = new byte[20000024];
+                while(true) {
+                    var3 = i.read(var5);
+                    if(var3 <= 0) {
+                        i.close();
+                        break;
+                    }
+                    os.write(var5, 0, var3);
+				}
+				os.flush();
 				mstatedown = "נשלח בהצלחה";
 				tv.setText(mstatedown);
                 os.flush();

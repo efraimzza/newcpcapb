@@ -178,8 +178,8 @@ public class SettingsActivity extends BaseActivity implements PreferenceFragment
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
         private SwitchPreference mTlsDecryption;
-        private SwitchPreference mFullPayloadEnabled;
-        private SwitchPreference mRootCaptureEnabled;
+        //private SwitchPreference mFullPayloadEnabled;
+        //private SwitchPreference mRootCaptureEnabled;
         private SwitchPreference mAutoBlockPrivateDNS;
         private EditTextPreference mMitmproxyOpts;
         private DropDownPreference mIpMode;
@@ -241,7 +241,7 @@ public class SettingsActivity extends BaseActivity implements PreferenceFragment
             if(mHasStartedMitmWizard && !MitmAddon.needsSetup(requireContext())) {
                 Log.d(TAG, "mitm setup complete, enabling");
                 mTlsDecryption.setChecked(true);
-                mFullPayloadEnabled.setChecked(true);
+                //mFullPayloadEnabled.setChecked(true);
             }
             mHasStartedMitmWizard = false;
         }
@@ -272,7 +272,8 @@ public class SettingsActivity extends BaseActivity implements PreferenceFragment
         }
 
         private boolean rootCaptureEnabled() {
-            return Utils.isRootAvailable() && mRootCaptureEnabled.isChecked();
+            //return Utils.isRootAvailable() && mRootCaptureEnabled.isChecked();
+            return false;
         }
 
         private boolean isPcapngEnabled() {
@@ -312,14 +313,14 @@ public class SettingsActivity extends BaseActivity implements PreferenceFragment
             mCapInterface = requirePreference(Prefs.PREF_CAPTURE_INTERFACE);
             refreshInterfaces();
 
-            mRootCaptureEnabled = requirePreference(Prefs.PREF_ROOT_CAPTURE);
-            if(Utils.isRootAvailable()) {
-                mRootCaptureEnabled.setOnPreferenceChangeListener((preference, newValue) -> {
-                    rootCaptureHideShow((Boolean) newValue);
-                    return checkDecrpytionWithRoot((Boolean) newValue, mTlsDecryption.isChecked());
-                });
-            } else
-                mRootCaptureEnabled.setVisible(false);
+            //mRootCaptureEnabled = requirePreference(Prefs.PREF_ROOT_CAPTURE);
+            //if(Utils.isRootAvailable()) {
+            //    mRootCaptureEnabled.setOnPreferenceChangeListener((preference, newValue) -> {
+            //        rootCaptureHideShow((Boolean) newValue);
+            //        return checkDecrpytionWithRoot((Boolean) newValue, mTlsDecryption.isChecked());
+            //    });
+            //} else
+            //    mRootCaptureEnabled.setVisible(false);
 
             mRestartOnDisconnect = requirePreference(Prefs.PREF_RESTART_ON_DISCONNECT);
             mRestartOnDisconnect.setVisible(VpnReconnectService.isAvailable());
@@ -382,7 +383,7 @@ public class SettingsActivity extends BaseActivity implements PreferenceFragment
             } else
                 mPcapngEnabled.setVisible(false);
 
-            mFullPayloadEnabled = requirePreference(Prefs.PREF_FULL_PAYLOAD);
+            //mFullPayloadEnabled = requirePreference(Prefs.PREF_FULL_PAYLOAD);
             mBlockQuic = requirePreference(Prefs.PREF_BLOCK_QUIC);
             mMitmproxyOpts = requirePreference(Prefs.PREF_MITMPROXY_OPTS);
             mMitmproxyOpts.setVisible(mTlsDecryption.isChecked());
@@ -499,7 +500,7 @@ public class SettingsActivity extends BaseActivity implements PreferenceFragment
             new AlertDialog.Builder(requireContext())
                     .setMessage(R.string.tls_decryption_with_root_msg)
                     .setPositiveButton(R.string.ok, (dialog, whichButton) -> {
-                        mRootCaptureEnabled.setChecked(true);
+                        //mRootCaptureEnabled.setChecked(true);
                         mTlsDecryption.setChecked(true);
 
                         mRootDecryptionNoticeShown = true;

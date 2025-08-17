@@ -13,7 +13,7 @@ android {
 
         // only include full translations
         // NOTE: keep in sync with locales_config.xml
-        resourceConfigurations += ["en", "iw", "ar", "az", "de", "es", "in", "it", "pl", "ru", "ta", "tr",
+        resourceConfigurations += ["en", "iw", "az", "de", "es", "in", "it", "pl", "ru", "ta", "tr",
                                    "uk", "zh-rCN"]
     }
 

@@ -13,8 +13,7 @@ public class AboutActivitya extends Activity {
 
         TextView tvAboutContent = findViewById(R.id.tv_about_content);
         tvAboutContent.setText("אפליקציית ניהול מכשירים (MDM)\n\n" +
-                               "גרסה: 0.1\n" +
-                               "יישום זה נועד לסייע בניהול הגדרות המכשיר והאפליקציות במכשירים מנוהלים. " +
+                               "יישום זה נועד לסייע בניהול הגדרות המכשיר והאפליקציות וניהול תעבורת אינטרנט במכשירים מנוהלים. " +
                                "דורש הרשאת מנהל מכשיר.");
     }
 }
