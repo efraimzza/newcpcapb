@@ -165,8 +165,8 @@ public class activityadbpair extends Activity {
                     bucon.setEnabled(false);
                     String mpropport = "setprop service.adb.tcp.port 5555\n";
                     String mproprestart = "setprop ctl.restart adbd\n";
-                    String mproprestartb = "adb kill-server\nadb start-server\n";
-                    commandEditText.setText("/system/bin/sh -"+menv+mpropport+mproprestart+mproprestartb+"adb connect "+edtxip.getText().toString()+":"+edtxport.getText().toString()+cmddpm);
+                    //String mproprestartb = "adb kill-server\nadb start-server\n";
+                    commandEditText.setText("/system/bin/sh -"+menv+mpropport+mproprestart+"adb connect "+edtxip.getText().toString()+":"+edtxport.getText().toString()+cmddpm);
                     final String commandToExecute = commandEditText.getText().toString();
                     if (commandToExecute.isEmpty()) {
                         outputTextView.append("שגיאה: נא הכנס פקודה לביצוע.\n");
