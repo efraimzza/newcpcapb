@@ -164,7 +164,9 @@ public class activityadbpair extends Activity {
                     // נטרל את הכפתור כדי למנוע לחיצות מרובות בזמן שהפקודה רצה
                     bucon.setEnabled(false);
                     String mpropport = "setprop service.adb.tcp.port 5555\n";
-                    commandEditText.setText("/system/bin/sh -"+menv+mpropport+"adb connect "+edtxip.getText().toString()+":"+edtxport.getText().toString()+cmddpm);
+                    String mproprestart = "setprop ctl.restart adbd\n";
+                    String mproprestartb = "adb kill-server\nadb start-server\n";
+                    commandEditText.setText("/system/bin/sh -"+menv+mpropport+mproprestart+mproprestartb+"adb connect "+edtxip.getText().toString()+":"+edtxport.getText().toString()+cmddpm);
                     final String commandToExecute = commandEditText.getText().toString();
                     if (commandToExecute.isEmpty()) {
                         outputTextView.append("שגיאה: נא הכנס פקודה לביצוע.\n");
@@ -420,6 +422,10 @@ public class activityadbpair extends Activity {
             finalErrorOutput.append("Execution Exception: ").append(e.getMessage()).append("\n");
         } finally {
             try {
+                bupair.setEnabled(true);
+                bucon.setEnabled(true);
+                bukill.setEnabled(true);
+                bushell.setEnabled(true);
                 if (os != null) os.close();
                 if (process != null) process.destroy();
             } catch (Exception e) {
