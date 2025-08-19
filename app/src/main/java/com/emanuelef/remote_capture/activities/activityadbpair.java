@@ -194,7 +194,7 @@ public class activityadbpair extends Activity {
                     // נטרל את הכפתור כדי למנוע לחיצות מרובות בזמן שהפקודה רצה
                     buconmul.setEnabled(false);
                     String mpropport = "setprop service.adb.tcp.port 5555\n";
-                    String mproprestart = "setprop ctl.restart adbd\nadb disconnect\nadb devices\n"";
+                    String mproprestart = "setprop ctl.restart adbd\nadb disconnect\nadb devices\n";
                     //String mproprestartb = "adb kill-server\nadb start-server\n";
                     commandEditText.setText("/system/bin/sh -"+menv+mpropport+mproprestart+"adb connect localhost:5555"+cmddpm);
                     final String commandToExecute = commandEditText.getText().toString();
