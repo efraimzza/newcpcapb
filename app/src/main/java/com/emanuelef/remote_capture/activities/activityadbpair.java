@@ -27,7 +27,7 @@ public class activityadbpair extends Activity {
     private TextView outputTextView;
     private EditText edtxip,edtxport,edtxpwd;
     private EditText commandEditText;
-    private Button bupair,bucon,bukill,bushell;
+    private Button bupair,bucon,bukill,bushell,buconmul;
     private ScrollView outputScrollView; 
     public interface CommandOutputListener {
         void onOutputReceived(String line);
@@ -55,6 +55,7 @@ public class activityadbpair extends Activity {
         commandEditText = (EditText) findViewById(R.id.commandEditText); // אתחול EditText
         bupair = findViewById(R.id.bupair);
         bucon = findViewById(R.id.bucon);
+        buconmul = findViewById(R.id.buconmul);
         bukill = findViewById(R.id.bukill);
         bushell = findViewById(R.id.bushell);
         outputScrollView = (ScrollView) findViewById(R.id.outputScrollView); // אתחול ScrollView
@@ -66,13 +67,13 @@ public class activityadbpair extends Activity {
                 runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Log.d(TAG, "实时输出 (Real-time output): " + line);
+                            Log.d(TAG, "(Real-time output): " + line);
                             if (outputTextView != null) {
                                 outputTextView.append("o: " + line + "\n");
                                 // גלילה אוטומטית לתחתית
-                                if (outputTextView != null && outputScrollView != null) { // ודא ששניהם לא null
+                                if (outputTextView != null && outputScrollView != null) {
                                     //outputTextView.append("Output: " + line + "\n");
-                                    // גלילה אוטומטית לתחתית ה-ScrollView
+                                    // scrill down
                                     outputScrollView.fullScroll(View.FOCUS_DOWN);
                                 }
                             }
@@ -85,7 +86,7 @@ public class activityadbpair extends Activity {
                 runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Log.e(TAG, "错误输出 (Error output): " + line);
+                            Log.e(TAG, "(Error output): " + line);
                             if (outputTextView != null) {
                                 outputTextView.append("e: " + line + "\n");
                                 // גלילה אוטומטית לתחתית
@@ -104,9 +105,9 @@ public class activityadbpair extends Activity {
                 runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Log.d(TAG, "命令完成 (Command finished). Exit Code: " + exitCode);
-                            Log.d(TAG, "最终输出 (Final Output):\n" + finalOutput);
-                            Log.d(TAG, "最终错误 (Final Error Output):\n" + finalError);
+                            Log.d(TAG, "(Command finished). Exit Code: " + exitCode);
+                            Log.d(TAG, "(Final Output):\n" + finalOutput);
+                            Log.d(TAG, "(Final Error Output):\n" + finalError);
 
                             if (outputTextView != null) {
                                 outputTextView.append("\n--- Command Finished ---\n");
@@ -123,6 +124,7 @@ public class activityadbpair extends Activity {
                             // אפשר להפוך את הכפתור ללחיץ שוב לאחר סיום הפקודה
                             bupair.setEnabled(true);
                             bucon.setEnabled(true);
+                            buconmul.setEnabled(true);
                             bukill.setEnabled(true);
                             bushell.setEnabled(true);
                         }
@@ -136,13 +138,13 @@ public class activityadbpair extends Activity {
                 public void onClick(View v) {
                     // נקה את הפלט הקודם
                     outputTextView.setText("מבצע פקודה...\n");
-                    // נטרל את הכפתור כדי למנוע לחיצות מרובות בזמן שהפקודה רצה
+                    
                     bupair.setEnabled(false);
                     commandEditText.setText("/system/bin/sh -"+menv+"adb pair "+edtxip.getText().toString()+":"+edtxport.getText().toString()+"\n"+edtxpwd.getText().toString()+cmddpm);
                     final String commandToExecute = commandEditText.getText().toString();
                     if (commandToExecute.isEmpty()) {
                         outputTextView.append("שגיאה: נא הכנס פקודה לביצוע.\n");
-                        bupair.setEnabled(true); // הפוך את הכפתור ללחיץ בחזרה
+                        bupair.setEnabled(true);
                         return;
                     }
 
@@ -163,14 +165,42 @@ public class activityadbpair extends Activity {
                     outputTextView.setText("מבצע פקודה...\n");
                     // נטרל את הכפתור כדי למנוע לחיצות מרובות בזמן שהפקודה רצה
                     bucon.setEnabled(false);
-                    String mpropport = "setprop service.adb.tcp.port 5555\n";
-                    String mproprestart = "setprop ctl.restart adbd\n";
+                    //String mpropport = "setprop service.adb.tcp.port 5555\n";
+                    //String mproprestart = "setprop ctl.restart adbd\n";
                     //String mproprestartb = "adb kill-server\nadb start-server\n";
-                    commandEditText.setText("/system/bin/sh -"+menv+mpropport+mproprestart+"adb connect "+edtxip.getText().toString()+":"+edtxport.getText().toString()+cmddpm);
+                    commandEditText.setText("/system/bin/sh -"+menv+"adb connect "+edtxip.getText().toString()+":"+edtxport.getText().toString()+cmddpm);
                     final String commandToExecute = commandEditText.getText().toString();
                     if (commandToExecute.isEmpty()) {
                         outputTextView.append("שגיאה: נא הכנס פקודה לביצוע.\n");
                         bucon.setEnabled(true); // הפוך את הכפתור ללחיץ בחזרה
+                        return;
+                    }
+
+                    Log.d(TAG, "Button clicked, executing command: " + commandToExecute);
+                    // הפעלת הפקודה על Thread נפרד
+                    new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                executeRootCommandInternal(commandToExecute, commandListener);
+                            }
+                        }).start();
+                }
+            });
+        buconmul.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // נקה את הפלט הקודם
+                    outputTextView.setText("מבצע פקודה...\n");
+                    // נטרל את הכפתור כדי למנוע לחיצות מרובות בזמן שהפקודה רצה
+                    buconmul.setEnabled(false);
+                    String mpropport = "setprop service.adb.tcp.port 5555\n";
+                    String mproprestart = "setprop ctl.restart adbd\nadb disconnect\nadb devices\n"";
+                    //String mproprestartb = "adb kill-server\nadb start-server\n";
+                    commandEditText.setText("/system/bin/sh -"+menv+mpropport+mproprestart+"adb connect localhost:5555"+cmddpm);
+                    final String commandToExecute = commandEditText.getText().toString();
+                    if (commandToExecute.isEmpty()) {
+                        outputTextView.append("שגיאה: נא הכנס פקודה לביצוע.\n");
+                        buconmul.setEnabled(true); // הפוך את הכפתור ללחיץ בחזרה
                         return;
                     }
 
@@ -307,7 +337,7 @@ public class activityadbpair extends Activity {
     
 
     /**
-     * פונקציה פנימית לביצוע פקודות root באופן אסינכרוני.
+     * פונקציה פנימית לביצוע פקודות באופן אסינכרוני.
      *
      * @param command הפקודה לביצוע
      * @param listener הליסטנר לקבלת עדכונים על פלט
@@ -324,8 +354,8 @@ public class activityadbpair extends Activity {
             process = Runtime.getRuntime().exec("sh");
             os = new DataOutputStream(process.getOutputStream());
 
-            os.writeBytes(command + "\n"); // שלח את הפקודה
-            os.writeBytes("exit\n"); // יציאה מ-su
+            os.writeBytes(command + "\n");
+            os.writeBytes("exit\n");
             os.flush();
 
             final AtomicBoolean processFinished = new AtomicBoolean(false);
@@ -424,6 +454,7 @@ public class activityadbpair extends Activity {
             try {
                 bupair.setEnabled(true);
                 bucon.setEnabled(true);
+                buconmul.setEnabled(true);
                 bukill.setEnabled(true);
                 bushell.setEnabled(true);
                 if (os != null) os.close();
