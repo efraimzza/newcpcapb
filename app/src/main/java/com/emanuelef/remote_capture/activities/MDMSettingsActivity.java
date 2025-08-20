@@ -611,7 +611,7 @@ public class MDMSettingsActivity extends Activity {
             e.printStackTrace();
         }
     }
-    public static void showLockMDMConfirmationDialog(final Activity activity) {
+    public void showLockMDMConfirmationDialog(final Activity activity) {
         new AlertDialog.Builder(activity)
             .setTitle("נעילת הגדרות ניהול מכשיר ונעילת הסרה")
             .setMessage("האם אתה בטוח שברצונך להסיר אפשרות ניהול של כל ההגדרות mdm לצמיתות ונעילת אפשרות הסרת mdm לצמיתות?")
