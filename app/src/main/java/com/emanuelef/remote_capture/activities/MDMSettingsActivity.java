@@ -163,8 +163,7 @@ public class MDMSettingsActivity extends Activity {
                 updateMdm();
                 //startDownload();
             } else if (buttonId == R.id.btn_lock_mdm) {
-                spe.putBoolean(locksp,true);
-                spe.commit();
+                showLockMDMConfirmationDialog(MDMSettingsActivity.this);
             } else if (buttonId == R.id.btn_select_route) {
                 final PathType[] paths = PathType.values();
                 String[] pathNames = new String[paths.length];
@@ -612,7 +611,20 @@ public class MDMSettingsActivity extends Activity {
             e.printStackTrace();
         }
     }
-
+    public static void showLockMDMConfirmationDialog(final Activity activity) {
+        new AlertDialog.Builder(activity)
+            .setTitle("נעילת הגדרות ניהול מכשיר ונעילת הסרה")
+            .setMessage("האם אתה בטוח שברצונך להסיר אפשרות ניהול של כל ההגדרות mdm לצמיתות ונעילת אפשרות הסרת mdm לצמיתות?")
+            .setPositiveButton("כן, נעל!", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    spe.putBoolean(locksp,true);
+                    spe.commit();
+                }
+            })
+            .setNegativeButton("ביטול", null)
+            .show();
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
