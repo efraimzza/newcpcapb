@@ -293,12 +293,13 @@ public class Blacklists {
 
             Log.i(TAG, "\tupdating " + bl.fname + "...");
             //old
-            /*if(Utils.downloadFile(bl.url, getListPath(bl)))
+            if(Utils.downloadFile(bl.url, getListPath(bl)))
                 bl.setUpdated(System.currentTimeMillis());
             else
                 bl.setOutdated();
-            */
+            
             //end old
+            /*
             try{
             Utils.startDownload(mContext,bl.url, getListPath(bl),new Runnable(){
 
@@ -321,6 +322,7 @@ public class Blacklists {
             } catch (Exception e){
                     Toast.makeText(mContext,e+ "", Toast.LENGTH_SHORT).show();
             }
+            */
             notifyListeners();
         }
 
