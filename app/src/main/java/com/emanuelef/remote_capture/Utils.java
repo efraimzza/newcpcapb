@@ -159,6 +159,13 @@ import java.util.zip.GZIPInputStream;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
 public class Utils {
     static final String TAG = "Utils";
     public static final String INTERACT_ACROSS_USERS = "android.permission.INTERACT_ACROSS_USERS";
@@ -1090,7 +1097,178 @@ public class Utils {
         // Only write the target path if it was successful
         return (new File(path + ".tmp")).renameTo(new File(path));
     }
+    
+    private static Thread downloadThread;
+    private static volatile boolean isCanceled = false;
+    static boolean mend=true;
+    static boolean msuc=true;
+    static Runnable runner;
+    static HttpsURLConnection connection = null;
+    
+    public static void startDownload(final Context context,final String fileurl,final String filename ,final Runnable runonsuc,final Runnable runonfail) {
+        
+        // לוודא שלא מתבצעת הורדה
+        if (downloadThread != null && downloadThread.isAlive()) {
+            Toast.makeText(context, "הורדה כבר מתבצעת...", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        mend=false;
+        msuc=false;
+        
+        File file = new File(filename+".tmp");
+        if (file.exists()) {
+            file.delete();
+        }
+        isCanceled = false;
+        final Handler mhandler=new Handler();
 
+        // הפעלת הורדה בחוט (Thread) נפרד כדי לא לחסום את ממשק המשתמש
+        downloadThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    runner=new Runnable(){
+
+                        @Override
+                        public void run() {
+                            if(mend){
+                                if(msuc){
+                                    //end and success
+                                    runonsuc.run();
+                                }else{
+                                    //end and failed
+                                    runonfail.run();
+                                }
+                            }else{
+                                mhandler.postDelayed(runner,1000);
+                            }
+                        }
+                    };
+                    mhandler.post(runner);
+                    manualDownload(context,fileurl,filename);
+                }
+            });
+        downloadThread.start();
+    }
+    
+    private static void manualDownload(final Context context,String fileurl,final String filename) {
+        InputStream input = null;
+        OutputStream output = null;
+        
+        try {
+            // יצירת SSLContext מותאם אישית עם TrustManager שסומך על הכל
+            // ביישומי Production, החלף את זה ב-TrustManager אמיתי שסומך רק על ה-Certificate שלך.
+            TrustManager[] trustAllCerts = new TrustManager[]{
+                new X509TrustManager() {
+                    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                        return new X509Certificate[0];
+                    }
+                    @Override
+                    public void checkClientTrusted(X509Certificate[] certs, String authType) throws CertificateException {}
+                    @Override
+                    public void checkServerTrusted(X509Certificate[] certs, String authType) throws CertificateException {}
+                }
+            };
+
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
+            SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+
+            URL url = new URL(fileurl);
+            connection = (HttpsURLConnection) url.openConnection();
+            connection.setSSLSocketFactory(sslSocketFactory);
+            connection.connect();
+
+            // לוודא שהקובץ ניתן להורדה (קוד 200)
+            if (connection.getResponseCode() != HttpsURLConnection.HTTP_OK) {
+                // הצגת הודעת שגיאה על ממשק המשתמש
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                mend=true;
+                                msuc=false;
+                                Toast.makeText(context, "שגיאת שרת: " + connection.getResponseCode(), Toast.LENGTH_SHORT).show();
+                            } catch (IOException e) {}
+                            
+                        }
+                    });
+                return;
+            }
+
+            // הורדת הקובץ
+            int fileLength = connection.getContentLength();
+            input = connection.getInputStream();
+            output = new FileOutputStream(filename+".tmp");
+
+            byte[] data = new byte[4096];
+            long total = 0;
+            int count;
+
+            while ((count = input.read(data)) != -1) {
+                // בדיקת ביטול הורדה
+                if (isCanceled) {
+                    break;
+                }
+                total += count;
+                if (fileLength > 0) {
+                    final int progress = (int) (total * 100 / fileLength);
+                    
+                }
+                output.write(data, 0, count);
+            }
+            output.flush();
+
+            // סגירת הדיאלוג והתקנה או הצגת הודעת ביטול
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!isCanceled) {
+                            Toast.makeText(context, "הורדה הושלמה בהצלחה!", Toast.LENGTH_SHORT).show();
+                            mend=true;
+                            msuc=true;
+                            File file = new File(filename+".tmp");
+                            if (file.exists()) {
+                                file.renameTo(new File(filename));
+                            }
+                            //success...
+                        } else {
+                            Toast.makeText(context, "ההורדה בוטלה.", Toast.LENGTH_SHORT).show();
+                            // מחיקת הקובץ החלקי
+                            mend=true;
+                            msuc=false;
+                            File file = new File(filename+".tmp");
+                            if (file.exists()) {
+                                file.delete();
+                            }
+                        }
+                    }
+                });
+        } catch (Exception e) {
+            mend=true;
+            msuc=false;
+            final String errorMessage = "שגיאת הורדה: " + e.getMessage();
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show();
+                    }
+                });
+        } finally {
+            mend=true;
+            try {
+                if (output != null) output.close();
+                if (input != null) input.close();
+                if (connection != null) connection.disconnect();
+            } catch (Exception ignored) {
+                // התעלם משגיאות בסגירת חיבורים
+            }
+        }
+        if (downloadThread != null && downloadThread.isAlive()) {
+            isCanceled = true;
+            downloadThread.interrupt();
+        }
+    }
+    
     public static String shorten(String s, int maxlen) {
         if(s.length() > maxlen)
             s = s.substring(0, maxlen - 1) + "…";

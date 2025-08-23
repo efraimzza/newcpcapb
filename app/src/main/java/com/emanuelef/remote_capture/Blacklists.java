@@ -292,11 +292,31 @@ public class Blacklists {
             }
 
             Log.i(TAG, "\tupdating " + bl.fname + "...");
-
-            if(Utils.downloadFile(bl.url, getListPath(bl)))
+            //old
+            /*if(Utils.downloadFile(bl.url, getListPath(bl)))
                 bl.setUpdated(System.currentTimeMillis());
             else
                 bl.setOutdated();
+            */
+            //end old
+            Utils.startDownload(mContext,bl.url, getListPath(bl),new Runnable(){
+
+                            @Override
+                            public void run() {
+                                //success
+                                Toast.makeText(mContext, "suc", Toast.LENGTH_SHORT).show();
+                                bl.setUpdated(System.currentTimeMillis());
+                            }
+                        },
+                    new Runnable(){
+
+                        @Override
+                        public void run() {
+                            //fail
+                            Toast.makeText(mContext, "fail", Toast.LENGTH_SHORT).show();
+                            bl.setOutdated();
+                        }
+                    });
 
             notifyListeners();
         }

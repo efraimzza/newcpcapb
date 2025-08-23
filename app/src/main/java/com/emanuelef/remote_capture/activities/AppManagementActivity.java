@@ -54,7 +54,7 @@ public class AppManagementActivity extends Activity {
 
     // משתנים לשמירת מצב הסינון והמיון הנוכחי
     private String currentSearchText = "";
-    private String currentSearchPackage = ""; // **חדש**: לחיפוש לפי שם חבילה
+    private String currentSearchPackage = ""; // לחיפוש לפי שם חבילה
     private int currentFilterOptionId = R.id.rb_filter_all_dialog; // ID של כפתור הרדיו הנבחר
     private int currentSortOptionId = R.id.rb_sort_name_dialog; // ID של כפתור הרדיו הנבחר
    
@@ -215,13 +215,13 @@ public class AppManagementActivity extends Activity {
         builder.setView(dialogView);
 
         final EditText etSearchApps = dialogView.findViewById(R.id.et_search_apps_dialog);
-        final EditText etSearchPackage = dialogView.findViewById(R.id.et_search_package_dialog); // **חדש**: מצא את ה-EditText החדש
+        final EditText etSearchPackage = dialogView.findViewById(R.id.et_search_package_dialog); // מצא את ה-EditText החדש
         final RadioGroup rgFilterApps = dialogView.findViewById(R.id.rg_filter_apps_dialog);
         final RadioGroup rgSortApps = dialogView.findViewById(R.id.rg_sort_apps_dialog);
 
         // הגדר את הערכים הנוכחיים בדיאלוג
         etSearchApps.setText(currentSearchText);
-        etSearchPackage.setText(currentSearchPackage); // **חדש**: הגדר את טקסט חיפוש החבילה
+        etSearchPackage.setText(currentSearchPackage); // הגדר את טקסט חיפוש החבילה
         rgFilterApps.check(currentFilterOptionId);
         rgSortApps.check(currentSortOptionId);
 
@@ -234,7 +234,7 @@ public class AppManagementActivity extends Activity {
                 @Override public void afterTextChanged(Editable s) {}
             });
 
-        // **חדש**: עדכן את טקסט חיפוש החבילה כאשר המשתמש מקליד
+        // עדכן את טקסט חיפוש החבילה כאשר המשתמש מקליד
         etSearchPackage.addTextChangedListener(new TextWatcher() {
                 @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
                 @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -276,7 +276,7 @@ public class AppManagementActivity extends Activity {
     private void applyFiltersAndSort() {
         mFilteredAppList.clear();
         String searchTextLower = currentSearchText.toLowerCase();
-        String searchPackageLower = currentSearchPackage.toLowerCase(); // **חדש**: טקסט חיפוש חבילה ב-lowercase
+        String searchPackageLower = currentSearchPackage.toLowerCase(); // טקסט חיפוש חבילה ב-lowercase
 
         // 1. סינון
         for (AppItem appItem : mOriginalAppList) {
@@ -297,7 +297,7 @@ public class AppManagementActivity extends Activity {
                 matchesFilter = hasLauncher;
             }
 
-            // **חדש**: שילוב חיפוש לפי שם אפליקציה וגם לפי שם חבילה
+            // שילוב חיפוש לפי שם אפליקציה וגם לפי שם חבילה
             boolean matchesName = appItem.getName().toLowerCase().contains(searchTextLower);
             boolean matchesPackage = appItem.getPackageName().toLowerCase().contains(searchPackageLower);
 
