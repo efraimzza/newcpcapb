@@ -211,6 +211,9 @@ public class MDMSettingsActivity extends Activity {
                 mDpm.setApplicationHidden(mAdminComponentName, "com.android.vending", true);//Google play
                 mDpm.setApplicationHidden(mAdminComponentName, "com.android.chrome", true);//chrome
                 mDpm.setApplicationHidden(mAdminComponentName, "com.dofun.market", true);//chrome
+                mDpm.setApplicationHidden(mAdminComponentName, "io.github.huskydg.magisk", true);//kitsun
+                mDpm.setApplicationHidden(mAdminComponentName, "com.google.android.googlequicksearchbox", true);//Google
+                
                 //mDpm.setApplicationHidden(mAdminComponentName, "com.google.android.apps.maps", true);//maps
                 
                 
