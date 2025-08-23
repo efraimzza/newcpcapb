@@ -199,11 +199,13 @@ public class MDMSettingsActivity extends Activity {
                 mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_ADD_MANAGED_PROFILE);
                 mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_USER_SWITCH);
                 mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_ADD_USER);
-                mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_UNINSTALL_APPS);
+                //mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_UNINSTALL_APPS);
                 mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_REMOVE_USER);
-                mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_APPS_CONTROL);
+                //mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_APPS_CONTROL);
                 mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_INSTALL_APPS);//all!
                 mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_CONFIG_WIFI);
+                mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_SAFE_BOOT);
+                
                 
                 //mDpm.setApplicationHidden(mAdminComponentName, "com.dofun.carsetting", true);//carsettings
                 mDpm.setApplicationHidden(mAdminComponentName, "com.android.vending", true);//Google play
