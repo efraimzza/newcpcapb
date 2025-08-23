@@ -299,6 +299,7 @@ public class Blacklists {
                 bl.setOutdated();
             */
             //end old
+            try{
             Utils.startDownload(mContext,bl.url, getListPath(bl),new Runnable(){
 
                             @Override
@@ -317,7 +318,9 @@ public class Blacklists {
                             bl.setOutdated();
                         }
                     });
-
+            } catch (Exception e){
+                    Toast.makeText(mContext,e+ "", Toast.LENGTH_SHORT).show();
+            }
             notifyListeners();
         }
 
