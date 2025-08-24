@@ -1106,7 +1106,7 @@ public class Utils {
     static HttpsURLConnection connection = null;
     
     public static void startDownload(final Context context,final String fileurl,final String filename ,final Runnable runonsuc,final Runnable runonfail) {
-        
+        try{
         // לוודא שלא מתבצעת הורדה
         if (downloadThread != null && downloadThread.isAlive()) {
             Toast.makeText(context, "הורדה כבר מתבצעת...", Toast.LENGTH_SHORT).show();
@@ -1148,6 +1148,9 @@ public class Utils {
                 }
             });
         downloadThread.start();
+        } catch (Exception e){
+            Toast.makeText(context, "" + e, Toast.LENGTH_SHORT).show();
+        }
     }
     
     private static void manualDownload(final Context context,String fileurl,final String filename) {
