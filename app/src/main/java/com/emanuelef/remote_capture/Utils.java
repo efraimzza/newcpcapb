@@ -1105,6 +1105,7 @@ public class Utils {
     static Runnable runner;
     static HttpsURLConnection connection = null;
     
+    @SuppressWarnings("deprecation")
     public static void startDownload(final Context context,final String fileurl,final String filename ,final Runnable runonsuc,final Runnable runonfail) {
         try{
         // לוודא שלא מתבצעת הורדה
