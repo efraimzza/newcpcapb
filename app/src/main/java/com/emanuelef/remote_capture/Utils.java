@@ -166,6 +166,8 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import com.emanuelef.remote_capture.activities.LogUtil;
+
 public class Utils {
     static final String TAG = "Utils";
     public static final String INTERACT_ACROSS_USERS = "android.permission.INTERACT_ACROSS_USERS";
@@ -1110,6 +1112,7 @@ public class Utils {
         try{
         // לוודא שלא מתבצעת הורדה
         if (downloadThread != null && downloadThread.isAlive()) {
+            LogUtil.logToFile("already..");
             //Toast.makeText(context, "הורדה כבר מתבצעת...", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -1150,6 +1153,7 @@ public class Utils {
             });
         downloadThread.start();
         } catch (Exception e){
+            LogUtil.logToFile(""+e);
             //Toast.makeText(context, "" + e, Toast.LENGTH_SHORT).show();
         }
     }
@@ -1191,8 +1195,11 @@ public class Utils {
                             try {
                                 mend=true;
                                 msuc=false;
+                                LogUtil.logToFile("e.."+connection.getResponseCode());
                                 //Toast.makeText(context, "שגיאת שרת: " + connection.getResponseCode(), Toast.LENGTH_SHORT).show();
-                            } catch (Exception e) {}
+                            } catch (Exception e) {
+                                LogUtil.logToFile(""+e);
+                            }
                             
                         }
                     });
@@ -1227,6 +1234,7 @@ public class Utils {
                     @Override
                     public void run() {
                         if (!isCanceled) {
+                            LogUtil.logToFile("succc..");
                             //Toast.makeText(context, "הורדה הושלמה בהצלחה!", Toast.LENGTH_SHORT).show();
                             mend=true;
                             msuc=true;
@@ -1236,6 +1244,7 @@ public class Utils {
                             }
                             //success...
                         } else {
+                            LogUtil.logToFile("canc..");
                             //Toast.makeText(context, "ההורדה בוטלה.", Toast.LENGTH_SHORT).show();
                             // מחיקת הקובץ החלקי
                             mend=true;
@@ -1254,6 +1263,7 @@ public class Utils {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
+                        LogUtil.logToFile(""+errorMessage);
                         //Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show();
                     }
                 });

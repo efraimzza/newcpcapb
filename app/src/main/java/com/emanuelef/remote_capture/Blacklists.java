@@ -53,6 +53,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
+import com.emanuelef.remote_capture.activities.LogUtil;
+
 /* Represents the malware blacklists.
  * The blacklists are hard-coded via the Blacklists.addList calls. Blacklists update is performed
  * as follows:
@@ -306,6 +308,7 @@ public class Blacklists {
                             @Override
                             public void run() {
                                 //success
+                                LogUtil.logToFile("suc");
                                 //Toast.makeText(mContext, "suc", Toast.LENGTH_SHORT).show();
                                 bl.setUpdated(System.currentTimeMillis());
                             }
@@ -314,11 +317,13 @@ public class Blacklists {
                         @Override
                         public void run() {
                             //fail
+                            LogUtil.logToFile("fail");
                             //Toast.makeText(mContext, "fail", Toast.LENGTH_SHORT).show();
                             bl.setOutdated();
                         }
                     });
             } catch (Exception e){
+                LogUtil.logToFile(""+e);
                 //Toast.makeText(mContext,e+ "", Toast.LENGTH_SHORT).show();
             }
             
