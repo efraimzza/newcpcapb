@@ -1124,6 +1124,7 @@ public class Utils {
             file.delete();
         }
         isCanceled = false;
+        Looper.prepare();
         final Handler mhandler=new Handler();
 
         // הפעלת הורדה בחוט (Thread) נפרד כדי לא לחסום את ממשק המשתמש
@@ -1143,10 +1144,13 @@ public class Utils {
                                     runonfail.run();
                                 }
                             }else{
+                                Looper.prepare();
                                 mhandler.postDelayed(runner,1000);
                             }
                         }
                     };
+                    Looper.prepare();
+                    Looper.prepare();
                     mhandler.post(runner);
                     manualDownload(context,fileurl,filename);
                 }
@@ -1189,6 +1193,7 @@ public class Utils {
             // לוודא שהקובץ ניתן להורדה (קוד 200)
             if (connection.getResponseCode() != HttpsURLConnection.HTTP_OK) {
                 // הצגת הודעת שגיאה על ממשק המשתמש
+                Looper.prepare();
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                         @Override
                         public void run() {
@@ -1228,7 +1233,7 @@ public class Utils {
                 output.write(data, 0, count);
             }
             output.flush();
-
+            Looper.prepare();
             // סגירת הדיאלוג והתקנה או הצגת הודעת ביטול
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
@@ -1260,6 +1265,7 @@ public class Utils {
             mend=true;
             msuc=false;
             final String errorMessage = "שגיאת הורדה: " + e.getMessage();
+            Looper.prepare();
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
