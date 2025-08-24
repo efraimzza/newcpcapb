@@ -1099,7 +1099,172 @@ public class Utils {
         // Only write the target path if it was successful
         return (new File(path + ".tmp")).renameTo(new File(path));
     }
+  
+
+    private static Thread downloadThread;
+    private static volatile boolean isCanceled = false;
+    private static HttpsURLConnection connection = null;
+    private static final Handler mainHandler = new Handler(Looper.getMainLooper());
+
+    /**
+     * פותח חוט חדש להורדה.
+     * מריץ את runonsuc/runonfail על ה-UI Thread בסיום.
+     */
+    @SuppressWarnings("deprecation") // עבור new Thread
+    public static void startDownload(final Context context, final String fileurl, final String filename, final Runnable runonsuc, final Runnable runonfail) {
+        // לוודא שלא מתבצעת הורדה
+        if (downloadThread != null && downloadThread.isAlive()) {
+            LogUtil.logToFile("Download already in progress..."); // שימוש ב-LogUtil מהקוד המקורי
+            // ניתן להוסיף כאן הודעה למשתמש
+            return;
+        }
+
+        try {
+            // ניקוי קובץ זמני ישן אם קיים
+            File file = new File(filename + ".tmp");
+            if (file.exists()) {
+                file.delete();
+            }
+
+            // איפוס מצב והתחלת הורדה בחוט נפרד
+            isCanceled = false;
+
+            downloadThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    boolean success = manualDownload(context, fileurl, filename);
+                    
+                    // הפעלת ה-Runnable המתאים על ה-UI Thread
+                    final Runnable resultRunner = success ? runonsuc : runonfail;
+                    mainHandler.post(resultRunner);
+                }
+            });
+            downloadThread.start();
+        } catch (Exception e) {
+            LogUtil.logToFile("Error starting download thread: " + e);
+            // ניתן להפעיל runonfail גם כאן אם ההתחלה נכשלה
+        }
+    }
     
+    /**
+     * מבטל את ההורדה הנוכחית אם היא מתבצעת.
+     */
+    public static void cancelDownload() {
+        if (downloadThread != null && downloadThread.isAlive() && !isCanceled) {
+            isCanceled = true;
+            try {
+                // ניתוק החיבור כדי לשחרר את חוט הקריאה שנתקע ב-input.read()
+                if (connection != null) {
+                    connection.disconnect();
+                }
+            } catch (Exception ignored) { /* ייתכן ו-disconnect כבר נקרא */ }
+        }
+    }
+
+    /**
+     * מוריד את הקובץ.
+     * @return true אם ההורדה הושלמה בהצלחה, false אחרת (כולל ביטול או כשל).
+     */
+    private static boolean manualDownload(final Context context, String fileurl, final String filename) {
+        InputStream input = null;
+        OutputStream output = null;
+        boolean downloadSuccess = false;
+        
+        try {
+            // 1. יצירת SSLContext מותאם אישית (הערה: לשנות ב-Production)
+            TrustManager[] trustAllCerts = new TrustManager[]{
+                new X509TrustManager() {
+                    // ... (יישום TrustManager נשאר זהה)
+                    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                        return new X509Certificate[0];
+                    }
+                    @Override
+                    public void checkClientTrusted(X509Certificate[] certs, String authType) throws CertificateException {}
+                    @Override
+                    public void checkServerTrusted(X509Certificate[] certs, String authType) throws CertificateException {}
+                }
+            };
+
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
+            SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+
+            URL url = new URL(fileurl);
+            connection = (HttpsURLConnection) url.openConnection();
+            connection.setSSLSocketFactory(sslSocketFactory);
+            connection.connect();
+
+            // 2. בדיקת תגובת שרת
+            if (connection.getResponseCode() != HttpsURLConnection.HTTP_OK) {
+                final int responseCode = connection.getResponseCode();
+                mainHandler.post(() -> LogUtil.logToFile("Server error: " + responseCode));
+                return false; // כשל
+            }
+
+            // 3. הורדת הקובץ
+            int fileLength = connection.getContentLength();
+            input = connection.getInputStream();
+            output = new FileOutputStream(filename + ".tmp");
+
+            byte[] data = new byte[4096];
+            long total = 0;
+            int count;
+
+            while ((count = input.read(data)) != -1) {
+                // בדיקת ביטול הורדה (חשוב!)
+                if (isCanceled) {
+                    mainHandler.post(() -> LogUtil.logToFile("Download canceled."));
+                    break;
+                }
+                total += count;
+                // עדכון התקדמות (אם נחוץ)
+                if (fileLength > 0) {
+                    final int progress = (int) (total * 100 / fileLength);
+                    // כאן ניתן לעדכן ProgressBar ב-UI Thread באמצעות mainHandler.post()
+                }
+                output.write(data, 0, count);
+            }
+            output.flush();
+            
+            // 4. טיפול בסיום
+            if (!isCanceled) {
+                downloadSuccess = true;
+                // שינוי שם הקובץ הזמני
+                File tempFile = new File(filename + ".tmp");
+                if (tempFile.exists()) {
+                    tempFile.renameTo(new File(filename));
+                }
+                mainHandler.post(() -> LogUtil.logToFile("Download succeeded."));
+            } else {
+                // אם בוטל, מחיקת הקובץ החלקי
+                File file = new File(filename + ".tmp");
+                if (file.exists()) {
+                    file.delete();
+                }
+                // LogUtil כבר נקרא בתוך הלולאה בעת הביטול
+            }
+
+        } catch (Exception e) {
+            final String errorMessage = "Download error: " + e.getMessage();
+            mainHandler.post(() -> LogUtil.logToFile(errorMessage));
+            return false; // כשל
+        } finally {
+            // סגירת משאבים
+            try {
+                if (output != null) output.close();
+                if (input != null) input.close();
+                // אין צורך ב-disconnect כאן אם משתמשים ב-disconnect ב-cancelDownload()
+                // אבל זה לא מזיק:
+                if (connection != null) connection.disconnect();
+            } catch (Exception ignored) { }
+            // איפוס משתנים סטטיים בסיום הטיפול
+            connection = null;
+            downloadThread = null; 
+        }
+        
+        return downloadSuccess;
+    }
+/*
     private static Thread downloadThread;
     private static volatile boolean isCanceled = false;
     static boolean mend=true;
@@ -1288,6 +1453,7 @@ public class Utils {
             downloadThread.interrupt();
         }
     }
+    */
     
     public static String shorten(String s, int maxlen) {
         if(s.length() > maxlen)
