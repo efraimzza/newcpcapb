@@ -306,7 +306,7 @@ public class Blacklists {
                             @Override
                             public void run() {
                                 //success
-                                Toast.makeText(mContext, "suc", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(mContext, "suc", Toast.LENGTH_SHORT).show();
                                 bl.setUpdated(System.currentTimeMillis());
                             }
                         },
@@ -314,12 +314,12 @@ public class Blacklists {
                         @Override
                         public void run() {
                             //fail
-                            Toast.makeText(mContext, "fail", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(mContext, "fail", Toast.LENGTH_SHORT).show();
                             bl.setOutdated();
                         }
                     });
             } catch (Exception e){
-                Toast.makeText(mContext,e+ "", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext,e+ "", Toast.LENGTH_SHORT).show();
             }
             
             notifyListeners();

@@ -1109,7 +1109,7 @@ public class Utils {
         try{
         // לוודא שלא מתבצעת הורדה
         if (downloadThread != null && downloadThread.isAlive()) {
-            Toast.makeText(context, "הורדה כבר מתבצעת...", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "הורדה כבר מתבצעת...", Toast.LENGTH_SHORT).show();
             return;
         }
         mend=false;
@@ -1149,7 +1149,7 @@ public class Utils {
             });
         downloadThread.start();
         } catch (Exception e){
-            Toast.makeText(context, "" + e, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "" + e, Toast.LENGTH_SHORT).show();
         }
     }
     
@@ -1190,7 +1190,7 @@ public class Utils {
                             try {
                                 mend=true;
                                 msuc=false;
-                                Toast.makeText(context, "שגיאת שרת: " + connection.getResponseCode(), Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(context, "שגיאת שרת: " + connection.getResponseCode(), Toast.LENGTH_SHORT).show();
                             } catch (IOException e) {}
                             
                         }
@@ -1226,7 +1226,7 @@ public class Utils {
                     @Override
                     public void run() {
                         if (!isCanceled) {
-                            Toast.makeText(context, "הורדה הושלמה בהצלחה!", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(context, "הורדה הושלמה בהצלחה!", Toast.LENGTH_SHORT).show();
                             mend=true;
                             msuc=true;
                             File file = new File(filename+".tmp");
@@ -1235,7 +1235,7 @@ public class Utils {
                             }
                             //success...
                         } else {
-                            Toast.makeText(context, "ההורדה בוטלה.", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(context, "ההורדה בוטלה.", Toast.LENGTH_SHORT).show();
                             // מחיקת הקובץ החלקי
                             mend=true;
                             msuc=false;
@@ -1253,7 +1253,7 @@ public class Utils {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show();
+                        //Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show();
                     }
                 });
         } finally {
