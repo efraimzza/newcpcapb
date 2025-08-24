@@ -1191,7 +1191,7 @@ public class Utils {
                                 mend=true;
                                 msuc=false;
                                 //Toast.makeText(context, "שגיאת שרת: " + connection.getResponseCode(), Toast.LENGTH_SHORT).show();
-                            } catch (IOException e) {}
+                            } catch (Exception e) {}
                             
                         }
                     });
