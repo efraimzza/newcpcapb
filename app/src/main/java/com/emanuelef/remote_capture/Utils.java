@@ -1105,6 +1105,149 @@ public class Utils {
     }
   
 
+
+    private static final ExecutorService executor = Executors.newCachedThreadPool();
+    private static final ConcurrentHashMap<String, HttpsURLConnection> connections = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, Boolean> canceledDownloads = new ConcurrentHashMap<>();
+    private static final Handler mainHandler = new Handler(Looper.getMainLooper());
+    
+    /**
+     * פותח משימת הורדה חדשה במאגר החוטים.
+     * @param context הקונטקסט של האפליקציה.
+     * @param fileurl כתובת ה-URL של הקובץ להורדה.
+     * @param filename הנתיב המלא לקובץ היעד.
+     * @param runonsuc Runnable שירוץ במקרה של הצלחה.
+     * @param runonfail Runnable שירוץ במקרה של כשל.
+     */
+    public static void startDownload(final Context context, final String fileurl, final String filename, final Runnable runonsuc, final Runnable runonfail) {
+        if (connections.containsKey(fileurl)) {
+            LogUtil.logToFile("Download already in progress for: " + fileurl);
+            return;
+        }
+
+        canceledDownloads.put(fileurl, false);
+
+        executor.submit(new Runnable() {
+            @Override
+            public void run() {
+                boolean success = manualDownload(context, fileurl, filename);
+                
+                canceledDownloads.remove(fileurl);
+                
+                final Runnable resultRunner = success ? runonsuc : runonfail;
+                mainHandler.post(resultRunner);
+            }
+        });
+    }
+
+    /**
+     * מבטל הורדה ספציפית על פי כתובת ה-URL שלה.
+     * @param fileurl כתובת ה-URL של ההורדה לביטול.
+     */
+    public static void cancelDownload(String fileurl) {
+        if (canceledDownloads.containsKey(fileurl)) {
+            canceledDownloads.put(fileurl, true);
+        }
+        HttpsURLConnection connection = connections.get(fileurl);
+        if (connection != null) {
+            connection.disconnect();
+        }
+    }
+
+    private static boolean manualDownload(final Context context, String fileurl, final String filename) {
+        InputStream input = null;
+        OutputStream output = null;
+        HttpsURLConnection connection = null;
+        boolean downloadSuccess = false;
+        
+        try {
+            TrustManager[] trustAllCerts = new TrustManager[]{
+                new X509TrustManager() {
+                    public java.security.cert.X509Certificate[] getAcceptedIssuers() { return new X509Certificate[0]; }
+                    @Override public void checkClientTrusted(X509Certificate[] certs, String authType) throws CertificateException {}
+                    @Override public void checkServerTrusted(X509Certificate[] certs, String authType) throws CertificateException {}
+                }
+            };
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
+            SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+            URL url = new URL(fileurl);
+            connection = (HttpsURLConnection) url.openConnection();
+            connection.setSSLSocketFactory(sslSocketFactory);
+
+            connections.put(fileurl, connection);
+            connection.connect();
+            
+            if (connection.getResponseCode() != HttpsURLConnection.HTTP_OK) {
+                final int responseCode = connection.getResponseCode();
+                mainHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        LogUtil.logToFile("Server error: " + responseCode);
+                    }
+                });
+                return false;
+            }
+
+            int fileLength = connection.getContentLength();
+            input = connection.getInputStream();
+            output = new FileOutputStream(filename + ".tmp");
+            byte[] data = new byte[4096];
+            long total = 0;
+            int count;
+            
+            while ((count = input.read(data)) != -1) {
+                if (canceledDownloads.getOrDefault(fileurl, false)) {
+                    mainHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            LogUtil.logToFile("Download canceled for: " + fileurl);
+                        }
+                    });
+                    break;
+                }
+                total += count;
+                output.write(data, 0, count);
+            }
+            output.flush();
+            
+            if (!canceledDownloads.getOrDefault(fileurl, false)) {
+                downloadSuccess = true;
+                File tempFile = new File(filename + ".tmp");
+                if (tempFile.exists()) {
+                    tempFile.renameTo(new File(filename));
+                }
+                mainHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        LogUtil.logToFile("Download succeeded for: " + fileurl);
+                    }
+                });
+            } else {
+                File file = new File(filename + ".tmp");
+                if (file.exists()) {
+                    file.delete();
+                }
+            }
+        } catch (Exception e) {
+            final String errorMessage = "Download error for " + fileurl + ": " + e.getMessage();
+            mainHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    LogUtil.logToFile(errorMessage);
+                }
+            });
+        } finally {
+            try {
+                if (output != null) output.close();
+                if (input != null) input.close();
+                if (connection != null) connection.disconnect();
+            } catch (Exception ignored) { }
+            connections.remove(fileurl);
+        }
+        return downloadSuccess;
+    }
+/*
  
 
     // מאגר חוטים לניהול הורדות מקבילות
@@ -1123,7 +1266,7 @@ public class Utils {
      * @param filename הנתיב המלא לקובץ היעד.
      * @param runonsuc Runnable שירוץ במקרה של הצלחה.
      * @param runonfail Runnable שירוץ במקרה של כשל.
-     */
+     *//*
     public static void startDownload(final Context context, final String fileurl, final String filename, final Runnable runonsuc, final Runnable runonfail) {
         // לוודא שהורדה זו לא כבר מתבצעת
         if (connections.containsKey(fileurl)) {
@@ -1149,7 +1292,7 @@ public class Utils {
     /**
      * מבטל הורדה ספציפית על פי כתובת ה-URL שלה.
      * @param fileurl כתובת ה-URL של ההורדה לביטול.
-     */
+     *//*
     public static void cancelDownload(String fileurl) {
         // סימון ההורדה לביטול
         if (canceledDownloads.containsKey(fileurl)) {
@@ -1239,7 +1382,7 @@ public class Utils {
         }
         return downloadSuccess;
     }
-
+*/
 /*
     private static Thread downloadThread;
     private static volatile boolean isCanceled = false;
