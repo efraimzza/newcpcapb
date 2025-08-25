@@ -311,6 +311,7 @@ public class Blacklists {
                                 LogUtil.logToFile("suc");
                                 //Toast.makeText(mContext, "suc", Toast.LENGTH_SHORT).show();
                                 bl.setUpdated(System.currentTimeMillis());
+                                notifyListeners();
                             }
                         },
                     new Runnable(){
@@ -320,6 +321,7 @@ public class Blacklists {
                             LogUtil.logToFile("fail");
                             //Toast.makeText(mContext, "fail", Toast.LENGTH_SHORT).show();
                             bl.setOutdated();
+                            notifyListeners();
                         }
                     });
             } catch (Exception e){
