@@ -184,13 +184,13 @@
             app:summary="@string/malware_detection_summary"
             app:defaultValue="true" />
 
-        <Preference
+        <!--Preference
             app:key="malware_detection_docs"
             app:title="@string/malware_detection_learn_more"
             app:iconSpaceReserved="false">
             <intent android:action="android.intent.action.VIEW"
                 android:data="https://emanuele-f.github.io/PCAPdroid/paid_features#51-malware-detection" />
-        </Preference>
+        </Preference-->
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/other_prefs" app:iconSpaceReserved="false" >

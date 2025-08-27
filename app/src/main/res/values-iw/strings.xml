@@ -180,8 +180,8 @@
     <string name="show_only_malicious">קשרים זדוניים</string>
     <string name="show_only_cleartext">חיבורי ClearText</string>
     <string name="security">בטחון</string>
-    <string name="malware_detection">איתור תוכנות זדוניות</string>
-    <string name="malware_detection_summary">לזהות חיבורים למארחים זדוניים ידועים באמצעות רשימות שחורות של צד שלישי</string>
+    <string name="malware_detection">רשימות לבנות</string>
+    <string name="malware_detection_summary">לאפשר חיבורים רק לפי רשימות לבנות</string>
     <string name="reset">אתחול</string>
     <string name="malware_whitelist_rules">כללי רשימת הלבנים של תוכנות זדוניות</string>
     <string name="feature_not_available">תכונה זו אינה זמינה כרגע עבור המכשיר שלך</string>
