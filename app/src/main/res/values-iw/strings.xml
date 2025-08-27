@@ -221,7 +221,7 @@
     <string name="malicious_connections">חיבורים זדוניים</string>
     <string name="malicious_connection_description">חיבור מ- App \"%1$s \" הפעיל כלל זיהוי תוכנות זדוניות (%2$s)</string>
     <string name="malicious_connections_notice">רשימות שחורות עשויות להכיל חיוביות כוזבות. הקפד לבדוק שוב את מוניטין כתובת ה- IP/תחום באופן מקוון. אתה יכול לשלול חיוביות כוזבות דרך רשימת ההלבנה של תוכנות זדוניות</string>
-    <string name="updated_blacklists">רשימות שחורות מעודכנות</string>
+    <string name="updated_blacklists">רשימות לבנות מעודכנות</string>
     <string name="connections_checked">חיבורים נבדקו</string>
     <string name="last_blacklists_update">עדכון אחרון</string>
     <string name="domain_rules">כללי דומיין</string>
