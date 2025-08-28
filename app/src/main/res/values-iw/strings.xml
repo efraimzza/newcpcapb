@@ -226,7 +226,7 @@
     <string name="last_blacklists_update">עדכון אחרון</string>
     <string name="domain_rules">כללי דומיין</string>
     <string name="ip_rules">כללי IP</string>
-    <string name="malware_status_update_failed">כמה רשימות שחורות מיושנות</string>
+    <string name="malware_status_update_failed">כמה רשימות לבנות מיושנות</string>
     <string name="update_now">עדכן עכשיו</string>
     <string name="status_updating">עדכון…</string>
     <string name="malware_detection_learn_more">למידע נוסף על תכונת גילוי התוכנה הזדונית</string>
