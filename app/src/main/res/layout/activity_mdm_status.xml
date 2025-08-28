@@ -109,6 +109,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/tvremove_root"
+                    android:gravity="center"
+                    android:textColor="#FFFF0000"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"/>
