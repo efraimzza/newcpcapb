@@ -329,7 +329,7 @@ public class Blacklists {
                 //Toast.makeText(mContext,e+ "", Toast.LENGTH_SHORT).show();
             }
             
-            notifyListeners();
+            //notifyListeners();
         }
 
         mLastUpdate = System.currentTimeMillis();

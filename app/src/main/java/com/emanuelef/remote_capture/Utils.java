@@ -1174,7 +1174,9 @@ public class Utils {
             URL url = new URL(fileurl);
             connection = (HttpsURLConnection) url.openConnection();
             connection.setSSLSocketFactory(sslSocketFactory);
-
+            connection.setRequestProperty("Connection", "Close");
+            connection.setConnectTimeout(5000);
+            connection.setReadTimeout(5000);
             connections.put(fileurl, connection);
             connection.connect();
             
