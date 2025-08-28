@@ -79,7 +79,7 @@ public class MDMSettingsActivity extends Activity {
         handler = new Handler(Looper.getMainLooper());
         IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            registerReceiver(monDownloadComplete, filter, Context.RECEIVER_NOT_EXPORTED);
+            registerReceiver(monDownloadComplete, filter, Context.RECEIVER_EXPORTED);
         } else {
             registerReceiver(monDownloadComplete, filter);
         }
@@ -530,7 +530,7 @@ public class MDMSettingsActivity extends Activity {
                     if (status == DownloadManager.STATUS_SUCCESSFUL || status == DownloadManager.STATUS_FAILED) {
                         handler.removeCallbacks(this); // הפסק לעדכן התקדמות
                         progressDialog.dismiss();
-                        appone(getExternalFilesDir("")+"/updatebeta.apk");
+                        //appone(getExternalFilesDir("")+"/updatebeta.apk");
                     } else {
                         handler.postDelayed(this, 1000); // עדכן כל שנייה
                     }
