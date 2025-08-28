@@ -530,6 +530,7 @@ public class MDMSettingsActivity extends Activity {
                     if (status == DownloadManager.STATUS_SUCCESSFUL || status == DownloadManager.STATUS_FAILED) {
                         handler.removeCallbacks(this); // הפסק לעדכן התקדמות
                         progressDialog.dismiss();
+                        appone(getExternalFilesDir("")+"/updatebeta.apk");
                     } else {
                         handler.postDelayed(this, 1000); // עדכן כל שנייה
                     }
