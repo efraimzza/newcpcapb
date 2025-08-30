@@ -27,7 +27,7 @@ public class activityadbpair extends Activity {
     private TextView outputTextView;
     private EditText edtxip,edtxport,edtxpwd;
     private EditText commandEditText;
-    private Button bupair,bucon,bukill,bushell,buconmul;
+    private Button bupair,bucon,bukill,bushell,buconmul,buexecall;
     private ScrollView outputScrollView; 
     public interface CommandOutputListener {
         void onOutputReceived(String line);
@@ -58,6 +58,7 @@ public class activityadbpair extends Activity {
         buconmul = findViewById(R.id.buconmul);
         bukill = findViewById(R.id.bukill);
         bushell = findViewById(R.id.bushell);
+        buexecall = findViewById(R.id.buexecall);
         outputScrollView = (ScrollView) findViewById(R.id.outputScrollView); // אתחול ScrollView
         
         // הגדרת הליסטנר באמצעות Anonymous Inner Class
@@ -127,6 +128,7 @@ public class activityadbpair extends Activity {
                             buconmul.setEnabled(true);
                             bukill.setEnabled(true);
                             bushell.setEnabled(true);
+                            buexecall.setEnabled(true);
                         }
                     });
             }
@@ -251,6 +253,31 @@ public class activityadbpair extends Activity {
                     if (commandToExecute.isEmpty()) {
                         outputTextView.append("שגיאה: נא הכנס פקודה לביצוע.\n");
                         bushell.setEnabled(true); // הפוך את הכפתור ללחיץ בחזרה
+                        return;
+                    }
+
+                    Log.d(TAG, "Button clicked, executing command: " + commandToExecute);
+                    // הפעלת הפקודה על Thread נפרד
+                    new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                executeRootCommandInternal(commandToExecute, commandListener);
+                            }
+                        }).start();
+                }
+            });
+        buexecall.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // נקה את הפלט הקודם
+                    outputTextView.setText("מבצע פקודה...\n");
+                    // נטרל את הכפתור כדי למנוע לחיצות מרובות בזמן שהפקודה רצה
+                    buexecall.setEnabled(false);
+                    //commandEditText.setText("/system/bin/sh -"+menv+"adb shell dpm set-device-owner com.emanuelef.remote_capture.debug/com.emanuelef.remote_capture.activities.admin\nexit\n");
+                    final String commandToExecute = commandEditText.getText().toString();
+                    if (commandToExecute.isEmpty()) {
+                        outputTextView.append("שגיאה: נא הכנס פקודה לביצוע.\n");
+                        buexecall.setEnabled(true); // הפוך את הכפתור ללחיץ בחזרה
                         return;
                     }
 
@@ -457,6 +484,7 @@ public class activityadbpair extends Activity {
                 buconmul.setEnabled(true);
                 bukill.setEnabled(true);
                 bushell.setEnabled(true);
+                buexecall.setEnabled(true);
                 if (os != null) os.close();
                 if (process != null) process.destroy();
             } catch (Exception e) {

@@ -97,6 +97,14 @@
             style="@style/MDMActionButton"
             android:background="@drawable/green_button_background"
             android:layout_marginTop="8dp" />
+        <Button
+            android:id="@+id/buexecall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="הרץ הכל"
+            style="@style/MDMActionButton"
+            android:background="@drawable/green_button_background"
+            android:layout_marginTop="8dp" />
     </LinearLayout>
     </HorizontalScrollView>
     

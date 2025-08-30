@@ -81,7 +81,11 @@
             <Button style="@style/MDMActionButton"
                 android:id="@+id/btn_def_rest_multi"
                 android:text="השבתות מומלצות למולטימדיה"/>
-
+                
+            <Button style="@style/MDMActionButton"
+                android:id="@+id/btn_def_rest_cube"
+                android:text="השבתות מומלצות לקוביית אנדרואיד"/>
+                
             <Button style="@style/MDMActionButton"
                 android:id="@+id/btn_update_whitelist"
                 android:text="עדכון לרשימת דומיינים לבנה"/>
@@ -96,7 +100,6 @@
             <Button style="@style/MDMActionButton"
                 android:id="@+id/btn_more_features"
                 android:text="פיצ'רים נוספים"/>
-
 
         </LinearLayout>
     </ScrollView>

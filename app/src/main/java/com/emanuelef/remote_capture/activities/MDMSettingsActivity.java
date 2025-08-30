@@ -110,7 +110,8 @@ public class MDMSettingsActivity extends Activity {
         setupButton(R.id.btn_update_mdm_app, "עדכון אפליקציית MDM", null);
         setupButton(R.id.btn_lock_mdm, "נעילת הגדרות והסרה", null);
         setupButton(R.id.btn_select_route, "בחירת מסלול", null); // תצטרך אקטיביטי לזה
-        setupButton(R.id.btn_def_rest_multi, "השבתות מומלצות למולטימדיה", null); // תצטרך לוגיקה לזה
+        setupButton(R.id.btn_def_rest_multi, "השבתות מומלצות למולטימדיה", null);
+        setupButton(R.id.btn_def_rest_cube, "השבתות מומלצות לקוביית אנדרואיד", null);
         setupButton(R.id.btn_update_whitelist, "עדכון לרשימת דומיינים לבנה", null); // תצטרך לוגיקה לזה
         setupButton(R.id.btn_more_features, "פיצ'רים נוספים", MoreFeaturesActivity.class); // אקטיביטי חדש
         setupabodeb();
@@ -131,7 +132,8 @@ public class MDMSettingsActivity extends Activity {
                             v.getId() == R.id.btn_activate_frp ||
                             v.getId() == R.id.btn_lock_mdm ||
                             v.getId() ==  R.id.btn_select_route ||
-                            v.getId() == R.id.btn_def_rest_multi) { 
+                            v.getId() == R.id.btn_def_rest_multi ||
+                            v.getId() == R.id.btn_def_rest_cube) { 
                             PasswordManager.requestPasswordAndSave(new Runnable() {
                                     @Override
                                     public void run() {
@@ -210,7 +212,7 @@ public class MDMSettingsActivity extends Activity {
                 //mDpm.setApplicationHidden(mAdminComponentName, "com.dofun.carsetting", true);//carsettings
                 mDpm.setApplicationHidden(mAdminComponentName, "com.android.vending", true);//Google play
                 mDpm.setApplicationHidden(mAdminComponentName, "com.android.chrome", true);//chrome
-                mDpm.setApplicationHidden(mAdminComponentName, "com.dofun.market", true);//chrome
+                mDpm.setApplicationHidden(mAdminComponentName, "com.dofun.market", true);//market
                 mDpm.setApplicationHidden(mAdminComponentName, "io.github.huskydg.magisk", true);//kitsun
                 mDpm.setApplicationHidden(mAdminComponentName, "com.google.android.googlequicksearchbox", true);//Google
                 
@@ -218,6 +220,40 @@ public class MDMSettingsActivity extends Activity {
                 
                 
                 Toast.makeText(MDMSettingsActivity.this, "הופעלו השבתות מומלצות למולטימדיה!", Toast.LENGTH_SHORT).show();
+                } catch (Exception e){
+                    Toast.makeText(MDMSettingsActivity.this, ""+e, Toast.LENGTH_SHORT).show();
+                }
+                    
+                }else{
+                    Toast.makeText(MDMSettingsActivity.this, "אין עדיין הרשאות ניהול מכשיר", Toast.LENGTH_SHORT).show();
+                }
+            }else if (buttonId == R.id.btn_def_rest_cube) {
+                boolean mdmstate=mDpm.isDeviceOwnerApp(MDMSettingsActivity.this.getPackageName());
+                if(mdmstate){
+                try{
+                mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_CONFIG_TETHERING);
+                mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_INSTALL_UNKNOWN_SOURCES);
+                mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_DEBUGGING_FEATURES);
+                mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_FACTORY_RESET);
+                mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_ADD_MANAGED_PROFILE);
+                mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_USER_SWITCH);
+                mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_ADD_USER);
+                //mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_UNINSTALL_APPS);
+                mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_REMOVE_USER);
+                //mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_APPS_CONTROL);
+                mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_INSTALL_APPS);//all!
+                mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_CONFIG_WIFI);
+                mDpm.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_SAFE_BOOT);
+                
+                
+                mDpm.setApplicationHidden(mAdminComponentName, "com.android.vending", true);//Google play
+                mDpm.setApplicationHidden(mAdminComponentName, "com.android.chrome", true);//chrome
+                mDpm.setApplicationHidden(mAdminComponentName, "com.google.android.googlequicksearchbox", true);//Google
+                
+                //mDpm.setApplicationHidden(mAdminComponentName, "com.google.android.apps.maps", true);//maps
+                
+                
+                Toast.makeText(MDMSettingsActivity.this, "הופעלו השבתות מומלצות לקוביית אנדרואיד!", Toast.LENGTH_SHORT).show();
                 } catch (Exception e){
                     Toast.makeText(MDMSettingsActivity.this, ""+e, Toast.LENGTH_SHORT).show();
                 }
