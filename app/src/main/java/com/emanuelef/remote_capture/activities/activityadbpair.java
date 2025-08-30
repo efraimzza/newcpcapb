@@ -27,7 +27,7 @@ public class activityadbpair extends Activity {
     private TextView outputTextView;
     private EditText edtxip,edtxport,edtxpwd;
     private EditText commandEditText;
-    private Button bupair,bucon,bukill,bushell,buconmul,buexecall;
+    private Button bupair,bucon,bukill,bushell,buconmul,buconmult,buexecall;
     private ScrollView outputScrollView; 
     public interface CommandOutputListener {
         void onOutputReceived(String line);
@@ -56,6 +56,7 @@ public class activityadbpair extends Activity {
         bupair = findViewById(R.id.bupair);
         bucon = findViewById(R.id.bucon);
         buconmul = findViewById(R.id.buconmul);
+        buconmult = findViewById(R.id.buconmult);
         bukill = findViewById(R.id.bukill);
         bushell = findViewById(R.id.bushell);
         buexecall = findViewById(R.id.buexecall);
@@ -126,6 +127,7 @@ public class activityadbpair extends Activity {
                             bupair.setEnabled(true);
                             bucon.setEnabled(true);
                             buconmul.setEnabled(true);
+                            buconmult.setEnabled(true);
                             bukill.setEnabled(true);
                             bushell.setEnabled(true);
                             buexecall.setEnabled(true);
@@ -203,6 +205,35 @@ public class activityadbpair extends Activity {
                     if (commandToExecute.isEmpty()) {
                         outputTextView.append("שגיאה: נא הכנס פקודה לביצוע.\n");
                         buconmul.setEnabled(true); // הפוך את הכפתור ללחיץ בחזרה
+                        return;
+                    }
+
+                    Log.d(TAG, "Button clicked, executing command: " + commandToExecute);
+                    // הפעלת הפקודה על Thread נפרד
+                    new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                executeRootCommandInternal(commandToExecute, commandListener);
+                            }
+                        }).start();
+                }
+            });
+        buconmult.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // נקה את הפלט הקודם
+                    outputTextView.setText("מבצע פקודה...\n");
+                    // נטרל את הכפתור כדי למנוע לחיצות מרובות בזמן שהפקודה רצה
+                    buconmult.setEnabled(false);
+                    String mpropport = "setprop service.adb.tcp.port 5555\n";
+                    String mproprestart = "setprop ctl.restart adbd\nadb disconnect\nadb devices\n";
+                    //String mproprestartb = "adb kill-server\nadb start-server\n";
+                    String multcmd = "/system/bin/sh -\nTMPDIR=/storage/emulated/0/\nHOME=/storage/emulated/0/\nTERM=screen\necho $TMPDIR\necho $HOME\nsetprop service.adb.tcp.port 5555\nsetprop ctl.restart adbd\n/data/user/0/com.emanuelef.remote_capture.debug/files/adb disconnect\n/data/user/0/com.emanuelef.remote_capture.debug/files/adb devices\n/data/user/0/com.emanuelef.remote_capture.debug/files/adb connect localhost:5555\n/data/user/0/com.emanuelef.remote_capture.debug/files/adb shell dpm set-device-owner com.emanuelef.remote_capture.debug/com.emanuelef.remote_capture.activities.admin\nexit\n";
+                    commandEditText.setText(multcmd);
+                    final String commandToExecute = commandEditText.getText().toString();
+                    if (commandToExecute.isEmpty()) {
+                        outputTextView.append("שגיאה: נא הכנס פקודה לביצוע.\n");
+                        buconmult.setEnabled(true); // הפוך את הכפתור ללחיץ בחזרה
                         return;
                     }
 
@@ -482,6 +513,7 @@ public class activityadbpair extends Activity {
                 bupair.setEnabled(true);
                 bucon.setEnabled(true);
                 buconmul.setEnabled(true);
+                buconmult.setEnabled(true);
                 bukill.setEnabled(true);
                 bushell.setEnabled(true);
                 buexecall.setEnabled(true);
