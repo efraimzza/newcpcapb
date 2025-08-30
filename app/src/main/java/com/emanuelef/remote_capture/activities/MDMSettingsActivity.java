@@ -73,6 +73,7 @@ public class MDMSettingsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try{
         setContentView(R.layout.activity_mdm_settings);
         try{
         downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
@@ -115,7 +116,9 @@ public class MDMSettingsActivity extends Activity {
         setupButton(R.id.btn_update_whitelist, "עדכון לרשימת דומיינים לבנה", null); // תצטרך לוגיקה לזה
         setupButton(R.id.btn_more_features, "פיצ'רים נוספים", MoreFeaturesActivity.class); // אקטיביטי חדש
         setupabodeb();
-
+        }  catch(Exception e){
+            Toast.makeText(this, e+"",1).show();
+        }
         }
 
     private void setupButton(int buttonId, String text, final Class<?> targetActivity) {
@@ -249,8 +252,10 @@ public class MDMSettingsActivity extends Activity {
                 mDpm.setApplicationHidden(mAdminComponentName, "com.android.vending", true);//Google play
                 mDpm.setApplicationHidden(mAdminComponentName, "com.android.chrome", true);//chrome
                 mDpm.setApplicationHidden(mAdminComponentName, "com.google.android.googlequicksearchbox", true);//Google
+                mDpm.setApplicationHidden(mAdminComponentName, "com.google.android.apps.maps", true);//maps
+                mDpm.setApplicationHidden(mAdminComponentName, "com.suding.apkinstaller", true);//market
+                mDpm.setApplicationHidden(mAdminComponentName, "com.google.android.apps.youtube.music", true);//YouTube music
                 
-                //mDpm.setApplicationHidden(mAdminComponentName, "com.google.android.apps.maps", true);//maps
                 
                 
                 Toast.makeText(MDMSettingsActivity.this, "הופעלו השבתות מומלצות לקוביית אנדרואיד!", Toast.LENGTH_SHORT).show();
