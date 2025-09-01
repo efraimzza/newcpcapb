@@ -70,7 +70,7 @@ public class MDMStatusActivity extends Activity {
     public static final String modesp="mode";
     public static final String locksp="lock";
     LinearLayout linlactivate,linldetails;
-    TextView tvstate,tvroute,tvdescription,tvremoveroot,tvstartbarcode;
+    TextView tvappname,tvstate,tvroute,tvdescription,tvremoveroot,tvstartbarcode;
     Button bucpcmd,busavebarcode,bustartroot,buadbwifi,buqrmdm;
     ImageView ivbarcode;
     Bitmap bmp;
@@ -112,6 +112,7 @@ public class MDMStatusActivity extends Activity {
                 Toast.makeText(this, e+"",1).show();
             }
         }
+        tvappname=findViewById(R.id.act_stat_tvappname);
         tvstate=findViewById(R.id.act_stat_tvstate);
         linlactivate=findViewById(R.id.act_stat_linlactivate);
         linldetails=findViewById(R.id.act_stat_linldetails);
@@ -126,6 +127,7 @@ public class MDMStatusActivity extends Activity {
         tvroute=findViewById(R.id.act_stat_tvroute);
         tvdescription=findViewById(R.id.act_stat_tvdescription);
         
+        tvappname.setText(getResources().getString(R.string.pcapdroid_app_name)+" "+Utils.getAppVersion(this));
         bucpcmd.setOnClickListener(new OnClickListener(){
                 @Deprecated
                 @Override
