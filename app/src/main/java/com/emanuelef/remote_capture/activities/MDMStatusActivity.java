@@ -525,13 +525,13 @@ public class MDMStatusActivity extends Activity {
                             String resa=edtxd.getText().toString();
                             if (!resa.equals("")) {
                                 alertDialogb.hide();
-                                String md_email="whitelistnetkosher@gmail.com";
-                                String md_password="ogrh baby ankk twcb";
+                                String md_email="";
+                                String md_password="";
                                 md_email = BuildConfig.md_mail;
                                 md_password = BuildConfig.md_pwd;
-                                //String md_targetemail="whitelistnetkosher@gmail.com";
+                                
                                 String ad="****@gmail.com";
-                                String mail_to = "hefraimzzxc@gmail.com";
+                                String mail_to = "";
                                 mail_to = BuildConfig.md_mail_to;
                                 String[] recipients = { mail_to };
                                 msendmail(md_email, md_password,resa,recipients);
