@@ -125,7 +125,9 @@
         <TextView
             android:id="@+id/outputTextView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:text="פלט הפקודה יופיע כאן...\n" />
+            android:layout_height="wrap_content" 
+            android:textIsSelectable="true"
+            android:text="פלט הפקודה יופיע כאן...\n" />
 
     </ScrollView>
         </LinearLayout>

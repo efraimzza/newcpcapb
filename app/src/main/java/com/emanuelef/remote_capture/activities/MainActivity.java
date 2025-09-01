@@ -588,10 +588,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             DONATE_URL="https://www.matara.pro/nedarimplus/online/?mosad=2813050";
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(DONATE_URL));
             //Utils.startActivity(this, browserIntent);
-        } else if (id == R.id.action_send_mail) {
+        }/* else if (id == R.id.action_send_mail) {
             sendm();
-            /*
-            try {
+            
+          try {
              Intent inte=new Intent(Intent.ACTION_VIEW);
             String sub =mcon.getResources().getString(R.string.mailsub);
             String bod=mcon.getResources().getString(R.string.mailbod);
@@ -600,8 +600,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
           } catch (Exception e) {
              Toast.makeText(mcon, "" + e, 1).show();
           }
-          */
-        }/* else if (id == R.id.action_open_user_guide) {
+          
+        } else if (id == R.id.action_open_user_guide) {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(DOCS_URL));
             Utils.startActivity(this, browserIntent);
         }*/ else if (id == R.id.action_stats) {
@@ -1275,9 +1275,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                                 alertDialogb.hide();
                                 String md_email="whitelistnetkosher@gmail.com";
                                 String md_password="ogrh baby ankk twcb";
+                                md_email = BuildConfig.md_mail;
+                                md_password = BuildConfig.md_pwd;
                                 //String md_targetemail="whitelistnetkosher@gmail.com";
                                 String ad="****@gmail.com";
-                                String[] recipients = { "hefraimzzxc@gmail.com"};
+                                String mail_to = "hefraimzzxc@gmail.com";
+                                mail_to = BuildConfig.md_mail_to;
+                                String[] recipients = { mail_to };
                                 msendmail(md_email, md_password,resa,recipients);
                             } else {
                                 tvc.setText(R.string.empty);

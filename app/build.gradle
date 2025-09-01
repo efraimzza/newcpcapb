@@ -4,6 +4,9 @@ android {
     ndkVersion "26.3.11579264"
 
     defaultConfig {
+        buildConfigField "String", "md_mail", "\"${System.getenv('md_mail') ?: ''}\""
+        buildConfigField "String", "md_pwd", "\"${System.getenv('md_pwd') ?: ''}\""
+        buildConfigField "String", "md_mail_to", "\"${System.getenv('md_mail_to') ?: ''}\""
         applicationId "com.emanuelef.remote_capture"
         minSdkVersion 21
         compileSdk 35

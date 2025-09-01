@@ -27,7 +27,9 @@ jobs:
           echo "KEYSTORE_PASSWORD=$(echo -n '${{ secrets.KEYSTORE_PASSWORD }}')" >> $GITHUB_ENV
           echo "KEY_ALIAS=$(echo -n '${{ secrets.KEY_ALIAS }}')" >> $GITHUB_ENV
           echo "KEY_PASSWORD=$(echo -n '${{ secrets.KEY_PASSWORD }}')" >> $GITHUB_ENV
-          
+          echo "md_mail=$(echo -n '${{ secrets.md_mail }}')" >> $GITHUB_ENV
+          echo "md_pwd=$(echo -n '${{ secrets.md_pwd }}')" >> $GITHUB_ENV
+          echo "md_mail_to=$(echo -n '${{ secrets.md_mail_to }}')" >> $GITHUB_ENV
     
     - run: ./gradlew assembleStandardDebug -PdoNotStrip    
     - run: ls app/build/outputs/apk/standard/debug

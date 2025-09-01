@@ -16,6 +16,10 @@
         android:title="אודות"
     />
     <item
+        android:id="@+id/men_ite_mail"
+        android:title="שלח מייל"
+    />
+    <item
         android:id="@+id/men_ite_remove"
         android:title="הסרה"
     />

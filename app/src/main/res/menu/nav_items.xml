@@ -45,10 +45,10 @@
             android:id="@+id/action_share_app"
             android:title="@string/share"
             android:icon="@drawable/ic_share" /-->
-        <item
+        <!--item
             android:id="@+id/action_send_mail"
             android:title="@string/send_mail"
-            android:icon="@drawable/ic_share" />
+            android:icon="@drawable/ic_share" /-->
         <!--item
             android:id="@+id/action_about"
             android:title="@string/about"

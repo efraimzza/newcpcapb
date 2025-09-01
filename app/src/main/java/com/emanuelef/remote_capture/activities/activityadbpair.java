@@ -45,7 +45,7 @@ public class activityadbpair extends Activity {
         hompat=getDir("HOME", MODE_PRIVATE).getAbsolutePath();
         filesdir=getFilesDir().getAbsolutePath();
         menv="\nPATH=$PATH:"+filesdir+"\nTMPDIR="+hompat+"\nHOME="+hompat+"\nTERM=screen\n";
-        cmddpm="\nadb shell dpm set-device-owner com.emanuelef.remote_capture.debug/com.emanuelef.remote_capture.activities.admin\nexit\n";
+        cmddpm="\nadb shell dpm set-device-owner com.emanuelef.remote_capture.debug/com.emanuelef.remote_capture.activities.admin & exit\nexit\n";
         //Toast.makeText(this,getDir("HOME", MODE_PRIVATE).getAbsolutePath(),1).show();
         getDir("HOME", MODE_PRIVATE).getAbsolutePath();//important to automaticly create
         outputTextView = (TextView) findViewById(R.id.outputTextView);
@@ -69,7 +69,7 @@ public class activityadbpair extends Activity {
                 runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Log.d(TAG, "(Real-time output): " + line);
+                            //Log.d(TAG, "(Real-time output): " + line);
                             if (outputTextView != null) {
                                 outputTextView.append("o: " + line + "\n");
                                 // גלילה אוטומטית לתחתית
@@ -88,13 +88,13 @@ public class activityadbpair extends Activity {
                 runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Log.e(TAG, "(Error output): " + line);
+                            //Log.e(TAG, "(Error output): " + line);
                             if (outputTextView != null) {
                                 outputTextView.append("e: " + line + "\n");
-                                // גלילה אוטומטית לתחתית
+                                
                                 if (outputTextView != null && outputScrollView != null) { // ודא ששניהם לא null
                                     //outputTextView.append("Output: " + line + "\n");
-                                    // גלילה אוטומטית לתחתית ה-ScrollView
+                                    
                                     outputScrollView.fullScroll(View.FOCUS_DOWN);
                                 }
                             }
@@ -107,23 +107,23 @@ public class activityadbpair extends Activity {
                 runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Log.d(TAG, "(Command finished). Exit Code: " + exitCode);
-                            Log.d(TAG, "(Final Output):\n" + finalOutput);
-                            Log.d(TAG, "(Final Error Output):\n" + finalError);
+                            //Log.d(TAG, "(Command finished). Exit Code: " + exitCode);
+                            //Log.d(TAG, "(Final Output):\n" + finalOutput);
+                            //Log.d(TAG, "(Final Error Output):\n" + finalError);
 
                             if (outputTextView != null) {
                                 outputTextView.append("\n--- Command Finished ---\n");
                                 outputTextView.append("Exit Code: " + exitCode + "\n");
-                                outputTextView.append("Final Output:\n" + finalOutput + "\n");
-                                outputTextView.append("Final Error:\n" + finalError + "\n");
-                                // גלילה אוטומטית לתחתית
+                                //outputTextView.append("Final Output:\n" + finalOutput + "\n");
+                                //outputTextView.append("Final Error:\n" + finalError + "\n");
+                                
                                 if (outputTextView != null && outputScrollView != null) { // ודא ששניהם לא null
                                     //outputTextView.append("Output: " + line + "\n");
-                                    // גלילה אוטומטית לתחתית ה-ScrollView
+                                    
                                     outputScrollView.fullScroll(View.FOCUS_DOWN);
                                 }
                             }
-                            // אפשר להפוך את הכפתור ללחיץ שוב לאחר סיום הפקודה
+                            
                             bupair.setEnabled(true);
                             bucon.setEnabled(true);
                             buconmul.setEnabled(true);
@@ -144,7 +144,7 @@ public class activityadbpair extends Activity {
                     outputTextView.setText("מבצע פקודה...\n");
                     
                     bupair.setEnabled(false);
-                    commandEditText.setText("/system/bin/sh -"+menv+"adb pair "+edtxip.getText().toString()+":"+edtxport.getText().toString()+"\n"+edtxpwd.getText().toString()+cmddpm);
+                    commandEditText.setText("/system/bin/sh -"+menv+"adb kill-server\nadb pair "+edtxip.getText().toString()+":"+edtxport.getText().toString()+"\n"+edtxpwd.getText().toString()+cmddpm);
                     final String commandToExecute = commandEditText.getText().toString();
                     if (commandToExecute.isEmpty()) {
                         outputTextView.append("שגיאה: נא הכנס פקודה לביצוע.\n");
@@ -152,7 +152,7 @@ public class activityadbpair extends Activity {
                         return;
                     }
 
-                    Log.d(TAG, "Button clicked, executing command: " + commandToExecute);
+                    //Log.d(TAG, "Button clicked, executing command: " + commandToExecute);
                     // הפעלת הפקודה על Thread נפרד
                     new Thread(new Runnable() {
                             @Override
@@ -172,7 +172,7 @@ public class activityadbpair extends Activity {
                     //String mpropport = "setprop service.adb.tcp.port 5555\n";
                     //String mproprestart = "setprop ctl.restart adbd\n";
                     //String mproprestartb = "adb kill-server\nadb start-server\n";
-                    commandEditText.setText("/system/bin/sh -"+menv+"adb connect "+edtxip.getText().toString()+":"+edtxport.getText().toString()+cmddpm);
+                    commandEditText.setText("/system/bin/sh -"+menv+"adb kill-server\nadb connect "+edtxip.getText().toString()+":"+edtxport.getText().toString()+cmddpm);
                     final String commandToExecute = commandEditText.getText().toString();
                     if (commandToExecute.isEmpty()) {
                         outputTextView.append("שגיאה: נא הכנס פקודה לביצוע.\n");
@@ -180,7 +180,7 @@ public class activityadbpair extends Activity {
                         return;
                     }
 
-                    Log.d(TAG, "Button clicked, executing command: " + commandToExecute);
+                    //Log.d(TAG, "Button clicked, executing command: " + commandToExecute);
                     // הפעלת הפקודה על Thread נפרד
                     new Thread(new Runnable() {
                             @Override
@@ -198,18 +198,18 @@ public class activityadbpair extends Activity {
                     // נטרל את הכפתור כדי למנוע לחיצות מרובות בזמן שהפקודה רצה
                     buconmul.setEnabled(false);
                     String mpropport = "setprop service.adb.tcp.port 5555\n";
-                    String mproprestart = "setprop ctl.restart adbd\nadb disconnect\nadb devices\n";
+                    String mproprestart = "setprop ctl.restart adbd\nadb kill-server\nadb disconnect\nadb devices\n";
                     //String mproprestartb = "adb kill-server\nadb start-server\n";
-                    commandEditText.setText("/system/bin/sh -"+menv+mpropport+mproprestart+"adb connect localhost:5555"+cmddpm);
+                    commandEditText.setText("/system/bin/sh -"+menv+mpropport+mproprestart+"adb connect localhost:5555"+"\nadb devices"+cmddpm);
                     final String commandToExecute = commandEditText.getText().toString();
                     if (commandToExecute.isEmpty()) {
                         outputTextView.append("שגיאה: נא הכנס פקודה לביצוע.\n");
-                        buconmul.setEnabled(true); // הפוך את הכפתור ללחיץ בחזרה
+                        buconmul.setEnabled(true);
                         return;
                     }
 
-                    Log.d(TAG, "Button clicked, executing command: " + commandToExecute);
-                    // הפעלת הפקודה על Thread נפרד
+                    //Log.d(TAG, "Button clicked, executing command: " + commandToExecute);
+                    
                     new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -228,17 +228,18 @@ public class activityadbpair extends Activity {
                     String mpropport = "setprop service.adb.tcp.port 5555\n";
                     String mproprestart = "setprop ctl.restart adbd\nadb disconnect\nadb devices\n";
                     //String mproprestartb = "adb kill-server\nadb start-server\n";
-                    String multcmd = "/system/bin/sh -\nTMPDIR=/storage/emulated/0/\nHOME=/storage/emulated/0/\nTERM=screen\necho $TMPDIR\necho $HOME\nsetprop service.adb.tcp.port 5555\nsetprop ctl.restart adbd\n/data/user/0/com.emanuelef.remote_capture.debug/files/adb disconnect\n/data/user/0/com.emanuelef.remote_capture.debug/files/adb devices\n/data/user/0/com.emanuelef.remote_capture.debug/files/adb connect localhost:5555\n/data/user/0/com.emanuelef.remote_capture.debug/files/adb shell dpm set-device-owner com.emanuelef.remote_capture.debug/com.emanuelef.remote_capture.activities.admin\nexit\n";
+                    String patadb = "/data/user/0/com.emanuelef.remote_capture.debug/files/adb ";
+                    String multcmd = "/system/bin/sh -\nTMPDIR=/storage/emulated/0/\nHOME=/storage/emulated/0/\nTERM=screen\necho $TMPDIR\necho $HOME\nsetprop service.adb.tcp.port 5555\nsetprop ctl.restart adbd\n+"patadb"+kill-server\n+"patadb"+disconnect\n+"patadb"+devices\n+"patadb"+connect localhost:5555\n+"patadb"+devices\n+"patadb"+shell dpm set-device-owner com.emanuelef.remote_capture.debug/com.emanuelef.remote_capture.activities.admin & exit\nexit\n";
                     commandEditText.setText(multcmd);
                     final String commandToExecute = commandEditText.getText().toString();
                     if (commandToExecute.isEmpty()) {
                         outputTextView.append("שגיאה: נא הכנס פקודה לביצוע.\n");
-                        buconmult.setEnabled(true); // הפוך את הכפתור ללחיץ בחזרה
+                        buconmult.setEnabled(true);
                         return;
                     }
 
-                    Log.d(TAG, "Button clicked, executing command: " + commandToExecute);
-                    // הפעלת הפקודה על Thread נפרד
+                    //Log.d(TAG, "Button clicked, executing command: " + commandToExecute);
+                    
                     new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -262,7 +263,7 @@ public class activityadbpair extends Activity {
                         return;
                     }
 
-                    Log.d(TAG, "Button clicked, executing command: " + commandToExecute);
+                    //Log.d(TAG, "Button clicked, executing command: " + commandToExecute);
                     // הפעלת הפקודה על Thread נפרד
                     new Thread(new Runnable() {
                             @Override
@@ -275,20 +276,20 @@ public class activityadbpair extends Activity {
         bushell.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // נקה את הפלט הקודם
+                    
                     outputTextView.setText("מבצע פקודה...\n");
-                    // נטרל את הכפתור כדי למנוע לחיצות מרובות בזמן שהפקודה רצה
+                    
                     bushell.setEnabled(false);
-                    commandEditText.setText("/system/bin/sh -"+menv+"adb shell dpm set-device-owner com.emanuelef.remote_capture.debug/com.emanuelef.remote_capture.activities.admin\nexit\n");
+                    commandEditText.setText("/system/bin/sh -"+menv+"adb shell dpm set-device-owner com.emanuelef.remote_capture.debug/com.emanuelef.remote_capture.activities.admin & exit\nexit\n");
                     final String commandToExecute = commandEditText.getText().toString();
                     if (commandToExecute.isEmpty()) {
                         outputTextView.append("שגיאה: נא הכנס פקודה לביצוע.\n");
-                        bushell.setEnabled(true); // הפוך את הכפתור ללחיץ בחזרה
+                        bushell.setEnabled(true);
                         return;
                     }
 
-                    Log.d(TAG, "Button clicked, executing command: " + commandToExecute);
-                    // הפעלת הפקודה על Thread נפרד
+                    //Log.d(TAG, "Button clicked, executing command: " + commandToExecute);
+                    
                     new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -304,7 +305,7 @@ public class activityadbpair extends Activity {
                     outputTextView.setText("מבצע פקודה...\n");
                     // נטרל את הכפתור כדי למנוע לחיצות מרובות בזמן שהפקודה רצה
                     buexecall.setEnabled(false);
-                    //commandEditText.setText("/system/bin/sh -"+menv+"adb shell dpm set-device-owner com.emanuelef.remote_capture.debug/com.emanuelef.remote_capture.activities.admin\nexit\n");
+                    //commandEditText.setText("/system/bin/sh -"+menv+"adb shell dpm set-device-owner com.emanuelef.remote_capture.debug/com.emanuelef.remote_capture.activities.admin & exit\nexit\n");
                     final String commandToExecute = commandEditText.getText().toString();
                     if (commandToExecute.isEmpty()) {
                         outputTextView.append("שגיאה: נא הכנס פקודה לביצוע.\n");
@@ -312,7 +313,7 @@ public class activityadbpair extends Activity {
                         return;
                     }
 
-                    Log.d(TAG, "Button clicked, executing command: " + commandToExecute);
+                    //Log.d(TAG, "Button clicked, executing command: " + commandToExecute);
                     // הפעלת הפקודה על Thread נפרד
                     new Thread(new Runnable() {
                             @Override
