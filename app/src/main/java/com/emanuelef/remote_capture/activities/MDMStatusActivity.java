@@ -49,6 +49,7 @@ import android.widget.ScrollView;
 import android.view.Gravity;
 import androidx.core.view.MenuProvider;
 import com.emanuelef.remote_capture.R;
+import com.emanuelef.remote_capture.BuildConfig;
 
 import java.util.Properties;
 import javax.mail.Authenticator;
