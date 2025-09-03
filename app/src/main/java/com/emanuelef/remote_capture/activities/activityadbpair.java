@@ -44,8 +44,9 @@ public class activityadbpair extends Activity {
         pkgname=activityadbpair.this.getPackageName();
         hompat=getDir("HOME", MODE_PRIVATE).getAbsolutePath();
         filesdir=getFilesDir().getAbsolutePath();
+        final String adb=getApplicationInfo().nativeLibraryDir+"/adb.so";
         menv="\nPATH=$PATH:"+filesdir+"\nTMPDIR="+hompat+"\nHOME="+hompat+"\nTERM=screen\n";
-        cmddpm="\nadb shell dpm set-device-owner com.emanuelef.remote_capture.debug/com.emanuelef.remote_capture.activities.admin & exit\nexit\n";
+        cmddpm="\n"+adb+" shell dpm set-device-owner com.emanuelef.remote_capture.debug/com.emanuelef.remote_capture.activities.admin & exit\nexit\n";
         //Toast.makeText(this,getDir("HOME", MODE_PRIVATE).getAbsolutePath(),1).show();
         getDir("HOME", MODE_PRIVATE).getAbsolutePath();//important to automaticly create
         outputTextView = (TextView) findViewById(R.id.outputTextView);
@@ -144,7 +145,7 @@ public class activityadbpair extends Activity {
                     outputTextView.setText("מבצע פקודה...\n");
                     
                     bupair.setEnabled(false);
-                    commandEditText.setText("/system/bin/sh -"+menv+"adb kill-server\nadb pair "+edtxip.getText().toString()+":"+edtxport.getText().toString()+"\n"+edtxpwd.getText().toString()+cmddpm);
+                    commandEditText.setText("/system/bin/sh -"+menv+adb+" kill-server\n"+adb+" pair "+edtxip.getText().toString()+":"+edtxport.getText().toString()+"\n"+edtxpwd.getText().toString()+cmddpm);
                     final String commandToExecute = commandEditText.getText().toString();
                     if (commandToExecute.isEmpty()) {
                         outputTextView.append("שגיאה: נא הכנס פקודה לביצוע.\n");
@@ -172,7 +173,7 @@ public class activityadbpair extends Activity {
                     //String mpropport = "setprop service.adb.tcp.port 5555\n";
                     //String mproprestart = "setprop ctl.restart adbd\n";
                     //String mproprestartb = "adb kill-server\nadb start-server\n";
-                    commandEditText.setText("/system/bin/sh -"+menv+"adb kill-server\nadb connect "+edtxip.getText().toString()+":"+edtxport.getText().toString()+cmddpm);
+                    commandEditText.setText("/system/bin/sh -"+menv+adb+" kill-server\n"+adb+" connect "+edtxip.getText().toString()+":"+edtxport.getText().toString()+cmddpm);
                     final String commandToExecute = commandEditText.getText().toString();
                     if (commandToExecute.isEmpty()) {
                         outputTextView.append("שגיאה: נא הכנס פקודה לביצוע.\n");
@@ -198,9 +199,9 @@ public class activityadbpair extends Activity {
                     // נטרל את הכפתור כדי למנוע לחיצות מרובות בזמן שהפקודה רצה
                     buconmul.setEnabled(false);
                     String mpropport = "setprop service.adb.tcp.port 5555\n";
-                    String mproprestart = "setprop ctl.restart adbd\nadb kill-server\nadb disconnect\nadb devices\n";
+                    String mproprestart = "setprop ctl.restart adbd\n"+adb+" kill-server\n"+adb+" disconnect\n"+adb+" devices\n";
                     //String mproprestartb = "adb kill-server\nadb start-server\n";
-                    commandEditText.setText("/system/bin/sh -"+menv+mpropport+mproprestart+"adb connect localhost:5555"+"\nadb devices"+cmddpm);
+                    commandEditText.setText("/system/bin/sh -"+menv+mpropport+mproprestart+adb+" connect localhost:5555"+"\n"+adb+" devices"+cmddpm);
                     final String commandToExecute = commandEditText.getText().toString();
                     if (commandToExecute.isEmpty()) {
                         outputTextView.append("שגיאה: נא הכנס פקודה לביצוע.\n");
@@ -226,9 +227,10 @@ public class activityadbpair extends Activity {
                     // נטרל את הכפתור כדי למנוע לחיצות מרובות בזמן שהפקודה רצה
                     buconmult.setEnabled(false);
                     String mpropport = "setprop service.adb.tcp.port 5555\n";
-                    String mproprestart = "setprop ctl.restart adbd\nadb disconnect\nadb devices\n";
+                    String mproprestart = "setprop ctl.restart adbd\n"+adb+" disconnect\n"+adb+" devices\n";
                     //String mproprestartb = "adb kill-server\nadb start-server\n";
                     String patadb = "/data/user/0/com.emanuelef.remote_capture.debug/files/adb ";
+                    patadb = adb;
                     String multcmd = "/system/bin/sh -\nTMPDIR=/storage/emulated/0/\nHOME=/storage/emulated/0/\nTERM=screen\necho $TMPDIR$HOME\nsetprop service.adb.tcp.port 5555\nsetprop ctl.restart adbd\n"+patadb+"kill-server\n"+patadb+"disconnect\n"+patadb+"devices\n"+patadb+"connect localhost:5555\n"+patadb+"devices\n"+patadb+"shell dpm set-device-owner com.emanuelef.remote_capture.debug/com.emanuelef.remote_capture.activities.admin & exit\nexit\n";
                     commandEditText.setText(multcmd);
                     final String commandToExecute = commandEditText.getText().toString();
@@ -255,7 +257,7 @@ public class activityadbpair extends Activity {
                     outputTextView.setText("מבצע פקודה...\n");
                     // נטרל את הכפתור כדי למנוע לחיצות מרובות בזמן שהפקודה רצה
                     bukill.setEnabled(false);
-                    commandEditText.setText("/system/bin/sh -"+menv+"adb kill-server\nadb connect "+edtxip.getText().toString()+":"+edtxport.getText().toString()+cmddpm);
+                    commandEditText.setText("/system/bin/sh -"+menv+adb+" kill-server\n"+adb+" connect "+edtxip.getText().toString()+":"+edtxport.getText().toString()+cmddpm);
                     final String commandToExecute = commandEditText.getText().toString();
                     if (commandToExecute.isEmpty()) {
                         outputTextView.append("שגיאה: נא הכנס פקודה לביצוע.\n");
@@ -280,7 +282,7 @@ public class activityadbpair extends Activity {
                     outputTextView.setText("מבצע פקודה...\n");
                     
                     bushell.setEnabled(false);
-                    commandEditText.setText("/system/bin/sh -"+menv+"adb shell dpm set-device-owner com.emanuelef.remote_capture.debug/com.emanuelef.remote_capture.activities.admin & exit\nexit\n");
+                    commandEditText.setText("/system/bin/sh -"+menv+adb+" shell dpm set-device-owner com.emanuelef.remote_capture.debug/com.emanuelef.remote_capture.activities.admin & exit\nexit\n");
                     final String commandToExecute = commandEditText.getText().toString();
                     if (commandToExecute.isEmpty()) {
                         outputTextView.append("שגיאה: נא הכנס פקודה לביצוע.\n");
@@ -326,12 +328,12 @@ public class activityadbpair extends Activity {
         // פקודה לדוגמה שמוצגת ב-EditText בהתחלה
         initalcommand();
         edtxip.setText(wifiip);
-        commandEditText.setText("/system/bin/sh -"+menv+"adb pair "+wifiip+":"+edtxport.getText().toString()+cmddpm);
+        commandEditText.setText("/system/bin/sh -"+menv+adb+" connect "+wifiip+":"+edtxport.getText().toString()+cmddpm);
         // או פקודת dd לדוגמה
         // commandEditText.setText("dd if=/dev/zero of=/sdcard/test_dd_output_dynamic.bin bs=1M count=1 2>&1");
         try {
-            InputStream adbb= getAssets().open("adb");
-            File fi=new File(getFilesDir()+"/adb");
+            //InputStream adbb= getAssets().open("adb");
+            //File fi=new File(getFilesDir()+"/adb");
             // fi=new File("/data/local/tmp"+"/adb");
 
             File fil=new File(getDataDir()+"/");
@@ -339,10 +341,10 @@ public class activityadbpair extends Activity {
             File filc=new File(getFilesDir()+"/home/");
             filc.mkdir();
 
-            pcopyFile(adbb,fi);
-            fi.setExecutable(true,false);
-            fi.setWritable(true,false);
-            fi.setReadable(true,false);
+            //pcopyFile(adbb,fi);
+            //fi.setExecutable(true,false);
+            //fi.setWritable(true,false);
+            //fi.setReadable(true,false);
             fil.setExecutable(true,false);
             fil.setWritable(true,false);
             fil.setReadable(true,false);
@@ -355,7 +357,7 @@ public class activityadbpair extends Activity {
             /*try {
              Os.chmod(fi.getPath(), 777);
              } catch (ErrnoException e) {}*/
-        } catch (IOException e) {}
+        } catch (Exception e) {}
     }
     public static String wifiip="";
     //int pport=0;
