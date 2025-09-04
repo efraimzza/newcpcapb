@@ -129,8 +129,7 @@ public class MDMSettingsActivity extends Activity {
                     @Override
                     public void onClick(final View v) {
                         // with password
-                        if (v.getId() == R.id.btn_manage_restrictions ||
-                            v.getId() == R.id.btn_change_password ||
+                        if (v.getId() == R.id.btn_change_password ||
                             v.getId() == R.id.btn_remove_frp ||
                             v.getId() == R.id.btn_activate_frp ||
                             v.getId() == R.id.btn_lock_mdm ||

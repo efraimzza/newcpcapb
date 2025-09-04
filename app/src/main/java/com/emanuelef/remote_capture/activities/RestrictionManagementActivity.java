@@ -181,7 +181,13 @@ public class RestrictionManagementActivity extends Activity {
             mDpm.getUserRestrictions(mAdminComponentName).getBoolean(UserManager.DISALLOW_USB_FILE_TRANSFER),
             R.drawable.ic_restriction_usb_file_transfer
         );
-
+        mRestrictionList.add(new RestrictionItem("",
+                                  "השבתת מצלמה",
+                                  "מונע אפשרות צילום והסרטה",
+                                  "DISALLOW_CAMERA",
+                                  mDpm.getCameraDisabled(mAdminComponentName),
+                                  R.drawable.ic_restriction_vpn
+                               ));
         // טיפול ספציפי ב-VPN - השתמש במתודה המתאימה
         boolean vpnenabled=false;
         String strpkgvpn= mDpm.getAlwaysOnVpnPackage(mAdminComponentName);
@@ -254,17 +260,25 @@ public class RestrictionManagementActivity extends Activity {
                     try {
                         mDpm.setAlwaysOnVpnPackage(mAdminComponentName, item.isEnabled() ? getPackageName() : null, item.isEnabled());
                         // שנה ל-package name של אפליקציית ה-VPN שלך!
-                        Toast.makeText(this, "הגדרת VPN תמידי: " + (item.isEnabled() ? "הופעל" : "בוטל"), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(this, "הגדרת VPN תמידי: " + (item.isEnabled() ? "הופעל" : "בוטל"), Toast.LENGTH_SHORT).show();
                     } catch (PackageManager.NameNotFoundException e) {
                         Toast.makeText(this, "שגיאה: אפליקציית ה-VPN לא נמצאה.", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(this, "אפשרות VPN תמידי זמינה מ-Android 7.0 (API 24) ואילך.", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this, "אפשרות VPN תמידי זמינה מ-Android 7.0 (API 24) ואילך.", Toast.LENGTH_SHORT).show();
                 }
             } else if (item.getKey().equals("ALLOW_VPN_GENERAL")) {
                 // זהו פריט דמה, אין API ישיר לשליטה כללית ב-VPN כהגבלה.
                 // ייתכן שצריך להסיר אותו או להחליף אותו בלוגיקה ספציפית אם יש צורך.
                 Toast.makeText(this, "הגדרת VPN כללי אינה נתמכת כהגבלת משתמש ישירה.", Toast.LENGTH_SHORT).show();
+            }else if (item.getKey().equals("DISALLOW_CAMERA")) {
+                if (Build.VERSION.SDK_INT >= 14) {
+                    try {
+                        mDpm.setCameraDisabled(mAdminComponentName, item.isEnabled());
+                    } catch (Exception e) {
+                        Toast.makeText(this, ""+e, Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
             else {
                 // עבור שאר הגבלות UserManager
