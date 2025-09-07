@@ -302,7 +302,7 @@ public class MDMStatusActivity extends Activity {
     public static void showRemoveMDMConfirmationDialog(final Activity activity) {
         new AlertDialog.Builder(activity)
             .setTitle("הסר ניהול מכשיר")
-            .setMessage("האם אתה בטוח שברצונך להסיר את אפליקציית ה-MDM כמנהל המכשיר?")
+            .setMessage("האם אתה בטוח שברצונך להסיר את אפליקציית ה-MDM כמנהל המכשיר\nאזהרה: אם הסתרת אפליקציות תצטרך להסיר את ההסתרה ידנית בניהול אפליקציות לפני ההסרה!?")
             .setPositiveButton("כן, הסר", new DialogInterface.OnClickListener() {
                 @Deprecated
                 @Override
