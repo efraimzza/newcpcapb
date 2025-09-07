@@ -136,7 +136,7 @@ public class AppManagementActivity extends Activity {
                         }
                         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                         intent.setType("*/*");
-                        String[] mimetypes = {"application/vnd.android.package-archive", "application/zip", "application/x-zip-compressed", "application/octet-stream"};
+                        String[] mimetypes = {"*/apk","*/apks","*/xapk","application/vnd.android.package-archive", "application/zip", "application/x-zip-compressed", "application/octet-stream"};
                         intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
 
                         intent.addCategory(Intent.CATEGORY_OPENABLE);
