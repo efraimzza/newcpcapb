@@ -47,6 +47,7 @@ public class InstallReceiver extends BroadcastReceiver {
                 case PackageInstaller.STATUS_FAILURE_INCOMPATIBLE:
                 case PackageInstaller.STATUS_FAILURE_INVALID:
                 case PackageInstaller.STATUS_FAILURE_STORAGE:
+                    LogUtil.logToFile("rece-"+e);
                     Toast.makeText(context, "התקנה נכשלה עבור " + packageName + ": " + message, Toast.LENGTH_LONG).show();
                     break;
                 default:
