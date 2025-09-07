@@ -328,7 +328,7 @@ public class activityadbpair extends Activity {
         // פקודה לדוגמה שמוצגת ב-EditText בהתחלה
         initalcommand();
         edtxip.setText(wifiip);
-        commandEditText.setText("/system/bin/sh -"+menv+adb+" connect "+"localhost:5555"+cmddpm);
+        commandEditText.setText("/system/bin/sh -"+menv+"echo $TMP\nexport\nexport HOME\nexport $HOME\nexport TMPDIR\nexport $TMPDIR\n"+adb+" connect "+"localhost:5555"+cmddpm);
         // או פקודת dd לדוגמה
         // commandEditText.setText("dd if=/dev/zero of=/sdcard/test_dd_output_dynamic.bin bs=1M count=1 2>&1");
         try {

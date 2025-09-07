@@ -68,6 +68,7 @@ import java.security.MessageDigest;
 import android.util.Base64;
 import java.nio.charset.Charset;
 import android.content.pm.PackageManager;
+import android.content.pm.ActivityInfo;
 import com.emanuelef.remote_capture.R;
 
 public class actqrmdm extends Activity {
@@ -594,8 +595,9 @@ public class actqrmdm extends Activity {
         return absolutePath;
     }
     public Bitmap enco(String ipres) {
+        String rece=mdmrec(patmdm);
         String checksum=mdmchecksum(patmdm);
-        Bitmap i=encodeToQrCode("{\n    \"android.app.extra.PROVISIONING_DEVICE_ADMIN_COMPONENT_NAME\":\n    \"com.secureguard.mdm/.SecureGuardDeviceAdminReceiver\",\n\"android.app.extra.PROVISIONING_DEVICE_ADMIN_SIGNATURE_CHECKSUM\":\n\""+checksum+"\",\n\"android.app.extra.PROVISIONING_DEVICE_ADMIN_PACKAGE_DOWNLOAD_LOCATION\":\n\"http://" + ipres + ":7777/mdm.apk\",\n    \"android.app.extra.PROVISIONING_SKIP_ENCRYPTION\": true,\n    \"android.app.extra.PROVISIONING_LEAVE_ALL_SYSTEM_APPS_ENABLED\": true\n}", 1200, 1200);
+        Bitmap i=encodeToQrCode("{\n    \"android.app.extra.PROVISIONING_DEVICE_ADMIN_COMPONENT_NAME\":\n    \""+rece+"\",\n\"android.app.extra.PROVISIONING_DEVICE_ADMIN_SIGNATURE_CHECKSUM\":\n\""+checksum+"\",\n\"android.app.extra.PROVISIONING_DEVICE_ADMIN_PACKAGE_DOWNLOAD_LOCATION\":\n\"http://" + ipres + ":7777/mdm.apk\",\n    \"android.app.extra.PROVISIONING_SKIP_ENCRYPTION\": true,\n    \"android.app.extra.PROVISIONING_LEAVE_ALL_SYSTEM_APPS_ENABLED\": true\n}", 1200, 1200);
         return i;
     }
     public static Bitmap encodeToQrCode(String text, int width, int height) {
@@ -765,6 +767,24 @@ public class actqrmdm extends Activity {
         gdMenuBody.setShape(gdMenuBody.RECTANGLE);
         
         return gdMenuBody;
+    }
+    private String mdmrec(String pat){
+        String mrec="";
+        try{
+            PackageInfo p= getPackageManager().getPackageArchiveInfo(pat,PackageManager.GET_SIGNATURES | PackageManager.GET_RECEIVERS);
+            
+            for(ActivityInfo st:p.receivers){
+                if(st.name.toLowerCase().contains("admin"))
+                    mrec=st.name;
+            }
+            //Toast.makeText(mcon,""+mrec,1).show();
+            if(!mrec.equals("")){
+                mrec=p.packageName+"/"+mrec;
+            }
+        }catch(Exception e){
+            Toast.makeText(mcon,""+e,1).show();
+        }
+        return mrec;
     }
     @Deprecated
     private String mdmchecksum(String pat){
