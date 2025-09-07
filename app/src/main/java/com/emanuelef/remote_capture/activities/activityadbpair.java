@@ -169,7 +169,7 @@ public class activityadbpair extends Activity {
                     //String mpropport = "setprop service.adb.tcp.port 5555\n";
                     //String mproprestart = "setprop ctl.restart adbd\n";
                     //String mproprestartb = "adb kill-server\nadb start-server\n";
-                    commandEditText.setText("/system/bin/sh -"+menv+adb+" kill-server\n"+adb+" connect "+edtxip.getText().toString()+":"+edtxport.getText().toString()+cmddpm);
+                    commandEditText.setText("/system/bin/sh -"+menv+adb+" kill-server\nadb.so disconnect\nadb.so connect "+edtxip.getText().toString()+":"+edtxport.getText().toString()+"\nadb.so disconnect\nadb.so connect "+edtxip.getText().toString()+":"+edtxport.getText().toString()+cmddpm);
                     final String commandToExecute = commandEditText.getText().toString();
                     if (commandToExecute.isEmpty()) {
                         outputTextView.append("שגיאה: נא הכנס פקודה לביצוע.\n");
