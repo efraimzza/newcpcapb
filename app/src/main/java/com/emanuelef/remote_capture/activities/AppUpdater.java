@@ -148,6 +148,7 @@ public class AppUpdater {
             Toast.makeText(context, "מתחיל התקנת/עדכון APK...", Toast.LENGTH_SHORT).show();
 
         } catch (Exception e) {
+            LogUtil.logToFile(""+e);
             Toast.makeText(context, "שגיאה בהתחלת התקנה/עדכון: " + e.getMessage(), Toast.LENGTH_LONG).show();
             if (session != null) {
                 session.abandon();
@@ -174,6 +175,7 @@ public class AppUpdater {
             }
             return getSignaturesFromPackageInfo(packageInfo);
         } catch (Exception e) {
+            LogUtil.logToFile(""+e);
             e.printStackTrace();
         }
         return null;
@@ -220,6 +222,7 @@ public class AppUpdater {
                 return packageInfo.packageName;
             }
         } catch (Exception e) {
+            LogUtil.logToFile(""+e);
             e.printStackTrace();
         }
         return null;

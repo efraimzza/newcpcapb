@@ -125,13 +125,14 @@ public class AppManagementActivity extends Activity {
                                                 getPackageManager().getPackageInstaller().abandonSession(pses.getSessionId());
                                             }
                                         } catch (Exception e) {
-                                           
+                                            LogUtil.logToFile(""+e);
                                             Toast.makeText(AppManagementActivity.this, "" + e, 0).show();
                                         }
                                     }
                                 }
                             }
                         } catch (Exception e) {
+                            LogUtil.logToFile(""+e);
                             Toast.makeText(AppManagementActivity.this, "" + e, 0).show();
                         }
                         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -177,6 +178,7 @@ public class AppManagementActivity extends Activity {
                     PackageInfo packageInfo = pm.getPackageInfo(appInfo.packageName, 0);
                     lastUpdateTime = packageInfo.lastUpdateTime;
                 } catch (PackageManager.NameNotFoundException e) {
+                    LogUtil.logToFile(""+e);
                     e.printStackTrace();
                 }
 
@@ -395,6 +397,7 @@ public class AppManagementActivity extends Activity {
                         Toast.makeText(this, "לא ניתן לגשת לקובץ הנבחר או להעתיקו.", Toast.LENGTH_LONG).show();
                     }
                 } catch (Exception e) {
+                    LogUtil.logToFile(""+e);
                     Toast.makeText(this, "שגיאה בטיפול בקובץ: " + e.getMessage(), Toast.LENGTH_LONG).show();
                     e.printStackTrace();
                     if (tempFile != null && tempFile.exists()) {
@@ -501,6 +504,7 @@ public class AppManagementActivity extends Activity {
             outputStream.flush();
             return tempFile;
         } catch (Exception e) {
+            LogUtil.logToFile(""+e);
             e.printStackTrace();
             if (tempFile != null && tempFile.exists()) {
                 tempFile.delete(); // מחיקת קובץ חלקי במקרה של שגיאה
@@ -511,6 +515,7 @@ public class AppManagementActivity extends Activity {
                 if (inputStream != null) inputStream.close();
                 if (outputStream != null) outputStream.close();
             } catch (IOException e) {
+                LogUtil.logToFile(""+e);
                 e.printStackTrace();
             }
         }
