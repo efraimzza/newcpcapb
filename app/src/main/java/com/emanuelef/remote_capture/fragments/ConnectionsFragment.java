@@ -146,6 +146,7 @@ public class ConnectionsFragment extends Fragment implements ConnectionsListener
     EditText edtxd;
     AlertDialog alertDialogb;
     TextView tvtc,tvc;
+    Button bud;
     
     private final ActivityResultLauncher<Intent> csvFileLauncher =
             registerForActivityResult(new StartActivityForResult(), this::csvFileResult);
