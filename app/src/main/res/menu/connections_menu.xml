@@ -28,4 +28,10 @@
         android:orderInCategory="30"
         android:icon="@drawable/ic_save"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/senddev"
+        android:title="@string/sendtodev"
+        android:orderInCategory="40"
+        android:icon="@drawable/ic_save"
+        app:showAsAction="never" />
 </menu>

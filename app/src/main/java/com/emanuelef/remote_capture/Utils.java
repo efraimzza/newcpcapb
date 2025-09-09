@@ -1069,8 +1069,8 @@ public class Utils {
                 try {
                     // Necessary otherwise the connection will stay open
                     con.setRequestProperty("Connection", "Close");
-                    con.setConnectTimeout(5000);
-                    con.setReadTimeout(5000);
+                    con.setConnectTimeout(15000);
+                    con.setReadTimeout(15000);
 
                     try(InputStream in = new BufferedInputStream(con.getInputStream())) {
                         byte[] bytesIn = new byte[4096];
@@ -1175,8 +1175,8 @@ public class Utils {
             connection = (HttpsURLConnection) url.openConnection();
             connection.setSSLSocketFactory(sslSocketFactory);
             connection.setRequestProperty("Connection", "Close");
-            connection.setConnectTimeout(5000);
-            connection.setReadTimeout(5000);
+            connection.setConnectTimeout(15000);
+            connection.setReadTimeout(15000);
             connections.put(fileurl, connection);
             connection.connect();
             

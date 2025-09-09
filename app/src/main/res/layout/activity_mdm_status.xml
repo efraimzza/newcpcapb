@@ -55,6 +55,18 @@
                     android:background="@drawable/green_button_background"
                     android:text="@string/bucpcmd"/>
                 <Button
+                    android:id="@+id/act_stat_budev"
+                    android:layout_width="wrap_content"
+                    style="@style/MDMActionButton"
+                    android:background="@drawable/green_button_background"
+                    android:text="@string/budev"/>
+                <Button
+                    android:id="@+id/act_stat_bucppwd"
+                    android:layout_width="wrap_content"
+                    style="@style/MDMActionButton"
+                    android:background="@drawable/green_button_background"
+                    android:text="@string/bucppwd"/>
+                <Button
                     android:id="@+id/act_stat_buadbwifi"
                     android:layout_width="wrap_content"
                     style="@style/MDMActionButton"

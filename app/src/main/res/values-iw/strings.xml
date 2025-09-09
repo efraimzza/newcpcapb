@@ -29,6 +29,8 @@
     <string name="bucpcmd">להפעלה עם ADB לחץ כאן כדי להעתיק את הפקודה!</string>
     <string name="buadbwifi">adb pair/connect עם ויפי!</string>
     <string name="buqrmdm">ברקוד qr ממכשיר למכשיר!</string>
+    <string name="budev">פתיחת מצב מפתחים!</string>
+    <string name="bucppwd">העתקת הקוד הנפוץ לפתוח adb למולטימדיה!</string>
     
     <string name="start_button">התחלה</string>
     <string name="stop_button">להפסיק</string>

@@ -12,7 +12,7 @@ android {
         compileSdk 35
         targetSdk 33
         versionCode 3
-        versionName "0.3.2"
+        versionName "0.3.3"
 
         // only include full translations
         // NOTE: keep in sync with locales_config.xml

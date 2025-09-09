@@ -158,6 +158,40 @@ public class Blacklists {
                 "https://raw.githubusercontent.com/davidonzo/Threat-Intel/master/lists/latestips.txt");
         */
                 break;
+                case MAPS:
+                    //domains
+                    addList("domains maps", BlacklistDescriptor.Type.DOMAIN_BLACKLIST,"maps.txt",
+                            "https://raw.githubusercontent.com/efraimzz/Mywhitelistdomains/refs/heads/main/maps.txt");
+                    // IPs
+                    addList("ips white", BlacklistDescriptor.Type.IP_BLACKLIST, "ipswhite.txt",
+                            "https://raw.githubusercontent.com/efraimzz/Mywhitelistdomains/refs/heads/main/ipswhite.txt");
+                    break;
+                case WAZE:
+                    //domains
+                    addList("domains waze", BlacklistDescriptor.Type.DOMAIN_BLACKLIST,"waze.txt",
+                            "https://raw.githubusercontent.com/efraimzz/Mywhitelistdomains/refs/heads/main/waze/waze-domains.txt");
+                    // IPs
+                    addList("ips white", BlacklistDescriptor.Type.IP_BLACKLIST, "ipswhite.txt",
+                            "https://raw.githubusercontent.com/efraimzz/Mywhitelistdomains/refs/heads/main/ipswhite.txt");
+                    break;
+                case MAIL:
+                    //domains
+                    addList("domains mail", BlacklistDescriptor.Type.DOMAIN_BLACKLIST,"mail.txt",
+                            "https://raw.githubusercontent.com/efraimzz/Mywhitelistdomains/refs/heads/main/mail/mail-domains.txt");
+                    // IPs
+                    addList("ips white", BlacklistDescriptor.Type.IP_BLACKLIST, "ipswhite.txt",
+                            "https://raw.githubusercontent.com/efraimzz/Mywhitelistdomains/refs/heads/main/ipswhite.txt");
+                    break;
+                case NAVIGATIONMUSICAPPS:
+                    //domains
+                    addList("domains navigationmusicapps", BlacklistDescriptor.Type.DOMAIN_BLACKLIST,"navigationmusicapps.txt",
+                            "https://raw.githubusercontent.com/efraimzz/Mywhitelistdomains/refs/heads/main/navigationmusicapps/navigationmusicapps-domains.txt");
+                    // IPs
+                    addList("ips white", BlacklistDescriptor.Type.IP_BLACKLIST, "ipswhite.txt",
+                            "https://raw.githubusercontent.com/efraimzz/Mywhitelistdomains/refs/heads/main/ipswhite.txt");
+                    break;
+                default:
+                    break;
         }
         // To review
         //https://github.com/StevenBlack/hosts

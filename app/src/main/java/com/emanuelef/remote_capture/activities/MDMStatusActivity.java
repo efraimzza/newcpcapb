@@ -72,7 +72,7 @@ public class MDMStatusActivity extends Activity {
     public static final String locksp="lock";
     LinearLayout linlactivate,linldetails;
     TextView tvappname,tvstate,tvroute,tvdescription,tvremoveroot,tvstartbarcode;
-    Button bucpcmd,busavebarcode,bustartroot,buadbwifi,buqrmdm;
+    Button bucpcmd,bucppwd,budev,busavebarcode,bustartroot,buadbwifi,buqrmdm;
     ImageView ivbarcode;
     Bitmap bmp;
     InputStream is;
@@ -118,6 +118,8 @@ public class MDMStatusActivity extends Activity {
         linlactivate=findViewById(R.id.act_stat_linlactivate);
         linldetails=findViewById(R.id.act_stat_linldetails);
         bucpcmd=findViewById(R.id.act_stat_bucpcmd);
+        bucppwd=findViewById(R.id.act_stat_bucppwd);
+        budev=findViewById(R.id.act_stat_budev);
         buadbwifi=findViewById(R.id.act_stat_buadbwifi);
         buqrmdm=findViewById(R.id.act_stat_buqrmdm);
         tvstartbarcode=findViewById(R.id.act_stat_tvstartbarcode);
@@ -137,6 +139,31 @@ public class MDMStatusActivity extends Activity {
                     clbo.setText("dpm set-device-owner com.emanuelef.remote_capture.debug/com.emanuelef.remote_capture.activities.admin");
                     Toast.makeText(MDMStatusActivity.this, "הועתק ללוח!",1).show();
                     
+                }
+            });
+        bucppwd.setOnClickListener(new OnClickListener(){
+                @Deprecated
+                @Override
+                public void onClick(View p1) {
+                    ClipboardManager clbo= (ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
+                    clbo.setText("john@tw-desktop");
+                    Toast.makeText(MDMStatusActivity.this, "הועתק ללוח!",1).show();
+                    
+                }
+            });
+        budev.setOnClickListener(new OnClickListener(){
+                @Deprecated
+                @Override
+                public void onClick(View p1) {
+                    try{
+                    Intent intent = new Intent().setClassName("com.android.settings","com.android.settings.Settings$DevelopmentSettingsDashboardActivity");
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    }catch(Exception e){
+                        try{
+                            
+                        }catch(Exception e){}
+                    }
                 }
             });
         buadbwifi.setOnClickListener(new OnClickListener(){

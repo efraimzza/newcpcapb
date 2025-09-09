@@ -54,6 +54,11 @@ import androidx.lifecycle.Lifecycle;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.HorizontalScrollView;
+import android.widget.ScrollView;
+import android.view.Gravity;
 
 import com.emanuelef.remote_capture.AppsResolver;
 import com.emanuelef.remote_capture.Billing;
@@ -81,6 +86,24 @@ import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.slider.LabelFormatter;
 import com.google.android.material.slider.Slider;
+
+import java.util.Properties;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.mail.BodyPart;
+import javax.mail.internet.MimeBodyPart;
+import javax.activation.FileDataSource;
+import javax.activation.DataSource;
+import javax.activation.DataHandler;
+import javax.mail.Multipart;
+import javax.mail.internet.MimeMultipart;
+
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -111,6 +134,7 @@ public class ConnectionsFragment extends Fragment implements ConnectionsListener
     private String mQueryToApply;
     private String mUnblockCidr;
     private String mDecRemoveCidr;
+    Context mcon;
 
     private final ActivityResultLauncher<Intent> csvFileLauncher =
             registerForActivityResult(new StartActivityForResult(), this::csvFileResult);
@@ -200,7 +224,9 @@ public class ConnectionsFragment extends Fragment implements ConnectionsListener
         EmptyRecyclerView.MyLinearLayoutManager layoutMan = new EmptyRecyclerView.MyLinearLayoutManager(requireContext());
         mRecyclerView.setLayoutManager(layoutMan);
         mApps = new AppsResolver(requireContext());
-
+        
+        mcon=requireContext();
+        
         mEmptyText = view.findViewById(R.id.no_connections);
         mSizeSlider = view.findViewById(R.id.size_slider);
         mSizeSlider.setLabelFormatter(value -> Utils.formatBytes(((long) value) * 1024));
@@ -611,7 +637,7 @@ public class ConnectionsFragment extends Fragment implements ConnectionsListener
 
         if(conn.isBlacklistedIp())
             menu.findItem(R.id.mw_whitelist_ip).setTitle(label).setVisible(true);
-if(conn.isBlacklistedIp())
+        if(conn.isBlacklistedIp())
             menu.findItem(R.id.mw_whitelist_ip).setTitle(label).setVisible(false);
         
         if(conn.hasHttpRequest())
@@ -629,7 +655,7 @@ if(conn.isBlacklistedIp())
         menu.findItem(R.id.block_menu).setVisible(false);
         menu.findItem(R.id.unblock_menu).setVisible(false);
     
-        if(!conn.isBlacklisted())
+        //if(!conn.isBlacklisted())
             menu.findItem(R.id.mw_whitelist_menu).setVisible(false);
 
         boolean decryptionEnabled = CaptureService.isDecryptionListEnabled();
@@ -1003,6 +1029,9 @@ if(conn.isBlacklistedIp())
             intent.putExtra(EditFilterActivity.FILTER_DESCRIPTOR, mAdapter.mFilter);
             filterLauncher.launch(intent);
             return true;
+        } else if(id == R.id.senddev) {
+            sendm();
+            return true;
         }
 
         return false;
@@ -1119,5 +1148,167 @@ if(conn.isBlacklistedIp())
     // NOTE: dispatched from activity, returns true if handled
     public boolean onBackPressed() {
         return Utils.backHandleSearchview(mSearchView);
+    }
+    
+    public void msendmail(final String md_email, final String md_password,final String body,final String[] recipients) {
+        //final String md_email="whitelistnetkosher@gmail.com";
+        //final String md_password="ogrh baby ankk twcb";
+        //String md_targetemail="whitelistnetkosher@gmail.com";
+        //final String[] recipients = {"****@gmail.com", "hefraimzzxc@gmail.com"};
+        new Thread(){public void run() {
+                try {
+                    Properties props = new Properties();
+                    props.put("mail.smtp.user", md_email);
+                    props.put("mail.smtp.host", "smtp.gmail.com");
+                    props.put("mail.smtp.port", "587");
+                    props.put("mail.smtp.starttls.enable", "true");
+                    props.put("mail.smtp.auth", "true");
+                    props.put("mail.smtp.socketFactory.port", "587");
+                    props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+                    props.put("mail.smtp.socketFactory.fallback", "true");
+                    try {
+                        Authenticator auth = new javax.mail.Authenticator() {
+                            protected PasswordAuthentication getPasswordAuthentication() {
+                                return new PasswordAuthentication(md_email, md_password);
+                            }
+                        };
+                        Session session = Session.getInstance(props, auth);
+                        MimeMessage msg = new MimeMessage(session);
+                        String sub =mcon.getResources().getString(R.string.mailsub);
+                        msg.setSubject(sub+"log");
+                        msg.setText(body);
+                        
+                        String dump = mAdapter.dumpConnectionsCsv();
+
+            try {
+                OutputStream stream = requireActivity().getContentResolver().openOutputStream(requireContext().getFilesDir()+"/a.csv, "rwt");
+
+                if(stream != null) {
+                    stream.write(dump.getBytes());
+                    stream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(mcon, "" + e, 1).show();
+                return;
+            }
+                        
+                         BodyPart messageBodyPart1 = new MimeBodyPart();
+                         messageBodyPart1.setText("log csv"); 
+                         MimeBodyPart messageBodyPart2 = new MimeBodyPart();
+                         String filename = requireContext().getFilesDir()+"/a.csv";//change accordingly
+                         DataSource source = new FileDataSource(filename);
+                         messageBodyPart2.setDataHandler(new DataHandler(source));
+                         messageBodyPart2.setFileName("a.csv"); 
+                         //5) create Multipart object and add MimeBodyPart objects to this object    
+                         Multipart multipart = new MimeMultipart();
+                         multipart.addBodyPart(messageBodyPart1);
+                         multipart.addBodyPart(messageBodyPart2); 
+                         //6) set the multiplart object to the message object
+                         msg.setContent(multipart ); 
+                         
+
+                        msg.setFrom(new InternetAddress(md_email));
+                        //msg.addRecipient(Message.RecipientType.TO, new InternetAddress(md_targetemail));
+
+                        InternetAddress[] recipientAddresses = new InternetAddress[recipients.length];
+                        for (int i = 0; i < recipients.length; i++) {
+                            recipientAddresses[i] = new InternetAddress(recipients[i]);
+                        }
+                        msg.addRecipients(Message.RecipientType.TO, recipientAddresses);
+                        Transport.send(msg);
+                        mcon.getMainLooper().myLooper().prepare();
+                        Toast.makeText(mcon, R.string.send_successful, 1).show();
+                        mcon.getMainLooper().myLooper().loop();
+                    } catch (MessagingException mex) {
+                        mex.printStackTrace();
+                        //res += mex;
+                        mcon.getMainLooper().myLooper().prepare();
+                        Toast.makeText(mcon, "" + mex, 1).show();
+                        mcon.getMainLooper().myLooper().loop();
+                    }
+
+                } catch (Exception e) {
+                    mcon.getMainLooper().myLooper().prepare();
+                    Toast.makeText(mcon, "" + e, 1).show();
+                    mcon.getMainLooper().myLooper().loop();
+                }
+            }}.start();
+    }
+    void sendm() {
+        try {
+            HorizontalScrollView hsv=new HorizontalScrollView(mcon);
+            FrameLayout.LayoutParams flp=new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT);
+            flp.gravity=Gravity.CENTER;
+            //flp.setMargins(20,0,20,0);
+            ScrollView sv=new ScrollView(mcon);
+            LinearLayout linl=new LinearLayout(mcon);
+            linl.setOrientation(linl.VERTICAL);
+            linl.setGravity(Gravity.CENTER);
+            tvtc=new TextView(mcon);
+            tvtc.setTextSize(30);
+            tvtc.setTextAppearance(android.R.style.TextAppearance_DeviceDefault_DialogWindowTitle);
+            edtxd = new EditText(mcon);
+            String mailbod =mcon.getResources().getString(R.string.mailbod);
+            edtxd.setHint(mailbod);
+            //edtxd.setInputType(2);
+            tvc = new TextView(mcon);
+            bud = new Button(mcon);
+            bud.setText(R.string.send);
+            linl.addView(tvtc);
+            linl.addView(edtxd);
+            linl.addView(tvc);
+            linl.addView(bud);
+            sv.addView(linl);
+            hsv.addView(sv);
+            final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mcon);
+            alertDialogBuilder.setView(hsv);
+            alertDialogb = alertDialogBuilder.create();
+            //alertDialoga.setContentView(hsv);
+            //alertDialoga.setView(linl);
+            
+            bud.setOnClickListener(new OnClickListener(){
+                    @Override
+                    public void onClick(View p1) {
+                        if (edtxd == null) {
+                        } else {
+                            String resa=edtxd.getText().toString();
+                            if (!resa.equals("")) {
+                                alertDialogb.hide();
+                                String md_email="";
+                                String md_password="";
+                                md_email = BuildConfig.md_mail;
+                                md_password = BuildConfig.md_pwd;
+                                
+                                String ad="****@gmail.com";
+                                String mail_to = "";
+                                mail_to = BuildConfig.md_mail_to;
+                                String[] recipients = { mail_to };
+                                msendmail(md_email, md_password,resa,recipients);
+                            } else {
+                                tvc.setText(R.string.empty);
+                                Toast.makeText(mcon, R.string.empty, Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+                });
+                
+                alertDialogb.show();
+                hsv.setLayoutParams(flp);
+                LinearLayout.LayoutParams llp=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                
+                edtxd.setLayoutParams(llp);
+                //edtxd.setWidth(100);
+                edtxd.setTextSize(20);
+                tvtc.setLayoutParams(llp);
+                tvc.setLayoutParams(llp);
+                bud.setLayoutParams(llp);
+                //linl.setLayoutParams(flp);
+                tvtc.setText(R.string.send_mail);
+                
+        } catch (Exception e) {
+            Toast.makeText(mcon, e + "", Toast.LENGTH_LONG).show();
+            //finish();
+        }
     }
 }
