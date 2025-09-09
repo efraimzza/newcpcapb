@@ -4,7 +4,7 @@ public enum PathType {
     MULTIMEDIA("מולטימדיה"),
     MULTIMEDIA_ACCESSIBILITY("מולטימדיה ונגישות"),
     EVERYTHING("הכל");
-    MAPS("מפות");
+    MMAPS("מפות");
     WAZE("וויז");
     MAIL("מייל");
     NAVIGATIONMUSICAPPS("ניווט ומוזיקה");

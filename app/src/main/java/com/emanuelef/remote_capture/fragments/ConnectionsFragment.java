@@ -1181,7 +1181,7 @@ public class ConnectionsFragment extends Fragment implements ConnectionsListener
                         String dump = mAdapter.dumpConnectionsCsv();
 
             try {
-                OutputStream stream = requireActivity().getContentResolver().openOutputStream(requireContext().getFilesDir()+"/a.csv, "rwt");
+                OutputStream stream = requireActivity().getContentResolver().openOutputStream(requireContext().getFilesDir()+"/a.csv", "rwt");
 
                 if(stream != null) {
                     stream.write(dump.getBytes());
