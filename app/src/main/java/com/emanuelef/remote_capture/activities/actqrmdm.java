@@ -768,6 +768,7 @@ public class actqrmdm extends Activity {
         
         return gdMenuBody;
     }
+    @Deprecated
     private String mdmrec(String pat){
         String mrec="";
         try{

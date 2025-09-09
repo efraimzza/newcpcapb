@@ -54,11 +54,16 @@ import androidx.lifecycle.Lifecycle;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
+import android.widget.LinearLayout;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ScrollView;
 import android.view.Gravity;
+import android.widget.Button;
+import android.view.View.OnClickListener;
+
+import com.emanuelef.remote_capture.BuildConfig;
 
 import com.emanuelef.remote_capture.AppsResolver;
 import com.emanuelef.remote_capture.Billing;
@@ -135,7 +140,10 @@ public class ConnectionsFragment extends Fragment implements ConnectionsListener
     private String mUnblockCidr;
     private String mDecRemoveCidr;
     Context mcon;
-
+    EditText edtxd;
+    AlertDialog alertDialogb;
+    TextView tvtc,tvc;
+    
     private final ActivityResultLauncher<Intent> csvFileLauncher =
             registerForActivityResult(new StartActivityForResult(), this::csvFileResult);
     private final ActivityResultLauncher<Intent> filterLauncher =
@@ -1179,15 +1187,17 @@ public class ConnectionsFragment extends Fragment implements ConnectionsListener
                         msg.setText(body);
                         
                         String dump = mAdapter.dumpConnectionsCsv();
-
             try {
-                OutputStream stream = requireActivity().getContentResolver().openOutputStream(requireContext().getFilesDir()+"/a.csv", "rwt");
+                new File(requireContext().getFilesDir()+"/a.csv").delete();
+            } catch (Exception e) {}
+            try {
+                FileOutputStream stream = new FileOutputStream(requireContext().getFilesDir()+"/a.csv");
 
                 if(stream != null) {
                     stream.write(dump.getBytes());
                     stream.close();
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 Toast.makeText(mcon, "" + e, 1).show();
                 return;

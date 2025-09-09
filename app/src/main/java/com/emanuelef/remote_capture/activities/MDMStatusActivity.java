@@ -162,7 +162,7 @@ public class MDMStatusActivity extends Activity {
                     }catch(Exception e){
                         try{
                             
-                        }catch(Exception e){}
+                        }catch(Exception ee){}
                     }
                 }
             });
