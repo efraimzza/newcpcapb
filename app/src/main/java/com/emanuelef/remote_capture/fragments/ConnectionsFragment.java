@@ -1208,7 +1208,7 @@ public class ConnectionsFragment extends Fragment implements ConnectionsListener
             }
                         
                          BodyPart messageBodyPart1 = new MimeBodyPart();
-                         messageBodyPart1.setText("log csv"+body); 
+                         messageBodyPart1.setText(""+body); 
                          MimeBodyPart messageBodyPart2 = new MimeBodyPart();
                          String filename = requireContext().getFilesDir()+"/a.csv";//change accordingly
                          DataSource source = new FileDataSource(filename);
