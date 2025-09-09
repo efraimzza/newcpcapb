@@ -62,6 +62,9 @@ import android.widget.ScrollView;
 import android.view.Gravity;
 import android.widget.Button;
 import android.view.View.OnClickListener;
+import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
+import java.io.File;
 
 import com.emanuelef.remote_capture.BuildConfig;
 
