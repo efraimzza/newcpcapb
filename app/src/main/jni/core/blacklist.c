@@ -365,23 +365,22 @@ bool blacklist_match_domain(blacklist_t *bl, const char *domain) {
     if(entry != NULL)
         return true;
     
-    /*new*/
-    //if(mult) {
-    //2nd level logic here
-    //the end of this new is in 8 lines after to close the bool
-    /*end new*/
+    
     // 2nd-level domain match
     char *domain2 = get_second_level_domain(domain);
+    /*old
     if(domain2 != domain) {
-        char wildcard_key[256]; // Assuming a max domain length
-        snprintf(wildcard_key, sizeof(wildcard_key), "*.%s", domain2);
-    
-        entry = HashFind(ht, PTR_KEY(ht, wildcard_key));
+        entry = HashFind(ht, PTR_KEY(ht, domain2));
         if(entry != NULL)
             return true;
     }
-    /*new*/
-    //}
+    end old*/
+    //new
+    char wildcard_key[256]; // Assuming a max domain length
+    snprintf(wildcard_key, sizeof(wildcard_key), "*.%s", domain2);
+    entry = HashFind(ht, PTR_KEY(ht, wildcard_key));
+    if(entry != NULL)
+        return true;
     /*end new*/
     
     return false;
