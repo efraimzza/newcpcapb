@@ -1000,8 +1000,8 @@ public class Utils {
 
     // www.example.org -> example.org
     public static String cleanDomain(String domain) {
-        //if(domain.startsWith("www."))
-        //    domain = domain.substring(4);
+        if(domain.startsWith("www."))
+            domain = domain.substring(4);
         //new
         if(domain.startsWith("*."))
             domain = domain.substring(2);

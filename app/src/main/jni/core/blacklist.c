@@ -67,12 +67,12 @@ blacklist_t* blacklist_init() {
 /* ******************************************************* */
 
 int blacklist_add_domain(blacklist_t *bl, const char *domain) {
-    //if(strncmp(domain, "www.", 4) == 0)
-    //    domain += 4;
+    if(strncmp(domain, "www.", 4) == 0)
+        domain += 4;
     
     /*new*/
-    if(strncmp(domain, "*.", 2) == 0)
-        domain += 2;
+    //if(strncmp(domain, "*.", 2) == 0)
+    //    domain += 2;
     /*end new*/
     
     if(blacklist_match_domain(bl, domain))
@@ -349,8 +349,8 @@ bool blacklist_match_domain(blacklist_t *bl, const char *domain) {
     HashTable* ht = bl->domains;
     HTItem *entry = NULL;
 
-    //if(strncmp(domain, "www.", 4) == 0)
-    //    domain += 4;
+    if(strncmp(domain, "www.", 4) == 0)
+        domain += 4;
    
     /*new*/
     bool mult=false;
@@ -366,19 +366,22 @@ bool blacklist_match_domain(blacklist_t *bl, const char *domain) {
         return true;
     
     /*new*/
-    if(mult) {
+    //if(mult) {
     //2nd level logic here
     //the end of this new is in 8 lines after to close the bool
     /*end new*/
     // 2nd-level domain match
     char *domain2 = get_second_level_domain(domain);
     if(domain2 != domain) {
+        char wildcard_key[256]; // Assuming a max domain length
+        snprintf(wildcard_key, sizeof(wildcard_key), "*.%s", domain2);
+    
         entry = HashFind(ht, PTR_KEY(ht, domain2));
         if(entry != NULL)
             return true;
     }
     /*new*/
-    }
+    //}
     /*end new*/
     
     return false;
