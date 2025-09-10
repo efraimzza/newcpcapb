@@ -473,13 +473,13 @@ public class MatchList {
         // exact domain match
         if(matchesExactHost(nhost))
             return true;
-        if(!nhost.equals(host)){
+        //if(!nhost.equals(host)){
         // 2nd-level domain match
             String domain = Utils.getSecondLevelDomain(nhost);
             return !domain.equals(nhost) && mMatches.containsKey(matchKey(RuleType.HOST, domain));
-        }else{
-            return false;
-        }
+        //}else{
+        //    return false;
+        //}
         //end new
     }
 
