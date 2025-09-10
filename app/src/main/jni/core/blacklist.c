@@ -376,7 +376,7 @@ bool blacklist_match_domain(blacklist_t *bl, const char *domain) {
         char wildcard_key[256]; // Assuming a max domain length
         snprintf(wildcard_key, sizeof(wildcard_key), "*.%s", domain2);
     
-        entry = HashFind(ht, PTR_KEY(ht, domain2));
+        entry = HashFind(ht, PTR_KEY(ht, wildcard_key));
         if(entry != NULL)
             return true;
     }
