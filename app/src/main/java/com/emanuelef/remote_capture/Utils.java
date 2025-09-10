@@ -1003,7 +1003,7 @@ public class Utils {
         //if(domain.startsWith("www."))
         //    domain = domain.substring(4);
         //new
-        if(domain.startsWith("*."))
+        if(domain.startsWith("\\*."))
             domain = domain.substring(2);
         //end new
         return domain;
