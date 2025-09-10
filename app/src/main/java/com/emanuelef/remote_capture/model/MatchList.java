@@ -452,6 +452,7 @@ public class MatchList {
     }
 
     public boolean matchesHost(String host) {
+    /*old
         // Keep in sync with the native blacklist_match_domain
         host = Utils.cleanDomain(host);
 
@@ -462,6 +463,24 @@ public class MatchList {
         // 2nd-level domain match
         String domain = Utils.getSecondLevelDomain(host);
         return !domain.equals(host) && mMatches.containsKey(matchKey(RuleType.HOST, domain));
+        //end old
+        */
+        //new
+        // Keep in sync with the native blacklist_match_domain
+        String nhost=host;
+        nhost = Utils.cleanDomain(host);
+
+        // exact domain match
+        if(matchesExactHost(nhost))
+            return true;
+        if(!nhost.equals(host)){
+        // 2nd-level domain match
+            String domain = Utils.getSecondLevelDomain(nhost);
+            return !domain.equals(nhost) && mMatches.containsKey(matchKey(RuleType.HOST, domain));
+        }else{
+            return false;
+        }
+        //end new
     }
 
     public boolean matchesCountry(String country_code) {
