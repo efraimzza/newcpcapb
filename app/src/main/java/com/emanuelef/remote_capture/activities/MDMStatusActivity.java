@@ -51,6 +51,7 @@ import androidx.core.view.MenuProvider;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import android.graphics.Color;
 
 import com.emanuelef.remote_capture.R;
 import com.emanuelef.remote_capture.BuildConfig;
@@ -75,7 +76,7 @@ public class MDMStatusActivity extends Activity {
     public static final String modesp="mode";
     public static final String locksp="lock";
     LinearLayout linlactivate,linldetails;
-    TextView tvappname,tvstate,tvroute,tvdescription,tvremoveroot,tvstartbarcode;
+    TextView tvappname,tvstate,tvtinst,tvtlogin,tvroute,tvdescription,tvremoveroot,tvstartbarcode;
     Button bucpcmd,bucppwd,budev,busavebarcode,bustartroot,buadbwifi,buqrmdm;
     ImageView ivbarcode;
     Bitmap bmp;

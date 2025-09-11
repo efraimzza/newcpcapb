@@ -239,7 +239,7 @@ public class PasswordManager {
         builder.setNegativeButton("ביטול", null);
         builder.show();
     }
-    private String getCurrentDate() {
+    private static String getCurrentDate() {
         return new SimpleDateFormat("yyddMMHHmmss").format(Calendar.getInstance().getTime());
     }
 }
