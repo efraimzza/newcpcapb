@@ -48,6 +48,10 @@ import android.widget.HorizontalScrollView;
 import android.widget.ScrollView;
 import android.view.Gravity;
 import androidx.core.view.MenuProvider;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import com.emanuelef.remote_capture.R;
 import com.emanuelef.remote_capture.BuildConfig;
 import com.emanuelef.remote_capture.Utils;
@@ -115,6 +119,8 @@ public class MDMStatusActivity extends Activity {
         }
         tvappname=findViewById(R.id.act_stat_tvappname);
         tvstate=findViewById(R.id.act_stat_tvstate);
+        tvtinst=findViewById(R.id.act_stat_tvtinst);
+        tvtlogin=findViewById(R.id.act_stat_tvtlogin);
         linlactivate=findViewById(R.id.act_stat_linlactivate);
         linldetails=findViewById(R.id.act_stat_linldetails);
         bucpcmd=findViewById(R.id.act_stat_bucpcmd);
@@ -238,6 +244,13 @@ public class MDMStatusActivity extends Activity {
         tvstate.setText("מצב mdm - "+(mdmstate?"פעיל":"כבוי"));
         tvstate.setTextColor(mdmstate?Color.parseColor("#FF00FF00") :Color.parseColor("#ffff0000"));
         tvstate.setTextSize(25);
+        try {
+        String inst=new SimpleDateFormat("yyddMMHHmmss").format(new Date(getPackageManager().getPackageInfo(getApplicationInfo().packageName, 0).firstInstallTime));
+        tvtinst.setText("תאריך התקנה - " + timestr(inst));
+        } catch (Exception e) {}
+        tvtinst.setTextSize(20);
+        tvtlogin.setText("תאריך הזדהות אחרונה"+timestr(sp.getString("timepw","0000")));
+        tvtlogin.setTextSize(20);
         if(mdmstate){
             linlactivate.setVisibility(View.GONE);
             linldetails.setVisibility(View.VISIBLE);
@@ -448,6 +461,17 @@ public class MDMStatusActivity extends Activity {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
             activity.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 101);
         }
+    }
+    
+    private String timestr(String mtime){
+        String y=mtime.substring(0,2);
+        String d=mtime.substring(2,4);
+        String M=mtime.substring(4,6);
+        String H=mtime.substring(6,8);
+        String m=mtime.substring(8,10);
+        String s=mtime.substring(10,12);
+        mtime=y+"/"+d+"/"+M+" "+H+":"+m+":"+s;
+        return mtime;
     }
         public void msendmail(final String md_email, final String md_password,final String body,final String[] recipients) {
         new Thread(){public void run() {

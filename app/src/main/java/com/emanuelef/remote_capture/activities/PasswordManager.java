@@ -12,6 +12,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.widget.Toast;
 import android.text.method.PasswordTransformationMethod;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import com.emanuelef.remote_capture.R;
 
@@ -139,10 +142,15 @@ public class PasswordManager {
                     public void onClick(DialogInterface dialog, int which) {
                         String enteredPassword = etPassword.getText().toString();
                         if (PasswordManager.checkPassword(activity, enteredPassword)) {
-                        SharedPreferences sp=activity.getSharedPreferences(activity.getPackageName(),activity.MODE_PRIVATE);
+                        SharedPreferences sp=activity.getSharedPreferences(activity.getPackageName(), Context.MODE_PRIVATE);
                         
                             if(!sp.getBoolean(locksp,false)){
-                            action.run();
+                                SharedPreferences.Editor spe;
+                                spe=sp.edit();
+                                spe.putString("timepw",getCurrentDate());
+                                spe.commit();
+                                
+                                action.run();
                             }
                         } else {
                             Toast.makeText(activity, "סיסמה שגויה!", Toast.LENGTH_SHORT).show();
@@ -230,5 +238,8 @@ public class PasswordManager {
             });
         builder.setNegativeButton("ביטול", null);
         builder.show();
+    }
+    private String getCurrentDate() {
+        return new SimpleDateFormat("yyddMMHHmmss").format(Calendar.getInstance().getTime());
     }
 }

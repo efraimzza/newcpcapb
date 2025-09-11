@@ -36,6 +36,29 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp" />
+            <TextView
+                android:id="@+id/act_stat_tvtinst"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="time install"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp" />
+            <TextView
+                android:id="@+id/act_stat_tvtlogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="time login"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(צריך להשבית שינוי תאריך ושעה!)"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp" />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -54,6 +77,12 @@
                     style="@style/MDMActionButton"
                     android:background="@drawable/green_button_background"
                     android:text="@string/bucpcmd"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#DDDDDD"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="24dp"/>
                 <Button
                     android:id="@+id/act_stat_budev"
                     android:layout_width="wrap_content"
@@ -72,6 +101,12 @@
                     style="@style/MDMActionButton"
                     android:background="@drawable/green_button_background"
                     android:text="@string/buadbwifi"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#DDDDDD"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="24dp"/>
                 <Button
                     android:id="@+id/act_stat_buqrmdm"
                     android:layout_width="wrap_content"
