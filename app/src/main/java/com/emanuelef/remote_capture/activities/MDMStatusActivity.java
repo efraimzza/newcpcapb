@@ -246,7 +246,7 @@ public class MDMStatusActivity extends Activity {
         try {
         tvstate.setTextColor(mdmstate?Color.parseColor("#FF00FF00") :Color.parseColor("#ffff0000"));
         tvstate.setTextSize(25);
-        
+        try{
         String inst=new SimpleDateFormat("yyddMMHHmmss").format(new Date(getPackageManager().getPackageInfo(getApplicationInfo().packageName, 0).firstInstallTime));
         tvtinst.setText("תאריך התקנה - " + timestr(inst));
         } catch (Exception e) {}
