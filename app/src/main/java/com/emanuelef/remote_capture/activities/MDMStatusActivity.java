@@ -243,15 +243,17 @@ public class MDMStatusActivity extends Activity {
     private void refresh(){
         boolean mdmstate=mDpm.isDeviceOwnerApp(getPackageName());
         tvstate.setText("מצב mdm - "+(mdmstate?"פעיל":"כבוי"));
+        try {
         tvstate.setTextColor(mdmstate?Color.parseColor("#FF00FF00") :Color.parseColor("#ffff0000"));
         tvstate.setTextSize(25);
-        try {
+        
         String inst=new SimpleDateFormat("yyddMMHHmmss").format(new Date(getPackageManager().getPackageInfo(getApplicationInfo().packageName, 0).firstInstallTime));
         tvtinst.setText("תאריך התקנה - " + timestr(inst));
         } catch (Exception e) {}
         tvtinst.setTextSize(20);
-        tvtlogin.setText("תאריך הזדהות אחרונה"+timestr(sp.getString("timepw","0000")));
+        tvtlogin.setText("תאריך הזדהות אחרונה"+timestr(sp.getString("timepw","000000000000")));
         tvtlogin.setTextSize(20);
+        } catch (Exception e) {}
         if(mdmstate){
             linlactivate.setVisibility(View.GONE);
             linldetails.setVisibility(View.VISIBLE);
