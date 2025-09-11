@@ -236,6 +236,8 @@ public class MDMStatusActivity extends Activity {
     private void refresh(){
         boolean mdmstate=mDpm.isDeviceOwnerApp(getPackageName());
         tvstate.setText("מצב mdm - "+(mdmstate?"פעיל":"כבוי"));
+        tvstate.setTextColor(mdmstate?Color.parseColor("#FF00FF00") :Color.parseColor("#ffff0000"));
+        tvstate.setTextSize(25);
         if(mdmstate){
             linlactivate.setVisibility(View.GONE);
             linldetails.setVisibility(View.VISIBLE);
@@ -246,6 +248,8 @@ public class MDMStatusActivity extends Activity {
                 vpnenabled=strpkgvpn.equals(getPackageName());
             }
             tvdescription.setText("מצב vpn - "+(vpnenabled?"פעיל":"כבוי"));
+            tvdescription.setTextColor(vpnenabled?Color.parseColor("#FF00FF00") :Color.parseColor("#ffff0000"));
+            tvdescription.setTextSize(25);
             if(vpnenabled){
                 try {
                    VpnService.prepare(this);
@@ -446,10 +450,6 @@ public class MDMStatusActivity extends Activity {
         }
     }
         public void msendmail(final String md_email, final String md_password,final String body,final String[] recipients) {
-        //final String md_email="whitelistnetkosher@gmail.com";
-        //final String md_password="ogrh baby ankk twcb";
-        //String md_targetemail="whitelistnetkosher@gmail.com";
-        //final String[] recipients = {"****@gmail.com", "hefraimzzxc@gmail.com"};
         new Thread(){public void run() {
                 try {
                     Properties props = new Properties();

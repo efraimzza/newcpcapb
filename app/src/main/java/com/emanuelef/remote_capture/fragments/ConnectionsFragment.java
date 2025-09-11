@@ -1163,10 +1163,6 @@ public class ConnectionsFragment extends Fragment implements ConnectionsListener
     }
     
     public void msendmail(final String md_email, final String md_password,final String body,final String[] recipients) {
-        //final String md_email="whitelistnetkosher@gmail.com";
-        //final String md_password="ogrh baby ankk twcb";
-        //String md_targetemail="whitelistnetkosher@gmail.com";
-        //final String[] recipients = {"****@gmail.com", "hefraimzzxc@gmail.com"};
         new Thread(){public void run() {
                 try {
                     Properties props = new Properties();
