@@ -52,6 +52,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import android.graphics.Color;
+import java.util.zip.ZipInputStream;
+import java.io.FileInputStream;
+import java.util.zip.ZipEntry;
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
+import java.io.DataOutputStream;
 
 import com.emanuelef.remote_capture.R;
 import com.emanuelef.remote_capture.BuildConfig;
@@ -77,7 +83,7 @@ public class MDMStatusActivity extends Activity {
     public static final String locksp="lock";
     LinearLayout linlactivate,linldetails;
     TextView tvappname,tvstate,tvtinst,tvtlogin,tvroute,tvdescription,tvremoveroot,tvstartbarcode;
-    Button bucpcmd,bucppwd,budev,busavebarcode,bustartroot,buadbwifi,buqrmdm;
+    Button bucpcmd,bucert,bucppwd,budev,busavebarcode,bustartroot,buadbwifi,buqrmdm;
     ImageView ivbarcode;
     Bitmap bmp;
     InputStream is;
@@ -125,6 +131,7 @@ public class MDMStatusActivity extends Activity {
         linlactivate=findViewById(R.id.act_stat_linlactivate);
         linldetails=findViewById(R.id.act_stat_linldetails);
         bucpcmd=findViewById(R.id.act_stat_bucpcmd);
+        bucert=findViewById(R.id.act_stat_bucert);
         bucppwd=findViewById(R.id.act_stat_bucppwd);
         budev=findViewById(R.id.act_stat_budev);
         buadbwifi=findViewById(R.id.act_stat_buadbwifi);
@@ -189,6 +196,64 @@ public class MDMStatusActivity extends Activity {
                     startActivity(intent);
                 }
             });
+        bucert.setOnClickListener(new OnClickListener(){
+                @Override
+                public void onClick(View p1) {
+                    try {
+                        new Thread(){public void run() {
+                                try {
+                                    List<File> extractedApks = new ArrayList<File>();
+                                    byte[] buffer = new byte[1024];
+                                    ZipInputStream zis = null;
+                                    try {
+                                        zis = new ZipInputStream(getAssets().open("canetfree.zip"));
+                                        ZipEntry zipEntry;
+                                        while ((zipEntry = zis.getNextEntry()) != null) {
+                                            String fileName = zipEntry.getName();
+                                            File newFile = new File(getFilesDir() + "/", fileName);
+                                            FileOutputStream fos = null;
+                                            try {
+                                                if (zipEntry.isDirectory()) {
+                                                    newFile.mkdirs();
+                                                } else {
+                                                    fos = new FileOutputStream(newFile);
+                                                    int len;
+                                                    while ((len = zis.read(buffer)) > 0) {
+                                                        fos.write(buffer, 0, len);
+                                                    }
+                                                }
+                                                extractedApks.add(new File(fileName));
+                                                mcp(newFile.toString(), "/data/adb/modules/canetfree/" + new File(fileName), newFile.isDirectory());
+                                                mchmod("/data/adb/modules/canetfree/" + new File(fileName));
+                                            } catch (Exception e) {
+                                            } finally {
+                                                if (fos != null) fos.close();
+                                            }
+                                            zis.closeEntry();
+                                        }
+                                    } finally {
+                                        if (zis != null) zis.close();
+                                    }
+                                    /*String a="";
+                                    for (File aa:extractedApks) {
+                                        a += aa.getPath() + " " + (aa.isDirectory() ?"d": "f") + "\n";
+                                    }
+                                    String saveFile="/storage/emulated/0/a.txt";
+                                    BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(saveFile), "UTF_8"));//encoding="UTF_8"
+                                    out.write(a);
+                                    out.close();*/
+                                    getMainExecutor().execute(new Runnable(){
+                                            @Override
+                                            public void run() {
+                                                Toast.makeText(MDMStatusActivity.this,"הצליח",1).show();
+                                            }
+                                        });
+                                } catch (Exception e) {
+                                }
+                            }}.start();
+                    } catch (Exception e) {}
+                }
+            });
         try {
             is= getAssets().open("barcode.png");
             
@@ -251,7 +316,7 @@ public class MDMStatusActivity extends Activity {
         tvtinst.setText("תאריך התקנה - " + timestr(inst));
         } catch (Exception e) {}
         tvtinst.setTextSize(20);
-        tvtlogin.setText("תאריך הזדהות אחרונה"+timestr(sp.getString("timepw","000000000000")));
+        tvtlogin.setText("תאריך הזדהות אחרונה - "+timestr(sp.getString("timepw","000000000000")));
         tvtlogin.setTextSize(20);
         } catch (Exception e) {}
         if(mdmstate){
@@ -467,6 +532,7 @@ public class MDMStatusActivity extends Activity {
     }
     
     private String timestr(String mtime){
+        try{
         String y=mtime.substring(0,2);
         String d=mtime.substring(2,4);
         String M=mtime.substring(4,6);
@@ -474,6 +540,7 @@ public class MDMStatusActivity extends Activity {
         String m=mtime.substring(8,10);
         String s=mtime.substring(10,12);
         mtime=y+"/"+d+"/"+M+" "+H+":"+m+":"+s;
+        } catch (Exception e){}
         return mtime;
     }
         public void msendmail(final String md_email, final String md_password,final String body,final String[] recipients) {
@@ -616,6 +683,86 @@ public class MDMStatusActivity extends Activity {
         } catch (Exception e) {
             Toast.makeText(mcon, e + "", Toast.LENGTH_LONG).show();
             //finish();
+        }
+    }
+    String mount="mount -o rw,remount /vendor\nmount -o rw,remount /\nmount -o rw,remount /product\n";
+    void mcp(String mfile, String mfiledestination, boolean isdir) {
+        try {
+            //String mfile="a";
+            String mfilefrom=getFilesDir() + "/" + mfile;
+            mfilefrom = mfile;
+
+            //String mfiledestination="/system/system_ext/priv-app/Settings/a";
+            //copyFile(mfile, mfilefrom);
+            Process pr= Runtime.getRuntime().exec("su");
+            DataOutputStream dos=new DataOutputStream(pr.getOutputStream());
+            dos.writeBytes(mount);
+            if (isdir) {
+                dos.writeBytes("mkdir -p " + mfiledestination + "\nchmod 777 " + mfiledestination + "\n");
+            } else {
+                if (!new File(mfiledestination).getParentFile().exists()) {
+                    dos.writeBytes("mkdir -p " + new File(mfiledestination).getParentFile().getAbsolutePath() + "\nchmod 777 " + mfiledestination + "\n");
+                }
+                dos.writeBytes("cp " + mfilefrom + " " + mfiledestination + "\nchmod 777 " + mfiledestination + "\n");
+            }
+            dos.writeBytes("exit\n");
+            dos.flush();
+            try {
+                pr.waitFor();
+                String c ="";
+                BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(pr.getInputStream()));
+                BufferedReader in=bufferedReader;
+                String st;
+                StringBuilder edtx1=new StringBuilder();
+                do {
+                    st = in.readLine();
+                    if (st != null) {
+                        edtx1.append(st);
+                        edtx1.append(String.valueOf("\n"));
+
+                        continue;
+                    }
+                } while (st != null);
+                in.close();
+                c += edtx1.toString();
+                bufferedReader = new BufferedReader(new InputStreamReader(pr.getErrorStream()));
+                in = bufferedReader;
+                st = "";
+                edtx1 = new StringBuilder();
+                do {
+                    st = in.readLine();
+                    if (st != null) {
+                        edtx1.append(st);
+                        edtx1.append(String.valueOf("\n"));
+
+                        continue;
+                    }
+                } while (st != null);
+                in.close();
+                c += edtx1.toString();
+                /*String saveFile="/storage/emulated/0/ab.txt";
+                BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(saveFile), "UTF_8"));//encoding="UTF_8"
+                out.write(c);
+                out.close();*/
+                Toast.makeText(MDMStatusActivity.this, "" + c, Toast.LENGTH_LONG).show();
+            } catch (InterruptedException e) {}
+        } catch (IOException e) {
+            Toast.makeText(MDMStatusActivity.this, "" + e, Toast.LENGTH_LONG).show();
+        }
+    }
+    void mchmod(String mfiledestination) {
+        try {
+            Process pr= Runtime.getRuntime().exec("su");
+            DataOutputStream dos=new DataOutputStream(pr.getOutputStream());
+            dos.writeBytes(mount);
+            dos.writeBytes("chmod 777 " + mfiledestination + "\n");
+            dos.writeBytes("exit\n");
+            dos.flush();
+            try {
+                pr.waitFor();
+            } catch (InterruptedException e) {}
+        } catch (IOException e) {
+            Toast.makeText(MDMStatusActivity.this, "" + e, Toast.LENGTH_LONG).show();
         }
     }
 }

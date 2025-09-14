@@ -84,6 +84,18 @@
                     android:layout_marginTop="24dp"
                     android:layout_marginBottom="24dp"/>
                 <Button
+                    android:id="@+id/act_stat_bucert"
+                    android:layout_width="wrap_content"
+                    style="@style/MDMActionButton"
+                    android:background="@drawable/green_button_background"
+                    android:text="התקנת מודל תעודת אבטחה לנטפרי!"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#DDDDDD"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="24dp"/>
+                <Button
                     android:id="@+id/act_stat_budev"
                     android:layout_width="wrap_content"
                     style="@style/MDMActionButton"
@@ -183,6 +195,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="description"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(במולטימדיה ובמכשירים לא רשמיים צריך להשבית שינוי הגדרות vpn!)"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
