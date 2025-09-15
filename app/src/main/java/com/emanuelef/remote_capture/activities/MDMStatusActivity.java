@@ -426,6 +426,8 @@ public class MDMStatusActivity extends Activity {
         linl.setOrientation(LinearLayout.VERTICAL);
         TextView tvdes=new TextView(activity);
         tvdes.setGravity(Gravity.CENTER);
+        tvdes.setTextSize(20);
+        tvdes.setTextColor(Color.parseColor("#ffff0000"));
         tvdes.setText("האם אתה בטוח שברצונך להסיר את אפליקציית ה-MDM כמנהל המכשיר?\nאזהרה: אם הסתרת אפליקציות תצטרך להסיר את ההסתרה ידנית בניהול אפליקציות לפני ההסרה!");
         Button buenall=new Button(activity);
         buenall.setBackgroundResource(R.drawable.green_button_background);
@@ -449,7 +451,7 @@ public class MDMStatusActivity extends Activity {
         new AlertDialog.Builder(activity)
             .setTitle("הסר ניהול מכשיר")
             .setView(linl)
-            .setMessage("האם אתה בטוח שברצונך להסיר את אפליקציית ה-MDM כמנהל המכשיר?\nאזהרה: אם הסתרת אפליקציות תצטרך להסיר את ההסתרה ידנית בניהול אפליקציות לפני ההסרה!")
+            //.setMessage("האם אתה בטוח שברצונך להסיר את אפליקציית ה-MDM כמנהל המכשיר?\nאזהרה: אם הסתרת אפליקציות תצטרך להסיר את ההסתרה ידנית בניהול אפליקציות לפני ההסרה!")
             .setPositiveButton("כן, הסר", new DialogInterface.OnClickListener() {
                 @Deprecated
                 @Override
