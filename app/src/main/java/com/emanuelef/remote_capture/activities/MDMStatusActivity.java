@@ -428,7 +428,7 @@ public class MDMStatusActivity extends Activity {
         tvdes.setGravity(Gravity.CENTER);
         tvdes.setTextSize(20);
         tvdes.setTextColor(Color.parseColor("#ffff0000"));
-        tvdes.setText("האם אתה בטוח שברצונך להסיר את אפליקציית ה-MDM כמנהל המכשיר?\nאזהרה: אם הסתרת אפליקציות תצטרך להסיר את ההסתרה ידנית בניהול אפליקציות לפני ההסרה!");
+        tvdes.setText("האם אתה בטוח שברצונך להסיר את אפליקציית ה-MDM כמנהל המכשיר?\nאזהרה: אם הסתרת אפליקציות תצטרך להסיר את ההסתרה לפני ההסרה!");
         Button buenall=new Button(activity);
         buenall.setBackgroundResource(R.drawable.green_button_background);
         buenall.setText("הסרת הסתרת כל האפליקציות");
