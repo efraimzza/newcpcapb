@@ -684,6 +684,8 @@ public class MDMSettingsActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        PasswordManager.pwopen=false;
+        
         // בטל רישום של ה-BroadcastReceiver כדי למנוע דליפות זיכרון
         unregisterReceiver(monDownloadComplete);
         // עצור עדכוני התקדמות ממתינים
@@ -721,11 +723,6 @@ public class MDMSettingsActivity extends Activity {
             });
         builder.show();
     }
-    
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        PasswordManager.pwopen=false;
-    }
+
     
 }

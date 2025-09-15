@@ -76,6 +76,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+@Deprecated
 public class MDMStatusActivity extends Activity {
     
     public static DevicePolicyManager mDpm;
@@ -434,7 +435,7 @@ public class MDMStatusActivity extends Activity {
                 @Override
                 public void onClick(View p1) {
                     activity.getMainExecutor().execute(new Runnable(){
-                        
+                            @Deprecated
                             @Override
                             public void run() {
                                new EnableAppsTask().execute();
@@ -475,9 +476,9 @@ public class MDMStatusActivity extends Activity {
             .setNegativeButton("ביטול", null)
             .show();
     }
-    
+    @Deprecated
     private static class EnableAppsTask extends AsyncTask<Void, Void, List<AppItem>> {
-
+        @Deprecated
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -487,7 +488,7 @@ public class MDMStatusActivity extends Activity {
             progressDialog.setCancelable(false);
             progressDialog.show();
         }
-
+        @Deprecated
         @Override
         protected List<AppItem> doInBackground(Void... voids) {
             PackageManager pm = mactivity.getPackageManager();
@@ -505,7 +506,7 @@ public class MDMStatusActivity extends Activity {
             }
             return appList;
         }
-
+        @Deprecated
         @Override
         protected void onPostExecute(List<AppItem> result) {
             super.onPostExecute(result);
