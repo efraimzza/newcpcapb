@@ -58,6 +58,9 @@ import java.util.zip.ZipEntry;
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
 import java.io.DataOutputStream;
+import android.content.pm.ApplicationInfo;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 
 import com.emanuelef.remote_capture.R;
 import com.emanuelef.remote_capture.BuildConfig;
@@ -92,11 +95,14 @@ public class MDMStatusActivity extends Activity {
     AlertDialog alertDialogb;
     TextView tvtc,tvc;
     Button bud;
+    private static ProgressDialog progressDialog;
+    private static Activity mactivity;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mdm_status);
+        mactivity=this;
         if(!hasManageExternalStoragePermission(this)){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 requestManageExternalStoragePermission(this);
@@ -175,7 +181,9 @@ public class MDMStatusActivity extends Activity {
                     startActivity(intent);
                     }catch(Exception e){
                         try{
-                            
+                            Intent intent = new Intent().setClassName("com.android.settings","com.android.settings.Settings$DevelopmentSettingsActivity");
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
                         }catch(Exception ee){}
                     }
                 }
@@ -306,6 +314,7 @@ public class MDMStatusActivity extends Activity {
         
     }
     private void refresh(){
+        PasswordManager.pwopen=false;
         boolean mdmstate=mDpm.isDeviceOwnerApp(getPackageName());
         tvstate.setText("מצב mdm - "+(mdmstate?"פעיל":"כבוי"));
         try {
@@ -412,8 +421,33 @@ public class MDMStatusActivity extends Activity {
         // }
     }
     public static void showRemoveMDMConfirmationDialog(final Activity activity) {
+        LinearLayout linl=new LinearLayout(activity);
+        linl.setOrientation(LinearLayout.VERTICAL);
+        TextView tvdes=new TextView(activity);
+        tvdes.setGravity(Gravity.CENTER);
+        tvdes.setText("האם אתה בטוח שברצונך להסיר את אפליקציית ה-MDM כמנהל המכשיר?\nאזהרה: אם הסתרת אפליקציות תצטרך להסיר את ההסתרה ידנית בניהול אפליקציות לפני ההסרה!");
+        Button buenall=new Button(activity);
+        buenall.setBackgroundResource(R.drawable.green_button_background);
+        buenall.setText("הסרת הסתרת כל האפליקציות");
+        buenall.setOnClickListener(new OnClickListener(){
+
+                @Override
+                public void onClick(View p1) {
+                    activity.getMainExecutor().execute(new Runnable(){
+                        
+                            @Override
+                            public void run() {
+                               new EnableAppsTask().execute();
+                            }
+                        });
+                    
+                }
+            });
+        linl.addView(tvdes);
+        linl.addView(buenall);
         new AlertDialog.Builder(activity)
             .setTitle("הסר ניהול מכשיר")
+            .setView(linl)
             .setMessage("האם אתה בטוח שברצונך להסיר את אפליקציית ה-MDM כמנהל המכשיר?\nאזהרה: אם הסתרת אפליקציות תצטרך להסיר את ההסתרה ידנית בניהול אפליקציות לפני ההסרה!")
             .setPositiveButton("כן, הסר", new DialogInterface.OnClickListener() {
                 @Deprecated
@@ -441,9 +475,60 @@ public class MDMStatusActivity extends Activity {
             .setNegativeButton("ביטול", null)
             .show();
     }
+    
+    private static class EnableAppsTask extends AsyncTask<Void, Void, List<AppItem>> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(mactivity);
+            progressDialog.getWindow().setBackgroundDrawableResource(R.drawable.roundbugreen);
+            progressDialog.setMessage("מסיר הסתרת אפליקציות...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected List<AppItem> doInBackground(Void... voids) {
+            PackageManager pm = mactivity.getPackageManager();
+            List<ApplicationInfo> installedApps = pm.getInstalledApplications(PackageManager.GET_META_DATA | PackageManager.MATCH_UNINSTALLED_PACKAGES);
+            List<AppItem> appList = new ArrayList<AppItem>();
+
+            for (ApplicationInfo appInfo : installedApps) {
+                boolean isHiddenByMDM =false;
+                try{
+                    isHiddenByMDM = mDpm.isApplicationHidden(mAdminComponentName, appInfo.packageName);
+                    if(isHiddenByMDM){
+                        mDpm.setApplicationHidden(mAdminComponentName,appInfo.packageName,false);
+                    }
+                }catch(Exception e){}
+            }
+            return appList;
+        }
+
+        @Override
+        protected void onPostExecute(List<AppItem> result) {
+            super.onPostExecute(result);
+            if (progressDialog != null && progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+        }
+    }
     @Override
     protected void onResume() {
         super.onResume();
+        refresh();
+    }
+    
+    @Override
+    protected void onStart() {
+        super.onStart();
+        refresh();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
         refresh();
     }
     

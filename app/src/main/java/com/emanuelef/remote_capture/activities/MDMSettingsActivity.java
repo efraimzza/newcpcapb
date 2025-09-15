@@ -27,6 +27,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import androidx.preference.PreferenceManager;
 import android.content.SharedPreferences;
+import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.widget.Switch;
 import android.os.Build;
@@ -114,7 +115,8 @@ public class MDMSettingsActivity extends Activity {
         setupButton(R.id.btn_def_rest_multi, "השבתות מומלצות למולטימדיה", null);
         setupButton(R.id.btn_def_rest_cube, "השבתות מומלצות לקוביית אנדרואיד", null);
         setupButton(R.id.btn_update_whitelist, "עדכון לרשימת דומיינים לבנה", null); // תצטרך לוגיקה לזה
-        setupButton(R.id.btn_more_features, "פיצ'רים נוספים", MoreFeaturesActivity.class); // אקטיביטי חדש
+        setupButton(R.id.btn_more_features, "פיצ'רים נוספים", MoreFeaturesActivity.class);
+        setupButton(R.id.btn_pwopen, "אימות סיסמה לכל ההגדרות", null);
         setupabodeb();
         }  catch(Exception e){
             Toast.makeText(this, e+"",1).show();
@@ -135,7 +137,8 @@ public class MDMSettingsActivity extends Activity {
                             v.getId() == R.id.btn_lock_mdm ||
                             v.getId() ==  R.id.btn_select_route ||
                             v.getId() == R.id.btn_def_rest_multi ||
-                            v.getId() == R.id.btn_def_rest_cube) { 
+                            v.getId() == R.id.btn_def_rest_cube ||
+                            v.getId() ==  R.id.btn_pwopen) { 
                             PasswordManager.requestPasswordAndSave(new Runnable() {
                                     @Override
                                     public void run() {
@@ -270,6 +273,8 @@ public class MDMSettingsActivity extends Activity {
                    CaptureService.requestBlacklistsUpdate();
                    Toast.makeText(MDMSettingsActivity.this, "updating...",1).show();
                }
+            } else if (buttonId == R.id.btn_pwopen) {
+               pwopen();
             }
         }
     }
@@ -689,4 +694,38 @@ public class MDMSettingsActivity extends Activity {
             progressDialog.dismiss();
         }
     }
+    
+    private void pwopen() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MDMSettingsActivity.this);
+        builder.setTitle("אימות סיסמה");
+        LinearLayout linl=new LinearLayout(MDMSettingsActivity.this);
+        linl.setOrientation(LinearLayout.VERTICAL);
+        TextView tvdes=new TextView(MDMSettingsActivity.this);
+        tvdes.setText("הסרת בקשת הסיסמה עד הכניסה הבאה ל\"סטאטוס\" - המסך הראשוני של האפליקציה");
+        final Switch swi =new Switch(MDMSettingsActivity.this);
+        swi.setText("הסרת הסיסמה");
+        swi.setChecked(PasswordManager.pwopen);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.MATCH_PARENT);
+        swi.setLayoutParams(lp);
+        linl.addView(tvdes);
+        linl.addView(swi);
+        builder.setView(linl);
+        builder.setPositiveButton("אישור", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    PasswordManager.pwopen = swi.isChecked();
+                    dialog.cancel();
+                }
+            });
+        builder.show();
+    }
+    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PasswordManager.pwopen=false;
+    }
+    
 }

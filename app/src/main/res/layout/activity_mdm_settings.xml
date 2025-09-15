@@ -100,7 +100,17 @@
             <Button style="@style/MDMActionButton"
                 android:id="@+id/btn_more_features"
                 android:text="פיצ'רים נוספים"/>
+                
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#DDDDDD"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="24dp"/>
 
+            <Button style="@style/MDMActionButton"
+                android:id="@+id/btn_pwopen"
+                android:text="אימות סיסמה לכל ההגדרות"/>
         </LinearLayout>
     </ScrollView>
 

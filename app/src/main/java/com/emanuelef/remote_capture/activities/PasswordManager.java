@@ -23,7 +23,7 @@ public class PasswordManager {
     private static final String PREFS_NAME = "MDMPrefs";
     private static final String KEY_PASSWORD_HASH = "admin_password_hash";
     private static final int MIN_PASSWORD_LENGTH = 4; // אורך סיסמה מינימלי
-
+    public static boolean pwopen=false;
     /**
      * מגבבת (hashes) סיסמה באמצעות SHA-256 ושומרת אותה ב-SharedPreferences.
      *
@@ -108,6 +108,10 @@ public class PasswordManager {
         return MIN_PASSWORD_LENGTH;
     }
     public static void requestPasswordAndSave(final Runnable action,final Activity activity) {
+        if(pwopen){
+            action.run();
+            return;
+        }
         final String storedPasswordHash = PasswordManager.getStoredPasswordHash(activity);
         
         final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
