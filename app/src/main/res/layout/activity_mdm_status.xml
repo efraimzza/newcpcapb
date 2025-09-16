@@ -102,6 +102,12 @@
                     android:background="@drawable/green_button_background"
                     android:text="@string/budev"/>
                 <Button
+                    android:id="@+id/act_stat_buaccount"
+                    android:layout_width="wrap_content"
+                    style="@style/MDMActionButton"
+                    android:background="@drawable/green_button_background"
+                    android:text="@string/buaccount"/>
+                <Button
                     android:id="@+id/act_stat_bucppwd"
                     android:layout_width="wrap_content"
                     style="@style/MDMActionButton"

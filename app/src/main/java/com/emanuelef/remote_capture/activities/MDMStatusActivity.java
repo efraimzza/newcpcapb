@@ -87,7 +87,7 @@ public class MDMStatusActivity extends Activity {
     public static final String locksp="lock";
     LinearLayout linlactivate,linldetails;
     TextView tvappname,tvstate,tvtinst,tvtlogin,tvroute,tvdescription,tvremoveroot,tvstartbarcode;
-    Button bucpcmd,bucert,bucppwd,budev,busavebarcode,bustartroot,buadbwifi,buqrmdm;
+    Button bucpcmd,bucert,bucppwd,budev,buaccount,busavebarcode,bustartroot,buadbwifi,buqrmdm;
     ImageView ivbarcode;
     Bitmap bmp;
     InputStream is;
@@ -141,6 +141,7 @@ public class MDMStatusActivity extends Activity {
         bucert=findViewById(R.id.act_stat_bucert);
         bucppwd=findViewById(R.id.act_stat_bucppwd);
         budev=findViewById(R.id.act_stat_budev);
+        buaccount=findViewById(R.id.act_stat_buaccount);
         buadbwifi=findViewById(R.id.act_stat_buadbwifi);
         buqrmdm=findViewById(R.id.act_stat_buqrmdm);
         tvstartbarcode=findViewById(R.id.act_stat_tvstartbarcode);
@@ -186,6 +187,23 @@ public class MDMStatusActivity extends Activity {
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
                         }catch(Exception ee){}
+                    }
+                }
+            });
+        buaccount.setOnClickListener(new OnClickListener(){
+                @Deprecated
+                @Override
+                public void onClick(View p1) {
+                    try{
+                    Intent intent = new Intent().setClassName("com.android.settings","com.android.settings.Settings$AccountDashboardActivity");
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    }catch(Exception e){
+                        /*try{
+                            Intent intent = new Intent().setClassName("com.android.settings","com.android.settings.Settings$DevelopmentSettingsActivity");
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                        }catch(Exception ee){}*/
                     }
                 }
             });

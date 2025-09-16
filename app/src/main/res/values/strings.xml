@@ -75,6 +75,7 @@
     <string name="budev">פתיחת מצב מפתחים!</string>
     <string name="bucppwd">העתקת הקוד הנפוץ לפתוח adb למולטימדיה!</string>
     <string name="sendtodev">שלח קובץ csv למפתח!</string>
+    <string name="buaccount">פתיחת חשבונות בהגדרות!</string>
     
     <string name="start_button">Start</string>
     <string name="stop_button">Stop</string>
