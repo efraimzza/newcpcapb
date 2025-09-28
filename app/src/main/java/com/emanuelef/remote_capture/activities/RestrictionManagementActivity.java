@@ -15,6 +15,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 import android.content.pm.PackageManager;
+import android.content.SharedPreferences;
 import com.emanuelef.remote_capture.R;
 
 public class RestrictionManagementActivity extends Activity {
@@ -24,12 +25,17 @@ public class RestrictionManagementActivity extends Activity {
     private List<RestrictionItem> mRestrictionList;
     private RestrictionListAdapter mAdapter;
     private ListView lvRestrictions;
+    SharedPreferences sp;
+    SharedPreferences.Editor spe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restriction_management); // שם קובץ layout חדש
-
+        
+        sp = this.getSharedPreferences(this.getPackageName(), this.MODE_PRIVATE);
+        spe = sp.edit();
+        
         mDpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
         mAdminComponentName = new ComponentName(this, admin.class);
         if(mDpm.isDeviceOwnerApp(getPackageName())){
@@ -60,21 +66,47 @@ public class RestrictionManagementActivity extends Activity {
 
         // Helper method to add restriction if API level is met
         // addRestrictionIfApplicable(String name, String key, int minApi, boolean isEnabled, int iconResId)
-
-        addRestrictionIfApplicable(
-            "השבתת הגדרת נקודה חמה", UserManager.DISALLOW_CONFIG_TETHERING, 20,
-            mDpm.getUserRestrictions(mAdminComponentName).getBoolean(UserManager.DISALLOW_CONFIG_TETHERING),
-            R.drawable.ic_restriction_tethering
-        );
+        
+        boolean vpnenabled=false;
+        String strpkgvpn= mDpm.getAlwaysOnVpnPackage(mAdminComponentName);
+        if(strpkgvpn!=null){
+            vpnenabled=strpkgvpn.equals(getPackageName());
+        }
+        if (Build.VERSION.SDK_INT >= 24) {
+            mRestrictionList.add(new RestrictionItem("",
+                                     "הפעלת VPN תמידי",
+                                     "מונע עקיפת VPN על ידי חסימת כל תעבורת הרשת מחוץ ל-VPN.",
+                                     "DISALLOW_ALWAYS_ON_VPN", // זה לא UserManager restriction key, תצטרך לטפל בזה באופן נפרד ב-applyRestrictions
+                                     vpnenabled,
+                                     R.drawable.ic_restriction_vpn
+                                 ));
+        }
         addRestrictionIfApplicable(
             "השבתת הגדרת VPN", UserManager.DISALLOW_CONFIG_VPN, 20,
             mDpm.getUserRestrictions(mAdminComponentName).getBoolean(UserManager.DISALLOW_CONFIG_VPN),
             R.drawable.ic_restriction_vpn
         );
         addRestrictionIfApplicable(
+            "שינוי זמן", UserManager.DISALLOW_CONFIG_DATE_TIME, 27,
+            mDpm.getUserRestrictions(mAdminComponentName).getBoolean(UserManager.DISALLOW_CONFIG_DATE_TIME),
+            R.drawable.ic_restriction_date_time
+        );
+        addRestrictionIfApplicable(
+            "השבתת הגדרת נקודה חמה", UserManager.DISALLOW_CONFIG_TETHERING, 20,
+            mDpm.getUserRestrictions(mAdminComponentName).getBoolean(UserManager.DISALLOW_CONFIG_TETHERING),
+            R.drawable.ic_restriction_tethering
+        );
+        
+        addRestrictionIfApplicable(
             "השבתת הגדרת Wi-Fi", UserManager.DISALLOW_CONFIG_WIFI, 17,
             mDpm.getUserRestrictions(mAdminComponentName).getBoolean(UserManager.DISALLOW_CONFIG_WIFI),
             R.drawable.ic_restriction_wifi
+        );
+                
+        addRestrictionIfApplicable(
+            "מצב מפתחים", UserManager.DISALLOW_DEBUGGING_FEATURES, 20,
+            mDpm.getUserRestrictions(mAdminComponentName).getBoolean(UserManager.DISALLOW_DEBUGGING_FEATURES),
+            R.drawable.ic_restriction_developer_mode
         );
         addRestrictionIfApplicable(
             "השבתת התקנת אפליקציות", UserManager.DISALLOW_INSTALL_APPS, 17,
@@ -86,10 +118,16 @@ public class RestrictionManagementActivity extends Activity {
             mDpm.getUserRestrictions(mAdminComponentName).getBoolean(UserManager.DISALLOW_INSTALL_UNKNOWN_SOURCES),
             R.drawable.ic_restriction_unknown_sources
         );
+
         addRestrictionIfApplicable(
-            "מצב מפתחים", UserManager.DISALLOW_DEBUGGING_FEATURES, 20,
-            mDpm.getUserRestrictions(mAdminComponentName).getBoolean(UserManager.DISALLOW_DEBUGGING_FEATURES),
-            R.drawable.ic_restriction_developer_mode
+            "הסרת התקנה", UserManager.DISALLOW_UNINSTALL_APPS, 17,
+            mDpm.getUserRestrictions(mAdminComponentName).getBoolean(UserManager.DISALLOW_UNINSTALL_APPS),
+            R.drawable.ic_restriction_uninstall_apps
+        );
+        addRestrictionIfApplicable(
+            "שליטה באפליקציות", UserManager.DISALLOW_APPS_CONTROL, 20,
+            mDpm.getUserRestrictions(mAdminComponentName).getBoolean(UserManager.DISALLOW_APPS_CONTROL),
+            R.drawable.ic_restriction_apps_control
         );
         addRestrictionIfApplicable(
             "איפוס להגדרות יצרן", UserManager.DISALLOW_FACTORY_RESET, 20,
@@ -112,6 +150,17 @@ public class RestrictionManagementActivity extends Activity {
             R.drawable.ic_restriction_add_user
         );
         addRestrictionIfApplicable(
+            "מצב בטוח", UserManager.DISALLOW_SAFE_BOOT, 22,
+            mDpm.getUserRestrictions(mAdminComponentName).getBoolean(UserManager.DISALLOW_SAFE_BOOT),
+            R.drawable.ic_restriction_safe_boot
+        );
+        addRestrictionIfApplicable(
+            "הסרת משתמש", UserManager.DISALLOW_REMOVE_USER, 17,
+            mDpm.getUserRestrictions(mAdminComponentName).getBoolean(UserManager.DISALLOW_REMOVE_USER),
+            R.drawable.ic_restriction_remove_user
+        );     
+        
+        addRestrictionIfApplicable(
             "השבתת בלוטות'", UserManager.DISALLOW_BLUETOOTH, 25,
             mDpm.getUserRestrictions(mAdminComponentName).getBoolean(UserManager.DISALLOW_BLUETOOTH),
             R.drawable.ic_restriction_bluetooth
@@ -122,35 +171,23 @@ public class RestrictionManagementActivity extends Activity {
             R.drawable.ic_restriction_bluetooth
         );
         addRestrictionIfApplicable(
-            "השבתת DNS פרטי", UserManager.DISALLOW_CONFIG_PRIVATE_DNS, 28,
-            mDpm.getUserRestrictions(mAdminComponentName).getBoolean(UserManager.DISALLOW_CONFIG_PRIVATE_DNS),
-            R.drawable.ic_restriction_dns
-        );
-        addRestrictionIfApplicable(
-            "הסרת התקנה", UserManager.DISALLOW_UNINSTALL_APPS, 17,
-            mDpm.getUserRestrictions(mAdminComponentName).getBoolean(UserManager.DISALLOW_UNINSTALL_APPS),
-            R.drawable.ic_restriction_uninstall_apps
-        );
-        addRestrictionIfApplicable(
-            "אס אם אס (SMS)", UserManager.DISALLOW_SMS, 20,
-            mDpm.getUserRestrictions(mAdminComponentName).getBoolean(UserManager.DISALLOW_SMS),
-            R.drawable.ic_restriction_sms
-        );
-        addRestrictionIfApplicable(
             "שיתוף בלוטות'", UserManager.DISALLOW_BLUETOOTH_SHARING, 25,
             mDpm.getUserRestrictions(mAdminComponentName).getBoolean(UserManager.DISALLOW_BLUETOOTH_SHARING),
             R.drawable.ic_restriction_bluetooth // ניתן להשתמש באותו אייקון
         );
         addRestrictionIfApplicable(
-            "שינוי זמן", UserManager.DISALLOW_CONFIG_DATE_TIME, 27,
-            mDpm.getUserRestrictions(mAdminComponentName).getBoolean(UserManager.DISALLOW_CONFIG_DATE_TIME),
-            R.drawable.ic_restriction_date_time
+            "השבתת DNS פרטי", UserManager.DISALLOW_CONFIG_PRIVATE_DNS, 28,
+            mDpm.getUserRestrictions(mAdminComponentName).getBoolean(UserManager.DISALLOW_CONFIG_PRIVATE_DNS),
+            R.drawable.ic_restriction_dns
         );
+
         addRestrictionIfApplicable(
-            "מצב בטוח", UserManager.DISALLOW_SAFE_BOOT, 22,
-            mDpm.getUserRestrictions(mAdminComponentName).getBoolean(UserManager.DISALLOW_SAFE_BOOT),
-            R.drawable.ic_restriction_safe_boot
+            "אס אם אס (SMS)", UserManager.DISALLOW_SMS, 20,
+            mDpm.getUserRestrictions(mAdminComponentName).getBoolean(UserManager.DISALLOW_SMS),
+            R.drawable.ic_restriction_sms
         );
+
+
         addRestrictionIfApplicable(
             "שיחות יוצאות", UserManager.DISALLOW_OUTGOING_CALLS, 20,
             mDpm.getUserRestrictions(mAdminComponentName).getBoolean(UserManager.DISALLOW_OUTGOING_CALLS),
@@ -161,16 +198,8 @@ public class RestrictionManagementActivity extends Activity {
             mDpm.getUserRestrictions(mAdminComponentName).getBoolean(UserManager.DISALLOW_CONFIG_MOBILE_NETWORKS),
             R.drawable.ic_restriction_mobile_networks
         );
-        addRestrictionIfApplicable(
-            "הסרת משתמש", UserManager.DISALLOW_REMOVE_USER, 17,
-            mDpm.getUserRestrictions(mAdminComponentName).getBoolean(UserManager.DISALLOW_REMOVE_USER),
-            R.drawable.ic_restriction_remove_user
-        );
-        addRestrictionIfApplicable(
-            "שליטה באפליקציות", UserManager.DISALLOW_APPS_CONTROL, 20,
-            mDpm.getUserRestrictions(mAdminComponentName).getBoolean(UserManager.DISALLOW_APPS_CONTROL),
-            R.drawable.ic_restriction_apps_control
-        );
+
+        
         addRestrictionIfApplicable(
             "נדידת נתונים", UserManager.DISALLOW_DATA_ROAMING, 23,
             mDpm.getUserRestrictions(mAdminComponentName).getBoolean(UserManager.DISALLOW_DATA_ROAMING),
@@ -188,29 +217,20 @@ public class RestrictionManagementActivity extends Activity {
                                   mDpm.getCameraDisabled(mAdminComponentName),
                                   R.drawable.ic_restriction_vpn
                                ));
-        // טיפול ספציפי ב-VPN - השתמש במתודה המתאימה
-        boolean vpnenabled=false;
-        String strpkgvpn= mDpm.getAlwaysOnVpnPackage(mAdminComponentName);
-        if(strpkgvpn!=null){
-            vpnenabled=strpkgvpn.equals(getPackageName());
+        try{
+           if (Build.VERSION.SDK_INT >= 23) {
+                mRestrictionList.add(new RestrictionItem("",
+                                   "השבתת סטטוס בר",
+                                   "מונע אפשרות לראות סטטוס בר",
+                                   "DISALLOW_STATUSBAR",
+                                   sp.getBoolean("dis_statusbar",false),
+                                   R.drawable.ic_restriction_vpn
+                                ));
+           }
+        }catch(Exception e){
+            Toast.makeText(this, "c"+e, Toast.LENGTH_SHORT).show();
         }
-        if (Build.VERSION.SDK_INT >= 24) {
-            mRestrictionList.add(new RestrictionItem("",
-                                     "הפעלת VPN תמידי",
-                                     "מונע עקיפת VPN על ידי חסימת כל תעבורת הרשת מחוץ ל-VPN.",
-                                     "DISALLOW_ALWAYS_ON_VPN", // זה לא UserManager restriction key, תצטרך לטפל בזה באופן נפרד ב-applyRestrictions
-                                     vpnenabled,
-                                     R.drawable.ic_restriction_vpn
-                                 ));
-        } else if (Build.VERSION.SDK_INT >= 21) {
-            mRestrictionList.add(new RestrictionItem("",
-                                     "הפעלת VPN",
-                                     "מאפשר שליטה כללית בהפעלת VPN.",
-                                     "ALLOW_VPN_GENERAL", // זה לא UserManager restriction key
-                                     false, // סטטוס ברירת מחדל, כי אין בדיקה ישירה קלה כמו lockdown
-                                     R.drawable.ic_restriction_vpn
-                                 ));
-        }
+        
     }
 
     private void addRestrictionIfApplicable(String name, String key, int minApi, boolean isEnabled, int iconResId) {
@@ -247,7 +267,6 @@ public class RestrictionManagementActivity extends Activity {
             case UserManager.DISALLOW_DATA_ROAMING: return "מונע הפעלת נדידת נתונים סלולרית.";
             case UserManager.DISALLOW_USB_FILE_TRANSFER: return "מונע העברת קבצים באמצעות חיבור USB.";
             case "DISALLOW_ALWAYS_ON_VPN": return "כופה שימוש ב-VPN תמידי, מונע תעבורה מחוץ ל-VPN.";
-            case "ALLOW_VPN_GENERAL": return "מאפשר שליטה כללית בהפעלת VPN.";
             default: return "תיאור לא זמין.";
         }
     }
@@ -267,14 +286,20 @@ public class RestrictionManagementActivity extends Activity {
                 } else {
                     //Toast.makeText(this, "אפשרות VPN תמידי זמינה מ-Android 7.0 (API 24) ואילך.", Toast.LENGTH_SHORT).show();
                 }
-            } else if (item.getKey().equals("ALLOW_VPN_GENERAL")) {
-                // זהו פריט דמה, אין API ישיר לשליטה כללית ב-VPN כהגבלה.
-                // ייתכן שצריך להסיר אותו או להחליף אותו בלוגיקה ספציפית אם יש צורך.
-                Toast.makeText(this, "הגדרת VPN כללי אינה נתמכת כהגבלת משתמש ישירה.", Toast.LENGTH_SHORT).show();
-            }else if (item.getKey().equals("DISALLOW_CAMERA")) {
+            } else if (item.getKey().equals("DISALLOW_CAMERA")) {
                 if (Build.VERSION.SDK_INT >= 14) {
                     try {
                         mDpm.setCameraDisabled(mAdminComponentName, item.isEnabled());
+                    } catch (Exception e) {
+                        Toast.makeText(this, ""+e, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            } else if (item.getKey().equals("DISALLOW_STATUSBAR")) {
+                if (Build.VERSION.SDK_INT >= 23) {
+                    try {
+                        mDpm.setStatusBarDisabled(mAdminComponentName, item.isEnabled());
+                        spe.putBoolean("dis_statusbar",item.isEnabled());
+                        spe.commit();
                     } catch (Exception e) {
                         Toast.makeText(this, ""+e, Toast.LENGTH_SHORT).show();
                     }

@@ -67,6 +67,7 @@ import java.io.FileNotFoundException;
 import java.io.File;
 
 import com.emanuelef.remote_capture.BuildConfig;
+import com.emanuelef.remote_capture.activities.AppState;
 
 import com.emanuelef.remote_capture.AppsResolver;
 import com.emanuelef.remote_capture.Billing;
@@ -1183,7 +1184,7 @@ public class ConnectionsFragment extends Fragment implements ConnectionsListener
                         Session session = Session.getInstance(props, auth);
                         MimeMessage msg = new MimeMessage(session);
                         String sub =mcon.getResources().getString(R.string.mailsub);
-                        msg.setSubject(sub+"log");
+                        msg.setSubject(sub+" log "+AppState.getInstance().getCurrentPath().getDescription());
                         msg.setText(body);
                         
                         String dump = mAdapter.dumpConnectionsCsv();

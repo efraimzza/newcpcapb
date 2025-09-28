@@ -344,8 +344,10 @@ public class MDMStatusActivity extends Activity {
         tvtinst.setText("תאריך התקנה - " + timestr(inst));
         } catch (Exception e) {}
         tvtinst.setTextSize(20);
+        tvtinst.setGravity(Gravity.CENTER);
         tvtlogin.setText("תאריך הזדהות אחרונה - "+timestr(sp.getString("timepw","000000000000")));
         tvtlogin.setTextSize(20);
+        tvtlogin.setGravity(Gravity.CENTER);
         } catch (Exception e) {}
         if(mdmstate){
             linlactivate.setVisibility(View.GONE);
@@ -446,7 +448,7 @@ public class MDMStatusActivity extends Activity {
         tvdes.setGravity(Gravity.CENTER);
         tvdes.setTextSize(20);
         tvdes.setTextColor(Color.parseColor("#ffff0000"));
-        tvdes.setText("האם אתה בטוח שברצונך להסיר את אפליקציית ה-MDM כמנהל המכשיר?\nאזהרה: אם הסתרת אפליקציות תצטרך להסיר את ההסתרה לפני ההסרה!");
+        tvdes.setText("האם אתה בטוח שברצונך להסיר את אפליקציית ה-MDM כמנהל המכשיר?\nאזהרה: אם הסתרת אפליקציות תצטרך להסיר את ההסתרה לפני ההסרה!\nלפעמים ישארו גם כל מיני השבתות שתצטרכו להסיר ידנית בניהול השבתות(כמו השבתת סטטוס בר שאם לא הסרתם את ההשבתה בפעם הבאה תצטרכו להשבית את זה שוב בהגדרות אפילו שזה מושבת ורק אחר כך תצליחו להסיר...)");
         Button buenall=new Button(activity);
         buenall.setBackgroundResource(R.drawable.green_button_background);
         buenall.setText("הסרת הסתרת כל האפליקציות");
