@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/et_search_apps_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="חפש אפליקציה לפי שם"
+        android:inputType="text"
+        android:singleLine="true"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/et_search_package_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="חפש לפי שם חבילה"
+        android:inputType="text"
+        android:singleLine="true"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="סנן לפי:"
+        android:textSize="14sp"
+        android:layout_marginTop="8dp"/>
+    <RadioGroup
+        android:id="@+id/rg_filter_apps_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="8dp">
+        <RadioButton android:id="@+id/rb_filter_all_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="הכל"
+            android:checked="true"/>
+        <RadioButton android:id="@+id/rb_filter_hidden_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="מוסתרות"/>
+        <RadioButton android:id="@+id/rb_filter_launcher_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="מוצגות במסך הבית"/>
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="מיין לפי:"
+        android:textSize="14sp"
+        android:layout_marginTop="8dp"/>
+    <RadioGroup
+        android:id="@+id/rg_sort_apps_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="8dp">
+        <RadioButton android:id="@+id/rb_sort_name_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="שם"
+            android:checked="true"/>
+        <RadioButton android:id="@+id/rb_sort_last_installed_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="התקנה אחרונה"/>
+    </RadioGroup>
+
+</LinearLayout>

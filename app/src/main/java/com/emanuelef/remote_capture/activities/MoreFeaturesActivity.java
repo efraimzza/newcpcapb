@@ -44,6 +44,17 @@ public class MoreFeaturesActivity extends Activity {
            } catch (Exception e){}
                     }
                 });
+        Button btnprappmanag = findViewById(R.id.btn_prappmanag);
+        if (btnprappmanag != null) {
+            btnprappmanag(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try{
+                       Intent intent = new Intent(MoreFeaturesActivity.this, PrAppManagementActivity.class);
+                    startActivity(intent);
+           } catch (Exception e){}
+                    }
+                });
         }
     }
 }

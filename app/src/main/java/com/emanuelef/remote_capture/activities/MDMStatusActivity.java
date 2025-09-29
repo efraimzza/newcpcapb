@@ -466,8 +466,8 @@ public class MDMStatusActivity extends Activity {
                     
                 }
             });
-        linl.addView(tvdes);
         linl.addView(buenall);
+        linl.addView(tvdes);
         new AlertDialog.Builder(activity)
             .setTitle("הסר ניהול מכשיר")
             .setView(linl)
