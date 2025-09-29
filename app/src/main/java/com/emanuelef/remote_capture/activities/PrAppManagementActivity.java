@@ -98,7 +98,7 @@ public class PrAppManagementActivity extends Activity {
         btnSaveAppChanges.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    PrAppManagementActivity.requestPasswordAndSave(new Runnable() {
+                    PrPasswordManager.requestPasswordAndSave(new Runnable() {
                             @Override
                             public void run() {
                                 try{
@@ -114,7 +114,7 @@ public class PrAppManagementActivity extends Activity {
             btnchangepwd.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        PrAppManagementActivity.requestPasswordAndSave(new Runnable() {
+                        PrPasswordManager.requestPasswordAndSave(new Runnable() {
                             @Override
                             public void run() {
                                 try{

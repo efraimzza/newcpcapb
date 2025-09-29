@@ -47,7 +47,7 @@ public class MoreFeaturesActivity extends Activity {
                 }
         Button btnprappmanag = findViewById(R.id.btn_prappmanag);
         if (btnprappmanag != null) {
-            btnprappmanag(new View.OnClickListener() {
+            btnprappmanag.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         try{
