@@ -41,6 +41,7 @@ public class AppUpdater {
     static String reserr="";
     static Context mcontext;
     // הוספת פרמטר isPasswordAlreadyChecked
+    @Deprecated
     public static void startInstallSession(Context context, String mfilepath, File sourceFile, boolean isPasswordAlreadyChecked) {
         reserr="";
         mcontext=context;
@@ -483,6 +484,7 @@ public class AppUpdater {
     }
     
     private static final int BUFFER_SIZE = 4096;
+    @Deprecated
     public static List<File> extractApksFromZip(File zipFilep, File destDir) throws IOException {
         if (!destDir.exists()) {
                 destDir.mkdirs();
@@ -580,6 +582,7 @@ public class AppUpdater {
         */
         return extractedApks;
     }
+    
     public static File findBaseApk(Context context, List<File> apks) {
         // חפש את "base.apk" אם קיים, אחרת בחר את הגדול ביותר כ"ראשי"
         for (File apk : apks) {
@@ -607,7 +610,7 @@ public class AppUpdater {
     }
 
     // --- מתודות קיימות (ללא שינוי, רק העתקה לצורך קונטקסט) ---
-
+    @Deprecated
     private static boolean addApkToSession(PackageInstaller.Session session, File apkFile) throws Exception {
         boolean suc=true;
         OutputStream out = null;
@@ -636,7 +639,7 @@ public class AppUpdater {
         }
         return suc;
     }
-
+    @Deprecated
     private static boolean addzipToSessiono(PackageInstaller.Session session, File zipFile) throws Exception {
         //OutputStream out = null;
         //InputStream in = null;
@@ -709,6 +712,7 @@ public class AppUpdater {
          if (out != null) out.close();
          }*/
     }
+    @Deprecated
     private static boolean addzipToSession(PackageInstaller.Session session, File zipFilep) throws Exception {
         //OutputStream out = null;
         //InputStream in = null;

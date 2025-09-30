@@ -64,6 +64,8 @@ public class AppManagementActivity extends Activity {
     
     private static final int PICK_APK_REQUEST_CODE = 101;
     
+    static String pickedfilepath="";
+    
     @Deprecated
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -337,7 +339,8 @@ public class AppManagementActivity extends Activity {
 
         mAdapter.notifyDataSetChanged();
     }
-      @Override
+    @Deprecated
+    @Override
     protected void onResume() {
         super.onResume();
         if(pickedfilepath!=null&&!pickedfilepath.equals("")){
@@ -346,6 +349,7 @@ public class AppManagementActivity extends Activity {
             new Thread(){public void run() {
 
                     getMainExecutor().execute(new Runnable(){
+                            @Deprecated
                             @Override
                             public void run() {
                                 progressDialog = new ProgressDialog(AppManagementActivity.this);
@@ -484,6 +488,7 @@ public class AppManagementActivity extends Activity {
         }
         return res;
     }
+    @Deprecated
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -491,6 +496,7 @@ public class AppManagementActivity extends Activity {
         new Thread(){public void run() {
                 
                 getMainExecutor().execute(new Runnable(){
+                        @Deprecated
                         @Override
                         public void run() {
                             progressDialog = new ProgressDialog(AppManagementActivity.this);
@@ -505,9 +511,9 @@ public class AppManagementActivity extends Activity {
                     if (data != null && data.getData() != null) {
                         Uri sourceUri = data.getData();
                         try {
-                            LogUtil.logToFile(bgetFileNameFromUri(AppManagementActivity.this, data.getData()) + " " + new PathUtil().getPath(AppManagementActivity.this, data.getData()));
-                            mfilepath = new PathUtil().getPath(AppManagementActivity.this, data.getData());
-                            befsha1 = getsha1(new PathUtil().getPath(AppManagementActivity.this, data.getData()));
+                            //LogUtil.logToFile(bgetFileNameFromUri(AppManagementActivity.this, data.getData()) + " " + new PathUtil().getPath(AppManagementActivity.this, data.getData()));
+                            //mfilepath = new PathUtil().getPath(AppManagementActivity.this, data.getData());
+                            //befsha1 = getsha1(new PathUtil().getPath(AppManagementActivity.this, data.getData()));
                         } catch (Exception e) {
                             LogUtil.logToFile(e.toString());
                         }
@@ -614,8 +620,8 @@ public class AppManagementActivity extends Activity {
         }
     }
 
-    private void showNewAppInstallPasswordDialog(final File apkFile) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    private void showNewAppInstallPasswordDialog(final String mfilepath, final File apkFile) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(AppManagementActivity.this);
         builder.setTitle("התקנת אפליקציה חדשה");
         builder.setMessage("התקנת אפליקציה חדשה דורשת אימות סיסמה. האם ברצונך להמשיך?");
 
@@ -626,7 +632,6 @@ public class AppManagementActivity extends Activity {
                             @Override
                             public void run() {
                                 // אם הסיסמה נכונה, התחל את ההתקנה
-                                //AppUpdater.startInstallSession(AppManagementActivity.this, apkFile, true); // true = password already checked
                                 new Thread(){public void run() {
                                         //LogUtil.logToFile("inn 1");
                                         prgmsg(AppManagementActivity.this,"new app!",false);
@@ -635,24 +640,29 @@ public class AppManagementActivity extends Activity {
                                         
                                     }}.start();
                             }
-                        },AppManagementActivity.this);
+                        }, AppManagementActivity.this);
                 }
             });
         builder.setNegativeButton("ביטול", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     Toast.makeText(AppManagementActivity.this, "התקנת האפליקציה בוטלה.", Toast.LENGTH_SHORT).show();
-                    // נקה את הקובץ הזמני אם ההתקנה בוטלה
+                    //AppUpdater.dismissprogress(AppManagementActivity.this);
                     prgmsg(AppManagementActivity.this,"cancel!",true);
-                    
+                    // נקה את הקובץ הזמני אם ההתקנה בוטלה
+                    //if (apkFile != null && apkFile.exists()) {
+                    //apkFile.delete();
+                    //}
                 }
             });
         getMainExecutor().execute(new Runnable(){
+
                 @Override
                 public void run() {
                     builder.show();
                 }
             });
+
     }
 
     
@@ -753,9 +763,11 @@ public class AppManagementActivity extends Activity {
         return result;
     }
     */
+        @Deprecated
         static void prgmsg(final Context context,final String msg,final boolean end){
         //context.getMainLooper().prepare();
         context. getMainExecutor().execute(new Runnable(){
+                @Deprecated
                 @Override
                 public void run() {
                     if(progressDialog!=null){
@@ -771,7 +783,7 @@ public class AppManagementActivity extends Activity {
                     progressDialog.setMessage(msg);
                     if(end){
                         new Handler().postDelayed(new Runnable(){
-
+                                @Deprecated
                                 @Override
                                 public void run() {
                                     if(progressDialog!=null){
