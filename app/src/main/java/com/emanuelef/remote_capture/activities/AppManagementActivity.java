@@ -1,7 +1,9 @@
 package com.emanuelef.remote_capture.activities;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -9,35 +11,36 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageInstaller;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
+import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import android.os.AsyncTask; // הוסף את הייבוא הזה
-import android.app.ProgressDialog; // הוסף את הייבוא הזה (לדיאלוג טעינה)
-import java.util.zip.ZipInputStream; // וודא שזה מיובא
-import java.util.zip.ZipEntry; // וודא שזה מיובא
-import android.content.pm.PackageInstaller;
+import android.os.Handler;
 
 import com.emanuelef.remote_capture.R;
 
@@ -482,76 +485,124 @@ public class AppManagementActivity extends Activity {
         return res;
     }
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_APK_REQUEST_CODE && resultCode == RESULT_OK) {
-            if (data != null && data.getData() != null) {
-                Uri sourceUri = data.getData();
-                File tempFile = null;
-                try {
-                    // העתק את ה-URI לקובץ זמני.
-                    // אם זה ZIP/APKS, זה עדיין יועתק כקובץ ZIP יחיד.
-                    tempFile = copyUriToTempFile(this, sourceUri);
 
-                    if (tempFile != null) {
-                        String detectedPackageName = null;
-                        File baseApkFile = null; // קובץ ה-APK הבסיסי שישמש לבדיקת שם חבילה
+        new Thread(){public void run() {
+                
+                getMainExecutor().execute(new Runnable(){
+                        @Override
+                        public void run() {
+                            progressDialog = new ProgressDialog(AppManagementActivity.this);
+                            progressDialog.getWindow().setBackgroundDrawableResource(R.drawable.roundbugreen);
+                            progressDialog.setMessage("מתחיל.");
+                            //progressDialog.setCancelable(false);
+                            progressDialog.show();
+                        }});
+                befsha1 = "";
+                aftsha1 = "";
+                if (requestCode == PICK_APK_REQUEST_CODE && resultCode == RESULT_OK) {
+                    if (data != null && data.getData() != null) {
+                        Uri sourceUri = data.getData();
+                        try {
+                            LogUtil.logToFile(bgetFileNameFromUri(AppManagementActivity.this, data.getData()) + " " + new PathUtil().getPath(AppManagementActivity.this, data.getData()));
+                            mfilepath = new PathUtil().getPath(AppManagementActivity.this, data.getData());
+                            befsha1 = getsha1(new PathUtil().getPath(AppManagementActivity.this, data.getData()));
+                        } catch (Exception e) {
+                            LogUtil.logToFile(e.toString());
+                        }
+                        //File tempFile = null;
+                        File mselectedfile = null;
+                        try {
+                            // העתק את ה-URI לקובץ זמני.
+                            // אם זה ZIP/APKS, זה עדיין יועתק כקובץ ZIP יחיד.
+                            //tempFile = copyUriToTempFile(AppManagementActivity.this, sourceUri);
+                            //LogUtil.logToFile("copied!");
+                            mselectedfile = new File(mfilepath);
+                            LogUtil.logToFile("selected " + mfilepath);
+                            if (mselectedfile != null) {
+                                String detectedPackageName = null;
+                                File baseApkFile = null; // קובץ ה-APK הבסיסי שישמש לבדיקת שם חבילה
+                                // בדוק אם הקובץ הוא ארכיון (ZIP/APKS)
+                                LogUtil.logToFile("3");
+                                if (mselectedfile.getName().toLowerCase().endsWith(".zip") ||
+                                    mselectedfile.getName().toLowerCase().endsWith(".apks") ||
+                                    mselectedfile.getName().toLowerCase().endsWith(".xapk")) {
 
-                        // בדוק אם הקובץ הוא ארכיון (ZIP/APKS)
-                        if (tempFile.getName().toLowerCase().endsWith(".zip") ||
-                            tempFile.getName().toLowerCase().endsWith(".apks") ||
-                            tempFile.getName().toLowerCase().endsWith(".xapk")) {
+                                    // זהו ארכיון, חלץ את ה-APK הראשי כדי לקבל את שם החבילה
+                                    File extractedTempDir = AppUpdater.createTempDir(AppManagementActivity.this); // השתמש במתודה מ-AppUpdater
+                                    List<File> extractedApks = AppUpdater.extractApksFromZip(mselectedfile, extractedTempDir); // השתמש במתודה מ-AppUpdater
+                                    LogUtil.logToFile("1");
+                                    if (!extractedApks.isEmpty()) {
+                                        LogUtil.logToFile("3");
+                                        baseApkFile = AppUpdater.findBaseApk(AppManagementActivity.this, extractedApks); // מצא את ה-APK הבסיסי מתוך הרשימה
+                                        if (baseApkFile != null) {
+                                            LogUtil.logToFile("4");
+                                            detectedPackageName = AppUpdater.getApkPackageName(AppManagementActivity.this, baseApkFile.getAbsolutePath());
+                                        }
+                                        LogUtil.logToFile("5");
+                                    }
+                                    LogUtil.logToFile("6");
+                                    // חשוב: נקה את התיקיה הזמנית של הקבצים המחולצים.
+                                    // בדרך כלל הניקוי יקרה ב-InstallReceiver, אבל אם ההתקנה לא תצא לפועל
+                                    // בגלל בדיקת סיסמה שנכשלה, צריך לנקות.
+                                    // עם זאת, אם ההתקנה תצא לפועל, ה-InstallReceiver יטפל בזה.
+                                    // במקרה הזה, נשאיר את הניקוי ל-InstallReceiver
+                                    // או שנדאג לנקות את `extractedTempDir` אם ההתקנה מבוטלת פה.
+                                    // לצורך הפשטות, נסמוך על ה-InstallReceiver לניקוי הכללי של `apks_temp`.
 
-                            // זהו ארכיון, חלץ את ה-APK הראשי כדי לקבל את שם החבילה
-                            File extractedTempDir = AppUpdater.createTempDir(this); // השתמש במתודה מ-AppUpdater
-                            List<File> extractedApks = AppUpdater.extractApksFromZip(tempFile, extractedTempDir); // השתמש במתודה מ-AppUpdater
+                                } else if (mselectedfile.getName().toLowerCase().endsWith(".apk")) {
+                                    // זהו קובץ APK בודד
+                                    baseApkFile = mselectedfile; // הקובץ עצמו הוא ה-APK הבסיסי
+                                    detectedPackageName = AppUpdater.getApkPackageName(AppManagementActivity.this, baseApkFile.getAbsolutePath());
 
-                            if (!extractedApks.isEmpty()) {
-                                baseApkFile = AppUpdater.findBaseApk(this, extractedApks); // מצא את ה-APK הבסיסי מתוך הרשימה
-                                if (baseApkFile != null) {
-                                    detectedPackageName = AppUpdater.getApkPackageName(this, baseApkFile.getAbsolutePath());
+                                    LogUtil.logToFile("1");
                                 }
-                            }
-                            // חשוב: נקה את התיקיה הזמנית של הקבצים המחולצים.
-                            // בדרך כלל הניקוי יקרה ב-InstallReceiver, אבל אם ההתקנה לא תצא לפועל
-                            // בגלל בדיקת סיסמה שנכשלה, צריך לנקות.
-                            // עם זאת, אם ההתקנה תצא לפועל, ה-InstallReceiver יטפל בזה.
-                            // במקרה הזה, נשאיר את הניקוי ל-InstallReceiver
-                            // או שנדאג לנקות את `extractedTempDir` אם ההתקנה מבוטלת פה.
-                            // לצורך הפשטות, נסמוך על ה-InstallReceiver לניקוי הכללי של `apks_temp`.
-
-                        } else if (tempFile.getName().toLowerCase().endsWith(".apk")) {
-                            // זהו קובץ APK בודד
-                            baseApkFile = tempFile; // הקובץ עצמו הוא ה-APK הבסיסי
-                            detectedPackageName = AppUpdater.getApkPackageName(this, baseApkFile.getAbsolutePath());
-                        }
-
-                        if (detectedPackageName != null) {
-                            if (isAppInstalled(detectedPackageName)) {
-                                // האפליקציה כבר מותקנת, זהו עדכון - אין צורך בסיסמה
-                                AppUpdater.startInstallSession(this, tempFile, false); // העבר את קובץ ה-ZIP המקורי/APK בודד
+                                //progressDialog.setMessage("session.");
+                                prgmsg(AppManagementActivity.this,"session mode!",false);
+                                LogUtil.logToFile("now start session!");
+                                if (detectedPackageName != null) {
+                                    if (isAppInstalled(detectedPackageName)) {
+                                        // האפליקציה כבר מותקנת, זהו עדכון - אין צורך בסיסמה
+                                        AppUpdater.startInstallSession(AppManagementActivity.this, mfilepath, mselectedfile, false); // העבר את קובץ ה-ZIP המקורי/APK בודד
+                                    } else {
+                                        // אפליקציה חדשה, דורש סיסמה
+                                        showNewAppInstallPasswordDialog(mfilepath, mselectedfile); // העבר את קובץ ה-ZIP המקורי/APK בודד
+                                    }
+                                } else {
+                                    LogUtil.logToFile("not detected pkgnm");
+                                    //progressDialog.setMessage("not detected pkgnm");
+                                    //AppUpdater.dismissprogress(AppManagementActivity.this);
+                                    prgmsg(AppManagementActivity.this,"not detected pkgnm",true);
+                                    //Toast.makeText(AppManagementActivity.this, "לא ניתן לזהות את שם החבילה מהקובץ הנבחר.", Toast.LENGTH_LONG).show();
+                                    // נקה קובץ זמני אם לא זיהינו שם חבילה
+                                    //if (tempFile.exists()) tempFile.delete();
+                                }
                             } else {
-                                // אפליקציה חדשה, דורש סיסמה
-                                showNewAppInstallPasswordDialog(tempFile); // העבר את קובץ ה-ZIP המקורי/APK בודד
+                                LogUtil.logToFile("not access to file");
+                                //progressDialog.setMessage("not access to file");
+                                //AppUpdater.dismissprogress(AppManagementActivity.this);
+                                prgmsg(AppManagementActivity.this,"not access to file",true);
+                                //Toast.makeText(AppManagementActivity.this, "לא ניתן לגשת לקובץ הנבחר או להעתיקו.", Toast.LENGTH_LONG).show();
                             }
-                        } else {
-                            Toast.makeText(this, "לא ניתן לזהות את שם החבילה מהקובץ הנבחר.", Toast.LENGTH_LONG).show();
-                            // נקה קובץ זמני אם לא זיהינו שם חבילה
-                            if (tempFile.exists()) tempFile.delete();
+                        } catch (Exception e) {
+                            LogUtil.logToFile("exeption while accessing to file " + e);
+                            //progressDialog.setMessage("exeption while accessing to file" + e);
+                            //AppUpdater.dismissprogress(AppManagementActivity.this);
+                            prgmsg(AppManagementActivity.this,"exeption while accessing to file",true);
+                            //Toast.makeText(AppManagementActivity.this, "שגיאה בטיפול בקובץ: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
+                            //if (tempFile != null && tempFile.exists()) {
+                            //tempFile.delete(); // נקה במקרה של שגיאה
+                            //}
                         }
-                    } else {
-                        Toast.makeText(this, "לא ניתן לגשת לקובץ הנבחר או להעתיקו.", Toast.LENGTH_LONG).show();
                     }
-                } catch (Exception e) {
-                    LogUtil.logToFile(""+e);
-                    Toast.makeText(this, "שגיאה בטיפול בקובץ: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                    if (tempFile != null && tempFile.exists()) {
-                        tempFile.delete(); // נקה במקרה של שגיאה
-                    }
+                } else {
+                    //AppUpdater.dismissprogress(AppManagementActivity.this);
+                    prgmsg(AppManagementActivity.this,"cancel!",true);
                 }
-            }
-        }
+
+            }}.start();
     }
 
     private boolean isAppInstalled(String packageName) {
