@@ -22,6 +22,8 @@ import java.util.Comparator;
 import android.view.MotionEvent;
 import java.util.concurrent.locks.ReentrantLock;
 
+import com.emanuelef.remote_capture.R;
+
 public class picker extends Activity { 
 
     ListView listView;
