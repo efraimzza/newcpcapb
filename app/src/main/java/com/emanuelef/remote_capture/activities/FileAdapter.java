@@ -99,7 +99,7 @@ public class FileAdapter extends BaseAdapter {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         return sdf.format(date);
     }
-
+    @Deprecated
     private Drawable getFileIcon(FileItem item) {
         // Manual file type checking based on name/mimeType
         int iconResId;

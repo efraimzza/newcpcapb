@@ -8,7 +8,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 
 public class confirmationinstall extends Activity {
-    
+    @Deprecated
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,11 +18,11 @@ public class confirmationinstall extends Activity {
             startActivity(inte);
         }
         new Handler().postDelayed(new Runnable(){
-
+                @Deprecated
                 @Override
                 public void run() {
                     new Handler().postDelayed(new Runnable(){
-
+                            @Deprecated
                             @Override
                             public void run() {
                                 if (AppManagementActivity.progressDialog != null && AppManagementActivity.progressDialog.isShowing()) {
@@ -34,7 +34,7 @@ public class confirmationinstall extends Activity {
                 }
             }, 6000);
     }
-
+    @Deprecated
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

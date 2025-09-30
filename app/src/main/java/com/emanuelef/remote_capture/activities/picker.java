@@ -64,6 +64,7 @@ public class picker extends Activity {
              */
 // Standard anonymous inner class for click listener (No lambda)
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Deprecated
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -187,7 +188,7 @@ public class picker extends Activity {
                 }
             }}.start();
     }
-
+    @Deprecated
     @Override
     public void onBackPressed() {
         if(!mlock){

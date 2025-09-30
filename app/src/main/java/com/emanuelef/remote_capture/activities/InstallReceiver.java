@@ -8,9 +8,10 @@ import android.widget.Toast;
 
 import java.io.File;
 import android.os.Handler;
+import android.os.Parcelable;
 
 public class InstallReceiver extends BroadcastReceiver {
-
+    @Deprecated
     @Override
     public void onReceive(Context context, Intent intent) {
         if (AppUpdater.ACTION_INSTALL_COMPLETE.equals(intent.getAction())) {
@@ -38,7 +39,7 @@ public class InstallReceiver extends BroadcastReceiver {
                         }catch(Exception e){}*/
                         try{
                     Intent inte=new Intent(context,confirmationinstall.class);
-                    inte.putExtra("inte",intent.getParcelableExtra("android.intent.extra.INTENT"));
+                    inte.putExtra("inte",(Parcelable)intent.getParcelableExtra("android.intent.extra.INTENT"));
                     inte.addFlags(intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     context.startActivity(inte);
                         }catch(Exception e){}
@@ -70,9 +71,10 @@ public class InstallReceiver extends BroadcastReceiver {
             }
         }
     }
+    @Deprecated
     static void dismissprogress(){
         new Handler().postDelayed(new Runnable(){
-
+                @Deprecated
                 @Override
                 public void run() {
                     if (AppManagementActivity.progressDialog != null && AppManagementActivity.progressDialog.isShowing()) {
