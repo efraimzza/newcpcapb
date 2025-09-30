@@ -1,6 +1,5 @@
 package com.emanuelef.remote_capture.activities;
 
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.admin.DevicePolicyManager;
@@ -58,7 +57,7 @@ public class AppManagementActivity extends Activity {
     private int currentFilterOptionId = R.id.rb_filter_all_dialog; // ID של כפתור הרדיו הנבחר
     private int currentSortOptionId = R.id.rb_sort_name_dialog; // ID של כפתור הרדיו הנבחר
    
-    private ProgressDialog progressDialog; // משתנה לדיאלוג התקדמות
+    public static ProgressDialog progressDialog; // משתנה לדיאלוג התקדמות
     
     private static final int PICK_APK_REQUEST_CODE = 101;
     
@@ -135,13 +134,15 @@ public class AppManagementActivity extends Activity {
                             LogUtil.logToFile(""+e);
                             Toast.makeText(AppManagementActivity.this, "" + e, 0).show();
                         }
-                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                        intent.setType("*/*");
-                        String[] mimetypes = {"*/apk","*/apks","*/xapk","application/vnd.android.package-archive", "application/zip", "application/x-zip-compressed", "application/octet-stream"};
-                        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
-
-                        intent.addCategory(Intent.CATEGORY_OPENABLE);
-                        startActivityForResult(Intent.createChooser(intent, "בחר קובץ APK/APKS"), PICK_APK_REQUEST_CODE);
+                        //Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                        //intent.setType("*/*");
+                        //String[] mimetypes = {"application/vnd.android.package-archive", "application/zip", "application/x-zip-compressed", "application/octet-stream","*/apk","*/apks","*/xapk","*/apkm"};
+                        //intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+                        //intent.addCategory(Intent.CATEGORY_OPENABLE);
+                        //startActivityForResult(Intent.createChooser(intent, "בחר קובץ APK/APKS"), PICK_APK_REQUEST_CODE);
+                        pickedfilepath="";
+                        Intent intent=new Intent(AppManagementActivity.this,picker.class);
+                        startActivity(intent);  
                     }
                 });
         }
@@ -333,8 +334,153 @@ public class AppManagementActivity extends Activity {
 
         mAdapter.notifyDataSetChanged();
     }
+      @Override
+    protected void onResume() {
+        super.onResume();
+        if(pickedfilepath!=null&&!pickedfilepath.equals("")){
+            mfilepath=pickedfilepath;
+            pickedfilepath="";
+            new Thread(){public void run() {
+
+                    getMainExecutor().execute(new Runnable(){
+                            @Override
+                            public void run() {
+                                progressDialog = new ProgressDialog(AppManagementActivity.this);
+                                progressDialog.getWindow().setBackgroundDrawableResource(R.drawable.roundbugreen);
+                                progressDialog.setMessage("מתחיל.");
+                                //progressDialog.setCancelable(false);
+                                progressDialog.show();
+                            }});
+                    befsha1 = "";
+                    aftsha1 = "";
+                 
+                        
+                            try {
+                               
+                                befsha1 = getsha1(mfilepath);
+                            } catch (Exception e) {
+                                LogUtil.logToFile(e.toString());
+                            }
+                            //File tempFile = null;
+                            File mselectedfile = null;
+                            try {
+                                // העתק את ה-URI לקובץ זמני.
+                                // אם זה ZIP/APKS, זה עדיין יועתק כקובץ ZIP יחיד.
+                                //tempFile = copyUriToTempFile(AppManagementActivity.this, sourceUri);
+                                //LogUtil.logToFile("copied!");
+                                mselectedfile = new File(mfilepath);
+                                LogUtil.logToFile("selected " + mfilepath);
+                                if (mselectedfile != null) {
+                                    String detectedPackageName = null;
+                                    File baseApkFile = null; // קובץ ה-APK הבסיסי שישמש לבדיקת שם חבילה
+                                    // בדוק אם הקובץ הוא ארכיון (ZIP/APKS)
+                                    //LogUtil.logToFile("3");
+                                    if (mselectedfile.getName().toLowerCase().endsWith(".zip") ||
+                                        mselectedfile.getName().toLowerCase().endsWith(".apks") ||
+                                        mselectedfile.getName().toLowerCase().endsWith(".xapk")) {
+
+                                        // זהו ארכיון, חלץ את ה-APK הראשי כדי לקבל את שם החבילה
+                                        File extractedTempDir = AppUpdater.createTempDir(AppManagementActivity.this); // השתמש במתודה מ-AppUpdater
+                                        List<File> extractedApks = AppUpdater.extractApksFromZip(mselectedfile, extractedTempDir); // השתמש במתודה מ-AppUpdater
+                                        //LogUtil.logToFile("1");
+                                        if (!extractedApks.isEmpty()) {
+                                            //LogUtil.logToFile("3");
+                                            baseApkFile = AppUpdater.findBaseApk(AppManagementActivity.this, extractedApks); // מצא את ה-APK הבסיסי מתוך הרשימה
+                                            if (baseApkFile != null) {
+                                                //LogUtil.logToFile("4");
+                                                detectedPackageName = AppUpdater.getApkPackageName(AppManagementActivity.this, baseApkFile.getAbsolutePath());
+                                            }
+                                            //LogUtil.logToFile("5");
+                                        }
+                                        //LogUtil.logToFile("6");
+                                        // חשוב: נקה את התיקיה הזמנית של הקבצים המחולצים.
+                                        // בדרך כלל הניקוי יקרה ב-InstallReceiver, אבל אם ההתקנה לא תצא לפועל
+                                        // בגלל בדיקת סיסמה שנכשלה, צריך לנקות.
+                                        // עם זאת, אם ההתקנה תצא לפועל, ה-InstallReceiver יטפל בזה.
+                                        // במקרה הזה, נשאיר את הניקוי ל-InstallReceiver
+                                        // או שנדאג לנקות את `extractedTempDir` אם ההתקנה מבוטלת פה.
+                                        // לצורך הפשטות, נסמוך על ה-InstallReceiver לניקוי הכללי של `apks_temp`.
+
+                                    } else if (mselectedfile.getName().toLowerCase().endsWith(".apk")) {
+                                        // זהו קובץ APK בודד
+                                        baseApkFile = mselectedfile; // הקובץ עצמו הוא ה-APK הבסיסי
+                                        detectedPackageName = AppUpdater.getApkPackageName(AppManagementActivity.this, baseApkFile.getAbsolutePath());
+
+                                        //LogUtil.logToFile("1");
+                                    }
+                                    //progressDialog.setMessage("session.");
+                                    prgmsg(AppManagementActivity.this,"session mode!",false);
+                                    LogUtil.logToFile("now start session!");
+                                    if (detectedPackageName != null) {
+                                        if (isAppInstalled(detectedPackageName)) {
+                                            // האפליקציה כבר מותקנת, זהו עדכון - אין צורך בסיסמה
+                                            AppUpdater.startInstallSession(AppManagementActivity.this, mfilepath, mselectedfile, false); // העבר את קובץ ה-ZIP המקורי/APK בודד
+                                        } else {
+                                            // אפליקציה חדשה, דורש סיסמה
+                                            showNewAppInstallPasswordDialog(mfilepath, mselectedfile); // העבר את קובץ ה-ZIP המקורי/APK בודד
+                                        }
+                                    } else {
+                                        LogUtil.logToFile("not detected pkgnm");
+                                        //progressDialog.setMessage("not detected pkgnm");
+                                        //AppUpdater.dismissprogress(AppManagementActivity.this);
+                                        prgmsg(AppManagementActivity.this,"not detected pkgnm",true);
+                                        //Toast.makeText(AppManagementActivity.this, "לא ניתן לזהות את שם החבילה מהקובץ הנבחר.", Toast.LENGTH_LONG).show();
+                                        // נקה קובץ זמני אם לא זיהינו שם חבילה
+                                        //if (tempFile.exists()) tempFile.delete();
+                                    }
+                                } else {
+                                    LogUtil.logToFile("not access to file");
+                                    //progressDialog.setMessage("not access to file");
+                                    //AppUpdater.dismissprogress(AppManagementActivity.this);
+                                    prgmsg(AppManagementActivity.this,"not access to file",true);
+                                    //Toast.makeText(AppManagementActivity.this, "לא ניתן לגשת לקובץ הנבחר או להעתיקו.", Toast.LENGTH_LONG).show();
+                                }
+                            } catch (Exception e) {
+                                LogUtil.logToFile("exeption while accessing to file " + e);
+                                //progressDialog.setMessage("exeption while accessing to file" + e);
+                                //AppUpdater.dismissprogress(AppManagementActivity.this);
+                                prgmsg(AppManagementActivity.this,"exeption while accessing to file",true);
+                                //Toast.makeText(AppManagementActivity.this, "שגיאה בטיפול בקובץ: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                e.printStackTrace();
+                                //if (tempFile != null && tempFile.exists()) {
+                                //tempFile.delete(); // נקה במקרה של שגיאה
+                                //}
+                            }
+                        
+                    
+                }}.start();
+        }
+    }
     
+    String mfilepath="";
+    String befsha1="";
+    String aftsha1="";
     
+    String getsha1(String mfilename) {
+        String res="";
+        try {
+            MessageDigest md= MessageDigest.getInstance("SHA-1");
+            FileInputStream fis = new FileInputStream(new File(mfilename));
+            int len;
+            byte[] buffer = new byte[1024];
+            while ((len = fis.read(buffer)) > 0) {
+                md.update(buffer, 0, len);
+            }
+            byte[] bArr=md.digest();
+            char[] aa = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+            char[] cArr = new char[bArr.length * 2];
+            for (int i = 0; i < bArr.length; i++) {
+                cArr[i * 2] = aa[(bArr[i] & 255) >>> 4];
+                cArr[(i * 2) + 1] = aa[bArr[i] & 15];
+            }
+            res = new String(cArr);
+            //LogUtil.logToFile(new String(cArr));
+        } catch (Exception e) {
+            LogUtil.logToFile(e.toString());
+            Toast.makeText(this, "" + e, 1).show();
+        }
+        return res;
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -429,7 +575,14 @@ public class AppManagementActivity extends Activity {
                             @Override
                             public void run() {
                                 // אם הסיסמה נכונה, התחל את ההתקנה
-                                AppUpdater.startInstallSession(AppManagementActivity.this, apkFile, true); // true = password already checked
+                                //AppUpdater.startInstallSession(AppManagementActivity.this, apkFile, true); // true = password already checked
+                                new Thread(){public void run() {
+                                        //LogUtil.logToFile("inn 1");
+                                        prgmsg(AppManagementActivity.this,"new app!",false);
+                                        AppUpdater.startInstallSession(AppManagementActivity.this, mfilepath, apkFile, true); // true = password already checked
+                                        //LogUtil.logToFile("inn 2");
+                                        
+                                    }}.start();
                             }
                         },AppManagementActivity.this);
                 }
@@ -439,12 +592,16 @@ public class AppManagementActivity extends Activity {
                 public void onClick(DialogInterface dialog, int which) {
                     Toast.makeText(AppManagementActivity.this, "התקנת האפליקציה בוטלה.", Toast.LENGTH_SHORT).show();
                     // נקה את הקובץ הזמני אם ההתקנה בוטלה
-                    if (apkFile != null && apkFile.exists()) {
-                        apkFile.delete();
-                    }
+                    prgmsg(AppManagementActivity.this,"cancel!",true);
+                    
                 }
             });
-        builder.show();
+        getMainExecutor().execute(new Runnable(){
+                @Override
+                public void run() {
+                    builder.show();
+                }
+            });
     }
 
     
@@ -477,7 +634,7 @@ public class AppManagementActivity extends Activity {
         applyFiltersAndSort(); // סנן ומיין אותה מחדש
     }
     
-
+/*
     // מתודת עזר להעתקת URI לקובץ זמני
     private File copyUriToTempFile(Context context, Uri uri) {
         File tempFile = null;
@@ -544,6 +701,39 @@ public class AppManagementActivity extends Activity {
         }
         return result;
     }
-    
-    
+    */
+        static void prgmsg(final Context context,final String msg,final boolean end){
+        //context.getMainLooper().prepare();
+        context. getMainExecutor().execute(new Runnable(){
+                @Override
+                public void run() {
+                    if(progressDialog!=null){
+                        if(progressDialog.isShowing()){
+                            progressDialog.dismiss();
+                        }
+                    }
+                    progressDialog = new ProgressDialog(context);
+                    progressDialog.getWindow().setBackgroundDrawableResource(R.drawable.roundbugreen);
+                    progressDialog.setMessage("מתחיל.");
+                    //progressDialog.setCancelable(false);
+                    progressDialog.show();
+                    progressDialog.setMessage(msg);
+                    if(end){
+                        new Handler().postDelayed(new Runnable(){
+
+                                @Override
+                                public void run() {
+                                    if(progressDialog!=null){
+                                        if(progressDialog.isShowing()){
+                                            progressDialog.dismiss();
+                                        }
+                                    }
+                                }
+                            }, 5000);
+                    }
+                }});
+
+
+        //context.getMainLooper().loop();
+    }
 }

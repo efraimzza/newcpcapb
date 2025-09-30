@@ -144,4 +144,7 @@ dependencies {
     //zxing
     //implementation 'com.journeyapps:zxing-android-embedded:4.3.0' // Or the latest stable version
     implementation 'com.google.zxing:core:3.5.3'
+    //zip4j
+    // https://mvnrepository.com/artifact/net.lingala.zip4j/zip4j
+    implementation 'net.lingala.zip4j:zip4j:2.11.5'
 }
