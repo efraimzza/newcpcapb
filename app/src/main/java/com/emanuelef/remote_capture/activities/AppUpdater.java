@@ -49,11 +49,11 @@ public class AppUpdater {
             //Toast.makeText(context, "קובץ התקנה לא נמצא או לא חוקי.", Toast.LENGTH_LONG).show();
             //AppManagementActivity.progressDialog.setMessage("not faund or not possible" + sourceFile.getName());
             //dismissprogress(context);
-            AppManagementActivity.prgmsg(context,"not faund or not possible" + sourceFile.getName(),true);
+            AppManagementActivity.prgmsg(context,"לא נמצא או לא אפשרי" + sourceFile.getName(),true);
             LogUtil.logToFile("not faund or not possible");
             return;
         }
-        LogUtil.logToFile("in 1");
+        //LogUtil.logToFile("in 1");
         PackageManager pm = context.getPackageManager();
         PackageInstaller packageInstaller = pm.getPackageInstaller();
         PackageInstaller.Session session = null;
@@ -66,10 +66,10 @@ public class AppUpdater {
             if (sourceFile.getName().toLowerCase().endsWith(".zip") ||
                 sourceFile.getName().toLowerCase().endsWith(".apks") ||
                 sourceFile.getName().toLowerCase().endsWith(".xapk")) {
-                LogUtil.logToFile("in 1");
+                //LogUtil.logToFile("in 1");
                 File tempDir = createTempDir(context);
                 apksToInstall = extractApksFromZip(sourceFile, tempDir);
-                LogUtil.logToFile("in 2");
+                //LogUtil.logToFile("in 2");
                 if (apksToInstall.isEmpty()) {
                     //AppManagementActivity.progressDialog.setMessage("לא נמצאו קבצי APK בארכיון ה-ZIP." + sourceFile.getName());
                     //dismissprogress(context);
@@ -133,12 +133,12 @@ public class AppUpdater {
                 }
             } else if (sourceFile.getName().toLowerCase().endsWith(".apk")) {
                 apksToInstall.add(sourceFile);
-                LogUtil.logToFile("in 1");
+                //LogUtil.logToFile("in 1");
                 LogUtil.logToFile(sourceFile.getAbsolutePath());
                 mainPackageName = getApkPackageName(context, sourceFile.getAbsolutePath());
                 LogUtil.logToFile(mainPackageName);
                 mainApkSignatures = getApkSignature(context, sourceFile.getAbsolutePath());
-                LogUtil.logToFile("in 2");
+                //LogUtil.logToFile("in 2");
             } else {
                 //AppManagementActivity.progressDialog.setMessage("פורמט קובץ לא נתמך: " + sourceFile.getName());
                 //dismissprogress(context);
@@ -163,11 +163,11 @@ public class AppUpdater {
                 } else {
                     existingPackage = pm.getPackageInfo(mainPackageName, PackageManager.GET_SIGNATURES);
                 }
-                LogUtil.logToFile("in 4");
+                //LogUtil.logToFile("in 4");
                 Signature[] existingSignatures = getSignaturesFromPackageInfo(existingPackage);
 
                 if (!signaturesMatch(mainApkSignatures, existingSignatures)) {
-                    LogUtil.logToFile("in 5");
+                    //LogUtil.logToFile("in 5");
                     //AppManagementActivity.progressDialog.setMessage("שגיאה: חתימות האפליקציה אינן תואמות. העדכון בוטל.");
                     AppManagementActivity.prgmsg(context,"שגיאה: חתימות האפליקציה אינן תואמות. העדכון בוטל.",true);
                     //Toast.makeText(context, "שגיאה: חתימות האפליקציה אינן תואמות. העדכון בוטל.", Toast.LENGTH_LONG).show();
@@ -189,7 +189,7 @@ public class AppUpdater {
                 // יש לבדוק את ה-mainApkSignatures מול רשימת חתימות "לבנות" ידועות כאן.
             }
             //AppManagementActivity.progressDialog.setMessage("session create");
-            AppManagementActivity.prgmsg(context,"session create",false);
+            AppManagementActivity.prgmsg(context,"יצור סשן",false);
             LogUtil.logToFile("in 6");
             // יצירת סשן ההתקנה
             PackageInstaller.SessionParams params = new PackageInstaller.SessionParams(
@@ -261,7 +261,7 @@ public class AppUpdater {
 
             session.commit(pendingIntent.getIntentSender());
             //AppManagementActivity.progressDialog.setMessage("session commit");
-            AppManagementActivity.prgmsg(context,"session commit",false);
+            AppManagementActivity.prgmsg(context,"ביצוע סשן",false);
             LogUtil.logToFile("starting installation...");
             //Toast.makeText(context, "מתחיל התקנת/עדכון APK...", Toast.LENGTH_SHORT).show();
 
@@ -290,7 +290,7 @@ public class AppUpdater {
                 }
             }, 0);
         context.getMainLooper().loop();*/
-        AppManagementActivity.prgmsg(context,"cancel!",true);
+        AppManagementActivity.prgmsg(context,"ביטול!",true);
     }
     //static ProgressDialog progressDialog;
     /*static void prgmsg(final Context context,final String msg,final boolean end){
@@ -525,7 +525,7 @@ public class AppUpdater {
                             os.write(buffer, 0, len);
                         }
                         extractedApks.add(new File(destDir+"/"+fileName));
-                        AppManagementActivity.prgmsg(mcontext,"extrected " + i,false);
+                        AppManagementActivity.prgmsg(mcontext,"מחלץ " + i,false);
                     }
                 }
 
@@ -630,7 +630,8 @@ public class AppUpdater {
             session.fsync(out);
         } catch (Exception e) {
             LogUtil.logToFile("" + e);
-            AppManagementActivity.progressDialog.setMessage("session e " + e);
+            //AppManagementActivity.progressDialog.setMessage("סשן ש " + e);
+            AppManagementActivity.prgmsg(mcontext,"סשן ש " + e,true);
             if (session != null)
                 session.abandon();
 
@@ -666,7 +667,7 @@ public class AppUpdater {
                             os.write(buffer, 0, len);
                         }
                         session.fsync(os);
-                        AppManagementActivity.prgmsg(mcontext,"sync " + i,false);
+                        AppManagementActivity.prgmsg(mcontext,"מתקין " + i,false);
                     } catch (Exception e) {
                         if (os != null) os.close();
                         LogUtil.logToFile("" + e);
@@ -674,7 +675,7 @@ public class AppUpdater {
                             session.abandon();
                         suc = false;
                         //AppManagementActivity.progressDialog.setMessage("session e " + e);
-                        AppManagementActivity.prgmsg(mcontext,"session e " + e,false);
+                        AppManagementActivity.prgmsg(mcontext,"סשן ש " + e,true);
                         reserr=e.toString();
                     } finally {
                         if (os != null) os.close();
@@ -756,7 +757,7 @@ public class AppUpdater {
                     session.fsync(os);
                     if (is != null) is.close();
                     if (os != null) os.close();
-                    AppManagementActivity.prgmsg(mcontext,"sync " + i,false);
+                    AppManagementActivity.prgmsg(mcontext,"מתקין - " + i,false);
                 }
             }
 
@@ -771,7 +772,7 @@ public class AppUpdater {
                 session.abandon();
             suc = false;
             //AppManagementActivity.progressDialog.setMessage("session e " + e);
-            AppManagementActivity.prgmsg(mcontext,"session e " + e,false);
+            AppManagementActivity.prgmsg(mcontext,"סשן ש " + e,true);
             reserr=e.toString();
             //throw new IOException("Failed to extract specific files: " + e.getMessage(), e);
         } finally {
