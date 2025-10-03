@@ -123,7 +123,7 @@ public class AppManagementActivity extends Activity {
                             List<PackageInstaller.SessionInfo> lses= getPackageManager().getPackageInstaller().getAllSessions();
                             if (lses != null) {
                                 for (PackageInstaller.SessionInfo pses:lses) {
-                                    if (pses != null) {
+                                    if (pses != null&&pses.getInstallerPackageName()!=null) {
                                         try {
                                             if (pses.getInstallerPackageName().equals(getPackageName())) {
                                                 getPackageManager().getPackageInstaller().abandonSession(pses.getSessionId());

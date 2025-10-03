@@ -96,7 +96,7 @@ public class AppUpdater {
                                     mainApkSignatures = getApkSignature(context, apk.getAbsolutePath());
                                     if (mainPackageName != null && mainApkSignatures != null) {
                                         LogUtil.logToFile("detected main pn");
-                                        break;
+                                        break;//breaking the for loop
                                     }
                                 } catch (Exception ee) {}
                             }
@@ -178,6 +178,7 @@ public class AppUpdater {
                 try {
                     //if (AppManagementActivity.progressDialog != null && AppManagementActivity.progressDialog.isShowing())
                         //AppManagementActivity.progressDialog.setMessage("" + e.toString());
+                    LogUtil.logToFile(e.toString());
                 } catch (Exception ee) {
                     LogUtil.logToFile(e.toString());
                 }
@@ -190,7 +191,7 @@ public class AppUpdater {
             }
             //AppManagementActivity.progressDialog.setMessage("session create");
             AppManagementActivity.prgmsg(context,"יצור סשן",false);
-            LogUtil.logToFile("in 6");
+            //LogUtil.logToFile("in 6");
             // יצירת סשן ההתקנה
             PackageInstaller.SessionParams params = new PackageInstaller.SessionParams(
                 PackageInstaller.SessionParams.MODE_FULL_INSTALL);
@@ -219,7 +220,7 @@ public class AppUpdater {
                         
                         if (session != null)
                             session.abandon();
-                        AppManagementActivity.prgmsg(context,reserr,true);
+                        //AppManagementActivity.prgmsg(context,reserr,true);
                         //dismissprogress(context);
                     } catch (Exception e) {
                         LogUtil.logToFile("e3" + e);
@@ -241,7 +242,7 @@ public class AppUpdater {
             /*for (File apk : apksToInstall) {
              addApkToSession(session, apk);
              }*/
-            LogUtil.logToFile("in 5");
+            //LogUtil.logToFile("in 5");
             LogUtil.logToFile(mainPackageName);
             Intent callbackIntent = new Intent(context, InstallReceiver.class);
             callbackIntent.setAction(ACTION_INSTALL_COMPLETE);
