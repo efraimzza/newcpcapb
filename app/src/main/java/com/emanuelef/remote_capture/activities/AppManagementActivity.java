@@ -416,7 +416,7 @@ public class AppManagementActivity extends Activity {
                                         //LogUtil.logToFile("1");
                                     }
                                     //progressDialog.setMessage("session.");
-                                    prgmsg(AppManagementActivity.this,"session mode!",false);
+                                    prgmsg(AppManagementActivity.this,"מצב סשן!",false);
                                     LogUtil.logToFile("now start session!");
                                     if (detectedPackageName != null) {
                                         if (isAppInstalled(detectedPackageName)) {
@@ -430,7 +430,7 @@ public class AppManagementActivity extends Activity {
                                         LogUtil.logToFile("not detected pkgnm");
                                         //progressDialog.setMessage("not detected pkgnm");
                                         //AppUpdater.dismissprogress(AppManagementActivity.this);
-                                        prgmsg(AppManagementActivity.this,"not detected pkgnm",true);
+                                        prgmsg(AppManagementActivity.this,"לא נמצא שם חבילה(קובץ בעייתי או לא נתמך)",true);
                                         //Toast.makeText(AppManagementActivity.this, "לא ניתן לזהות את שם החבילה מהקובץ הנבחר.", Toast.LENGTH_LONG).show();
                                         // נקה קובץ זמני אם לא זיהינו שם חבילה
                                         //if (tempFile.exists()) tempFile.delete();
@@ -439,14 +439,14 @@ public class AppManagementActivity extends Activity {
                                     LogUtil.logToFile("not access to file");
                                     //progressDialog.setMessage("not access to file");
                                     //AppUpdater.dismissprogress(AppManagementActivity.this);
-                                    prgmsg(AppManagementActivity.this,"not access to file",true);
+                                    prgmsg(AppManagementActivity.this,"אין גישה לקובץ",true);
                                     //Toast.makeText(AppManagementActivity.this, "לא ניתן לגשת לקובץ הנבחר או להעתיקו.", Toast.LENGTH_LONG).show();
                                 }
                             } catch (Exception e) {
                                 LogUtil.logToFile("exeption while accessing to file " + e);
                                 //progressDialog.setMessage("exeption while accessing to file" + e);
                                 //AppUpdater.dismissprogress(AppManagementActivity.this);
-                                prgmsg(AppManagementActivity.this,"exeption while accessing to file",true);
+                                prgmsg(AppManagementActivity.this,"שגיאה בגישה לקובץ",true);
                                 //Toast.makeText(AppManagementActivity.this, "שגיאה בטיפול בקובץ: " + e.getMessage(), Toast.LENGTH_LONG).show();
                                 e.printStackTrace();
                                 //if (tempFile != null && tempFile.exists()) {
@@ -565,7 +565,7 @@ public class AppManagementActivity extends Activity {
                                     LogUtil.logToFile("1");
                                 }
                                 //progressDialog.setMessage("session.");
-                                prgmsg(AppManagementActivity.this,"session mode!",false);
+                                prgmsg(AppManagementActivity.this,"מצב סשן!",false);
                                 LogUtil.logToFile("now start session!");
                                 if (detectedPackageName != null) {
                                     if (isAppInstalled(detectedPackageName)) {
@@ -634,7 +634,7 @@ public class AppManagementActivity extends Activity {
                                 // אם הסיסמה נכונה, התחל את ההתקנה
                                 new Thread(){public void run() {
                                         //LogUtil.logToFile("inn 1");
-                                        prgmsg(AppManagementActivity.this,"new app!",false);
+                                        prgmsg(AppManagementActivity.this,"אפליקציה חדשה!",false);
                                         AppUpdater.startInstallSession(AppManagementActivity.this, mfilepath, apkFile, true); // true = password already checked
                                         //LogUtil.logToFile("inn 2");
                                         
@@ -648,7 +648,7 @@ public class AppManagementActivity extends Activity {
                 public void onClick(DialogInterface dialog, int which) {
                     Toast.makeText(AppManagementActivity.this, "התקנת האפליקציה בוטלה.", Toast.LENGTH_SHORT).show();
                     //AppUpdater.dismissprogress(AppManagementActivity.this);
-                    prgmsg(AppManagementActivity.this,"cancel!",true);
+                    prgmsg(AppManagementActivity.this,"ביטול!",true);
                     // נקה את הקובץ הזמני אם ההתקנה בוטלה
                     //if (apkFile != null && apkFile.exists()) {
                     //apkFile.delete();

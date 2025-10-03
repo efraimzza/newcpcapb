@@ -232,7 +232,7 @@ public class AppUpdater {
                     
                     if (session != null)
                         session.abandon();
-                    AppManagementActivity.prgmsg(context,reserr,true);
+                    //AppManagementActivity.prgmsg(context,reserr,true);
                     //dismissprogress(context);
                     
                     return;
