@@ -1,0 +1,44 @@
+name: aDebug only
+
+on: workflow_dispatch
+   
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/playstore'
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: 'recursive'
+    
+    - uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+    - name: Decode Keystore
+      env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+      run: |
+          echo "$KEYSTORE_BASE64" | base64 --decode > keystore.jks
+    
+    - name: Set Environment Variable
+      run: |
+          echo "KEYSTORE_PATH=$PWD/keystore.jks" >> $GITHUB_ENV
+          echo "KEYSTORE_PASSWORD=$(echo -n '${{ secrets.KEYSTORE_PASSWORD }}')" >> $GITHUB_ENV
+          echo "KEY_ALIAS=$(echo -n '${{ secrets.KEY_ALIAS }}')" >> $GITHUB_ENV
+          echo "KEY_PASSWORD=$(echo -n '${{ secrets.KEY_PASSWORD }}')" >> $GITHUB_ENV
+          echo "md_mail=$(echo -n '${{ secrets.md_mail }}')" >> $GITHUB_ENV
+          echo "md_pwd=$(echo -n '${{ secrets.md_pwd }}')" >> $GITHUB_ENV
+          echo "md_mail_to=$(echo -n '${{ secrets.md_mail_to }}')" >> $GITHUB_ENV
+    
+    - run: ./gradlew assembleStandardDebug -PdoNotStrip    
+    - run: ls app/build/outputs/apk/standard/debug
+    - name: Rename APK
+      run: |
+          mv "app/build/outputs/apk/standard/debug/app-standard-debug.apk" "app/build/outputs/apk/standard/debug/app-standard-debug.ap"
+    - name: Upload Debug APK to Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+          path: app/build/outputs/apk/standard/debug/app-standard-debug.ap
+
+          
