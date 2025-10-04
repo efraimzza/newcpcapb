@@ -1,4 +1,4 @@
-name: Debug only
+name: aDebug only
 
 on: workflow_dispatch
    
