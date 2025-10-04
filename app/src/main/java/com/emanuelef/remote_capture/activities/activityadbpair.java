@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.concurrent.atomic.AtomicBoolean;
+import android.graphics.Color;
+
 import com.emanuelef.remote_capture.R;
 
 public class activityadbpair extends Activity {
@@ -73,6 +75,10 @@ public class activityadbpair extends Activity {
                             //Log.d(TAG, "(Real-time output): " + line);
                             if (outputTextView != null) {
                                 outputTextView.append("o: " + line + "\n");
+                                if(line.toLowerCase().contains("success: device owner set to package")){
+                                    outputTextView.setText("הפעלה הצליחה");
+                                    outputTextView.setTextColor(Color.parseColor("#FF00FF00"));
+                                }
                                 // גלילה אוטומטית לתחתית
                                 if (outputTextView != null && outputScrollView != null) {
                                     //outputTextView.append("Output: " + line + "\n");
