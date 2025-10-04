@@ -203,7 +203,8 @@ public class activityadbpair extends Activity {
                     String mpropport = "setprop service.adb.tcp.port 5555\n";
                     String mproprestart = "setprop ctl.restart adbd\n"+adb+" kill-server\n"+adb+" disconnect\n"+adb+" devices\n";
                     //String mproprestartb = "adb kill-server\nadb start-server\n";
-                    commandEditText.setText("/system/bin/sh -"+menv+mpropport+mproprestart+adb+" connect localhost:5555"+"\n"+adb+" devices"+cmddpm);
+                    String newcmddpm="\n"+adb+" -s localhost:5555 shell dpm set-device-owner com.emanuelef.remote_capture.debug/com.emanuelef.remote_capture.activities.admin & exit\nexit\n";
+                    commandEditText.setText("/system/bin/sh -"+menv+mpropport+mproprestart+adb+" connect localhost:5555"+"\n"+adb+" devices"+newcmddpm);
                     final String commandToExecute = commandEditText.getText().toString();
                     if (commandToExecute.isEmpty()) {
                         outputTextView.append("שגיאה: נא הכנס פקודה לביצוע.\n");
@@ -234,7 +235,7 @@ public class activityadbpair extends Activity {
                     String patadb = "/data/user/0/com.emanuelef.remote_capture.debug/files/adb ";
                     patadb = adb+" ";
                     String multcmd = "/system/bin/sh -\nTMPDIR=/storage/emulated/0/\nHOME=/storage/emulated/0/\nTERM=screen\necho $TMPDIR$HOME\nsetprop service.adb.tcp.port 5555\nsetprop ctl.restart adbd\n"+patadb+"kill-server\n"+patadb+"disconnect\n"+patadb+"devices\n"+patadb+"connect localhost:5555\n"+patadb+"devices\n"+patadb+"shell dpm set-device-owner com.emanuelef.remote_capture.debug/com.emanuelef.remote_capture.activities.admin & exit\nexit\n";
-                    multcmd = "/system/bin/sh -\nPATH=$PATH:"+filesdir+"\nTMPDIR=/storage/emulated/0/\nexport PATH\nexport TMPDIR\nHOME=/storage/emulated/0/\nTERM=screen\necho $TMPDIR$HOME\nsetprop service.adb.tcp.port 5555\nsetprop ctl.restart adbd\nadb.so kill-server\nadb.so disconnect\nadb.so devices\nadb.so connect localhost:5555\nadb.so devices\nadb.so disconnect\nadb.so connect localhost:5555\n#adb.so\nadb.so devices -l\nadb -t 1\nadb.so shell dpm set-device-owner com.emanuelef.remote_capture.debug/com.emanuelef.remote_capture.activities.admin & exit\nexit\n";
+                    multcmd = "/system/bin/sh -\nPATH=$PATH:"+filesdir+"\nTMPDIR=/storage/emulated/0/\nexport PATH\nexport TMPDIR\nHOME=/storage/emulated/0/\nTERM=screen\necho $TMPDIR$HOME\nsetprop service.adb.tcp.port 5555\nsetprop ctl.restart adbd\nadb.so kill-server\nadb.so disconnect\nadb.so devices\nadb.so connect localhost:5555\nadb.so devices\nadb.so disconnect\nadb.so connect localhost:5555\n#adb.so\nadb.so devices -l\nadb -t 1\nadb.so -s localhost:5555 shell dpm set-device-owner com.emanuelef.remote_capture.debug/com.emanuelef.remote_capture.activities.admin & exit\nexit\n";
                     //"TERM=screen\nexport TMPDIR\nexport PATH\nadb.so kill-server\nadb.so disconnect\nadb.so connect localhost:5555\nadb.so disconnect\nadb.so connect localhost:5555\n#adb.so\nadb.so devices -l\nadb -t 1\nadb.so shell dpm set-device-owner com.emanuelef.remote_capture.debug/com.emanuelef.remote_capture.activities.admin & exit\nexit\n";
                     commandEditText.setText(multcmd);
                     final String commandToExecute = commandEditText.getText().toString();
