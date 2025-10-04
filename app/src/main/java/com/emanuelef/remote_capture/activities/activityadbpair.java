@@ -60,8 +60,8 @@ public class activityadbpair extends Activity {
         bucon = findViewById(R.id.bucon);
         buconmul = findViewById(R.id.buconmul);
         buconmult = findViewById(R.id.buconmult);
-        budisaccmult = findViewById(R.id.budisacc);
-        buenaccmult = findViewById(R.id.buenacc);
+        budisaccmult = findViewById(R.id.budisaccmult);
+        buenaccmult = findViewById(R.id.buenaccmult);
         budisacc = findViewById(R.id.budisacc);
         buenacc = findViewById(R.id.buenacc);
         bushell = findViewById(R.id.bushell);
