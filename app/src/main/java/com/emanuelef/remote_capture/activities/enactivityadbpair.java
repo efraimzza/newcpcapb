@@ -50,7 +50,7 @@ public class enactivityadbpair extends Activity {
         linl.removeView(findViewById(R.id.buconmult));
         linl.removeView(findViewById(R.id.buexecall));
         
-        pkgname=activityadbpair.this.getPackageName();
+        pkgname=enactivityadbpair.this.getPackageName();
         hompat=getDir("HOME", MODE_PRIVATE).getAbsolutePath();
         filesdir=getApplicationInfo().nativeLibraryDir;
         final String adb="adb.so";
