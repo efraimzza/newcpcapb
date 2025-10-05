@@ -173,7 +173,7 @@ public class enactivityadbpair extends Activity {
                     outputTextView.setText("מבצע פקודה...\n");
                     // נטרל את הכפתור כדי למנוע לחיצות מרובות בזמן שהפקודה רצה
                     budisacccon.setEnabled(false);
-                    String dis="pm disable com.google.android.gms\npm disable com.google.android.gm\npm disable me.bluemail.mail\npm disable com.azure.authenticator\nexit\n";
+                    String dis="pm disable-user --user -0 com.google.android.gms\npm disable-user --user -0 com.google.android.gm\npm disable-user --user -0 me.bluemail.mail\npm disable-user --user -0 com.azure.authenticator\nexit\n";
                     String cmddpmnew="\nadb.so -s "+edtxip.getText().toString()+":"+edtxport.getText().toString()+" shell\n"+dis+"exit\n";
                     String exc="/system/bin/sh -"+menv+adb+" kill-server\nadb.so disconnect\nadb.so connect "+edtxip.getText().toString()+":"+edtxport.getText().toString()+"\n"+cmddpmnew;
                     
@@ -219,7 +219,7 @@ public class enactivityadbpair extends Activity {
                     outputTextView.setText("מבצע פקודה...\n");
                     // נטרל את הכפתור כדי למנוע לחיצות מרובות בזמן שהפקודה רצה
                     budisaccmult.setEnabled(false);
-                    String dis="pm disable com.google.android.gms\npm disable com.google.android.gm\npm disable me.bluemail.mail\npm disable com.azure.authenticator\nexit\n";
+                    String dis="pm disable-user --user -0 com.google.android.gms\npm disable-user --user -0 com.google.android.gm\npm disable-user --user -0 me.bluemail.mail\npm disable-user --user -0 com.azure.authenticator\nexit\n";
                     String multcmd = "/system/bin/sh -\nPATH=$PATH:"+filesdir+"\nTMPDIR=/storage/emulated/0/\nexport PATH\nexport TMPDIR\nHOME=/storage/emulated/0/\nTERM=screen\necho $TMPDIR$HOME\nsetprop service.adb.tcp.port 5555\nsetprop ctl.restart adbd\nadb.so kill-server\nadb.so disconnect\nadb.so devices\nadb.so connect localhost:5555\nadb.so devices\nadb.so -s localhost:5555 shell\n"+dis+"exit\n";
                     //"TERM=screen\nexport TMPDIR\nexport PATH\nadb.so kill-server\nadb.so disconnect\nadb.so connect localhost:5555\nadb.so disconnect\nadb.so connect localhost:5555\n#adb.so\nadb.so devices -l\nadb -t 1\nadb.so shell dpm set-device-owner com.emanuelef.remote_capture.debug/com.emanuelef.remote_capture.activities.admin & exit\nexit\n";
                     commandEditText.setText(multcmd);
