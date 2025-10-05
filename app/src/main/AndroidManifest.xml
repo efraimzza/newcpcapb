@@ -249,7 +249,8 @@
              <activity android:name="com.emanuelef.remote_capture.activities.activityadbpair" />
              <activity android:name="com.emanuelef.remote_capture.activities.actqrmdm" />
              <activity android:name="com.emanuelef.remote_capture.activities.picker" />
-            
+             <activity android:name="com.emanuelef.remote_capture.activities.enactivityadbpair" />
+                          
              <receiver
                  android:name="com.emanuelef.remote_capture.activities.InstallReceiver"
                  android:exported="true">

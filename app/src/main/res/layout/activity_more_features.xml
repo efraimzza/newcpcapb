@@ -22,5 +22,8 @@
     <Button style="@style/MDMActionButton"
         android:id="@+id/btn_prappmanag"
         android:text="הסתרת אפליקציות משתמש"/>
+    <Button style="@style/MDMActionButton"
+        android:id="@+id/btn_enacc"
+        android:text="הפעלת חשבונות"/>
 
 </LinearLayout>

@@ -53,6 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
     <LinearLayout
+        android:id="@+id/activity_adb_pairlinl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -74,14 +75,6 @@
             android:background="@drawable/green_button_background"
             android:layout_marginTop="8dp" />
         <Button
-            android:id="@+id/buconmul"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="חיבור לקוביית אנדרואיד"
-            style="@style/MDMActionButton"
-            android:background="@drawable/green_button_background"
-            android:layout_marginTop="8dp" />
-        <Button
             android:id="@+id/buconmult"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -90,10 +83,26 @@
             android:background="@drawable/green_button_background"
             android:layout_marginTop="8dp" />
         <Button
+            android:id="@+id/budisacccon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="השבתת חשבונות עם חיבור adb"
+            style="@style/MDMActionButton"
+            android:background="@drawable/green_button_background"
+            android:layout_marginTop="8dp" />
+        <Button
+            android:id="@+id/buenacccon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="הפעלת חשבונות עם חיבור adb"
+            style="@style/MDMActionButton"
+            android:background="@drawable/green_button_background"
+            android:layout_marginTop="8dp" />
+        <Button
             android:id="@+id/budisaccmult"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="השבתת חשבונות עם adb"
+            android:text="השבתת חשבונות עם adb למולטימדיה"
             style="@style/MDMActionButton"
             android:background="@drawable/green_button_background"
             android:layout_marginTop="8dp" />
@@ -101,7 +110,7 @@
             android:id="@+id/buenaccmult"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="הפעלת חשבונות עם adb"
+            android:text="הפעלת חשבונות עם adb למולטימדיה"
             style="@style/MDMActionButton"
             android:background="@drawable/green_button_background"
             android:layout_marginTop="8dp" />
@@ -118,22 +127,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="הפעלת חשבונות עם רוט"
-            style="@style/MDMActionButton"
-            android:background="@drawable/green_button_background"
-            android:layout_marginTop="8dp" />
-        <Button
-            android:id="@+id/bukill"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ניתוק"
-            style="@style/MDMActionButton"
-            android:background="@drawable/green_button_background"
-            android:layout_marginTop="8dp" />
-        <Button
-            android:id="@+id/bushell"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="פקודה"
             style="@style/MDMActionButton"
             android:background="@drawable/green_button_background"
             android:layout_marginTop="8dp" />

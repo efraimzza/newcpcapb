@@ -52,9 +52,28 @@ public class MoreFeaturesActivity extends Activity {
                     @Override
                     public void onClick(View v) {
                         try{
-                       Intent intent = new Intent(MoreFeaturesActivity.this, PrAppManagementActivity.class);
-                    startActivity(intent);
-           } catch (Exception e){}
+                           Intent intent = new Intent(MoreFeaturesActivity.this, PrAppManagementActivity.class);
+                           startActivity(intent);
+                        } catch (Exception e){}
+                    }
+                });
+        }
+        Button btnenacc = findViewById(R.id.btn_enacc);
+        if (btnenacc != null) {
+            btnenacc.setOnClickListener(new View.OnClickListener() {
+                    @Deprecated
+                    @Override
+                    public void onClick(View v) {
+                        PasswordManager.requestPasswordAndSave(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                         try{
+                                            Intent intent = new Intent(MoreFeaturesActivity.this, enactivityadbpair.class);
+                                            startActivity(intent);
+                                         } catch (Exception e){}
+                                    }
+                                },MoreFeaturesActivity.this);
+
                     }
                 });
         }
