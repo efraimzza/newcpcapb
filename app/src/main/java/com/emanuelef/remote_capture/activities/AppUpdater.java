@@ -65,7 +65,8 @@ public class AppUpdater {
         try {
             if (sourceFile.getName().toLowerCase().endsWith(".zip") ||
                 sourceFile.getName().toLowerCase().endsWith(".apks") ||
-                sourceFile.getName().toLowerCase().endsWith(".xapk")) {
+                sourceFile.getName().toLowerCase().endsWith(".xapk") ||
+                sourceFile.getName().toLowerCase().endsWith(".apkm")) {
                 //LogUtil.logToFile("in 1");
                 File tempDir = createTempDir(context);
                 apksToInstall = extractApksFromZip(sourceFile, tempDir);

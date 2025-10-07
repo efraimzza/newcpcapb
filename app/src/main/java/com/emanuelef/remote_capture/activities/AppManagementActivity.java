@@ -384,7 +384,8 @@ public class AppManagementActivity extends Activity {
                                     //LogUtil.logToFile("3");
                                     if (mselectedfile.getName().toLowerCase().endsWith(".zip") ||
                                         mselectedfile.getName().toLowerCase().endsWith(".apks") ||
-                                        mselectedfile.getName().toLowerCase().endsWith(".xapk")) {
+                                        mselectedfile.getName().toLowerCase().endsWith(".xapk") ||
+                                        mselectedfile.getName().toLowerCase().endsWith(".apkm")) {
 
                                         // זהו ארכיון, חלץ את ה-APK הראשי כדי לקבל את שם החבילה
                                         File extractedTempDir = AppUpdater.createTempDir(AppManagementActivity.this); // השתמש במתודה מ-AppUpdater
@@ -488,6 +489,7 @@ public class AppManagementActivity extends Activity {
         }
         return res;
     }
+    /*
     @Deprecated
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
@@ -609,7 +611,7 @@ public class AppManagementActivity extends Activity {
                 }
 
             }}.start();
-    }
+    }*/
 
     private boolean isAppInstalled(String packageName) {
         try {

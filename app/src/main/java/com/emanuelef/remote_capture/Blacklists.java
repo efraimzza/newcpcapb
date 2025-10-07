@@ -53,6 +53,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
+import com.emanuelef.remote_capture.model.Blocklist;
 import com.emanuelef.remote_capture.activities.LogUtil;
 
 /* Represents the malware blacklists.
@@ -397,6 +398,10 @@ public class Blacklists {
                 // Update the number of rules
                 bl.num_rules = bl_status.num_rules;
                 bl.loaded = true;
+                Blocklist blocklist = PCAPdroid.getInstance().getBlocklist();
+                blocklist.removeHost("raw.githubusercontent.com");
+                blocklist.saveAndReload();
+                
                 loaded.add(bl.fname);
 
                 if(bl.type == BlacklistDescriptor.Type.DOMAIN_BLACKLIST)
@@ -413,6 +418,9 @@ public class Blacklists {
             if(!loaded.contains(bl.fname)) {
                 Log.w(TAG, "Blacklist not loaded: " + bl.fname);
                 bl.loaded = false;
+                Blocklist blocklist = PCAPdroid.getInstance().getBlocklist();
+                blocklist.addHost("raw.githubusercontent.com");
+                blocklist.saveAndReload();
             }
         }
         Toast.makeText(mContext, "lists up: " + num_loaded + " lists, " + num_domains + " domains, " + num_ips + " IPs",1).show();

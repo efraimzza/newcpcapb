@@ -106,7 +106,7 @@ public class FileAdapter extends BaseAdapter {
         //if (item.mimeType.equals(DocumentsContract.Document.MIME_TYPE_DIR) || item.mimeType.equals("vnd.android.document/directory")) {
         if (new File(item.path).isDirectory()) {
             iconResId = R.drawable.ic_folder; // Replace with your actual drawable
-        } else if (item.name.toLowerCase(Locale.ROOT).endsWith(".apk")||item.name.toLowerCase(Locale.ROOT).endsWith(".apks")||item.name.toLowerCase(Locale.ROOT).endsWith(".xapk")) {
+        } else if (item.name.toLowerCase(Locale.ROOT).endsWith(".apk")||item.name.toLowerCase(Locale.ROOT).endsWith(".apks")||item.name.toLowerCase(Locale.ROOT).endsWith(".xapk")||item.name.toLowerCase(Locale.ROOT).endsWith(".apkm")) {
             iconResId = R.drawable.ic_apk; // Replace with your actual drawable
         } 
         // Add more manual checks for .xapk, .apks, etc.

@@ -48,7 +48,7 @@ public class picker extends Activity {
             mpath = "/storage";
             //mpath="/storage";
             reloadlist(mpath);
-            LogUtil.logToFile("res");
+            //LogUtil.logToFile("res");
             /*
              List<FileItem> fileList=new ArrayList<>();
              for(File fi: new File(mpath).listFiles()){
@@ -62,14 +62,11 @@ public class picker extends Activity {
              final FileAdapter adapter = new FileAdapter(this, fileList); // Assume fileList is loaded
              listView.setAdapter(adapter);
              */
-// Standard anonymous inner class for click listener (No lambda)
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Deprecated
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                         FileItem clickedItem = (FileItem) parent.getItemAtPosition(position);
-
                         //if (clickedItem.mimeType.equals(DocumentsContract.Document.MIME_TYPE_DIR)) {
                         if (new File(clickedItem.path).isDirectory()) {
                             reloadlist(clickedItem.path);
@@ -80,11 +77,12 @@ public class picker extends Activity {
                             // File click: Show the full path in a Toast
                             if (clickedItem.path.toLowerCase().endsWith(".apk") ||
                                 clickedItem.path.toLowerCase().toLowerCase().endsWith(".apks") ||
-                                clickedItem.path.toLowerCase().toLowerCase().endsWith(".xapk")) {
+                                clickedItem.path.toLowerCase().toLowerCase().endsWith(".xapk") ||
+                                clickedItem.path.toLowerCase().toLowerCase().endsWith(".apkm")) {
                                     AppManagementActivity.pickedfilepath=clickedItem.path;
                                     finish();
                                 }
-                            Toast.makeText(getApplicationContext(), "Path: " + clickedItem.path, Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getApplicationContext(), "Path: " + clickedItem.path, Toast.LENGTH_LONG).show();
                         }
 
                     }
@@ -109,12 +107,22 @@ public class picker extends Activity {
                     StorageManager sm=(StorageManager) getSystemService(STORAGE_SERVICE);
                     List<String> storages=new ArrayList<>();
 
+                    if(Build.VERSION.SDK_INT>=24){
                     for (StorageVolume stv : sm.getStorageVolumes()) {
 
                         if (!stv.isEmulated()) {
                             storages.add(stv.getUuid());
                         }
                         //tv.append(stv.getUuid()+" "+stv.getState()+" "+stv.isEmulated()+" "+stv.isPrimary()+" "+stv.isRemovable());
+                    }
+                    }else{
+                        try{
+                            if(new File("/storage").list()!=null){
+                            for(String st:new File("/storage").list()){
+                                storages.add(st);
+                            }
+                            }
+                        }catch(Exception e){}
                     }
                     if (mpath.equals("/storage") || mpath.equals("/mnt") || mpath.equals("/")) {
                         mpath = "/storage";
@@ -148,7 +156,7 @@ public class picker extends Activity {
                             for (String s:sta) {
                                 lf[i] = new File(mpath, s);
                                 i++;
-                                LogUtil.logToFile(mpath + s);
+                                //LogUtil.logToFile(mpath + s);
                             }
 
                             //for(File fi: new File(path).listFiles()){
@@ -251,7 +259,7 @@ public class picker extends Activity {
         fghtdi = lidi.toArray(fghtdi);
         while (i < fghtdi.length) {
             limp.add(fghtdi[i]);
-            LogUtil.logToFile("dir=" + fghtdi[i]);
+            //LogUtil.logToFile("dir=" + fghtdi[i]);
             i++;}
         i = 0;
         String[] fght ={};
@@ -267,13 +275,8 @@ public class picker extends Activity {
     boolean cmpextensions(String cmp) {
         boolean ret=false;
         String[] extenames={};
-        /*if(   SharedPref.getBoolean("mp4pl",false)){
-         extenames=new String[]{"mp3","wav","m4a","wma","weba","mp4"};
-         }else{
-         extenames=new String[]{"mp3","wav","m4a","wma","weba"};
-         }*/
 
-        extenames = new String[]{"apk","apks","xapk"};
+        extenames = new String[]{"apk","apks","xapk","apkm"};
 
         ArrayList<String> extensions =new ArrayList<>();  
         for (String s:extenames) {
@@ -391,7 +394,7 @@ public class picker extends Activity {
                      String msize= cursor.getString(cursor.getColumnIndex(DocumentsContract.Document.COLUMN_SIZE));
                      String mdocid= cursor.getString(cursor.getColumnIndex(DocumentsContract.Document.COLUMN_DOCUMENT_ID));
                      sn=mname+","+mmimetype+","+mlastmodified+","+msize+","+mdocid;
-                     LogUtil.logToFile(sn);
+                     //LogUtil.logToFile(sn);
                      }*/
 
                     if (cursor != null &&
@@ -413,7 +416,7 @@ public class picker extends Activity {
 
                             //loadFilesFromUri( DocumentsContract.buildDocumentUri(treeUri.getAuthority(),mdocid));
                             //loadFilesFromUri(DocumentsContract.buildChildDocumentsUriUsingTree(treeUri,mdocid));
-                            LogUtil.logToFile(sn);
+                            //LogUtil.logToFile(sn);
                         }while(cursor.moveToNext());
 
                     //for(int i=0;i<cursor.getCount();i++){
@@ -426,7 +429,7 @@ public class picker extends Activity {
                      String msize= cursor.getString(cursor.getColumnIndex(DocumentsContract.Document.COLUMN_SIZE));
                      String mdocid= cursor.getString(cursor.getColumnIndex(DocumentsContract.Document.COLUMN_DOCUMENT_ID));
                      sn=cursor.getCount()+","+cursor.getPosition()+","+ mname+","+mmimetype+","+mlastmodified+","+msize+","+mdocid;
-                     LogUtil.logToFile(sn);
+                     //LogUtil.logToFile(sn);
                      }*/
                 } catch (Exception e) {
                     LogUtil.logToFile(e.toString());
@@ -467,7 +470,7 @@ public class picker extends Activity {
                      String msize= cursor.getString(cursor.getColumnIndex(DocumentsContract.Document.COLUMN_SIZE));
                      String mdocid= cursor.getString(cursor.getColumnIndex(DocumentsContract.Document.COLUMN_DOCUMENT_ID));
                      sn=mname+","+mmimetype+","+mlastmodified+","+msize+","+mdocid;
-                     LogUtil.logToFile(sn);
+                     //LogUtil.logToFile(sn);
                      }*/
 
                     if (cursor != null &&
@@ -496,7 +499,7 @@ public class picker extends Activity {
 
                             //loadFilesFromUri( DocumentsContract.buildDocumentUri(treeUri.getAuthority(),mdocid));
                             //loadFilesFromUri(DocumentsContract.buildChildDocumentsUriUsingTree(treeUri,mdocid));
-                            LogUtil.logToFile(sn);
+                            //LogUtil.logToFile(sn);
                         }while(cursor.moveToNext());
 
                     //for(int i=0;i<cursor.getCount();i++){
@@ -509,7 +512,7 @@ public class picker extends Activity {
                      String msize= cursor.getString(cursor.getColumnIndex(DocumentsContract.Document.COLUMN_SIZE));
                      String mdocid= cursor.getString(cursor.getColumnIndex(DocumentsContract.Document.COLUMN_DOCUMENT_ID));
                      sn=cursor.getCount()+","+cursor.getPosition()+","+ mname+","+mmimetype+","+mlastmodified+","+msize+","+mdocid;
-                     LogUtil.logToFile(sn);
+                     //LogUtil.logToFile(sn);
                      }*/
                 } catch (Exception e) {
                     LogUtil.logToFile(e.toString());
@@ -550,12 +553,4 @@ public class picker extends Activity {
             }}.start();
     }
 
-
-    
-    
-
-    //a - background
-    //b - up paths - sdcard usb etc
-    //c - permission(is already in the mdm)
-    //d - acoording alpha beta, type, time
 } 
