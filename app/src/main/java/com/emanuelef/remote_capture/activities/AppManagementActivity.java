@@ -344,6 +344,7 @@ public class AppManagementActivity extends Activity {
     protected void onResume() {
         super.onResume();
         if(pickedfilepath!=null&&!pickedfilepath.equals("")){
+            AppUpdater. deleteTempDir(new File(AppManagementActivity.this.getFilesDir().toString() + "/cach"));
             mfilepath=pickedfilepath;
             pickedfilepath="";
             new Thread(){public void run() {
@@ -397,6 +398,25 @@ public class AppManagementActivity extends Activity {
                                             if (baseApkFile != null) {
                                                 //LogUtil.logToFile("4");
                                                 detectedPackageName = AppUpdater.getApkPackageName(AppManagementActivity.this, baseApkFile.getAbsolutePath());
+                                                if (detectedPackageName != null) {}
+                                                else{
+                                                    LogUtil.logToFile("retrying detect pn");
+                                                    for (File apk : extractedApks) {
+                                                        LogUtil.logToFile("for");
+                                                        if (apk.getName().contains(".apk")) {
+                                                            try {
+                                                                detectedPackageName = AppUpdater.getApkPackageName(AppManagementActivity.this, apk.getAbsolutePath());
+                                                                
+                                                                if (detectedPackageName != null ) {
+                                                                    LogUtil.logToFile("detected main pn - "+detectedPackageName);
+                                                                    break;
+                                                                }
+                                                            } catch (Exception ee) {
+                                                                
+                                                            }
+                                                        }
+                                                    }
+                                                }
                                             }
                                             //LogUtil.logToFile("5");
                                         }

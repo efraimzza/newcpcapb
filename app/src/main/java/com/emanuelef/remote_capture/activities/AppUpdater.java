@@ -106,8 +106,24 @@ public class AppUpdater {
                     if (mainPackageName == null) {
                         //AppManagementActivity.progressDialog.setMessage("לא ניתן לזהות את ה-APK הבסיסי בארכיון." + sourceFile.getName());
                         //dismissprogress(context);
-                        AppManagementActivity.prgmsg(context,"לא ניתן לזהות את ה-APK הבסיסי בארכיון." + sourceFile.getName(),true);
-                        return;
+                        //AppManagementActivity.prgmsg(context,"לא ניתן לזהות את ה-APK הבסיסי בארכיון." + sourceFile.getName(),true);
+                        //return;
+                        LogUtil.logToFile("retrying detect pn");
+                        for (File apk : apksToInstall) {
+                            LogUtil.logToFile("for");
+                            if (apk.getName().contains(".apk")) {
+                                try {
+                                    mainPackageName = getApkPackageName(context, apk.getAbsolutePath());
+                                    mainApkSignatures = getApkSignature(context, apk.getAbsolutePath());
+                                    if (mainPackageName != null && mainApkSignatures != null) {
+                                        LogUtil.logToFile("detected main pn - "+mainPackageName);
+                                        break;
+                                    }
+                                } catch (Exception e) {
+                                    LogUtil.logToFile(e.toString());
+                                }
+                            }
+                        }
                     }
                 } else {
                     for (File apk : apksToInstall) {
@@ -718,7 +734,7 @@ public class AppUpdater {
          }*/
     }
     @Deprecated
-    private static boolean addzipToSession(PackageInstaller.Session session, File zipFilep) throws Exception {
+    private static boolean addzipToSession(PackageInstaller.Session session, File zipFilep) {
         //OutputStream out = null;
         //InputStream in = null;
         // try {
@@ -766,10 +782,12 @@ public class AppUpdater {
             System.out.println("Selective extraction complete.");
 
         } catch (Exception e) {
-            LogUtil.logToFile("" + e);
+            LogUtil.logToFile("ses err" + e);
             System.err.println("Zip4j Error: " + e.getMessage());
+            try{
             if (os != null) os.close();
-            LogUtil.logToFile("" + e);
+            }catch(Exception ee){}
+            //LogUtil.logToFile("" + e);
             if (session != null)
                 session.abandon();
             suc = false;
@@ -778,7 +796,9 @@ public class AppUpdater {
             reserr=e.toString();
             //throw new IOException("Failed to extract specific files: " + e.getMessage(), e);
         } finally {
+            try{
             if (is != null) is.close();
+            }catch(Exception e){}
             LogUtil.logToFile("in 9");
             if (!suc) {
                 LogUtil.logToFile("e1");
