@@ -1,5 +1,7 @@
 # רשימה לבנה
 
+עברתי לכאן - [pcapmdmblocker](https://github.com/efraimzza/pcapmdmblocker)
+
 אפליקציה שמאפשרת חסימות של mdm
 עם אפשרות להפעלת vpn תמידי במצב mdm
 
